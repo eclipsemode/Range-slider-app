@@ -1,11 +1,11 @@
 class Model {
-    static slider = $(`
-        <div class="slider-container">
-            <span class="slider__rulers"></span>
-            <span class="slider__bar">
-                <span class="slider__fill"></span>
+    public static slider: JQuery<HTMLElement> = $(`
+        <div class="slider-app">
+            <span class="slider-app__rulers"></span>
+            <span class="slider-app__bar">
+                <span class="slider-app__fill"></span>
             </span>
-            <input class="slider__input" type="range" min="0" max="100" value="50" step="10">
+            <input class="slider-app__input" type="range" min="0" max="100" value="50" step="10">
         </div>
     `);
 }

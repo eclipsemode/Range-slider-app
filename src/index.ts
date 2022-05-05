@@ -76,3 +76,5 @@ export class SliderRange extends View {
 const slider = new SliderRange('.htr', {
     name: 'Name'
 });
+
+console.log('test');

@@ -1,5 +1,7 @@
 $gr-main: #ffe53b;
 $gr-secondary: #ff2525;
+$width: 500px;
+$horizontal: rotate(90deg);
 
 body {
   margin: 0;
@@ -14,7 +16,8 @@ body {
 .slider-app {
   position: relative;
   width: 20px;
-  height: 300px;
+  height: $width;
+  transform: $horizontal;
 
   &__input {
     position: absolute;
@@ -24,7 +27,7 @@ body {
     appearance: none;
     margin: 0;
     height: 20px;
-    width: 300px;
+    width: $width;
     outline: none;
     transform: rotate(-90deg) translate(-50%, -50%);
     transform-origin: 0 0;
@@ -94,12 +97,12 @@ body {
     height: 50%;
     overflow: hidden;
 
-    &::before {
+    &-stripe {
       content: '';
       position: absolute;
       left: 0;
       right: 0;
-      height: 300px;
+      height: $width;
       bottom: 0;
       background-image: linear-gradient(0deg, $gr-main 0%, $gr-secondary 100%);
     }
@@ -136,4 +139,8 @@ body {
       background-size: 100% 2%;
     }
   }
+}
+
+.second {
+  margin-top: 10rem;
 }

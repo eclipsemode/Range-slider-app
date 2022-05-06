@@ -5,6 +5,8 @@ declare type SliderRangeOptions = {
     min?: number;
     max?: number;
     horizontal?: boolean;
+    width?: number,
+    rulersHidden?: boolean,
 }
 
 export {SliderRangeOptions};

@@ -3,4 +3,4 @@ declare type SliderRangeOptions = {
     value?: number;
 }
 
-export {SliderRangeOptions}
+export {SliderRangeOptions};

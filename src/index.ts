@@ -1,7 +1,6 @@
 import './assets/style/style.scss';
-import {SliderRange} from "./slider.view";
+import {default as SliderRange} from './slider.view';
 
-
-const slider = new SliderRange( '.slider', {
-    value: 100
+new SliderRange('.slider', {
+    value: 100,
 });

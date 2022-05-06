@@ -36,4 +36,4 @@ class Controller {
     }
 }
 
-export {Controller}
+export {Controller};

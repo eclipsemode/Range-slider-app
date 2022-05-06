@@ -34,6 +34,16 @@ class Controller {
             Controller.setBar();
         });
     }
+
+    public static setHorizontal(value: boolean): string | void {
+        if (value === false) {
+            return 'rotate(0deg)';
+        }
+        else if (value === true) {
+            return 'rotate(90deg)';
+        }
+        else return null;
+    }
 }
 
 export {Controller};

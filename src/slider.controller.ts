@@ -38,7 +38,8 @@ class Controller {
         this.getTooltip(
             $(selector + ' .slider-app__tooltip'),
             $(selector + ' .slider-app__input'),
-            options.tooltip
+            options.tooltip,
+            +$(selector + ' .slider-app__input').attr('max')
         );
 
         this.setHorizontal(options.horizontal, $(selector));
@@ -56,29 +57,20 @@ class Controller {
         }
     }
 
-    public static setWidth(value: number): string {
-        if (value) {
-            return value + 'px';
-        }
-    }
-
-    public static setRulers(value: boolean): string {
-        if (value === true) {
-            return 'none';
-        }
-        else {
-            return 'block';
-        }
-    }
-
-    public static getTooltip(tooltipValue: JQuery, inputValue: JQuery, value: boolean) {
-        tooltipValue.css('bottom', +inputValue.val() + '%');
+    public static getTooltip(
+        tooltipValue: JQuery,
+        inputValue: JQuery,
+        value: boolean,
+        maxValue: number
+    ) {
+        tooltipValue.css('bottom', ((+inputValue.val() / maxValue) * 100) + '%');
         tooltipValue.css('opacity', 0);
 
         if (value === true) {
             inputValue.on('input', () => {
                 tooltipValue.text(+inputValue.val());
-                tooltipValue.css('bottom', +inputValue.val() + '%');
+                tooltipValue.css('bottom', ((+inputValue.val() / maxValue) * 100) + '%');
+
             });
 
             inputValue.on('mouseover', () => {

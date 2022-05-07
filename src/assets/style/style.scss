@@ -34,6 +34,7 @@ body {
     background-color: transparent;
 
     &::-webkit-slider-thumb {
+      content: attr(data-el);
       appearance: none;
       width: 30px;
       height: 30px;
@@ -176,6 +177,26 @@ body {
       background: linear-gradient(to top, #686868 1px, transparent 2px);
       background-size: 100% 2%;
     }
+  }
+
+  &__value-block {
+    position: absolute;
+    bottom: -19px;
+    left: -2px;
+    height: 350px;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: space-between;
+    align-items: center;
+    color: $gr-main;
+    font-weight: 700;
+  }
+
+  &__min-value {
+    transform:rotate(-90deg);
+  }
+  &__max-value {
+    transform:rotate(-90deg);
   }
 }
 

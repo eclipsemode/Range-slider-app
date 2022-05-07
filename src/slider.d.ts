@@ -7,6 +7,7 @@ declare type SliderRangeOptions = {
     horizontal?: boolean;
     width?: number,
     rulersHidden?: boolean,
+    tooltip?: boolean
 }
 
 export {SliderRangeOptions};

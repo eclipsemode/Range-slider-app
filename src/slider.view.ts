@@ -8,7 +8,7 @@ class View {
     }
     render() {
         $(this.selector).append(Model.slider(this.options));
-        Controller.getSlider(this.selector);
+        Controller.getSlider(this.selector, this.options);
     }
 }
 

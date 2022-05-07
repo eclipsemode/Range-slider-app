@@ -1,7 +1,7 @@
 $gr-main: #ffe53b;
 $gr-secondary: #ff2525;
 $width: 500px;
-$horizontal: rotate(90deg);
+$horizontal: rotate(0deg);
 
 body {
   margin: 0;
@@ -57,7 +57,7 @@ body {
   &__bar {
     z-index: 1;
     top: 10px;
-    bottom: 10px;
+    bottom: 20px;
     background-color: rgba(0, 0, 0, 0.2);
 
     &::before {
@@ -105,6 +105,44 @@ body {
       height: $width;
       bottom: 0;
       background-image: linear-gradient(0deg, $gr-main 0%, $gr-secondary 100%);
+    }
+  }
+
+  &__tooltip {
+    position: absolute;
+    bottom: 0;
+    right: 3rem;
+    transform: translateY(16px) rotate(270deg);
+    width: 20px;
+    height: 20px;
+    color: #eeeeee;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity ease-in-out .4s;
+
+    &::before {
+      position: absolute;
+      content: '';
+      bottom: -50%;
+      left: -58%;
+      width: 30px;
+      height: 30px;
+      overflow: hidden;
+      background-color: #3e3e3e;
+      border: 2px solid $gr-main;
+      z-index: -1;
+      transform: rotate(-135deg);
+      border-bottom-left-radius: 50%;
+      border-bottom-right-radius: 50%;
+      border-top-right-radius: 50%;
+      padding: 5px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+    }
+
+    &-value {
+
     }
   }
 

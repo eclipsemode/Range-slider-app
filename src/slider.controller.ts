@@ -1,3 +1,5 @@
+import {SliderRangeOptions} from './slider';
+
 class Controller {
     private static setBar(selector: string | void): void {
         const $slider = $(selector + ' .slider-app__input');
@@ -28,19 +30,29 @@ class Controller {
         return (e - s) * (p / 100) + s;
     }
 
-    public static getSlider(selector: string) {
+    public static getSlider(selector: string, options: Partial<SliderRangeOptions>) {
         this.setBar(selector);
         $(selector + ' .slider-app__input').on('input', () => {
             Controller.setBar(selector);
         });
+        this.getTooltip(
+            $(selector + ' .slider-app__tooltip'),
+            $(selector + ' .slider-app__input'),
+            options.tooltip
+        );
+
+        this.setHorizontal(options.horizontal, $(selector));
     }
 
-    public static setHorizontal(value: boolean): string {
+    public static setHorizontal(value: boolean, element: JQuery) {
         if (value === false) {
-            return 'rotate(0deg)';
+            element.css('transform', 'rotate(0deg)');
+        }
+        else if (value === true) {
+            element.css('transform', 'rotate(90deg)');
         }
         else {
-            return 'rotate(90deg)';
+            element.css('transform', 'rotate(90deg)');
         }
     }
 
@@ -57,6 +69,26 @@ class Controller {
         else {
             return 'block';
         }
+    }
+
+    public static getTooltip(tooltipValue: JQuery, inputValue: JQuery, value: boolean) {
+        tooltipValue.css('bottom', +inputValue.val() + '%');
+        tooltipValue.css('opacity', 0);
+
+        if (value === true) {
+            inputValue.on('input', () => {
+                tooltipValue.text(+inputValue.val());
+                tooltipValue.css('bottom', +inputValue.val() + '%');
+            });
+
+            inputValue.on('mouseover', () => {
+                tooltipValue.css('opacity', 1);
+            });
+            inputValue.on('mouseout', () => {
+                tooltipValue.css('opacity', 0);
+            });
+        }
+
     }
 }
 

@@ -121,6 +121,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    pointer-events: none;
     transition: opacity ease-in-out .4s;
 
     &::before {
@@ -181,8 +182,9 @@ body {
 
   &__value-block {
     position: absolute;
-    bottom: -19px;
-    left: -2px;
+    bottom: -30px;
+    left: 0;
+    width: inherit;
     height: 350px;
     display: flex;
     flex-direction: column-reverse;

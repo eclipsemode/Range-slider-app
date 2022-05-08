@@ -6,11 +6,15 @@ new SliderRange('.slider', {
     rulersHidden: true,
     tooltip: true,
     width: 300,
-    max: 900
+    max: 900,
+    percent: true
 });
 
 new SliderRange('.second', {
-    value: 100,
+    value: 200,
     step: 20,
-    tooltip: true
+    tooltip: true,
+    max: 300,
+    min: 100,
+
 });

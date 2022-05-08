@@ -8,7 +8,7 @@ class Model {
         const step: number = data.step ?? 0.1;
         const width: string = data.width ? data.width + 'px' : '500px';
         const rulers: string = data.rulersHidden === true ? 'none' : 'block';
-        const minMaxBlock: string = data.width ? data.width + 50 + 'px' : '550px';
+        const minMaxBlock: string = data.width ? data.width + 70 + 'px' : '570px';
 
         return $(`
             <div class="slider-app" style="height: ${width}">

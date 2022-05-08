@@ -39,7 +39,9 @@ class Controller {
             $(selector + ' .slider-app__tooltip'),
             $(selector + ' .slider-app__input'),
             options.tooltip,
-            +$(selector + ' .slider-app__input').attr('max')
+            +$(selector + ' .slider-app__input').attr('max'),
+            +$(selector + ' .slider-app__input').attr('min'),
+            options.percent
         );
 
         this.setHorizontal(options.horizontal, $(selector));
@@ -60,27 +62,41 @@ class Controller {
     public static getTooltip(
         tooltipValue: JQuery,
         inputValue: JQuery,
-        value: boolean,
-        maxValue: number
+        tooltip: boolean,
+        maxValue: number,
+        minValue: number,
+        percent: boolean
     ) {
-        tooltipValue.css('bottom', ((+inputValue.val() / maxValue) * 100) + '%');
+        tooltipValue.css('bottom', (((+inputValue.val() - minValue) / (maxValue - minValue)) * 100) + '%');
         tooltipValue.css('opacity', 0);
 
-        if (value === true) {
+        if (percent === false || !percent) {
+            tooltipValue.text(parseInt(<string>inputValue.val()).toFixed());
             inputValue.on('input', () => {
-                tooltipValue.text(+inputValue.val());
-                tooltipValue.css('bottom', ((+inputValue.val() / maxValue) * 100) + '%');
+                tooltipValue.text(parseInt(<string>inputValue.val()).toFixed());
+            });
+        }
+        else if (percent === true) {
+            tooltipValue.text(parseInt((((+inputValue.val() - minValue) / (maxValue - minValue)) * 100).toFixed()) + '%');
+            inputValue.on('input', () => {
+                tooltipValue.text(parseInt((((+inputValue.val() - minValue) / (maxValue - minValue)) * 100).toFixed()) + '%');
+            });
+        }
 
+        if (tooltip === true) {
+
+            inputValue.on('input', () => {
+                tooltipValue.css('bottom', (((+inputValue.val() - minValue) / (maxValue - minValue)) * 100) + '%');
             });
 
             inputValue.on('mouseover', () => {
                 tooltipValue.css('opacity', 1);
             });
+
             inputValue.on('mouseout', () => {
                 tooltipValue.css('opacity', 0);
             });
         }
-
     }
 }
 

@@ -7,14 +7,14 @@ new SliderRange('.slider', {
     tooltip: true,
     width: 300,
     max: 900,
-    percent: true
 });
 
 new SliderRange('.second', {
     value: 200,
-    step: 20,
+    step: 1,
     tooltip: true,
-    max: 300,
-    min: 100,
-
+    max: 10000,
+    min: -10000,
+    width: 1000,
+    percent: true
 });

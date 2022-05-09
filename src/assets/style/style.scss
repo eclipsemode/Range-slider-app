@@ -123,6 +123,7 @@ body {
     align-items: center;
     pointer-events: none;
     transition: opacity ease-in-out .4s;
+    font-size: 15px;
 
     &::before {
       position: absolute;
@@ -180,25 +181,25 @@ body {
     }
   }
 
-  &__value-block {
-    position: absolute;
-    bottom: -30px;
-    left: 0;
-    width: inherit;
-    height: 350px;
-    display: flex;
-    flex-direction: column-reverse;
-    justify-content: space-between;
-    align-items: center;
-    color: $gr-main;
-    font-weight: 700;
-  }
-
   &__min-value {
-    transform:rotate(-90deg);
+    position: absolute;
+    bottom: -25px;
+    left: 0;
+    transform: rotate(270deg);
+    display: flex;
+    width: 20px;
+    justify-content: flex-end;
+    color: $gr-main;
   }
   &__max-value {
-    transform:rotate(-90deg);
+    position: absolute;
+    top: -34px;
+    left: 0;
+    transform: rotate(270deg);
+    display: flex;
+    width: 20px;
+    justify-content: flex-start;
+    color: $gr-main;
   }
 }
 

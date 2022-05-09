@@ -8,7 +8,6 @@ class Model {
         const step: number = data.step ?? 0.1;
         const width: string = data.width ? data.width + 'px' : '500px';
         const rulers: string = data.rulersHidden === true ? 'none' : 'block';
-        const minMaxBlock: string = data.width ? data.width + 70 + 'px' : '570px';
 
         return $(`
             <div class="slider-app" style="height: ${width}">
@@ -19,7 +18,7 @@ class Model {
                 </span>
                     <div class="slider-app__tooltip">${value}</div>
                 </span>
-                
+                <div class="slider-app__min-value">${min}</div>
                 <input 
                 class="slider-app__input" 
                 type="range" 
@@ -29,10 +28,7 @@ class Model {
                 step=${step}
                 style="width: ${width}"
                 >
-                <div class="slider-app__value-block" style="height: ${minMaxBlock}">
-                    <span class="slider-app__min-value">${min}</span>
-                    <span class="slider-app__max-value">${max}</span>
-                </div>
+                <span class="slider-app__max-value">${max}</span>
             </div>
         `);
     };

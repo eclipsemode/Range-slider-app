@@ -1,4 +1,5 @@
 import {SliderRangeOptions} from './slider';
+import {Model} from './slider.model';
 
 class Controller {
     private static setBar(selector: string | void): void {
@@ -30,23 +31,6 @@ class Controller {
         return (e - s) * (p / 100) + s;
     }
 
-    public static getSlider(selector: string, options: Partial<SliderRangeOptions>) {
-        this.setBar(selector);
-        $(selector + ' .slider-app__input').on('input', () => {
-            Controller.setBar(selector);
-        });
-        this.getTooltip(
-            $(selector + ' .slider-app__tooltip'),
-            $(selector + ' .slider-app__input'),
-            options.tooltip,
-            +$(selector + ' .slider-app__input').attr('max'),
-            +$(selector + ' .slider-app__input').attr('min'),
-            options.percent
-        );
-
-        this.setHorizontal(options.horizontal, $(selector));
-    }
-
     public static setHorizontal(value: boolean, element: JQuery) {
         if (value === false) {
             element.css('transform', 'rotate(0deg)');
@@ -67,7 +51,9 @@ class Controller {
         minValue: number,
         percent: boolean
     ) {
-        tooltipValue.css('bottom', (((+inputValue.val() - minValue) / (maxValue - minValue)) * 100) + '%');
+        tooltipValue.css(
+            'bottom',
+            (((+inputValue.val() - minValue) / (maxValue - minValue)) * 100) + '%');
         tooltipValue.css('opacity', 0);
 
         if (percent === false || !percent) {
@@ -77,16 +63,33 @@ class Controller {
             });
         }
         else if (percent === true) {
-            tooltipValue.text(parseInt((((+inputValue.val() - minValue) / (maxValue - minValue)) * 100).toFixed()) + '%');
+            tooltipValue.text(
+                parseInt((((+inputValue.val() - minValue) / (maxValue - minValue)) * 100)
+                    .toFixed()) + '%');
             inputValue.on('input', () => {
-                tooltipValue.text(parseInt((((+inputValue.val() - minValue) / (maxValue - minValue)) * 100).toFixed()) + '%');
+                tooltipValue.text(
+                    parseInt((((+inputValue.val() - minValue) / (maxValue - minValue)) * 100)
+                        .toFixed()) + '%');
             });
         }
 
         if (tooltip === true) {
 
+            const fontSize: number = tooltipValue.text().length - 2;
+            tooltipValue.css('font-size', 15 - fontSize + 'px');
+
             inputValue.on('input', () => {
-                tooltipValue.css('bottom', (((+inputValue.val() - minValue) / (maxValue - minValue)) * 100) + '%');
+                tooltipValue.css(
+                    'bottom',
+                    (((+inputValue.val() - minValue) / (maxValue - minValue)) * 100) + '%');
+
+                if (tooltipValue.text().length > 4) {
+                    const fontSize: number = tooltipValue.text().length - 2;
+                    tooltipValue.css('font-size', 15 - fontSize + 'px');
+                }
+                else {
+                    tooltipValue.css('font-size', '15px');
+                }
             });
 
             inputValue.on('mouseover', () => {
@@ -97,6 +100,23 @@ class Controller {
                 tooltipValue.css('opacity', 0);
             });
         }
+    }
+
+    public static getSlider(selector: string, options: Partial<SliderRangeOptions>) {
+        $(selector).append(Model.slider(options));
+        this.setBar(selector);
+        $(selector + ' .slider-app__input').on('input', () => {
+            Controller.setBar(selector);
+        });
+        this.getTooltip(
+            $(selector + ' .slider-app__tooltip'),
+            $(selector + ' .slider-app__input'),
+            options.tooltip,
+            +$(selector + ' .slider-app__input').attr('max'),
+            +$(selector + ' .slider-app__input').attr('min'),
+            options.percent
+        );
+        this.setHorizontal(options.horizontal, $(selector));
     }
 }
 

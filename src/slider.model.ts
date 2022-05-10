@@ -6,17 +6,20 @@ class Model {
         const max: number = data.max ?? 100;
         const value: number = data.value ?? 50;
         const step: number = data.step ?? 0.1;
-        const width: string = data.width ? data.width + 'px' : '500px';
+        const length: string = data.length ? data.length + 'px' : '500px';
         const rulers: string = data.rulersHidden === true ? 'none' : 'block';
 
         return $(`
-            <div class="slider-app" style="height: ${width}">
+            <div class="slider-app" style="height: ${length}">
                 <span class="slider-app__rulers" style="display: ${rulers}"></span>
                 <span class="slider-app__bar">
                     <span class="slider-app__fill">
                     <span class="slider-app__fill-stripe" style="height: 100%"></span>
                 </span>
-                    <div class="slider-app__tooltip">${value}</div>
+                    <div class="slider-app__tooltip-container">
+                    <div class="slider-app__tooltip-value">${value}</div>
+                    </div>
+                    
                 </span>
                 <div class="slider-app__min-value">${min}</div>
                 <input 
@@ -26,7 +29,7 @@ class Model {
                 max=${max} 
                 value=${value}
                 step=${step}
-                style="width: ${width}"
+                style="width: ${length}"
                 >
                 <span class="slider-app__max-value">${max}</span>
             </div>
@@ -34,4 +37,4 @@ class Model {
     };
 }
 
-export {Model};
+export default Model;

@@ -5,7 +5,7 @@ declare type SliderRangeOptions = {
     min?: number,
     max?: number,
     horizontal?: boolean;
-    width?: number,
+    length?: number,
     rulersHidden?: boolean,
     tooltip?: boolean,
     percent?: boolean,

@@ -1,4 +1,4 @@
-import {Controller} from './slider.controller';
+import Controller from './slider.controller';
 import {SliderRangeOptions} from './slider';
 
 class View {
@@ -7,4 +7,4 @@ class View {
     }
 }
 
-export {View as default};
+export default View;

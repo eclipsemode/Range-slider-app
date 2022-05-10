@@ -5,16 +5,19 @@ new SliderRange('.slider', {
     value: 180,
     rulersHidden: true,
     tooltip: true,
-    width: 300,
-    max: 900,
+    length: 300,
+    min: 120,
+    max: 1000000,
+    horizontal: false
 });
 
 new SliderRange('.second', {
     value: 200,
     step: 1,
     tooltip: true,
-    max: 10000,
+    max: 100000,
     min: -10000,
-    width: 1000,
-    percent: true
+    length: 500,
+    percent: true,
+    horizontal: false
 });

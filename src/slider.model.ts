@@ -13,13 +13,13 @@ class Model {
             <div class="slider-app" style="height: ${length}">
                 <span class="slider-app__rulers" style="display: ${rulers}"></span>
                 <span class="slider-app__bar">
+                    <span class="slider-app__color-start"></span>
                     <span class="slider-app__fill">
                     <span class="slider-app__fill-stripe" style="height: 100%"></span>
                 </span>
                     <div class="slider-app__tooltip-container">
                     <div class="slider-app__tooltip-value">${value}</div>
                     </div>
-                    
                 </span>
                 <div class="slider-app__min-value">${min}</div>
                 <input 

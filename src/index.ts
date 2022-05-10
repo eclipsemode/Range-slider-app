@@ -8,7 +8,9 @@ new SliderRange('.slider', {
     length: 300,
     min: 120,
     max: 1000000,
-    horizontal: false
+    color: {
+        firstColor: 'green'
+    }
 });
 
 new SliderRange('.second', {
@@ -19,5 +21,4 @@ new SliderRange('.second', {
     min: -10000,
     length: 500,
     percent: true,
-    horizontal: false
 });

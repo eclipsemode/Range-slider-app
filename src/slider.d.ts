@@ -9,6 +9,12 @@ declare type SliderRangeOptions = {
     rulersHidden?: boolean,
     tooltip?: boolean,
     percent?: boolean,
+    color?: {
+        firstColor?: string,
+        secondColor?: string,
+        textColor?: string,
+        thumbColor?: string
+    }
 }
 
 export {SliderRangeOptions};

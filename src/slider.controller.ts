@@ -111,27 +111,29 @@ class Controller {
 
     private static setColor(
         selector: string,
-        firstColor: string,
-        secondColor: string,
-        textColor: string,
-        thumbColor: string) {
-        if (firstColor || secondColor) {
-            const colorOne: string = firstColor ?? '#ffe53b';
-            const colorTwo: string = secondColor ?? '#ff2525';
+        color: {
+            firstColor?: string;
+            secondColor?: string;
+            textColor?: string;
+            thumbColor?: string },
+    ): void {
+        if (color.firstColor || color.secondColor) {
+            const colorOne: string = color.firstColor ?? '#ffe53b';
+            const colorTwo: string = color.secondColor ?? '#ff2525';
             $(selector + ' .slider-app__fill-stripe').css('background-image',
                 `linear-gradient(0deg, ${colorOne} 0%, ${colorTwo} 100%)`);
             $(selector + ' .slider-app__color-start').css('background-color', colorOne);
         }
 
-        if (textColor) {
+        if (color.textColor) {
             $(`${selector} .slider-app__min-value, ${selector} .slider-app__max-value`)
-                .css('color', textColor);
+                .css('color', color.textColor);
         }
 
-        if (thumbColor) {
+        if (color.thumbColor) {
             // noinspection HtmlDeprecatedAttribute
             $(`<style type="text/css">${selector} .slider-app__input::-webkit-slider-thumb
-                {background-color: ${thumbColor}}</style>`).appendTo($('head'));
+                {background-color: ${color.thumbColor}}</style>`).appendTo($('head'));
         }
 
     }
@@ -145,12 +147,8 @@ class Controller {
 
         this.getTooltip(selector, options.tooltip, options.percent);
         this.setHorizontal(options.horizontal, selector);
-        this.setColor(
-            selector,
-            options.color.firstColor,
-            options.color.secondColor,
-            options.color.textColor,
-            options.color.thumbColor);
+        if (options.color) {this.setColor(selector, options.color);}
+
     }
 }
 

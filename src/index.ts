@@ -9,7 +9,7 @@ new SliderRange('.slider', {
     min: 120,
     max: 1000000,
     color: {
-        firstColor: 'green'
+        secondColor: 'green'
     }
 });
 

@@ -189,6 +189,7 @@ body {
     width: 20px;
     justify-content: flex-end;
     color: $gr-main;
+    cursor: pointer;
   }
   &__max-value {
     position: absolute;
@@ -199,6 +200,7 @@ body {
     width: 20px;
     justify-content: flex-start;
     color: $gr-main;
+    cursor: pointer;
   }
 }
 

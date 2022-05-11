@@ -2,12 +2,13 @@ import './assets/style/style.scss';
 import {default as SliderRange} from './slider.view';
 
 new SliderRange('.slider', {
-    value: 180,
+    value: 400,
     rulersHidden: true,
     tooltip: true,
     length: 300,
-    min: 120,
-    max: 1000000,
+    min: 0,
+    max: 1000,
+    step: 100,
     color: {
         secondColor: 'green'
     }
@@ -21,4 +22,9 @@ new SliderRange('.second', {
     min: -10000,
     length: 500,
     percent: true,
+    color: {
+        textColor: 'blue',
+        thumbColor: 'red'
+
+    }
 });

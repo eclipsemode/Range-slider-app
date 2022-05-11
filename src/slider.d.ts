@@ -1,4 +1,4 @@
-declare type SliderRangeOptions = {
+declare type SliderRangeOptions  = {
     classes: string,
     value?: number,
     step?: number,

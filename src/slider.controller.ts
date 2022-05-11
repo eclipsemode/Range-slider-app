@@ -120,7 +120,7 @@ class Controller {
         if (color.firstColor || color.secondColor) {
             const colorOne: string = color.firstColor ?? '#ffe53b';
             const colorTwo: string = color.secondColor ?? '#ff2525';
-            $(selector + ' .slider-app__fill-stripe').css('background-image',
+            $(`${selector} .slider-app__fill-stripe`).css('background-image',
                 `linear-gradient(0deg, ${colorOne} 0%, ${colorTwo} 100%)`);
             $(selector + ' .slider-app__color-start').css('background-color', colorOne);
         }
@@ -138,17 +138,38 @@ class Controller {
 
     }
 
+    private static minMaxClick(
+        selector: string,
+        min: number,
+        max: number,
+        tooltip: boolean,
+        percent: boolean): void {
+        const input: JQuery = $(`${selector} .slider-app__input`);
+        const minValue: JQuery = $(`${selector} .slider-app__min-value`);
+        const maxValue: JQuery = $(`${selector} .slider-app__max-value`);
+        minValue.on('click', () => {
+            input.val(min);
+            this.setBar(selector);
+            this.getTooltip(selector, tooltip, percent);
+        });
+
+        maxValue.on('click', () => {
+            input.val(max);
+            this.setBar(selector);
+            this.getTooltip(selector, tooltip, percent);
+        });
+    }
+
     public static getSlider(selector: string, options: Partial<SliderRangeOptions>) {
         $(selector).append(Model.slider(options));
         this.setBar(selector);
         $(selector + ' .slider-app__input').on('input', () => {
-            Controller.setBar(selector);
+            this.setBar(selector);
         });
-
         this.getTooltip(selector, options.tooltip, options.percent);
         this.setHorizontal(options.horizontal, selector);
         if (options.color) {this.setColor(selector, options.color);}
-
+        this.minMaxClick(selector, options.min, options.max, options.tooltip, options.percent);
     }
 }
 

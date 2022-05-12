@@ -11,49 +11,33 @@ class Controller {
         const value: number = <number>$slider.val();
         const percent: number = ((value - min) / (max - min)) * 100;
 
-        $fill.css('height', percent + '%');
-        this.setRGB(percent, selector);
-    }
-
-    private static setRGB(percent: number, selector: string | void): void {
-        const rgb1: number[] = [255, 229, 59];
-        const rgb2: number[] = [255, 37, 37];
-
-        const R: number = this.calcPercent(rgb1[0], rgb2[0], percent);
-        const G: number = this.calcPercent(rgb1[1], rgb2[1], percent);
-        const B: number = this.calcPercent(rgb1[2], rgb2[2], percent);
-
-        $(selector + ' .slider-app .slider-app__input::-webkit-slider-thumb').css(
-            'background-color', 'rgba('+R+','+G+','+B+');');
-    }
-
-    private static calcPercent(s: number, e: number, p: number) {
-        return (e - s) * (p / 100) + s;
+        $fill.css('width', percent + '%');
     }
 
     private static setHorizontal(value: boolean, selectorName: string) {
         if (value === false) {
-            $(selectorName).css('transform', 'rotate(0deg)');
+            const element: JQuery = $(selectorName);
+            const maxElement: JQuery = $(selectorName + ' .slider-app__max-value');
+            const minElement: JQuery = $(selectorName + ' .slider-app__min-value');
+            const tooltipElement: JQuery = $(selectorName + ' .slider-app__tooltip-value');
 
-            $(selectorName + ' .slider-app__max-value').css('transform','rotate(360deg)');
-            $(selectorName + ' .slider-app__max-value').css('justify-content','center');
+            element.css('transform', 'rotate(270deg)');
 
-            $(selectorName + ' .slider-app__min-value').css('transform','rotate(0deg)');
-            $(selectorName + ' .slider-app__min-value').css('justify-content','center');
+            maxElement.css({
+                transform: 'translateX(40px) rotate(90deg)',
+                justifyContent: 'center'
+            });
 
-            $(selectorName + ' .slider-app__tooltip-value').css('transform','rotate(225deg)');
+            minElement.css({
+                transform: 'translateX(-30px) rotate(-90deg)',
+                justifyContent: 'center'
+            });
 
-        }
-        else if (value === true) {
-            $(selectorName).css('transform', 'rotate(90deg)');
-        }
-        else {
-            $(selectorName).css('transform', 'rotate(90deg)');
+            tooltipElement.css('transform','rotate(225deg)');
         }
     }
 
     private static getTooltip(selector: string, tooltipValue: boolean, percentValue: boolean) {
-
         if (tooltipValue === true) {
             const tooltipContainer: JQuery = $(selector + ' .slider-app__tooltip-container');
             const tooltipNum: JQuery = $(selector + ' .slider-app__tooltip-value');
@@ -63,49 +47,40 @@ class Controller {
             const fontSize: number = tooltipNum.text().length - 2;
 
             tooltipContainer.css(
-                'bottom',
+                'left',
                 (((+inputElement.val() - minValue) / (maxValue - minValue)) * 100) + '%');
-            tooltipContainer.css('opacity', 0);
             tooltipNum.css('font-size', 15 - fontSize + 'px');
 
-            inputElement.on('input', () => {
-                tooltipContainer.css(
-                    'bottom',
-                    (((+inputElement.val() - minValue) / (maxValue - minValue)) * 100) + '%');
-
-                if (tooltipNum.text().length > 4) {
-                    const fontSize: number = tooltipNum.text().length - 2;
-                    tooltipNum.css('font-size', 15 - fontSize + 'px');
-                } else {
-                    tooltipNum.css('font-size', '15px');
+            inputElement.on({
+                mouseover: () => tooltipContainer.css('opacity', 1),
+                mouseout: () => tooltipContainer.css('opacity', 0),
+                input: () => {
+                    tooltipContainer.css('left',
+                        (((+inputElement.val() - minValue) / (maxValue - minValue)) * 100) + '%');
+                    if (tooltipNum.text().length > 4) {
+                        const fontSize: number = tooltipNum.text().length - 2;
+                        tooltipNum.css('font-size', 15 - fontSize + 'px');
+                    } else {
+                        tooltipNum.css('font-size', '15px');
+                    }
                 }
             });
 
-            inputElement.on('mouseover', () => {
-                    tooltipContainer.css('opacity', 1);
+            if (percentValue === false || !percentValue) {
+                tooltipNum.text(<string>inputElement.val());
+                inputElement.on('input', () => {
+                    tooltipNum.text(<string>inputElement.val());
                 });
+            }
+            else if (percentValue === true) {
+                tooltipNum.text(parseInt(String(
+                    (+inputElement.val() - minValue) / (maxValue - minValue) * 100)) + '%');
 
-            inputElement.on('mouseout', () => {
-                    tooltipContainer.css('opacity', 0);
+                inputElement.on('input', () => {
+                    tooltipNum.text(parseInt(String(
+                        (+inputElement.val() - minValue) / (maxValue - minValue) * 100)) + '%');
                 });
-
-        if (percentValue === false || !percentValue) {
-            tooltipNum.text(parseInt(<string>inputElement.val()).toFixed());
-            inputElement.on('input', () => {
-                tooltipNum.text(parseInt(<string>inputElement.val()).toFixed());
-            });
-        }
-        else if (percentValue === true) {
-            tooltipNum.text(
-                parseInt((((+inputElement.val() - minValue) / (maxValue - minValue)) * 100)
-                    .toFixed()) + '%');
-            inputElement.on('input', () => {
-                tooltipNum.text(
-                    parseInt((((+inputElement.val() - minValue) / (maxValue - minValue)) * 100)
-                        .toFixed()) + '%');
-            });
-        }
-
+            }
         }
     }
 
@@ -121,7 +96,7 @@ class Controller {
             const colorOne: string = color.firstColor ?? '#ffe53b';
             const colorTwo: string = color.secondColor ?? '#ff2525';
             $(`${selector} .slider-app__fill-stripe`).css('background-image',
-                `linear-gradient(0deg, ${colorOne} 0%, ${colorTwo} 100%)`);
+                `linear-gradient(90deg, ${colorOne} 0%, ${colorTwo} 100%)`);
             $(selector + ' .slider-app__color-start').css('background-color', colorOne);
         }
 
@@ -140,21 +115,20 @@ class Controller {
 
     private static minMaxClick(
         selector: string,
-        min: number,
-        max: number,
         tooltip: boolean,
         percent: boolean): void {
         const input: JQuery = $(`${selector} .slider-app__input`);
         const minValue: JQuery = $(`${selector} .slider-app__min-value`);
         const maxValue: JQuery = $(`${selector} .slider-app__max-value`);
+
         minValue.on('click', () => {
-            input.val(min);
+            input.val(input.attr('min'));
             this.setBar(selector);
             this.getTooltip(selector, tooltip, percent);
         });
 
         maxValue.on('click', () => {
-            input.val(max);
+            input.val(input.attr('max'));
             this.setBar(selector);
             this.getTooltip(selector, tooltip, percent);
         });
@@ -169,7 +143,7 @@ class Controller {
         this.getTooltip(selector, options.tooltip, options.percent);
         this.setHorizontal(options.horizontal, selector);
         if (options.color) {this.setColor(selector, options.color);}
-        this.minMaxClick(selector, options.min, options.max, options.tooltip, options.percent);
+        this.minMaxClick(selector, options.tooltip, options.percent);
     }
 }
 

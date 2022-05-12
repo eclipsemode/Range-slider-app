@@ -1,13 +1,13 @@
 $gr-main: #ffe53b;
 $gr-secondary: #ff2525;
 $width: 500px;
-$horizontal: rotate(0deg);
 
 body {
   margin: 0;
   padding: 0;
   height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: #35363a;
@@ -15,21 +15,19 @@ body {
 
 .slider-app {
   position: relative;
-  width: 20px;
-  height: $width;
-  transform: $horizontal;
+  height: 20px;
+  width: 100%;
 
   &__input {
     position: absolute;
     z-index: 3;
-    left: 50%;
-    top: 50%;
+    bottom: 0;
+    right: 0;
     appearance: none;
     margin: 0;
     height: 20px;
-    width: $width;
+    width: 100%;
     outline: none;
-    transform: rotate(-90deg) translate(-50%, -50%);
     transform-origin: 0 0;
     background-color: transparent;
 
@@ -57,79 +55,79 @@ body {
 
   &__bar {
     z-index: 1;
-    top: 10px;
-    bottom: 20px;
+    right: 10px;
+    left: 20px;
     background-color: rgba(0, 0, 0, 0.2);
 
     &::before {
-      bottom: 100%;
+      left: 100%;
       background-color: rgba(0, 0, 0, 0.2);
-      border-top-left-radius: 10px;
       border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
     }
 
     &::before {
       content: '';
       position: absolute;
-      left: 0;
-      right: 0;
-      height: 10px;
+      bottom: 0;
+      top: 0;
+      width: 10px;
     }
   }
 
   &__color-start {
-    top: 100%;
+    right: 100%;
     background-color: $gr-main;
     border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-top-left-radius: 10px;
     content: '';
     position: absolute;
-    left: 0;
-    right: 0;
-    height: 10px;
+    bottom: 0;
+    top: 0;
+    width: 10px;
   }
 
   &__bar,
   &__fill {
     position: absolute;
-    left: 0;
-    right: 0;
+    bottom: 0;
+    top: 0;
   }
 
   &__fill {
     z-index: 2;
-    bottom: 0;
-    height: 50%;
+    left: 0;
+    width: 50%;
     overflow: hidden;
 
     &-stripe {
       content: '';
       position: absolute;
-      left: 0;
-      right: 0;
-      height: $width;
       bottom: 0;
-      background-image: linear-gradient(0deg, $gr-main 0%, $gr-secondary 100%);
+      top: 0;
+      width: 100%;
+      left: 0;
+      background-image: linear-gradient(90deg, $gr-main 0%, $gr-secondary 100%);
     }
   }
   &__tooltip-container {
     position: absolute;
     content: "";
-    bottom: -27px;
-    right: 40px;
+    bottom: 0.9rem;
     width: 30px;
     height: 30px;
     overflow: hidden;
     background-color: #3e3e3e;
     border: 2px solid #ffe53b;
     z-index: -1;
-    transform: rotate(135deg) translate(20px, -19px);
+    transform: rotate(225deg) translateX(38px);
     border-bottom-left-radius: 50%;
     border-bottom-right-radius: 50%;
     border-top-right-radius: 50%;
     padding: 5px;
     box-shadow: 0 0 20px rgb(0 0 0 / 70%);
     transition: opacity ease-in-out 0.4s;
+    opacity: 0;
   }
 
   &__tooltip-value {
@@ -151,40 +149,39 @@ body {
   &__rulers {
     position: absolute;
     content: '';
-    right: 150%;
-    top: 15px;
-    bottom: 15px;
-    width: 100%;
-    border-top: 1px solid #686868;
+    top: 150%;
+    right: 15px;
+    left: 15px;
+    height: 100%;
+    border-right: 1px solid #686868;
 
     &::before {
       content: '';
       position: absolute;
-      left: 0;
-      right: 0;
       top: 0;
       bottom: 0;
-      background: linear-gradient(to top, #686868 1px, transparent 2px);
-      background-size: 100% 10%;
+      right: 0;
+      left: 0;
+      background: linear-gradient(to right, #686868 1px, transparent 2px);
+      background-size: 10% 100%;
     }
 
     &::after {
       content: '';
       position: absolute;
-      left: 30px;
-      right: 0;
-      top: 0;
+      top: 30px;
       bottom: 0;
-      background: linear-gradient(to top, #686868 1px, transparent 2px);
+      right: 0;
+      left: 0;
+      background: linear-gradient(to right, #686868 1px, transparent 2px);
       background-size: 100% 2%;
     }
   }
 
   &__min-value {
     position: absolute;
-    bottom: -25px;
     left: 0;
-    transform: rotate(270deg);
+    transform: translateX(-30px);
     display: flex;
     width: 20px;
     justify-content: flex-end;
@@ -193,9 +190,8 @@ body {
   }
   &__max-value {
     position: absolute;
-    top: -34px;
-    left: 0;
-    transform: rotate(270deg);
+    right: 0;
+    transform: translateX(40px);
     display: flex;
     width: 20px;
     justify-content: flex-start;
@@ -204,6 +200,11 @@ body {
   }
 }
 
+.slider {
+  width: 300px;
+}
+
 .second {
   margin-top: 10rem;
+  width: 500px;
 }

@@ -1,13 +1,14 @@
-declare type SliderRangeOptions  = {
-    classes: string,
+declare type ModelOption  = {
     value?: number,
     step?: number,
     min?: number,
     max?: number,
     horizontal?: boolean;
     rulersHidden?: boolean,
-    tooltip?: boolean,
-    percent?: boolean,
+    tooltip?: {
+        display?: boolean,
+        percent?: boolean
+    },
     color?: {
         firstColor?: string,
         secondColor?: string,
@@ -16,4 +17,4 @@ declare type SliderRangeOptions  = {
     }
 }
 
-export {SliderRangeOptions};
+export default ModelOption;

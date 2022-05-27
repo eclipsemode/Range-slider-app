@@ -1,5 +1,4 @@
 import ModelOption from '../utils/ModelOption';
-import ObserverEvents from '../Observer/ObserverEvents';
 import Observer from '../Observer/Observer';
 
 class Model extends Observer {
@@ -9,17 +8,13 @@ class Model extends Observer {
         this.optionsState = this.checkOptions(options);
     }
 
-    // updateOptions(newOptions: Partial<ModelOption>): void {
-    //     this.optionsState = this.checkOptions(newOptions);
-    //     this.notify(ObserverEvents.optionsUpdate, this.optionsState);
-    // }
-
     checkOptions(options: Partial<ModelOption>): Partial<ModelOption> {
         const verifiedOptions = {...options};
-
-        verifiedOptions.value = verifiedOptions.value ?? 500;
         verifiedOptions.min = verifiedOptions.min ?? 0;
         verifiedOptions.max = verifiedOptions.max ?? 1000;
+        verifiedOptions.value = verifiedOptions.value ?? verifiedOptions.min;
+        verifiedOptions.valueSecond = verifiedOptions.valueSecond ?? verifiedOptions.max;
+        verifiedOptions.gap = verifiedOptions.gap ?? 130;
         verifiedOptions.step = verifiedOptions.step ?? 0.1;
         verifiedOptions.horizontal = verifiedOptions.horizontal ?? true;
         verifiedOptions.rulersHidden = verifiedOptions.rulersHidden ?? false;
@@ -36,6 +31,7 @@ class Model extends Observer {
         verifiedOptions.color.secondColor = verifiedOptions.color.secondColor ?? '#ff2525';
         verifiedOptions.color.textColor = verifiedOptions.color.textColor ?? '#ffe53b';
         verifiedOptions.color.thumbColor = verifiedOptions.color.thumbColor ?? '#ffe53b';
+        verifiedOptions.range = verifiedOptions.range ?? false;
 
         verifiedOptions.min =
             verifiedOptions.min < verifiedOptions.max ? verifiedOptions.min :

@@ -5,17 +5,8 @@ new Controller('.slider', {
     tooltip: {
         display: true,
         percent: true
-    }
-});
-
-new Controller('.second', {
-    tooltip: {
-        display: true
     },
-    color: {
-        thumbColor: 'green',
-        secondColor: 'blue'
-    }
+    range: true
 });
 
 // const observer = new Observable();

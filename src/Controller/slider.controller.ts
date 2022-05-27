@@ -1,5 +1,4 @@
 import ModelOption from '../utils/ModelOption';
-import ObserverEvents from '../Observer/ObserverEvents';
 import Observer from '../Observer/Observer';
 
 import View from '../View/slider.view';
@@ -14,7 +13,6 @@ class Controller extends Observer {
         super();
         this.model = new Model(options);
         this.view = new View(selector, this.model.optionsState);
-
         this.init();
     }
 

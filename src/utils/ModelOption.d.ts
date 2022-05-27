@@ -1,10 +1,13 @@
 declare type ModelOption  = {
     value?: number,
+    valueSecond?: number,
+    gap?: number,
     step?: number,
     min?: number,
     max?: number,
     horizontal?: boolean;
     rulersHidden?: boolean,
+    range?: boolean,
     tooltip?: {
         display?: boolean,
         percent?: boolean

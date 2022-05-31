@@ -9,6 +9,12 @@ new Controller('.slider', {
     range: true
 });
 
+new Controller('.second', {
+    tooltip: {
+        display: true
+    }
+});
+
 // const observer = new Observable();
 //
 // const fn = (count: any) => {
@@ -28,3 +34,18 @@ new Controller('.slider', {
 // $('.inp-minus').on('click', () => {
 //     observer.broadcast( parseInt($('.text').text()) - 1);
 // });
+
+// function expect(value: number): any {
+//     return {
+//         toBe: (exp: number) => {
+//             if (value === exp) {
+//                 console.log('Success');
+//             } else {
+//                 console.error(`Value is ${value}, but expectation is ${exp}`);
+//             }
+//         }
+//     };
+// }
+
+
+

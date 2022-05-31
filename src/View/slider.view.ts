@@ -1,12 +1,53 @@
 import ModelOption from '../utils/ModelOption';
 
+import Rulers from '../components/rulers/Rulers';
+import MinMaxValues from '../components/minMaxValues/MinMaxValues';
+import Thumb from '../components/thumb/Thumb';
+import Progress from '../components/progress/Progress';
+import Tooltip from '../components/tooltip/Tooltip';
+import Bar from '../components/bar/Bar';
+import MainClass from '../components/mainClass/MainClass';
+
 class View {
     private readonly selectorState: string;
     private readonly optionsState: Partial<ModelOption>;
 
+    private rulers: Rulers;
+    private minMaxValues: MinMaxValues;
+    private thumb: Thumb;
+    private progress: Progress;
+    private tooltip: Tooltip;
+    private bar: Bar;
+    private mainClass: MainClass;
+
+
     constructor(private selector: string, private options: Partial<ModelOption>) {
         this.selectorState = selector;
         this.optionsState = options;
+
+        this.mainClass = new MainClass(this.selectorState);
+        this.rulers = new Rulers(this.selectorState);
+        this.minMaxValues = new MinMaxValues(
+            this.selectorState,
+            this.optionsState.min,
+            this.optionsState.max
+        );
+        this.thumb = new Thumb(
+            this.selectorState,
+            this.optionsState.min,
+            this.optionsState.max,
+            this.optionsState.value,
+            this.optionsState.valueSecond,
+            this.optionsState.step
+        );
+        this.progress = new Progress(this.selectorState);
+        this.tooltip = new Tooltip(
+            this.selectorState,
+            this.optionsState.value, 
+            this.optionsState.valueSecond
+        );
+        this.bar = new Bar(this.selectorState);
+
     }
 
     render() {
@@ -20,63 +61,17 @@ class View {
     }
 
     private getRange(): void {
-        if (this.optionsState.range === false) {
-            $(this.selectorState).append(`
-            <div class="slider-app">
-                <div class="slider-app__rulers"></div>
-                <div class="slider-app__min-value">${this.optionsState.min}</div>
-                <div class="slider-app__max-value">${this.optionsState.max}</div>
-                <div class="slider-app__bar-line">
-                    <div class="slider-app__tooltip-line">
-                        <div class="slider-app__tooltip-container slider-app__tooltip-container-first">
-                            <div class="slider-app__tooltip-value slider-app__tooltip-value-first">
-                                ${this.optionsState.value}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="slider-app__progress"></div>
-                    <input type="range" class="slider-app__input slider-app__inp-min"
-                        min=${this.optionsState.min} 
-                        max=${this.optionsState.max}
-                        value=${this.optionsState.value}
-                        step=${this.optionsState.step}
-                        >
-                        </div>
-                    </div>
-            </div>
-            `);
-        } else {
-            $(this.selectorState).append(`
-            <div class="slider-app">
-                <div class="slider-app__rulers"></div>
-                <div class="slider-app__min-value">${this.optionsState.min}</div>
-                <div class="slider-app__bar-line">
-                    <div class="slider-app__tooltip-line">
-                        <div class="slider-app__tooltip-container slider-app__tooltip-container-first">
-                            <div class="slider-app__tooltip-value slider-app__tooltip-value-first">
-                                ${this.optionsState.value}
-                            </div>
-                        </div>
-                        <div class="slider-app__tooltip-container slider-app__tooltip-container-second">
-                            <div class="slider-app__tooltip-value slider-app__tooltip-value-second">
-                                ${this.optionsState.valueSecond}
-                            </div>
-                        </div>                        
-                    </div>
-                    <div class="slider-app__progress"></div>
-                    <input type="range" class="slider-app__input slider-app__input-min"
-                        min=${this.optionsState.min} 
-                        max=${this.optionsState.max}
-                        value=${this.optionsState.value}>
-                    <input type="range" class="slider-app__input slider-app__input-max"
-                        min=${this.optionsState.min} 
-                        max=${this.optionsState.max}
-                        value=${this.optionsState.valueSecond}>
-                        </div>
-                        </div>
-                <div class="slider-app__max-value">${this.optionsState.max}</div>
-            </div>
-        `);
+            this.mainClass.getMainClass();
+            this.rulers.getRulers();
+            this.minMaxValues.getMinMaxValues();
+            this.bar.getBar();
+            this.progress.getProgress();
+            this.thumb.getMinThumb();
+            this.tooltip.getFirstTooltip();
+
+        if (this.optionsState.range === true) {
+            this.thumb.getMaxThumb();
+            this.tooltip.getSecondTooltip();
         }
     }
 
@@ -91,7 +86,6 @@ class View {
             const percent: number = ((value - min) / (max - min)) * 100;
 
             $fill.css('width', percent + '%');
-
         } else {
             const range = $(`${this.selectorState} .slider-app__input`);
             const minValue = $(`${this.selectorState} .slider-app__input-min`);
@@ -173,7 +167,7 @@ class View {
 
             inputMin.on({
                 mouseover: () => tooltipContainerFirst.css('opacity', 1),
-                mouseout: () => tooltipContainerFirst.css('opacity', 1),
+                mouseout: () => tooltipContainerFirst.css('opacity', 0),
                 input: () => {
                     tooltipContainerFirst.css('left',
                         (((+inputMin.val() - minValue) / (maxValue - minValue)) * 100) + '%');
@@ -265,20 +259,30 @@ class View {
     }
 
     private getMinMax(): void {
-        const input: JQuery = $(`${this.selectorState} .slider-app__input`);
+        const inputMin: JQuery = $(`${this.selectorState} .slider-app__input-min`);
+        const inputMax: JQuery = $(`${this.selectorState} .slider-app__input-max`);
         const minValue: JQuery = $(`${this.selectorState} .slider-app__min-value`);
         const maxValue: JQuery = $(`${this.selectorState} .slider-app__max-value`);
 
         minValue.on('click', () => {
-            input.val(input.attr('min'));
-            this.getBar();
-        });
-
-        maxValue.on('click', () => {
-            input.val(input.attr('max'));
+            inputMin.val(inputMin.attr('min'));
             this.getBar();
             this.getTooltip();
         });
+
+        if (!this.optionsState.range) {
+            maxValue.on('click', () => {
+                inputMin.val(inputMin.attr('max'));
+                this.getBar();
+                this.getTooltip();
+            });
+        } else {
+            maxValue.on('click', () => {
+                inputMax.val(inputMax.attr('max'));
+                this.getBar();
+                this.getTooltip();
+            });
+        }
     }
 }
 

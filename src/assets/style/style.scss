@@ -243,24 +243,24 @@ body {
   //  //background: none;
   //  //outline: none;
   //
-  //  &::-webkit-slider-thumb, &::-moz-range-thumb {
+  //  &::-webkit-sliderContainer-thumb, &::-moz-range-thumb {
   //    //pointer-events: auto;
   //    //appearance: none;
   //    //width: 30px;
   //    //height: 30px;
   //    //border: 8px solid #3e3e3e;
   //    //border-radius: 15px;
-  //    //background-color: $gr-main;
+  //    //background-color: $gr-mainClass;
   //    //box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
   //    //cursor: pointer;
   //    //transition: 0.3s ease-in-out;
   //  }
   //
-  //  &::-webkit-slider-thumb:hover, &::-moz-range-thumb:hover {
+  //  &::-webkit-sliderContainer-thumb:hover, &::-moz-range-thumb:hover {
   //    border-color: #eeeeee;
   //  }
   //
-  //  &::-webkit-slider-thumb:active, &::-moz-range-thumb:active {
+  //  &::-webkit-sliderContainer-thumb:active, &::-moz-range-thumb:active {
   //    box-shadow: 0 0 0 15px rgba(255, 255, 255, 0.1);
   //  }
   //}

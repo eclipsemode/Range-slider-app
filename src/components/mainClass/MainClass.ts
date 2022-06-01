@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 class MainClass {
     private readonly selector: string;
 

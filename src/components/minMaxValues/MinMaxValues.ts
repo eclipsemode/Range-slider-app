@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 class MinMaxValues {
     private readonly selector: string;
     private readonly min: number;
@@ -9,19 +11,19 @@ class MinMaxValues {
         this.max = max;
     }
 
-    public getMinMaxValues() {
+    getMinMaxValues() {
         this.getMin();
         this.getMax();
     }
 
-    private getMin = () => {
+    getMin = () => {
         return $('<div>', {
             class: 'slider-app__min-value',
             text: this.min
         }).prependTo(`${this.selector} .slider-app`);
     };
 
-    private getMax() {
+    getMax() {
         return $('<div>', {
             class: 'slider-app__max-value',
             text: this.max

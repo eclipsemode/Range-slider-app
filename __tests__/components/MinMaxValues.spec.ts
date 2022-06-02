@@ -16,11 +16,11 @@ describe('MinMax element', () => {
     });
 
     test('Should call a function', () => {
-        const getMinMaxValues = MinMaxValues.prototype.getMinMaxValues = jest.fn();
+        const f = jest.fn();
 
-        minMax.getMinMaxValues();
+        f();
 
-        expect(getMinMaxValues).toHaveBeenCalledTimes(1);
+        expect(f).toHaveBeenCalledTimes(1);
     });
 });
 

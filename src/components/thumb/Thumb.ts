@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 class Thumb {
     private readonly selector: string;
     private min: number;
@@ -22,7 +24,7 @@ class Thumb {
         this.step = step;
     }
     
-    public getMinThumb() {
+    getMinThumb() {
         return $('<input>', {
             class: 'slider-app__input slider-app__input-min',
             type: 'range',
@@ -33,7 +35,7 @@ class Thumb {
         }).appendTo(`${this.selector} .slider-app__bar-line`);
     }
 
-    public getMaxThumb() {
+    getMaxThumb() {
         return $('<input>', {
             class: 'slider-app__input slider-app__input-max',
             type: 'range',

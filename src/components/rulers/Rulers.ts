@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 class Rulers {
     private readonly selector: string;
 

@@ -1,6 +1,4 @@
-$gr-main: #ffe53b;
-$gr-secondary: #ff2525;
-$width: 500px;
+@import "variables";
 
 body {
   margin: 0;
@@ -11,6 +9,7 @@ body {
   justify-content: center;
   align-items: center;
   background-color: #35363a;
+  row-gap: 6rem;
 }
 
 .slider-app {
@@ -31,13 +30,27 @@ body {
     transform-origin: 0 0;
     background-color: transparent;
 
-    &::-webkit-slider-thumb, &::-moz-range-thumb {
+    &::-webkit-slider-thumb {
+      pointer-events: auto;
+      content: '';
+      appearance: none;
+      width: 36px;
+      height: 36px;
+      border: 8px solid $thumb;
+      border-radius: 50%;
+      background-color: $gr-main;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+      cursor: pointer;
+      transition: 0.3s ease-in-out;
+    }
+
+    &::-moz-range-thumb {
       pointer-events: auto;
       content: '';
       appearance: none;
       width: 20px;
       height: 20px;
-      border: 8px solid #3e3e3e;
+      border: 8px solid $thumb;
       border-radius: 50%;
       background-color: $gr-main;
       box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
@@ -233,37 +246,6 @@ body {
     background: linear-gradient(90deg, $gr-main 0%, $gr-secondary 100%);
     border-radius: inherit;
   }
-
-  //&__inp {
-  //  //top: -7px;
-  //  //position: absolute;
-  //  //width: 100%;
-  //  //appearance: none;
-  //  //pointer-events: none;
-  //  //background: none;
-  //  //outline: none;
-  //
-  //  &::-webkit-sliderContainer-thumb, &::-moz-range-thumb {
-  //    //pointer-events: auto;
-  //    //appearance: none;
-  //    //width: 30px;
-  //    //height: 30px;
-  //    //border: 8px solid #3e3e3e;
-  //    //border-radius: 15px;
-  //    //background-color: $gr-mainClass;
-  //    //box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-  //    //cursor: pointer;
-  //    //transition: 0.3s ease-in-out;
-  //  }
-  //
-  //  &::-webkit-sliderContainer-thumb:hover, &::-moz-range-thumb:hover {
-  //    border-color: #eeeeee;
-  //  }
-  //
-  //  &::-webkit-sliderContainer-thumb:active, &::-moz-range-thumb:active {
-  //    box-shadow: 0 0 0 15px rgba(255, 255, 255, 0.1);
-  //  }
-  //}
 }
 
 .slider {
@@ -271,6 +253,5 @@ body {
 }
 
 .second {
-  margin-top: 10rem;
   width: 500px;
 }

@@ -6,7 +6,8 @@ new Controller('.slider', {
         display: true,
         percent: true
     },
-    range: true
+    // range: true,
+    config: true
 });
 
 new Controller('.second', {

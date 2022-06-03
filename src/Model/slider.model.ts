@@ -32,6 +32,7 @@ class Model extends Observer {
         verifiedOptions.color.textColor = verifiedOptions.color.textColor ?? '#ffe53b';
         verifiedOptions.color.thumbColor = verifiedOptions.color.thumbColor ?? '#ffe53b';
         verifiedOptions.range = verifiedOptions.range ?? false;
+        verifiedOptions.config = verifiedOptions.config ?? false;
 
         verifiedOptions.min =
             verifiedOptions.min < verifiedOptions.max ? verifiedOptions.min :

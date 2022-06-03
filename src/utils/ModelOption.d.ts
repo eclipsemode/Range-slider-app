@@ -17,7 +17,8 @@ declare type ModelOption  = {
         secondColor?: string,
         textColor?: string,
         thumbColor?: string
-    }
+    },
+    config?: boolean
 }
 
 export default ModelOption;

@@ -7,6 +7,7 @@ import Progress from '../components/progress/Progress';
 import Tooltip from '../components/tooltip/Tooltip';
 import Bar from '../components/bar/Bar';
 import MainClass from '../components/mainClass/MainClass';
+import Config from '../components/config/Config';
 
 class View {
     private readonly selectorState: string;
@@ -19,6 +20,7 @@ class View {
     private tooltip: Tooltip;
     private bar: Bar;
     private mainClass: MainClass;
+    private config: Config;
 
 
     constructor(private selector: string, private options: Partial<ModelOption>) {
@@ -47,7 +49,15 @@ class View {
             this.optionsState.valueSecond
         );
         this.bar = new Bar(this.selectorState);
-
+        this.config = new Config(
+            this.selectorState,
+            this.optionsState.min,
+            this.optionsState.max,
+            this.optionsState.step,
+            this.optionsState.value,
+            this.optionsState.valueSecond,
+            this.optionsState.range
+        );
     }
 
     render() {
@@ -72,6 +82,9 @@ class View {
         if (this.optionsState.range === true) {
             this.thumb.getMaxThumb();
             this.tooltip.getSecondTooltip();
+        }
+        if (this.optionsState.config === true) {
+            this.config.getConfig();
         }
     }
 

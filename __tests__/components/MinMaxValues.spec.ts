@@ -22,6 +22,15 @@ describe('MinMax element', () => {
 
         expect(f).toHaveBeenCalledTimes(1);
     });
+
+    test('Should call getMinMaxValues method', () => {
+        const spy = jest.spyOn(minMax, 'getMinMaxValues');
+
+        minMax.getMinMaxValues();
+
+        expect(spy).toHaveBeenCalled();
+        expect(spy).toHaveLength(0);
+    });
 });
 
 describe('Min function', () => {

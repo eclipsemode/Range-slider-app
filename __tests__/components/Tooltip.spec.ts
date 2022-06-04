@@ -65,6 +65,15 @@ describe('First Tooltip', () => {
     test('Should be instance of Jquery', () => {
         expect(tooltip.getFirstTooltip).toBeInstanceOf(Function);
     });
+
+    test('Should call getFirstTooltip method', () => {
+        const spy = jest.spyOn(tooltip, 'getFirstTooltip');
+
+        tooltip.getFirstTooltip();
+
+        expect(spy).toHaveBeenCalled();
+        expect(spy).toHaveLength(0);
+    });
 });
 
 describe('Second Tooltip', () => {
@@ -75,5 +84,14 @@ describe('Second Tooltip', () => {
 
     test('Should be instance of Jquery', () => {
         expect(tooltip.getSecondTooltip).toBeInstanceOf(Function);
+    });
+
+    test('Should call getSecondTooltip method', () => {
+        const spy = jest.spyOn(tooltip, 'getSecondTooltip');
+
+        tooltip.getSecondTooltip();
+
+        expect(spy).toHaveBeenCalled();
+        expect(spy).toHaveLength(0);
     });
 });

@@ -26,7 +26,6 @@ class View {
     constructor(private selector: string, private options: Partial<ModelOption>) {
         this.selectorState = selector;
         this.optionsState = options;
-
         this.mainClass = new MainClass(this.selectorState);
         this.rulers = new Rulers(this.selectorState);
         this.minMaxValues = new MinMaxValues(
@@ -38,87 +37,99 @@ class View {
             this.selectorState,
             this.optionsState.min,
             this.optionsState.max,
-            this.optionsState.value,
-            this.optionsState.valueSecond,
+            this.optionsState.from,
+            this.optionsState.to,
             this.optionsState.step
         );
         this.progress = new Progress(this.selectorState);
         this.tooltip = new Tooltip(
             this.selectorState,
-            this.optionsState.value, 
-            this.optionsState.valueSecond
+            this.optionsState.from,
+            this.optionsState.to
         );
         this.bar = new Bar(this.selectorState);
         this.config = new Config(
             this.selectorState,
-            this.optionsState.min,
-            this.optionsState.max,
-            this.optionsState.step,
-            this.optionsState.value,
-            this.optionsState.valueSecond,
-            this.optionsState.range
+            this.optionsState.controlConfig,
+            this.optionsState.toggleConfig
         );
     }
 
-    render() {
-        this.getRange();
-        this.getBar();
-        $(`${this.selectorState} .slider-app__input`).on('input', () => this.getBar());
-        this.getTooltip();
-        this.getHorizontal();
-        this.getColor();
-        this.getMinMax();
+    render(): void {
+        this.setProgress();
+        $(`${this.selectorState} .slider-app__input`).on('input', () => this.setProgress());
+        this.setTooltip();
+        this.setHorizontal();
+        this.setColor();
+        this.setMinMax();
+        this.setConfig();
     }
 
-    private getRange(): void {
-            this.mainClass.getMainClass();
-            this.rulers.getRulers();
-            this.minMaxValues.getMinMaxValues();
-            this.bar.getBar();
-            this.progress.getProgress();
-            this.thumb.getMinThumb();
-            this.tooltip.getFirstTooltip();
-
-        if (this.optionsState.range === true) {
+    getSlider(): void {
+        this.mainClass.getMainClass();
+        this.rulers.getRulers();
+        this.minMaxValues.getMinMaxValues();
+        this.bar.getBar();
+        this.optionsState.progress ? this.progress.getProgress() : null;
+        this.thumb.getMinThumb();
+        this.optionsState.tooltip.display ? this.tooltip.getFirstTooltip() : null;
+        if (this.optionsState.range) {
             this.thumb.getMaxThumb();
             this.tooltip.getSecondTooltip();
         }
-        if (this.optionsState.config === true) {
-            this.config.getConfig();
-        }
+        this.optionsState.config ? this.config.getConfig() : null;
     }
 
-    private getBar() {
-        if (this.optionsState.range === false) {
-            const $slider = $(`${this.selectorState} .slider-app__input`);
-            const $fill = $(`${this.selectorState} .slider-app__progress`);
+    private setConfig = (): void => {
+        const newSelector: string = this.selectorState.slice(1);
 
-            const min: number = parseInt($slider.attr('min'));
-            const max: number = parseInt($slider.attr('max'));
-            const value: number = <number>$slider.val();
-            const percent: number = ((value - min) / (max - min)) * 100;
+        const selectorControlTo = $(`#${newSelector}__control-to`);
+        !this.optionsState.range
+            ? selectorControlTo.prop('disabled', true)
+            : selectorControlTo.prop('disabled', false);
 
-            $fill.css('width', percent + '%');
+        this.optionsState.controlConfig.forEach(item => {
+            $(`#${newSelector}__control-${item}`)
+                .val(this.evaluateVar(`this.optionsState.${item}`));
+        });
+
+        this.optionsState.toggleConfig.forEach(item => {
+            $(`#${newSelector}__toggle-${item}`)
+                .attr('checked', this.evaluateVar(`this.optionsState.${item}`));
+        });
+
+
+    };
+
+    evaluateVar = (item: string) => eval(item);
+
+    private setProgress(): void {
+        const $range = $(`${this.selectorState} .slider-app__input`);
+        const $minValue = $(`${this.selectorState} .slider-app__input-min`);
+        const $maxValue = $(`${this.selectorState} .slider-app__input-max`);
+        const $progress = $(`${this.selectorState} .slider-app__progress`);
+        const gap = this.optionsState.gap;
+        const min: number = parseInt($minValue.attr('min'));
+        const max: number = parseInt($minValue.attr('max'));
+        const value: number = <number>$minValue.val();
+        const percent: number = ((value - min) / (max - min)) * 100;
+
+        if (!this.optionsState.range) {
+            $progress.css('width', percent + '%');
         } else {
-            const range = $(`${this.selectorState} .slider-app__input`);
-            const minValue = $(`${this.selectorState} .slider-app__input-min`);
-            const maxValue = $(`${this.selectorState} .slider-app__input-max`);
-            const progress = $(`${this.selectorState} .slider-app__progress`);
-            const gap = this.optionsState.gap;
-
-            progress.css({
+            $progress.css({
                 width: 'auto',
-                left: (Number(minValue.val()) / Number(minValue.attr('max'))) * 100 + 1 + '%',
-                right: 100 - (Number(maxValue.val()) / Number(maxValue.attr('max'))) * 100 + '%',
+                left: (Number($minValue.val()) / Number($minValue.attr('max'))) * 100 + 1 + '%',
+                right: 100 - (Number($maxValue.val()) / Number($maxValue.attr('max'))) * 100 + '%',
             });
 
-            range.each(function () {
-                $(this).css('pointerEvents', 'none');
+            $range.each(function () {
+                $($maxValue).css('pointerEvents', 'none');
                 $(this).on('input', () => {
-                    const min = Number(minValue.val());
-                    const max = Number(maxValue.val());
-                    const minPercent: number = (min / Number(minValue.attr('max'))) * 100 + 1;
-                    const maxPercent: number = 100 - (max / Number(maxValue.attr('max'))) * 100;
+                    const min = Number($minValue.val());
+                    const max = Number($maxValue.val());
+                    const minPercent: number = (min / Number($minValue.attr('max'))) * 100 + 1;
+                    const maxPercent: number = 100 - (max / Number($maxValue.attr('max'))) * 100;
 
                     if (max - min < gap) {
                         $(this).hasClass('slider-app__input-min')
@@ -126,22 +137,22 @@ class View {
                             : $(this).val(min + gap);
                     }
 
-                    progress.css({
+                    $progress.css({
                         width: 'auto',
                         left: minPercent + '%',
                         right: maxPercent + '%'
                     });
 
                     minPercent > 45
-                        ? progress.css('transform', 'translateX(-15px)')
-                        : progress.css('transform', 'translateX(0px)');
+                        ? $progress.css('transform', 'translateX(-15px)')
+                        : $progress.css('transform', 'translateX(0px)');
                 });
             });
         }
     }
 
-    private getHorizontal() {
-        if (this.optionsState.horizontal === false) {
+    private setHorizontal(): void {
+        if (this.optionsState.vertical) {
             const element: JQuery = $(this.selectorState);
             const maxElement: JQuery = $(`${this.selectorState} .slider-app__max-value`);
             const minElement: JQuery = $(`${this.selectorState} .slider-app__min-value`);
@@ -163,8 +174,7 @@ class View {
         }
     }
 
-    private getTooltip() {
-        if (this.optionsState.tooltip.display === true) {
+    private setTooltip(): void {
             const maxValue: number = this.optionsState.max;
             const minValue: number = this.optionsState.min;
 
@@ -197,7 +207,7 @@ class View {
             if (this.optionsState.tooltip.percent === false || !this.optionsState.tooltip.percent) {
                 tooltipValueFirst.text(<string>inputMin.val());
                 inputMin.on('input', () => tooltipValueFirst.text(<string>inputMin.val()));
-            } else if (this.optionsState.tooltip.percent === true) {
+            } else if (this.optionsState.tooltip.percent) {
                 tooltipValueFirst.text(parseInt(String(
                     (+inputMin.val() - minValue) / (maxValue - minValue) * 100)) + '%');
 
@@ -247,10 +257,9 @@ class View {
                             (+inputMax.val() - minValue) / (maxValue - minValue) * 100)) + '%'));
                 }
             }
-        }
     }
 
-    private getColor(): void {
+    private setColor(): void {
         if (this.optionsState.color.firstColor || this.optionsState.color.secondColor) {
             const colorOne: string = this.optionsState.color.firstColor;
             const colorTwo: string = this.optionsState.color.secondColor;
@@ -271,7 +280,7 @@ class View {
         }
     }
 
-    private getMinMax(): void {
+    private setMinMax(): void {
         const inputMin: JQuery = $(`${this.selectorState} .slider-app__input-min`);
         const inputMax: JQuery = $(`${this.selectorState} .slider-app__input-max`);
         const minValue: JQuery = $(`${this.selectorState} .slider-app__min-value`);
@@ -279,21 +288,21 @@ class View {
 
         minValue.on('click', () => {
             inputMin.val(inputMin.attr('min'));
-            this.getBar();
-            this.getTooltip();
+            this.setProgress();
+            this.setTooltip();
         });
 
         if (!this.optionsState.range) {
             maxValue.on('click', () => {
                 inputMin.val(inputMin.attr('max'));
-                this.getBar();
-                this.getTooltip();
+                this.setProgress();
+                this.setTooltip();
             });
         } else {
             maxValue.on('click', () => {
                 inputMax.val(inputMax.attr('max'));
-                this.getBar();
-                this.getTooltip();
+                this.setProgress();
+                this.setTooltip();
             });
         }
     }

@@ -12,11 +12,11 @@ class Model extends Observer {
         const verifiedOptions = {...options};
         verifiedOptions.min = verifiedOptions.min ?? 0;
         verifiedOptions.max = verifiedOptions.max ?? 1000;
-        verifiedOptions.value = verifiedOptions.value ?? verifiedOptions.min;
-        verifiedOptions.valueSecond = verifiedOptions.valueSecond ?? verifiedOptions.max;
+        verifiedOptions.from = verifiedOptions.from ?? verifiedOptions.min;
+        verifiedOptions.to = verifiedOptions.to ?? verifiedOptions.max;
         verifiedOptions.gap = verifiedOptions.gap ?? 130;
         verifiedOptions.step = verifiedOptions.step ?? 0.1;
-        verifiedOptions.horizontal = verifiedOptions.horizontal ?? true;
+        verifiedOptions.vertical = verifiedOptions.vertical ?? false;
         verifiedOptions.rulersHidden = verifiedOptions.rulersHidden ?? false;
         verifiedOptions.tooltip = verifiedOptions.tooltip ?? {display: false, percent: false};
         verifiedOptions.tooltip.percent = verifiedOptions.tooltip.percent ?? false;
@@ -33,19 +33,24 @@ class Model extends Observer {
         verifiedOptions.color.thumbColor = verifiedOptions.color.thumbColor ?? '#ffe53b';
         verifiedOptions.range = verifiedOptions.range ?? false;
         verifiedOptions.config = verifiedOptions.config ?? false;
+        verifiedOptions.progress = verifiedOptions.progress ?? true;
+        verifiedOptions.controlConfig = ['min', 'max', 'step', 'from', 'to'];
+        verifiedOptions.toggleConfig = ['vertical', 'range', 'rulers', 'progress', 'tooltip'];
 
         verifiedOptions.min =
             verifiedOptions.min < verifiedOptions.max ? verifiedOptions.min :
                 verifiedOptions.max;
 
-        verifiedOptions.value =
-            (verifiedOptions.value > verifiedOptions.min) &&
-            (verifiedOptions.value < verifiedOptions.max) ?
-                verifiedOptions.value :
+        verifiedOptions.from =
+            (verifiedOptions.from > verifiedOptions.min) &&
+            (verifiedOptions.from < verifiedOptions.max) ?
+                verifiedOptions.from :
                 verifiedOptions.min;
 
         return verifiedOptions;
     }
+
+
 }
 
 export default Model;

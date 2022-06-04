@@ -6,14 +6,10 @@ describe('Progress element', () => {
     const progress = new Progress(className);
 
     test('Should NOT be undefined', () => {
-        expect(progress.getProgress()).not.toBeUndefined();
+        expect(progress.getProgress).not.toBeUndefined();
     });
 
-    test('Should be instance of Jquery', () => {
+    test('Should be instance of jQuery', () => {
         expect(progress.getProgress()).toBeInstanceOf($);
-    });
-
-    test('Should append to main parent class', () => {
-        expect(progress.getProgress().appendTo(className)).toBeTruthy();
     });
 });

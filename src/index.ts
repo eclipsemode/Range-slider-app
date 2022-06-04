@@ -6,14 +6,13 @@ new Controller('.slider', {
         display: true,
         percent: true
     },
-    // range: true,
+    range: true,
     config: true
 });
 
 new Controller('.second', {
-    tooltip: {
-        display: true
-    }
+    min: -10000,
+    max: 500,
 });
 
 // const observer = new Observable();

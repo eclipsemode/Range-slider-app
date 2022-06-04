@@ -6,14 +6,11 @@ describe('Bar element', () => {
     const bar = new Bar(className);
 
     test('Should NOT be undefined', () => {
-        expect(bar.getBar()).not.toBeUndefined();
+        expect(bar.getBar).not.toBeUndefined();
     });
 
     test('Should be instance of Jquery', () => {
         expect(bar.getBar()).toBeInstanceOf($);
     });
 
-    test('Should append to main parent class', () => {
-        expect(bar.getBar().appendTo('.slider-app')).toBeTruthy();
-    });
 });

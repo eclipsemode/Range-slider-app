@@ -1,11 +1,11 @@
 declare type ModelOption  = {
-    value?: number,
-    valueSecond?: number,
+    from?: number,
+    to?: number,
     gap?: number,
     step?: number,
     min?: number,
     max?: number,
-    horizontal?: boolean;
+    vertical?: boolean;
     rulersHidden?: boolean,
     range?: boolean,
     tooltip?: {
@@ -18,7 +18,10 @@ declare type ModelOption  = {
         textColor?: string,
         thumbColor?: string
     },
-    config?: boolean
+    config?: boolean,
+    controlConfig?: string[],
+    toggleConfig?: string[],
+    progress?: boolean
 }
 
 export default ModelOption;

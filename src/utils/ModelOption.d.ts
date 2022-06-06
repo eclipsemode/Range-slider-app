@@ -6,7 +6,7 @@ declare type ModelOption  = {
     min?: number,
     max?: number,
     vertical?: boolean;
-    rulersHidden?: boolean,
+    rulers?: boolean,
     range?: boolean,
     tooltip?: {
         display?: boolean,

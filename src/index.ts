@@ -15,37 +15,26 @@ new Controller('.second', {
     max: 500,
 });
 
-// const observer = new Observable();
+// $('body').append($(`
+//     <textarea class="textField"></textarea>
+//     <div>Words Count:
+//         <p class="countField"></p>
+//     </div>
+// `));
+
+// const blogObserver = new Observer();
 //
-// const fn = (count: any) => {
-//     $('.text').text(count);
-// };
 //
-// const nt = (ht: any) => {
-//     console.log('Hello');
-// };
+// const textField = $('.textField');
+// const countField = $('.countField');
 //
-// observer.subscribe(fn);
-// observer.subscribe(nt);
-//
-// $('.inp-plus').on('click', () => {
-//     observer.broadcast( parseInt($('.text').text()) + 1);
+// blogObserver.subscribe((data: any)=> {
+//     console.log(data);
+//     countField.text(getWordsCount(data));
 // });
-// $('.inp-minus').on('click', () => {
-//     observer.broadcast( parseInt($('.text').text()) - 1);
+//
+// textField.on('keyup', () => {
+//     blogObserver.broadcast(textField.val());
 // });
-
-// function expect(value: number): any {
-//     return {
-//         toBe: (exp: number) => {
-//             if (value === exp) {
-//                 console.log('Success');
-//             } else {
-//                 console.error(`Value is ${value}, but expectation is ${exp}`);
-//             }
-//         }
-//     };
-// }
-
-
-
+//
+// const getWordsCount = (text: any) => text.length;

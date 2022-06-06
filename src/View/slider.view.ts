@@ -8,8 +8,9 @@ import Tooltip from '../components/tooltip/Tooltip';
 import Bar from '../components/bar/Bar';
 import MainClass from '../components/mainClass/MainClass';
 import ConfigPanel from '../components/configPanel/ConfigPanel';
+import Observer from '../Observer/Observer';
 
-class View {
+class View extends Observer {
     private readonly selectorState: string;
     private readonly optionsState: Partial<ModelOption>;
 
@@ -24,6 +25,7 @@ class View {
 
 
     constructor(private selector: string, private options: Partial<ModelOption>) {
+        super();
         this.selectorState = selector;
         this.optionsState = options;
         this.mainClass = new MainClass(this.selectorState);
@@ -63,11 +65,13 @@ class View {
         this.setColor();
         this.setMinMax();
         this.setConfig();
+
+        this.updateValues();
     }
 
     getSlider(): void {
         this.mainClass.getMainClass();
-        this.rulers.getRulers();
+        this.optionsState.rulers ? this.rulers.getRulers() : null;
         this.minMaxValues.getMinMaxValues();
         this.bar.getBar();
         this.optionsState.progress ? this.progress.getProgress() : null;
@@ -79,6 +83,26 @@ class View {
         }
         this.optionsState.configPanel ? this.configPanel.getConfig() : null;
     }
+
+    updateValues = () => {
+        const newSelector: string = this.selectorState.slice(1);
+        this.subscribe((data: Partial<ModelOption>) => {
+
+            $(`${this.selectorState} .slider-app__rulers`).prop('hidden', !data.rulers);
+
+        });
+
+        this.optionsState.toggleConfig.forEach(item => {
+            $(`#${newSelector}__toggle-${item}`).on('change', () => {
+                this.broadcast({[item]: $(`#${newSelector}__toggle-${item}`).prop('checked')});
+            });
+        });
+
+        // $(`#${newSelector}__toggle-rulers`).on('change', () => {
+        //     const value: boolean = $(`#${newSelector}__toggle-rulers`).prop('checked');
+        //     this.broadcast({rulers: value});
+        // });
+    };
 
     private setConfig = (): void => {
         const newSelector: string = this.selectorState.slice(1);
@@ -97,8 +121,6 @@ class View {
             $(`#${newSelector}__toggle-${item}`)
                 .attr('checked', this.evaluateVar(`this.optionsState.${item}`));
         });
-
-
     };
 
     evaluateVar = (item: string) => eval(item);

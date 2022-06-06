@@ -17,7 +17,7 @@ class Model extends Observer {
         verifiedOptions.gap = verifiedOptions.gap ?? 130;
         verifiedOptions.step = verifiedOptions.step ?? 0.1;
         verifiedOptions.vertical = verifiedOptions.vertical ?? false;
-        verifiedOptions.rulersHidden = verifiedOptions.rulersHidden ?? false;
+        verifiedOptions.rulers = verifiedOptions.rulers ?? true;
         verifiedOptions.tooltip = verifiedOptions.tooltip ?? {display: false, percent: false};
         verifiedOptions.tooltip.percent = verifiedOptions.tooltip.percent ?? false;
         verifiedOptions.tooltip.display = verifiedOptions.tooltip.display ?? false;

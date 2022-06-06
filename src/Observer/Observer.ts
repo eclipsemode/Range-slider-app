@@ -1,20 +1,20 @@
-import ObserverEvents from './ObserverEvents';
-import {Subscriber, Subscribers} from '../utils/Observer';
-
 class Observer {
-    private readonly subscribers: Subscribers;
+    private observers: any[];
+
     constructor() {
-        this.subscribers = {};
+        this.observers = [];
     }
 
-    // subscribe(subscriber: ObserverEvents, callback: Subscriber) {
-    //     this.subscribers[subscriber] = [callback];
-    // }
+    subscribe (fn: any) {
+        this.observers.push(fn);
+    }
 
-    notify<T>(subscriber: ObserverEvents, data: T) {
-        if (this.subscribers[subscriber]) {
-            this.subscribers[subscriber].forEach((callback: Subscriber) => callback(data));
-        }
+    unsubscribe (fn: any) {
+        this.observers = this.observers.filter(subscriber => subscriber !== fn);
+    }
+
+    broadcast (data: any) {
+        this.observers.forEach(subscriber => subscriber(data));
     }
 }
 

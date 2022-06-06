@@ -7,7 +7,7 @@ new Controller('.slider', {
         percent: true
     },
     range: true,
-    config: true
+    configPanel: true
 });
 
 new Controller('.second', {

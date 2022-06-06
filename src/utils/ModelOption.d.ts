@@ -18,7 +18,7 @@ declare type ModelOption  = {
         textColor?: string,
         thumbColor?: string
     },
-    config?: boolean,
+    configPanel?: boolean,
     controlConfig?: string[],
     toggleConfig?: string[],
     progress?: boolean

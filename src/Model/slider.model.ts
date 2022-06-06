@@ -32,7 +32,7 @@ class Model extends Observer {
         verifiedOptions.color.textColor = verifiedOptions.color.textColor ?? '#ffe53b';
         verifiedOptions.color.thumbColor = verifiedOptions.color.thumbColor ?? '#ffe53b';
         verifiedOptions.range = verifiedOptions.range ?? false;
-        verifiedOptions.config = verifiedOptions.config ?? false;
+        verifiedOptions.configPanel = verifiedOptions.configPanel ?? false;
         verifiedOptions.progress = verifiedOptions.progress ?? true;
         verifiedOptions.controlConfig = ['min', 'max', 'step', 'from', 'to'];
         verifiedOptions.toggleConfig = ['vertical', 'range', 'rulers', 'progress', 'tooltip'];

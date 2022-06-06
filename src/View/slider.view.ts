@@ -7,7 +7,7 @@ import Progress from '../components/progress/Progress';
 import Tooltip from '../components/tooltip/Tooltip';
 import Bar from '../components/bar/Bar';
 import MainClass from '../components/mainClass/MainClass';
-import Config from '../components/config/Config';
+import ConfigPanel from '../components/configPanel/ConfigPanel';
 
 class View {
     private readonly selectorState: string;
@@ -20,7 +20,7 @@ class View {
     private tooltip: Tooltip;
     private bar: Bar;
     private mainClass: MainClass;
-    private config: Config;
+    private configPanel: ConfigPanel;
 
 
     constructor(private selector: string, private options: Partial<ModelOption>) {
@@ -48,7 +48,7 @@ class View {
             this.optionsState.to
         );
         this.bar = new Bar(this.selectorState);
-        this.config = new Config(
+        this.configPanel = new ConfigPanel(
             this.selectorState,
             this.optionsState.controlConfig,
             this.optionsState.toggleConfig
@@ -77,7 +77,7 @@ class View {
             this.thumb.getMaxThumb();
             this.tooltip.getSecondTooltip();
         }
-        this.optionsState.config ? this.config.getConfig() : null;
+        this.optionsState.configPanel ? this.configPanel.getConfig() : null;
     }
 
     private setConfig = (): void => {

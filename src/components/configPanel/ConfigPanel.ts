@@ -1,6 +1,6 @@
-import './config.scss';
+import $ from 'jquery';
 
-class Config {
+class ConfigPanel {
     private readonly selector: string;
     private readonly controlConfig: string[];
     private readonly toggleConfig: string[];
@@ -15,14 +15,22 @@ class Config {
         this.toggleConfig = toggleConfig;
     }
     getConfig() {
-        const newSelector: string = this.selector.slice(1);
+        this.getMain();
+        this.getControls();
+        this.getToggles();
+    }
 
+    getMain = () => {
         $(this.selector).after(
             `<div class="slider-app__config">
                         <div class="slider-app__config-section slider-app__config-section--control"></div>
                         <div class="slider-app__config-section slider-app__config-section--toggle"></div>
                     </div>`
         );
+    };
+
+    getControls = () => {
+        const newSelector: string = this.selector.slice(1);
 
         this.controlConfig.forEach(name => {
             const selector: string = newSelector + '__control-' + name;
@@ -40,6 +48,10 @@ class Config {
                 </div>`
             );
         });
+    };
+
+    getToggles = () => {
+        const newSelector: string = this.selector.slice(1);
 
         this.toggleConfig.forEach(name => {
             const selector: string = newSelector + '__toggle-' + name;
@@ -60,7 +72,7 @@ class Config {
                 </div>`
             );
         });
-    }
+    };
 }
 
-export default Config;
+export default ConfigPanel;

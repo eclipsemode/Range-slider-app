@@ -58,15 +58,15 @@ class View extends Observer {
     }
 
     render(): void {
-        this.setProgress();
-        $(`${this.selectorState} .slider-app__input`).on('input', () => this.setProgress());
+        this.setBar();
+        $(`${this.selectorState} .slider-app__input`).on('input', () => this.setBar());
         this.setTooltip();
-        this.setHorizontal();
+        this.setVertical();
         this.setColor();
         this.setMinMax();
         this.setConfig();
 
-        this.updateValues();
+        this.updateToggleValues();
     }
 
     getSlider(): void {
@@ -84,24 +84,44 @@ class View extends Observer {
         this.optionsState.configPanel ? this.configPanel.getConfig() : null;
     }
 
-    updateValues = () => {
+    updateToggleValues = () => {
         const newSelector: string = this.selectorState.slice(1);
-        this.subscribe((data: Partial<ModelOption>) => {
+        const fn = (data: {key: string, value: boolean}) => {
 
-            $(`${this.selectorState} .slider-app__rulers`).prop('hidden', !data.rulers);
-
-        });
+            switch (data.key) {
+                case 'vertical':
+                    this.optionsState.vertical = data.value;
+                    this.updateVertical();
+                    break;
+                case 'rulers':
+                    this.optionsState.rulers = data.value;
+                    this.updateRulers();
+                    break;
+                case 'progress':
+                    this.optionsState.progress = data.value;
+                    this.updateProgress();
+                    break;
+                case 'tooltip':
+                    this.optionsState.tooltip.display = data.value;
+                    this.updateTooltip();
+                    break;
+                case 'range':
+                    this.optionsState.range = data.value;
+                    this.updateRange();
+                    break;
+            }
+        };
 
         this.optionsState.toggleConfig.forEach(item => {
             $(`#${newSelector}__toggle-${item}`).on('change', () => {
-                this.broadcast({[item]: $(`#${newSelector}__toggle-${item}`).prop('checked')});
+                this.subscribe(fn);
+                this.broadcast({
+                    key: item,
+                    value: $(`#${newSelector}__toggle-${item}`).prop('checked')
+                });
+                this.unsubscribe(fn);
             });
         });
-
-        // $(`#${newSelector}__toggle-rulers`).on('change', () => {
-        //     const value: boolean = $(`#${newSelector}__toggle-rulers`).prop('checked');
-        //     this.broadcast({rulers: value});
-        // });
     };
 
     private setConfig = (): void => {
@@ -125,20 +145,87 @@ class View extends Observer {
 
     evaluateVar = (item: string) => eval(item);
 
-    private setProgress(): void {
+    private updateRulers = () => {
+        if (this.optionsState.rulers) {
+            this.rulers.getRulers();
+        } else {
+            $(`${this.selectorState} .slider-app__rulers`).remove();
+        }
+    };
+
+    private updateProgress = () => {
+        if (this.optionsState.progress) {
+            this.progress.getProgress();
+            this.setBar();
+        } else {
+            $(`${this.selectorState} .slider-app__progress`).remove();
+        }
+    };
+
+    private updateRange = () => {
+        if (this.optionsState.range) {
+            this.thumb.getMaxThumb();
+            this.optionsState.tooltip.display ? this.tooltip.getSecondTooltip() : null;
+
+            this.setBar();
+            this.setTooltip();
+            $(`${this.selectorState} .slider-app__input`).on('input', () => this.setBar());
+        } else {
+            const minValueSave = $(`${this.selectorState} .slider-app__input-min`).val();
+
+            $(`${this.selectorState} .slider-app__bar-line`).remove();
+            this.bar.getBar();
+            this.optionsState.progress ? this.progress.getProgress() : null;
+            this.thumb.getMinThumb();
+            this.optionsState.tooltip.display ? this.tooltip.getFirstTooltip() : null;
+            $(`${this.selectorState} .slider-app__input-min`).val(minValueSave);
+
+            this.setBar();
+            this.setTooltip();
+            $(`${this.selectorState} .slider-app__input`).on('input', () => this.setBar());
+        }
+    };
+
+    private updateTooltip = () => {
+        if (this.optionsState.tooltip.display) {
+            this.tooltip.getFirstTooltip();
+            this.optionsState.range ? this.tooltip.getSecondTooltip() : null;
+
+            this.setTooltip();
+        } else {
+            $(`${this.selectorState} .slider-app__tooltip-line`).remove();
+        }
+    };
+
+    private updateVertical = () => {
+        if (this.optionsState.vertical) {
+            this.setVertical();
+        } else {
+            this.setVertical();
+        }
+    };
+
+    private setBar(): void {
         const $range = $(`${this.selectorState} .slider-app__input`);
         const $minValue = $(`${this.selectorState} .slider-app__input-min`);
-        const $maxValue = $(`${this.selectorState} .slider-app__input-max`);
         const $progress = $(`${this.selectorState} .slider-app__progress`);
-        const gap = this.optionsState.gap;
-        const min: number = parseInt($minValue.attr('min'));
-        const max: number = parseInt($minValue.attr('max'));
-        const value: number = <number>$minValue.val();
-        const percent: number = ((value - min) / (max - min)) * 100;
 
         if (!this.optionsState.range) {
-            $progress.css('width', percent + '%');
+            const value: number = <number>$minValue.val();
+            const min: number = parseInt($minValue.attr('min'));
+            const max: number = parseInt($minValue.attr('max'));
+            const percent: number = ((value - min) / (max - min)) * 100;
+
+            $progress.css({
+                width: percent + '%',
+                left: '0',
+                right: '0',
+            });
+
         } else {
+            const gap = this.optionsState.gap;
+            const $maxValue = $(`${this.selectorState} .slider-app__input-max`);
+
             $progress.css({
                 width: 'auto',
                 left: (Number($minValue.val()) / Number($minValue.attr('max'))) * 100 + 1 + '%',
@@ -173,12 +260,13 @@ class View extends Observer {
         }
     }
 
-    private setHorizontal(): void {
+    private setVertical(): void {
+        const element: JQuery = $(this.selectorState);
+        const maxElement: JQuery = $(`${this.selectorState} .slider-app__max-value`);
+        const minElement: JQuery = $(`${this.selectorState} .slider-app__min-value`);
+        const tooltipElement: JQuery = $(`${this.selectorState} .slider-app__tooltip-value`);
+
         if (this.optionsState.vertical) {
-            const element: JQuery = $(this.selectorState);
-            const maxElement: JQuery = $(`${this.selectorState} .slider-app__max-value`);
-            const minElement: JQuery = $(`${this.selectorState} .slider-app__min-value`);
-            const tooltipElement: JQuery = $(`${this.selectorState} .slider-app__tooltip-value`);
 
             element.css('transform', 'rotate(270deg)');
 
@@ -193,6 +281,25 @@ class View extends Observer {
             });
 
             tooltipElement.css('transform','rotate(225deg)');
+
+            $('body').css('flexDirection', 'row');
+        } else {
+
+            element.css('transform', 'rotate(0deg)');
+
+            maxElement.css({
+                transform: 'translateX(40px) rotate(0deg)',
+                justifyContent: 'center'
+            });
+
+            minElement.css({
+                transform: 'translateX(-30px) rotate(0deg)',
+                justifyContent: 'center'
+            });
+
+            tooltipElement.css('transform','rotate(135deg)');
+
+            $('body').css('flexDirection', 'column');
         }
     }
 
@@ -211,8 +318,6 @@ class View extends Observer {
             tooltipValueFirst.css('font-size', 15 - fontSizeFirst + 'px');
 
             inputMin.on({
-                mouseover: () => tooltipContainerFirst.css('opacity', 1),
-                mouseout: () => tooltipContainerFirst.css('opacity', 0),
                 input: () => {
                     tooltipContainerFirst.css('left',
                         (((+inputMin.val() - minValue) / (maxValue - minValue)) * 100) + '%');
@@ -252,8 +357,6 @@ class View extends Observer {
                 tooltipValueSecond.css('font-size', 15 - fontSizeSecond + 'px');
 
                 inputMax.on({
-                    mouseover: () => tooltipContainerSecond.css('opacity', 1),
-                    mouseout: () => tooltipContainerSecond.css('opacity', 0),
                     input: () => {
                         tooltipContainerSecond.css('left',
                             (((+inputMax.val() - minValue) / (maxValue - minValue)) * 100) + '%');
@@ -310,20 +413,20 @@ class View extends Observer {
 
         minValue.on('click', () => {
             inputMin.val(inputMin.attr('min'));
-            this.setProgress();
+            this.setBar();
             this.setTooltip();
         });
 
         if (!this.optionsState.range) {
             maxValue.on('click', () => {
                 inputMin.val(inputMin.attr('max'));
-                this.setProgress();
+                this.setBar();
                 this.setTooltip();
             });
         } else {
             maxValue.on('click', () => {
                 inputMax.val(inputMax.attr('max'));
-                this.setProgress();
+                this.setBar();
                 this.setTooltip();
             });
         }

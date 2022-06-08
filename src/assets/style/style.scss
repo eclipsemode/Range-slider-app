@@ -157,7 +157,6 @@ body {
     padding: 5px;
     box-shadow: 0 0 20px rgb(0 0 0 / 70%);
     transition: opacity ease-in-out 0.4s;
-    opacity: 0;
   }
 
   &__tooltip-value {
@@ -242,6 +241,7 @@ body {
     position: absolute;
     left: 0;
     top: 0;
+    right: 0;
     height: 100%;
     width: 0;
     background: linear-gradient(90deg, $gr-main 0%, $gr-secondary 100%);

@@ -128,6 +128,9 @@ class View extends Observer {
         const newSelector: string = this.selectorState.slice(1);
 
         const selectorControlTo = $(`#${newSelector}__control-to`);
+
+        $(`#${newSelector}__toggle-tooltip`).prop('checked', this.optionsState.tooltip.display);
+
         !this.optionsState.range
             ? selectorControlTo.prop('disabled', true)
             : selectorControlTo.prop('disabled', false);
@@ -167,6 +170,8 @@ class View extends Observer {
             this.thumb.getMaxThumb();
             this.optionsState.tooltip.display ? this.tooltip.getSecondTooltip() : null;
 
+            this.setConfig();
+
             this.setBar();
             this.setTooltip();
             $(`${this.selectorState} .slider-app__input`).on('input', () => this.setBar());
@@ -179,6 +184,8 @@ class View extends Observer {
             this.thumb.getMinThumb();
             this.optionsState.tooltip.display ? this.tooltip.getFirstTooltip() : null;
             $(`${this.selectorState} .slider-app__input-min`).val(minValueSave);
+
+            this.setConfig();
 
             this.setBar();
             this.setTooltip();
@@ -200,8 +207,14 @@ class View extends Observer {
     private updateVertical = () => {
         if (this.optionsState.vertical) {
             this.setVertical();
+            this.setColor();
+            this.setBar();
+            this.setTooltip();
         } else {
             this.setVertical();
+            this.setColor();
+            this.setTooltip();
+            this.setBar();
         }
     };
 
@@ -216,21 +229,30 @@ class View extends Observer {
             const max: number = parseInt($minValue.attr('max'));
             const percent: number = ((value - min) / (max - min)) * 100;
 
-            $progress.css({
+            this.optionsState.vertical
+                ? $progress.css({
+                height: percent + '%',
+                width: 100 + '%'})
+                : $progress.css({
                 width: percent + '%',
-                left: '0',
-                right: '0',
-            });
+                height: 100 + '%'});
+
 
         } else {
             const gap = this.optionsState.gap;
             const $maxValue = $(`${this.selectorState} .slider-app__input-max`);
 
-            $progress.css({
+            this.optionsState.vertical
+                ? $progress.css({
+                height: 'auto',
+                bottom: (Number($minValue.val()) / Number($minValue.attr('max'))) * 100 + 1 + '%',
+                top: 100 - (Number($maxValue.val()) / Number($maxValue.attr('max'))) * 100 + '%'})
+                : $progress.css({
                 width: 'auto',
+                height: 100 + '%',
                 left: (Number($minValue.val()) / Number($minValue.attr('max'))) * 100 + 1 + '%',
-                right: 100 - (Number($maxValue.val()) / Number($maxValue.attr('max'))) * 100 + '%',
-            });
+                right: 100 - (Number($maxValue.val()) / Number($maxValue.attr('max'))) * 100 + '%'});
+
 
             $range.each(function () {
                 $($maxValue).css('pointerEvents', 'none');
@@ -261,45 +283,75 @@ class View extends Observer {
     }
 
     private setVertical(): void {
-        const element: JQuery = $(this.selectorState);
-        const maxElement: JQuery = $(`${this.selectorState} .slider-app__max-value`);
-        const minElement: JQuery = $(`${this.selectorState} .slider-app__min-value`);
-        const tooltipElement: JQuery = $(`${this.selectorState} .slider-app__tooltip-value`);
+        const $element: JQuery = $(this.selectorState);
+        const $maxElement: JQuery = $(`${this.selectorState} .slider-app__max-value`);
+        const $minElement: JQuery = $(`${this.selectorState} .slider-app__min-value`);
+        const $tooltipElement: JQuery = $(`${this.selectorState} .slider-app__tooltip-value`);
 
         if (this.optionsState.vertical) {
 
-            element.css('transform', 'rotate(270deg)');
+            $(`${this.selectorState} .slider-app`).addClass('slider-app--vertical');
+            $(`${this.selectorState} .slider-app__input`)
+                .addClass('slider-app__input--vertical')
+                .css('width', $(`${this.selectorState}`).css('height'));
 
-            maxElement.css({
-                transform: 'translateX(40px) rotate(90deg)',
-                justifyContent: 'center'
-            });
+            $(`${this.selectorState} .slider-app__tooltip-line`)
+                .addClass('slider-app__tooltip-line--vertical');
 
-            minElement.css({
-                transform: 'translateX(-30px) rotate(-90deg)',
-                justifyContent: 'center'
-            });
+            $(`${this.selectorState} .slider-app__rulers`)
+                .removeClass('slider-app__rulers')
+                .addClass('slider-app__rulers--vertical');
 
-            tooltipElement.css('transform','rotate(225deg)');
+            $(`${this.selectorState} .slider-app__bar-line`)
+                .addClass('slider-app__bar-line--vertical');
 
-            $('body').css('flexDirection', 'row');
+            $(`${this.selectorState} .slider-app__progress`)
+                .addClass('slider-app__progress--vertical');
+
+            $(`${this.selectorState} .slider-app__tooltip-container`)
+                .addClass('slider-app__tooltip-container--vertical');
+
+            $(`${this.selectorState} .slider-app__tooltip-value`)
+                .addClass('slider-app__tooltip-value--vertical');
+
+            $(`${this.selectorState} .slider-app__min-value`)
+                .addClass('slider-app__min-value--vertical');
+
+            $(`${this.selectorState} .slider-app__max-value`)
+                .addClass('slider-app__max-value--vertical');
+
         } else {
+            $(`${this.selectorState} .slider-app`).removeClass('slider-app--vertical');
 
-            element.css('transform', 'rotate(0deg)');
+            $(`${this.selectorState} .slider-app__input`)
+                .removeClass('slider-app__input--vertical')
+                .css('width', parseInt($(`${this.selectorState}`).css('width')) + 10 + 'px');
 
-            maxElement.css({
-                transform: 'translateX(40px) rotate(0deg)',
-                justifyContent: 'center'
-            });
+            $(`${this.selectorState} .slider-app__tooltip-line`)
+                .removeClass('slider-app__tooltip-line--vertical');
 
-            minElement.css({
-                transform: 'translateX(-30px) rotate(0deg)',
-                justifyContent: 'center'
-            });
+            $(`${this.selectorState} .slider-app__rulers--vertical`)
+                .removeClass('slider-app__rulers--vertical')
+                .addClass('slider-app__rulers');
 
-            tooltipElement.css('transform','rotate(135deg)');
 
-            $('body').css('flexDirection', 'column');
+            $(`${this.selectorState} .slider-app__bar-line`)
+                .removeClass('slider-app__bar-line--vertical');
+
+            $(`${this.selectorState} .slider-app__progress`)
+                .removeClass('slider-app__progress--vertical');
+
+            $(`${this.selectorState} .slider-app__tooltip-container`)
+                .removeClass('slider-app__tooltip-container--vertical');
+
+            $(`${this.selectorState} .slider-app__tooltip-value`)
+                .removeClass('slider-app__tooltip-value--vertical');
+
+            $(`${this.selectorState} .slider-app__min-value`)
+                .removeClass('slider-app__min-value--vertical');
+
+            $(`${this.selectorState} .slider-app__max-value`)
+                .removeClass('slider-app__max-value--vertical');
         }
     }
 
@@ -313,13 +365,24 @@ class View extends Observer {
             const inputMin: JQuery = $(`${this.selectorState} .slider-app__input-min`);
             const fontSizeFirst: number = tooltipValueFirst.text().length - 2;
 
-            tooltipContainerFirst.css('left',
-                (((+inputMin.val() - minValue) / (maxValue - minValue)) * 100) + '%');
-            tooltipValueFirst.css('font-size', 15 - fontSizeFirst + 'px');
+            this.optionsState.vertical
+                ? tooltipContainerFirst.css({
+                bottom: (( (+inputMin.val() - minValue) / (maxValue - minValue) ) * 100) + '%',
+                left: '0'
+                })
+                : tooltipContainerFirst.css({
+                left: (((+inputMin.val() - minValue) / (maxValue - minValue)) * 100) + '%',
+                bottom: '1.5rem'
+                });
+
+        tooltipValueFirst.css('font-size', 15 - fontSizeFirst + 'px');
 
             inputMin.on({
                 input: () => {
-                    tooltipContainerFirst.css('left',
+                    this.optionsState.vertical
+                        ? tooltipContainerFirst.css('bottom',
+                        (((+inputMin.val() - minValue) / (maxValue - minValue)) * 100) + '%')
+                        : tooltipContainerFirst.css('left',
                         (((+inputMin.val() - minValue) / (maxValue - minValue)) * 100) + '%');
 
                     if (tooltipValueFirst.text().length > 4) {
@@ -388,8 +451,12 @@ class View extends Observer {
         if (this.optionsState.color.firstColor || this.optionsState.color.secondColor) {
             const colorOne: string = this.optionsState.color.firstColor;
             const colorTwo: string = this.optionsState.color.secondColor;
-            $(`${this.selectorState} .slider-app__progress`).css('background-image',
+            this.optionsState.vertical
+                ? $(`${this.selectorState} .slider-app__progress`).css('background-image',
+                `linear-gradient(to top, ${colorOne} 0%, ${colorTwo} 100%)`)
+                : $(`${this.selectorState} .slider-app__progress`).css('background-image',
                 `linear-gradient(90deg, ${colorOne} 0%, ${colorTwo} 100%)`);
+
         }
 
         if (this.optionsState.color.textColor) {

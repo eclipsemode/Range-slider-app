@@ -18,6 +18,11 @@ body {
   height: 20px;
   width: 100%;
 
+  &--vertical {
+    height: 100%;
+    width: 20px;
+  }
+
   &__input {
     position: absolute;
     z-index: 3;
@@ -30,6 +35,12 @@ body {
     outline: none;
     transform-origin: 0 0;
     background-color: transparent;
+
+    &--vertical {
+      transform: rotate(-90deg);
+      bottom: -20px;
+      left: 0;
+    }
 
     &::-webkit-slider-thumb {
       pointer-events: auto;
@@ -76,68 +87,18 @@ body {
     }
   }
 
-  &__bar {
-    z-index: 1;
-    right: 10px;
-    left: 20px;
-    background-color: rgba(0, 0, 0, 0.2);
-
-    &::before {
-      left: 100%;
-      background-color: rgba(0, 0, 0, 0.2);
-      border-top-right-radius: 10px;
-      border-bottom-right-radius: 10px;
-    }
-
-    &::before {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      top: 0;
-      width: 10px;
-    }
-  }
-
-  &__color-start {
-    right: 100%;
-    background-color: $gr-main;
-    border-bottom-left-radius: 10px;
-    border-top-left-radius: 10px;
-    content: '';
-    position: absolute;
-    bottom: 0;
-    top: 0;
-    width: 10px;
-  }
-
-  &__bar,
-  &__fill {
-    position: absolute;
-    bottom: 0;
-    top: 0;
-  }
-
-  &__fill {
-    z-index: 2;
-    left: 0;
-    width: 50%;
-    overflow: hidden;
-
-    &-stripe {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      top: 0;
-      width: 100%;
-      left: 0;
-      background-image: linear-gradient(90deg, $gr-main 0%, $gr-secondary 100%);
-    }
-  }
-
   &__tooltip-line {
-  position: relative;
-  width: calc(100% - 26px);
-  transform: translateX(-14px);
+    position: relative;
+    height: auto;
+    width: calc(100% - 26px);
+    transform: translateX(-14px);
+
+    &--vertical {
+      height: calc(100% - 33px);
+      width: auto;
+      top: 37px;
+      transform: translateX(-66px);
+    }
 }
 
   &__tooltip-container {
@@ -157,6 +118,10 @@ body {
     padding: 5px;
     box-shadow: 0 0 20px rgb(0 0 0 / 70%);
     transition: opacity ease-in-out 0.4s;
+
+    &--vertical {
+      transform: rotate(135deg);
+    }
   }
 
   &__tooltip-value {
@@ -173,6 +138,10 @@ body {
     align-items: center;
     pointer-events: none;
     font-size: 15px;
+
+    &--vertical {
+      transform: rotate(225deg);
+    }
   }
 
   &__rulers {
@@ -205,6 +174,39 @@ body {
       background: linear-gradient(to right, #686868 1px, transparent 2px);
       background-size: 100% 2%;
     }
+
+    &--vertical {
+      position: absolute;
+      content: '';
+      right: auto;
+      left: 150%;
+      top: 15px;
+      bottom: 15px;
+      width: 100%;
+      border-top: 1px solid #686868;
+    }
+
+    &--vertical::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background: linear-gradient(to top, #686868 1px, transparent 2px);
+      background-size: 100% 10%;
+    }
+
+    &--vertical::after {
+      content: '';
+      position: absolute;
+      left: 30px;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background: linear-gradient(to top, #686868 1px, transparent 2px);
+      background-size: 100% 2%;
+    }
   }
 
   &__min-value {
@@ -216,6 +218,15 @@ body {
     justify-content: flex-end;
     color: $gr-main;
     cursor: pointer;
+
+    &--vertical {
+      left: 27px;
+      display: flex;
+      width: 27px;
+      justify-content: center;
+      bottom: -30px;
+    }
+
   }
   &__max-value {
     position: absolute;
@@ -226,6 +237,14 @@ body {
     justify-content: flex-start;
     color: $gr-main;
     cursor: pointer;
+
+    &--vertical {
+      right: 37px;
+      display: flex;
+      width: 27px;
+      justify-content: center;
+      top: -30px;
+    }
   }
 
   &__bar-line {
@@ -235,6 +254,11 @@ body {
     border-radius: 20px;
     outline: none;
     position: relative;
+
+    &--vertical {
+      width: 20px;
+      height: 100%;
+    }
   }
 
   &__progress {
@@ -246,11 +270,27 @@ body {
     width: 0;
     background: linear-gradient(90deg, $gr-main 0%, $gr-secondary 100%);
     border-radius: inherit;
+
+    &--vertical {
+      position: absolute;
+      top: auto;
+      right: 0;
+      bottom: 0;
+      height: 0;
+      width: 100%;
+      background: linear-gradient(to top, $gr-main 0%, $gr-secondary 100%);
+      border-radius: inherit;
+    }
   }
 }
 
 .slider {
   width: 500px;
+  height: 300px;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
 }
 
 .second {

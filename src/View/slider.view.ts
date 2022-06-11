@@ -67,11 +67,13 @@ class View extends Observer {
         this.setConfig();
 
         this.updateToggleValues();
+
+        this.setRulers();
     }
 
     getSlider(): void {
         this.mainClass.getMainClass();
-        this.optionsState.rulers ? this.rulers.getRulers() : null;
+        // this.optionsState.rulers ? this.rulers.getRulers() : null;
         this.minMaxValues.getMinMaxValues();
         this.bar.getBar();
         this.optionsState.progress ? this.progress.getProgress() : null;
@@ -95,7 +97,7 @@ class View extends Observer {
                     break;
                 case 'rulers':
                     this.optionsState.rulers = data.value;
-                    this.updateRulers();
+                    this.setRulers();
                     break;
                 case 'progress':
                     this.optionsState.progress = data.value;
@@ -148,13 +150,13 @@ class View extends Observer {
 
     evaluateVar = (item: string) => eval(item);
 
-    private updateRulers = () => {
-        if (this.optionsState.rulers) {
-            this.rulers.getRulers();
-        } else {
-            $(`${this.selectorState} .slider-app__rulers`).remove();
-        }
-    };
+    // private updateRulers = () => {
+        // if (this.optionsState.rulers) {
+        //     this.rulers.getRulers();
+        // } else {
+        //     $(`${this.selectorState} .slider-app__rulers`).remove();
+        // }
+    // };
 
     private updateProgress = () => {
         if (this.optionsState.progress) {
@@ -215,6 +217,16 @@ class View extends Observer {
             this.setColor();
             this.setTooltip();
             this.setBar();
+        }
+    };
+
+    private setRulers = () => {
+        const rulers = $(`${this.selectorState} .slider-app__rulers`);
+
+        if (this.optionsState.rulers) {
+            rulers.length === 0 ? this.rulers.getRulers() : null;
+        } else {
+            rulers.remove();
         }
     };
 

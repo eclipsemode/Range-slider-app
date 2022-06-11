@@ -3,13 +3,14 @@ import Controller from './Controller/slider.controller';
 
 new Controller('.slider', {
     range: false,
-    configPanel: true
+    configPanel: true,
 });
 
-new Controller('.second', {
-    min: -10000,
-    max: 500,
-});
+// new Controller('.second', {
+//     min: -10000,
+//     max: 500,
+//     configPanel: true
+// });
 
 // $('body').append($(`
 //     <textarea class="textField"></textarea>

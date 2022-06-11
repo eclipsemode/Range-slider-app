@@ -60,6 +60,7 @@ class View extends Observer {
     render(): void {
         this.setBar();
         $(`${this.selectorState} .slider-app__input`).on('input', () => this.setBar());
+        this.setRulers();
         this.setTooltip();
         this.setVertical();
         this.setColor();
@@ -68,7 +69,7 @@ class View extends Observer {
 
         this.updateToggleValues();
 
-        this.setRulers();
+
     }
 
     getSlider(): void {
@@ -78,10 +79,10 @@ class View extends Observer {
         this.bar.getBar();
         this.optionsState.progress ? this.progress.getProgress() : null;
         this.thumb.getMinThumb();
-        this.optionsState.tooltip.display ? this.tooltip.getFirstTooltip() : null;
+        // this.optionsState.tooltip.display ? this.tooltip.getFirstTooltip() : null;
         if (this.optionsState.range) {
             this.thumb.getMaxThumb();
-            this.tooltip.getSecondTooltip();
+            // this.tooltip.getSecondTooltip();
         }
         this.optionsState.configPanel ? this.configPanel.getConfig() : null;
     }
@@ -105,7 +106,7 @@ class View extends Observer {
                     break;
                 case 'tooltip':
                     this.optionsState.tooltip.display = data.value;
-                    this.updateTooltip();
+                    this.setTooltip();
                     break;
                 case 'range':
                     this.optionsState.range = data.value;
@@ -195,16 +196,16 @@ class View extends Observer {
         }
     };
 
-    private updateTooltip = () => {
-        if (this.optionsState.tooltip.display) {
-            this.tooltip.getFirstTooltip();
-            this.optionsState.range ? this.tooltip.getSecondTooltip() : null;
-
-            this.setTooltip();
-        } else {
-            $(`${this.selectorState} .slider-app__tooltip-line`).remove();
-        }
-    };
+    // private updateTooltip = () => {
+    //     if (this.optionsState.tooltip.display) {
+    //         this.tooltip.getFirstTooltip();
+    //         this.optionsState.range ? this.tooltip.getSecondTooltip() : null;
+    //
+    //         this.setTooltip();
+    //     } else {
+    //         $(`${this.selectorState} .slider-app__tooltip-line`).remove();
+    //     }
+    // };
 
     private updateVertical = () => {
         if (this.optionsState.vertical) {
@@ -368,9 +369,14 @@ class View extends Observer {
     }
 
     private setTooltip(): void {
+        const tooltip: JQuery = $(`${this.selectorState} .slider-app__tooltip-line`);
+
+        if (this.optionsState.tooltip.display) {
+            tooltip.length === 0 ? this.tooltip.getFirstTooltip() : null;
+            tooltip.length === 0 && this.optionsState.range ? this.tooltip.getSecondTooltip() : null;
+
             const maxValue: number = this.optionsState.max;
             const minValue: number = this.optionsState.min;
-
             const tooltipValueFirst: JQuery = $(`${this.selectorState} .slider-app__tooltip-value-first`);
             const tooltipContainerFirst: JQuery =
                 $(`${this.selectorState} .slider-app__tooltip-container-first`);
@@ -379,23 +385,23 @@ class View extends Observer {
 
             this.optionsState.vertical
                 ? tooltipContainerFirst.css({
-                bottom: (( (+inputMin.val() - minValue) / (maxValue - minValue) ) * 100) + '%',
-                left: '0'
+                    bottom: (( (+inputMin.val() - minValue) / (maxValue - minValue) ) * 100) + '%',
+                    left: '0'
                 })
                 : tooltipContainerFirst.css({
-                left: (((+inputMin.val() - minValue) / (maxValue - minValue)) * 100) + '%',
-                bottom: '1.5rem'
+                    left: (((+inputMin.val() - minValue) / (maxValue - minValue)) * 100) + '%',
+                    bottom: '1.5rem'
                 });
 
-        tooltipValueFirst.css('font-size', 15 - fontSizeFirst + 'px');
+            tooltipValueFirst.css('font-size', 15 - fontSizeFirst + 'px');
 
             inputMin.on({
                 input: () => {
                     this.optionsState.vertical
                         ? tooltipContainerFirst.css('bottom',
-                        (((+inputMin.val() - minValue) / (maxValue - minValue)) * 100) + '%')
+                            (((+inputMin.val() - minValue) / (maxValue - minValue)) * 100) + '%')
                         : tooltipContainerFirst.css('left',
-                        (((+inputMin.val() - minValue) / (maxValue - minValue)) * 100) + '%');
+                            (((+inputMin.val() - minValue) / (maxValue - minValue)) * 100) + '%');
 
                     if (tooltipValueFirst.text().length > 4) {
                         const fontSize: number = tooltipValueFirst.text().length - 2;
@@ -406,10 +412,10 @@ class View extends Observer {
                 }
             });
 
-            if (this.optionsState.tooltip.percent === false || !this.optionsState.tooltip.percent) {
+            if (!this.optionsState.tooltip.percent) {
                 tooltipValueFirst.text(<string>inputMin.val());
                 inputMin.on('input', () => tooltipValueFirst.text(<string>inputMin.val()));
-            } else if (this.optionsState.tooltip.percent) {
+            } else {
                 tooltipValueFirst.text(parseInt(String(
                     (+inputMin.val() - minValue) / (maxValue - minValue) * 100)) + '%');
 
@@ -445,10 +451,10 @@ class View extends Observer {
                     }
                 });
 
-                if (this.optionsState.tooltip.percent === false || !this.optionsState.tooltip.percent) {
+                if (!this.optionsState.tooltip.percent) {
                     tooltipValueSecond.text(<string>inputMax.val());
                     inputMax.on('input', () => tooltipValueSecond.text(<string>inputMax.val()));
-                } else if (this.optionsState.tooltip.percent === true) {
+                } else {
                     tooltipValueSecond.text(parseInt(String(
                         (+inputMax.val() - minValue) / (maxValue - minValue) * 100)) + '%');
 
@@ -456,7 +462,11 @@ class View extends Observer {
                         tooltipValueSecond.text(parseInt(String(
                             (+inputMax.val() - minValue) / (maxValue - minValue) * 100)) + '%'));
                 }
+
             }
+
+        } else tooltip.remove();
+
     }
 
     private setColor(): void {

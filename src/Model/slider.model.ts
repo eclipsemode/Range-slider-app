@@ -1,5 +1,6 @@
 import ModelOption from '../utils/ModelOption';
 import Observer from '../Observer/Observer';
+import {TogglesEnum, ControlsEnum} from '../utils/Config.enum';
 
 class Model extends Observer {
     optionsState: Partial<ModelOption>;
@@ -34,8 +35,8 @@ class Model extends Observer {
         verifiedOptions.range = verifiedOptions.range ?? false;
         verifiedOptions.configPanel = verifiedOptions.configPanel ?? false;
         verifiedOptions.progress = verifiedOptions.progress ?? true;
-        verifiedOptions.controlConfig = ['min', 'max', 'step', 'from', 'to'];
-        verifiedOptions.toggleConfig = ['vertical', 'range', 'rulers', 'progress', 'tooltip'];
+        verifiedOptions.controlConfig = Object.values(ControlsEnum);
+        verifiedOptions.toggleConfig = Object.values(TogglesEnum);
 
         verifiedOptions.min =
             verifiedOptions.min < verifiedOptions.max ? verifiedOptions.min :

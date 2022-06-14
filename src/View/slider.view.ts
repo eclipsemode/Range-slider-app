@@ -1,4 +1,5 @@
 import ModelOption from '../utils/ModelOption';
+import {TogglesEnum} from '../utils/Config.enum';
 
 import Rulers from '../components/rulers/Rulers';
 import MinMaxValues from '../components/minMaxValues/MinMaxValues';
@@ -84,23 +85,23 @@ class View extends Observer {
         const fn = (data: {key: string, value: boolean}) => {
 
             switch (data.key) {
-                case 'vertical':
+                case TogglesEnum.VERTICAL:
                     this.optionsState.vertical = data.value;
                     this.updateVertical();
                     break;
-                case 'rulers':
+                case TogglesEnum.RULERS:
                     this.optionsState.rulers = data.value;
                     this.setRulers();
                     break;
-                case 'progress':
+                case TogglesEnum.PROGRESS:
                     this.optionsState.progress = data.value;
                     this.setProgress();
                     break;
-                case 'tooltip':
+                case TogglesEnum.TOOLTIP:
                     this.optionsState.tooltip.display = data.value;
                     this.setTooltip();
                     break;
-                case 'range':
+                case TogglesEnum.RANGE:
                     this.optionsState.range = data.value;
                     this.setRange();
                     break;

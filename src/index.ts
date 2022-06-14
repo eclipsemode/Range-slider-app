@@ -2,7 +2,7 @@ import './assets/style/style.scss';
 import Controller from './Controller/slider.controller';
 
 new Controller('.slider', {
-    range: false,
+    range: true,
     configPanel: true,
     tooltip: {
         percent: true

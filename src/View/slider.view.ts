@@ -94,7 +94,7 @@ class View extends Observer {
                     break;
                 case 'progress':
                     this.optionsState.progress = data.value;
-                    this.updateProgress();
+                    this.setProgress();
                     break;
                 case 'tooltip':
                     this.optionsState.tooltip.display = data.value;
@@ -143,12 +143,13 @@ class View extends Observer {
 
     evaluateVar = (item: string) => eval(item);
 
-    private updateProgress = () => {
+    private setProgress = () => {
+        const progressBar: JQuery = $(`${this.selectorState} .slider-app__progress`);
         if (this.optionsState.progress) {
-            this.progress.getProgress();
+            progressBar.length === 0 ? this.progress.getProgress() : null;
             this.setBar();
         } else {
-            $(`${this.selectorState} .slider-app__progress`).remove();
+            progressBar.remove();
         }
     };
 
@@ -180,11 +181,10 @@ class View extends Observer {
         const inputMax: JQuery = $(`${this.selectorState} .slider-app__input-max`);
         const inputMin: JQuery = $(`${this.selectorState} .slider-app__input-min`);
         const thumbsMain: JQuery = $(`${this.selectorState} .slider-app__bar-line`);
-        const progressBar: JQuery = $(`${this.selectorState} .slider-app__progress`);
 
         if (this.optionsState.range && inputMax.length === 0) {
             inputMin.length === 0 ? this.bar.getBar() : null;
-            this.optionsState.progress && progressBar.length === 0 ? this.progress.getProgress() : null;
+            this.setProgress();
             inputMin.length === 0 ? this.thumb.getMinThumb() : null;
             this.thumb.getMaxThumb();
             this.setTooltip();
@@ -193,7 +193,7 @@ class View extends Observer {
         } else if (!this.optionsState.range) {
             thumbsMain.length !== 0 ? thumbsMain.remove() : null;
             this.bar.getBar();
-            this.optionsState.progress ? this.progress.getProgress() : null;
+            this.setProgress();
             this.thumb.getMinThumb();
             this.setBar();
             this.setTooltip();

@@ -183,24 +183,23 @@ class View extends Observer {
         const inputMin: JQuery = $(`${this.selectorState} .slider-app__input-min`);
         const thumbsMain: JQuery = $(`${this.selectorState} .slider-app__bar-line`);
 
-        if (this.optionsState.range && inputMax.length === 0) {
+        if (this.optionsState.range) {
             inputMin.length === 0 ? this.bar.getBar() : null;
             this.setProgress();
             inputMin.length === 0 ? this.thumb.getMinThumb() : null;
-            this.thumb.getMaxThumb();
-            this.setTooltip();
-            this.setBar();
-            this.setConfig();
-        } else if (!this.optionsState.range) {
+            inputMax.length === 0 ? this.thumb.getMaxThumb() : null;
+        } else {
             thumbsMain.length !== 0 ? thumbsMain.remove() : null;
             this.bar.getBar();
             this.setProgress();
             this.thumb.getMinThumb();
-            this.setBar();
-            this.setTooltip();
-            this.setConfig();
-            $(`${this.selectorState} .slider-app__input`).on('input', () => this.setBar());
         }
+
+        this.setBar();
+        this.setConfig();
+        $(`${this.selectorState} .slider-app__input`).on('input', () => this.setBar());
+        this.setTooltip();
+
     };
 
     private setBar(): void {
@@ -395,7 +394,7 @@ class View extends Observer {
             }
 
             if (this.optionsState.range) {
-                tooltip.length === 0 && this.optionsState.range ? this.tooltip.getSecondTooltip() : null;
+                this.tooltip.getSecondTooltip();
                 const tooltipValueSecond: JQuery =
                     $(`${this.selectorState} .slider-app__tooltip-value-second`);
                 const tooltipContainerSecond: JQuery =

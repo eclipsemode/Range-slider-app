@@ -115,7 +115,7 @@ body {
     border-bottom-left-radius: 50%;
     border-bottom-right-radius: 50%;
     border-top-right-radius: 50%;
-    padding: 5px;
+    padding: 6px;
     box-shadow: 0 0 20px rgb(0 0 0 / 70%);
     transition: opacity ease-in-out 0.4s;
 
@@ -148,8 +148,8 @@ body {
     position: absolute;
     content: '';
     top: 150%;
-    right: 17px;
-    left: 8px;
+    right: 18px;
+    left: 9px;
     height: 100%;
     border-right: 1px solid #686868;
 
@@ -209,12 +209,32 @@ body {
     }
   }
 
+  &__rulers-values {
+    position: absolute;
+    top: 4rem;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    & > * {
+      cursor: pointer;
+      font-size: 12px;
+      font-family: sans-serif;
+      width: 18px;
+      display: flex;
+      justify-content: center;
+      padding-left: 5px;
+      padding-right: 5px;
+      text-align: center;
+    }
+  }
+
   &__min-value {
     position: absolute;
     left: -10px;
-    transform: translateX(-30px);
+    top: 4rem;
     display: flex;
-    width: 20px;
     justify-content: flex-end;
     color: $gr-main;
     cursor: pointer;
@@ -231,9 +251,8 @@ body {
   &__max-value {
     position: absolute;
     right: 0;
-    transform: translateX(40px);
+    top: 4rem;
     display: flex;
-    width: 20px;
     justify-content: flex-start;
     color: $gr-main;
     cursor: pointer;

@@ -8,10 +8,8 @@ declare type ModelOption  = {
     vertical?: boolean;
     rulers?: boolean,
     range?: boolean,
-    tooltip?: {
-        display?: boolean,
-        percent?: boolean
-    },
+    tooltip?: boolean,
+    percent?: boolean,
     color?: {
         firstColor?: string,
         secondColor?: string,

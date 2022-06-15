@@ -4,9 +4,7 @@ import Controller from './Controller/slider.controller';
 new Controller('.slider', {
     range: true,
     configPanel: true,
-    tooltip: {
-        percent: true
-    }
+    percent: true,
 });
 
 // new Controller('.second', {

@@ -1,8 +1,8 @@
 import ModelOption from '../utils/ModelOption';
 import {TogglesEnum} from '../utils/Config.enum';
+import abbreviateNumber from '../utils/abbreviateNumber';
 
 import Rulers from '../components/rulers/Rulers';
-import MinMaxValues from '../components/minMaxValues/MinMaxValues';
 import Thumb from '../components/thumb/Thumb';
 import Progress from '../components/progress/Progress';
 import Tooltip from '../components/tooltip/Tooltip';
@@ -16,7 +16,6 @@ class View extends Observer {
     private readonly optionsState: Partial<ModelOption>;
 
     private rulers: Rulers;
-    private minMaxValues: MinMaxValues;
     private thumb: Thumb;
     private progress: Progress;
     private tooltip: Tooltip;
@@ -31,11 +30,6 @@ class View extends Observer {
         this.optionsState = options;
         this.mainClass = new MainClass(this.selectorState);
         this.rulers = new Rulers(this.selectorState);
-        this.minMaxValues = new MinMaxValues(
-            this.selectorState,
-            this.optionsState.min,
-            this.optionsState.max
-        );
         this.thumb = new Thumb(
             this.selectorState,
             this.optionsState.min,
@@ -65,7 +59,6 @@ class View extends Observer {
         this.setTooltip();
         this.setVertical();
         this.setColor();
-        this.setMinMax();
         this.setConfig();
 
         this.updateToggleValues();
@@ -75,7 +68,7 @@ class View extends Observer {
 
     getSlider(): void {
         this.mainClass.getMainClass();
-        this.minMaxValues.getMinMaxValues();
+        // this.minMaxValues.getMinMaxValues();
         this.optionsState.configPanel ? this.configPanel.getConfig() : null;
     }
 
@@ -98,7 +91,7 @@ class View extends Observer {
                     this.setProgress();
                     break;
                 case TogglesEnum.TOOLTIP:
-                    this.optionsState.tooltip.display = data.value;
+                    this.optionsState.tooltip = data.value;
                     this.setTooltip();
                     break;
                 case TogglesEnum.RANGE:
@@ -125,7 +118,7 @@ class View extends Observer {
 
         const selectorControlTo = $(`#${newSelector}__control-to`);
 
-        $(`#${newSelector}__toggle-tooltip`).prop('checked', this.optionsState.tooltip.display);
+        $(`#${newSelector}__toggle-tooltip`).prop('checked', this.optionsState.tooltip);
 
         !this.optionsState.range
             ? selectorControlTo.prop('disabled', true)
@@ -169,12 +162,100 @@ class View extends Observer {
     };
 
     private setRulers = () => {
-        const rulers = $(`${this.selectorState} .slider-app__rulers`);
+        const $rulers = $(`${this.selectorState} .slider-app__rulers`);
 
         if (this.optionsState.rulers) {
-            rulers.length === 0 ? this.rulers.getRulers() : null;
+            $rulers.length === 0 ? this.rulers.getRulers() : null;
+            const $values: JQuery = $(`${this.selectorState} .slider-app__rulers-values`);
+            const $minThumb: JQuery = $(`${this.selectorState} .slider-app__input-min`);
+            const $maxThumb: JQuery = $(`${this.selectorState} .slider-app__input-max`);
+
+            $values.css('color', this.optionsState.color.textColor);
+
+            $values.children().each((index, element) => {
+                const max: number = this.optionsState.to;
+                const gap: number = this.optionsState.gap;
+
+                switch (index) {
+                    case 0:
+                        this.optionsState.percent
+                            ? element.innerText = '0%'
+                            : element.innerText = abbreviateNumber(max, 0);
+
+                        element.addEventListener('click', () => {
+                            $minThumb.val(this.optionsState.min);
+                            this.setBar();
+                            this.setTooltip();
+                        });
+                        break;
+                    case 1:
+                        this.optionsState.percent
+                            ? element.innerText = '20%'
+                            : element.innerText = abbreviateNumber(max, 20);
+
+                        element.addEventListener('click', () => {
+                            max * 20 / 100 < Number($maxThumb.val()) - gap
+                                ? $minThumb.val(max * 20 / 100)
+                                : $minThumb.val(Number($maxThumb.val()) - gap);
+                            this.setBar();
+                            this.setTooltip();
+                        });
+                        break;
+                    case 2:
+                        this.optionsState.percent
+                            ? element.innerText = '40%'
+                            : element.innerText = abbreviateNumber(max, 40);
+
+                        element.addEventListener('click', () => {
+                            max * 40 / 100 < Number($maxThumb.val()) - gap
+                                ? $minThumb.val(max * 40 / 100)
+                                : $minThumb.val(Number($maxThumb.val()) - gap);
+                            this.setBar();
+                            this.setTooltip();
+                        });
+                        break;
+                    case 3:
+                        this.optionsState.percent
+                            ? element.innerText = '60%'
+                            : element.innerText = abbreviateNumber(max, 60);
+
+                        element.addEventListener('click', () => {
+                            max * 60 / 100 > Number($minThumb.val()) + gap
+                                ? $maxThumb.val(max * 60 / 100)
+                                : $maxThumb.val(Number($minThumb.val()) + gap);
+                            this.setBar();
+                            this.setTooltip();
+                        });
+                        break;
+                    case 4:
+                        this.optionsState.percent
+                            ? element.innerText = '80%'
+                            : element.innerText = abbreviateNumber(max, 80);
+
+                        element.addEventListener('click', () => {
+                            max * 80 / 100 > Number($minThumb.val()) + gap
+                                ? $maxThumb.val(max * 80 / 100)
+                                : $maxThumb.val(Number($minThumb.val()) + gap);
+                            this.setBar();
+                            this.setTooltip();
+                        });
+                        break;
+                    case 5:
+                        this.optionsState.percent
+                            ? element.innerText = '100%'
+                            : element.innerText = abbreviateNumber(max, 100);
+
+                        element.addEventListener('click', () => {
+                            $maxThumb.val(this.optionsState.max);
+                            this.setBar();
+                            this.setTooltip();
+                        });
+                        break;
+                }
+            });
         } else {
-            rulers.remove();
+            $rulers.remove();
+            $(`${this.selectorState} .slider-app__rulers-values`).remove();
         }
     };
 
@@ -341,7 +422,7 @@ class View extends Observer {
     private setTooltip(): void {
         const tooltip: JQuery = $(`${this.selectorState} .slider-app__tooltip-line`);
 
-        if (this.optionsState.tooltip.display) {
+        if (this.optionsState.tooltip) {
             tooltip.length === 0 ? this.tooltip.getFirstTooltip() : null;
 
             const maxValue: number = this.optionsState.max;
@@ -381,7 +462,7 @@ class View extends Observer {
                 }
             });
 
-            if (!this.optionsState.tooltip.percent) {
+            if (!this.optionsState.percent) {
                 tooltipValueFirst.text(<string>inputMin.val());
                 inputMin.on('input', () => tooltipValueFirst.text(<string>inputMin.val()));
             } else {
@@ -394,7 +475,10 @@ class View extends Observer {
             }
 
             if (this.optionsState.range) {
-                this.tooltip.getSecondTooltip();
+                // noinspection JSJQueryEfficiency
+                $(`${this.selectorState} .slider-app__tooltip-container-second`).length === 0
+                    ? this.tooltip.getSecondTooltip()
+                    : null;
                 const tooltipValueSecond: JQuery =
                     $(`${this.selectorState} .slider-app__tooltip-value-second`);
                 const tooltipContainerSecond: JQuery =
@@ -421,7 +505,7 @@ class View extends Observer {
                     }
                 });
 
-                if (!this.optionsState.tooltip.percent) {
+                if (!this.optionsState.percent) {
                     tooltipValueSecond.text(<string>inputMax.val());
                     inputMax.on('input', () => tooltipValueSecond.text(<string>inputMax.val()));
                 } else {
@@ -461,33 +545,6 @@ class View extends Observer {
             $(`<style type="text/css">${this.selectorState} .slider-app__input::-webkit-slider-thumb
                 {background-color: ${this.optionsState.color.thumbColor}}</style>`)
                     .appendTo($('head'));
-        }
-    }
-
-    private setMinMax(): void {
-        const inputMin: JQuery = $(`${this.selectorState} .slider-app__input-min`);
-        const inputMax: JQuery = $(`${this.selectorState} .slider-app__input-max`);
-        const minValue: JQuery = $(`${this.selectorState} .slider-app__min-value`);
-        const maxValue: JQuery = $(`${this.selectorState} .slider-app__max-value`);
-
-        minValue.on('click', () => {
-            inputMin.val(inputMin.attr('min'));
-            this.setBar();
-            this.setTooltip();
-        });
-
-        if (!this.optionsState.range) {
-            maxValue.on('click', () => {
-                inputMin.val(inputMin.attr('max'));
-                this.setBar();
-                this.setTooltip();
-            });
-        } else {
-            maxValue.on('click', () => {
-                inputMax.val(inputMax.attr('max'));
-                this.setBar();
-                this.setTooltip();
-            });
         }
     }
 }

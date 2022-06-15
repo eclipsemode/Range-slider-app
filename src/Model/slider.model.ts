@@ -15,13 +15,12 @@ class Model extends Observer {
         verifiedOptions.max = verifiedOptions.max ?? 1000;
         verifiedOptions.from = verifiedOptions.from ?? verifiedOptions.min;
         verifiedOptions.to = verifiedOptions.to ?? verifiedOptions.max;
-        verifiedOptions.gap = verifiedOptions.gap ?? 130;
+        verifiedOptions.gap = verifiedOptions.gap ?? ((verifiedOptions.max - verifiedOptions.min) * 10) / 100;
         verifiedOptions.step = verifiedOptions.step ?? 0.1;
         verifiedOptions.vertical = verifiedOptions.vertical ?? false;
         verifiedOptions.rulers = verifiedOptions.rulers ?? true;
-        verifiedOptions.tooltip = verifiedOptions.tooltip ?? {display: false, percent: false};
-        verifiedOptions.tooltip.percent = verifiedOptions.tooltip.percent ?? false;
-        verifiedOptions.tooltip.display = verifiedOptions.tooltip.display ?? false;
+        verifiedOptions.tooltip = verifiedOptions.tooltip ?? false;
+        verifiedOptions.percent = verifiedOptions.percent ?? false;
         verifiedOptions.color = verifiedOptions.color ?? {
             firstColor: '#ffe53b',
             secondColor: '#ff2525',

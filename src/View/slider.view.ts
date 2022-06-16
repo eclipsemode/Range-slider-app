@@ -326,6 +326,13 @@ class View extends Observer {
             const gap = this.optionsState.gap;
             const $maxValue = $(`${this.selectorState} .slider-app__input-max`);
 
+            const barTranslateX = () => {
+                const value: number = (Number($minValue.val()) / this.optionsState.max) * 100 + 1;
+                value > 45
+                    ? $progress.css('transform', 'translateX(-15px)')
+                    : $progress.css('transform', 'translateX(0px)');
+            };
+
             this.optionsState.vertical
                 ? $progress.css({
                 height: 'auto',
@@ -337,9 +344,11 @@ class View extends Observer {
                 left: (Number($minValue.val()) / Number($minValue.attr('max'))) * 100 + 1 + '%',
                 right: 100 - (Number($maxValue.val()) / Number($maxValue.attr('max'))) * 100 + '%'});
 
+            barTranslateX();
 
             $range.each(function () {
                 $($maxValue).css('pointerEvents', 'none');
+
                 $(this).on('input', () => {
                     const min = Number($minValue.val());
                     const max = Number($maxValue.val());
@@ -358,9 +367,7 @@ class View extends Observer {
                         right: maxPercent + '%'
                     });
 
-                    minPercent > 45
-                        ? $progress.css('transform', 'translateX(-15px)')
-                        : $progress.css('transform', 'translateX(0px)');
+                    barTranslateX();
                 });
             });
         }

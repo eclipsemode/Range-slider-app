@@ -6,10 +6,6 @@ new Controller('.slider', {
     configPanel: true,
     percent: false,
     max: 1000,
-    color: {
-        firstColor: 'green',
-        secondColor: 'blue'
-    }
 });
 
 // new Controller('.second', {

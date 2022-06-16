@@ -11,7 +11,7 @@ class Progress {
     public getProgress() {
         return $('<div>', {
             class: 'slider-app__progress'
-        }).appendTo(`${this.selector} .slider-app__bar-line`);
+        }).prependTo(`${this.selector} .slider-app__bar-line`);
     }
 
 }

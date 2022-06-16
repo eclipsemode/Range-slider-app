@@ -68,7 +68,6 @@ class View extends Observer {
 
     getSlider(): void {
         this.mainClass.getMainClass();
-        // this.minMaxValues.getMinMaxValues();
         this.optionsState.configPanel ? this.configPanel.getConfig() : null;
     }
 
@@ -88,7 +87,7 @@ class View extends Observer {
                     break;
                 case TogglesEnum.PROGRESS:
                     this.optionsState.progress = data.value;
-                    this.setProgress();
+                    this.setBar();
                     break;
                 case TogglesEnum.TOOLTIP:
                     this.optionsState.tooltip = data.value;
@@ -136,16 +135,6 @@ class View extends Observer {
     };
 
     evaluateVar = (item: string) => eval(item);
-
-    private setProgress = () => {
-        const progressBar: JQuery = $(`${this.selectorState} .slider-app__progress`);
-        if (this.optionsState.progress) {
-            progressBar.length === 0 ? this.progress.getProgress() : null;
-            this.setBar();
-        } else {
-            progressBar.remove();
-        }
-    };
 
     private updateVertical = () => {
         if (this.optionsState.vertical) {
@@ -267,18 +256,17 @@ class View extends Observer {
         const thumbsMain: JQuery = $(`${this.selectorState} .slider-app__bar-line`);
 
         if (this.optionsState.range) {
-            inputMin.length === 0 ? this.bar.getBar() : null;
-            this.setProgress();
+            this.setBar();
+            // this.setProgress();
             inputMin.length === 0 ? this.thumb.getMinThumb() : null;
             inputMax.length === 0 ? this.thumb.getMaxThumb() : null;
         } else {
             thumbsMain.length !== 0 ? thumbsMain.remove() : null;
-            this.bar.getBar();
-            this.setProgress();
+            this.setBar();
+            // this.setProgress();
             this.thumb.getMinThumb();
         }
 
-        this.setBar();
         this.setConfig();
         $(`${this.selectorState} .slider-app__input`).on('input', () => this.setBar());
         this.setTooltip();
@@ -286,11 +274,21 @@ class View extends Observer {
     };
 
     private setBar(): void {
+        const $bar: JQuery = $(`${this.selectorState} .slider-app__bar-line`);
+        $bar.length === 0 ? this.bar.getBar() : null;
         const $range = $(`${this.selectorState} .slider-app__input`);
         const $minValue = $(`${this.selectorState} .slider-app__input-min`);
-        const $progress = $(`${this.selectorState} .slider-app__progress`);
 
-        if (!this.optionsState.range) {
+        if (this.optionsState.progress) {
+            $(`${this.selectorState} .slider-app__progress`).length === 0
+                ? this.progress.getProgress()
+                : null;
+        } else $(`${this.selectorState} .slider-app__progress`).remove();
+
+        // noinspection JSJQueryEfficiency
+        const $progress: JQuery = $(`${this.selectorState} .slider-app__progress`);
+
+        if (!this.optionsState.range && this.optionsState.progress) {
             const value: number = <number>$minValue.val();
             const min: number = parseInt($minValue.attr('min'));
             const max: number = parseInt($minValue.attr('max'));
@@ -304,7 +302,7 @@ class View extends Observer {
                 width: percent + '%',
                 height: 100 + '%'});
 
-        } else {
+        } else if (this.optionsState.range && this.optionsState.progress) {
             const gap = this.optionsState.gap;
             const $maxValue = $(`${this.selectorState} .slider-app__input-max`);
 
@@ -349,10 +347,10 @@ class View extends Observer {
     }
 
     private setVertical(): void {
-        const $element: JQuery = $(this.selectorState);
-        const $maxElement: JQuery = $(`${this.selectorState} .slider-app__max-value`);
-        const $minElement: JQuery = $(`${this.selectorState} .slider-app__min-value`);
-        const $tooltipElement: JQuery = $(`${this.selectorState} .slider-app__tooltip-value`);
+        // const $element: JQuery = $(this.selectorState);
+        // const $maxElement: JQuery = $(`${this.selectorState} .slider-app__max-value`);
+        // const $minElement: JQuery = $(`${this.selectorState} .slider-app__min-value`);
+        // const $tooltipElement: JQuery = $(`${this.selectorState} .slider-app__tooltip-value`);
 
         if (this.optionsState.vertical) {
 

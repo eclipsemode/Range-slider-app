@@ -1,12 +1,12 @@
 @import "src/assets/style/variables";
 
 .slider-app__config {
-  width: 90vw;
   height: fit-content;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   row-gap: 2rem;
+  margin-top: 6rem;
 
   &-section {
     display: flex;

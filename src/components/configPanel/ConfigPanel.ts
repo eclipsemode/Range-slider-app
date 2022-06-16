@@ -21,7 +21,7 @@ class ConfigPanel {
     }
 
     getMain = () => {
-        $(this.selector).after(
+        $(this.selector).append(
             `<div class="slider-app__config">
                         <div class="slider-app__config-section slider-app__config-section--control"></div>
                         <div class="slider-app__config-section slider-app__config-section--toggle"></div>

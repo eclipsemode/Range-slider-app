@@ -61,21 +61,12 @@ class View extends Observer {
         this.setColor();
         this.setConfig();
         this.updateConfig();
-
-
-    }
-
-    private evaluateVar = (item: string) => eval(item);
-
-    getSlider(): void {
-        this.mainClass.getMainClass();
-        this.optionsState.configPanel ? this.configPanel.getConfig() : null;
     }
 
     updateConfig = () => {
         const newSelector: string = this.selectorState.slice(1);
 
-        const fn = (data: {key: string, value: boolean}) => {
+        const handleToggle = (data: {key: string, value: boolean}) => {
 
             switch (data.key) {
                 case TogglesEnum.VERTICAL:
@@ -103,36 +94,47 @@ class View extends Observer {
 
         this.optionsState.toggleConfig.forEach(item => {
             $(`#${newSelector}__toggle-${item}`).on('change', () => {
-                this.subscribe(fn);
+                this.subscribe(handleToggle);
                 this.broadcast({
                     key: item,
                     value: $(`#${newSelector}__toggle-${item}`).prop('checked')
                 });
-                this.unsubscribe(fn);
+                this.unsubscribe(handleToggle);
             });
         });
     };
 
+    private evaluateVar = (item: string) => eval(item);
+
+    getSlider(): void {
+        this.mainClass.getMainClass();
+    }
+
     private setConfig = (): void => {
-        const newSelector: string = this.selectorState.slice(1);
+        if (this.optionsState.configPanel) {
+            $(`${this.selectorState} .slider-app__config`).length === 0
+                ? this.configPanel.getConfig()
+                : null;
 
-        const selectorControlTo = $(`#${newSelector}__control-to`);
+            const newSelector: string = this.selectorState.slice(1);
+            const selectorControlTo = $(`#${newSelector}__control-to`);
 
-        $(`#${newSelector}__toggle-tooltip`).prop('checked', this.optionsState.tooltip);
+            $(`#${newSelector}__toggle-tooltip`).prop('checked', this.optionsState.tooltip);
 
-        !this.optionsState.range
-            ? selectorControlTo.prop('disabled', true)
-            : selectorControlTo.prop('disabled', false);
+            !this.optionsState.range
+                ? selectorControlTo.prop('disabled', true)
+                : selectorControlTo.prop('disabled', false);
 
-        this.optionsState.controlConfig.forEach(item => {
-            $(`#${newSelector}__control-${item}`)
-                .val(this.evaluateVar(`this.optionsState.${item}`));
-        });
+            this.optionsState.controlConfig.forEach(item => {
+                $(`#${newSelector}__control-${item}`)
+                    .val(this.evaluateVar(`this.optionsState.${item}`));
+            });
 
-        this.optionsState.toggleConfig.forEach(item => {
-            $(`#${newSelector}__toggle-${item}`)
-                .attr('checked', this.evaluateVar(`this.optionsState.${item}`));
-        });
+            this.optionsState.toggleConfig.forEach(item => {
+                $(`#${newSelector}__toggle-${item}`)
+                    .attr('checked', this.evaluateVar(`this.optionsState.${item}`));
+            });
+        }
     };
 
     private updateVertical = () => {

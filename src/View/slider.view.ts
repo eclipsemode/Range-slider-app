@@ -172,6 +172,8 @@ class View extends Observer {
 
             $values.css('color', this.optionsState.color.textColor);
 
+            $values.children().css('font-size', $(this.selectorState).width() / 40 + 'px');
+
             $values.children().each((index, element) => {
                 const max: number = this.optionsState.to;
                 const gap: number = this.optionsState.gap;

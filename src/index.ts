@@ -4,7 +4,8 @@ import Controller from './Controller/slider.controller';
 new Controller('.slider', {
     range: true,
     configPanel: true,
-    percent: true,
+    percent: false,
+    max: 1000
 });
 
 // new Controller('.second', {

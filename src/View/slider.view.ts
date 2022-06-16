@@ -185,9 +185,13 @@ class View extends Observer {
                             : element.innerText = abbreviateNumber(max, 20);
 
                         element.addEventListener('click', () => {
-                            max * 20 / 100 < Number($maxThumb.val()) - gap
-                                ? $minThumb.val(max * 20 / 100)
-                                : $minThumb.val(Number($maxThumb.val()) - gap);
+                            if (this.optionsState.range) {
+                                max * 20 / 100 < Number($maxThumb.val()) - gap
+                                    ? $minThumb.val(max * 20 / 100)
+                                    : $minThumb.val(Number($maxThumb.val()) - gap);
+                            } else {
+                                $minThumb.val(max * 20 / 100);
+                            }
                             this.setBar();
                             this.setTooltip();
                         });
@@ -198,9 +202,13 @@ class View extends Observer {
                             : element.innerText = abbreviateNumber(max, 40);
 
                         element.addEventListener('click', () => {
-                            max * 40 / 100 < Number($maxThumb.val()) - gap
-                                ? $minThumb.val(max * 40 / 100)
-                                : $minThumb.val(Number($maxThumb.val()) - gap);
+                            if (this.optionsState.range) {
+                                max * 40 / 100 < Number($maxThumb.val()) - gap
+                                    ? $minThumb.val(max * 40 / 100)
+                                    : $minThumb.val(Number($maxThumb.val()) - gap);
+                            } else {
+                                $minThumb.val(max * 40 / 100);
+                            }
                             this.setBar();
                             this.setTooltip();
                         });
@@ -211,9 +219,13 @@ class View extends Observer {
                             : element.innerText = abbreviateNumber(max, 60);
 
                         element.addEventListener('click', () => {
-                            max * 60 / 100 > Number($minThumb.val()) + gap
-                                ? $maxThumb.val(max * 60 / 100)
-                                : $maxThumb.val(Number($minThumb.val()) + gap);
+                            if (this.optionsState.range) {
+                                max * 60 / 100 > Number($minThumb.val()) + gap
+                                    ? $maxThumb.val(max * 60 / 100)
+                                    : $maxThumb.val(Number($minThumb.val()) + gap);
+                            } else {
+                                $minThumb.val(max * 60 / 100);
+                            }
                             this.setBar();
                             this.setTooltip();
                         });
@@ -224,9 +236,13 @@ class View extends Observer {
                             : element.innerText = abbreviateNumber(max, 80);
 
                         element.addEventListener('click', () => {
-                            max * 80 / 100 > Number($minThumb.val()) + gap
-                                ? $maxThumb.val(max * 80 / 100)
-                                : $maxThumb.val(Number($minThumb.val()) + gap);
+                            if (this.optionsState.range) {
+                                max * 80 / 100 > Number($minThumb.val()) + gap
+                                    ? $maxThumb.val(max * 80 / 100)
+                                    : $maxThumb.val(Number($minThumb.val()) + gap);
+                            } else {
+                                $minThumb.val(max * 80 / 100);
+                            }
                             this.setBar();
                             this.setTooltip();
                         });
@@ -237,7 +253,11 @@ class View extends Observer {
                             : element.innerText = abbreviateNumber(max, 100);
 
                         element.addEventListener('click', () => {
-                            $maxThumb.val(this.optionsState.max);
+                            if (this.optionsState.range) {
+                                $maxThumb.val(this.optionsState.max);
+                            } else {
+                                $minThumb.val(this.optionsState.max);
+                            }
                             this.setBar();
                             this.setTooltip();
                         });
@@ -266,6 +286,7 @@ class View extends Observer {
         }
 
         this.setBar();
+        this.setRulers();
         this.setConfig();
         $(`${this.selectorState} .slider-app__input`).on('input', () => this.setBar());
         this.setTooltip();

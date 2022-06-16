@@ -547,12 +547,12 @@ class View extends Observer {
         if (this.optionsState.color.firstColor || this.optionsState.color.secondColor) {
             const colorOne: string = this.optionsState.color.firstColor;
             const colorTwo: string = this.optionsState.color.secondColor;
+            const $progress: JQuery = $(`${this.selectorState} .slider-app__progress`);
             this.optionsState.vertical
-                ? $(`${this.selectorState} .slider-app__progress`).css('background-image',
+                ? $progress.css('background-image',
                 `linear-gradient(to top, ${colorOne} 0%, ${colorTwo} 100%)`)
-                : $(`${this.selectorState} .slider-app__progress`).css('background-image',
+                : $progress.css('background-image',
                 `linear-gradient(90deg, ${colorOne} 0%, ${colorTwo} 100%)`);
-
         }
 
         if (this.optionsState.color.textColor) {

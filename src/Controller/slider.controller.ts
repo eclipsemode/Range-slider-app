@@ -17,7 +17,6 @@ class Controller extends Observer {
     }
 
     init() {
-        this.view.getSlider();
         this.view.render();
     }
 }

@@ -53,6 +53,7 @@ class View extends Observer {
     }
 
     render(): void {
+        this.setSlider();
         this.setRange();
         this.setBar();
         this.setRulers();
@@ -106,9 +107,7 @@ class View extends Observer {
 
     private evaluateVar = (item: string) => eval(item);
 
-    getSlider(): void {
-        this.mainClass.getMainClass();
-    }
+    private setSlider = () => this.mainClass.getMainClass();
 
     private setConfig = (): void => {
         if (this.optionsState.configPanel) {

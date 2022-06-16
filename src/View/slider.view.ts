@@ -60,18 +60,19 @@ class View extends Observer {
         this.setVertical();
         this.setColor();
         this.setConfig();
-
-        this.updateToggleValues();
+        this.updateConfig();
 
 
     }
+
+    private evaluateVar = (item: string) => eval(item);
 
     getSlider(): void {
         this.mainClass.getMainClass();
         this.optionsState.configPanel ? this.configPanel.getConfig() : null;
     }
 
-    updateToggleValues = () => {
+    updateConfig = () => {
         const newSelector: string = this.selectorState.slice(1);
 
         const fn = (data: {key: string, value: boolean}) => {
@@ -133,8 +134,6 @@ class View extends Observer {
                 .attr('checked', this.evaluateVar(`this.optionsState.${item}`));
         });
     };
-
-    evaluateVar = (item: string) => eval(item);
 
     private updateVertical = () => {
         if (this.optionsState.vertical) {
@@ -257,16 +256,15 @@ class View extends Observer {
 
         if (this.optionsState.range) {
             this.setBar();
-            // this.setProgress();
             inputMin.length === 0 ? this.thumb.getMinThumb() : null;
             inputMax.length === 0 ? this.thumb.getMaxThumb() : null;
         } else {
             thumbsMain.length !== 0 ? thumbsMain.remove() : null;
             this.setBar();
-            // this.setProgress();
             this.thumb.getMinThumb();
         }
 
+        this.setBar();
         this.setConfig();
         $(`${this.selectorState} .slider-app__input`).on('input', () => this.setBar());
         this.setTooltip();

@@ -2,7 +2,7 @@ import './assets/style/style.scss';
 import Controller from './Controller/slider.controller';
 
 new Controller('.slider', {
-    range: true,
+    from: 150,
     configPanel: true,
     percent: false,
     max: 1000,

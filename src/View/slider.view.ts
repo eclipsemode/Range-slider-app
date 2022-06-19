@@ -72,7 +72,7 @@ class View extends Observer {
             switch (data.key) {
                 case TogglesEnum.VERTICAL:
                     this.optionsState.vertical = data.value;
-                    this.updateVertical();
+                    this.setVertical();
                     break;
                 case TogglesEnum.RULERS:
                     this.optionsState.rulers = data.value;
@@ -133,20 +133,6 @@ class View extends Observer {
                 $(`#${newSelector}__toggle-${item}`)
                     .attr('checked', this.evaluateVar(`this.optionsState.${item}`));
             });
-        }
-    };
-
-    private updateVertical = () => {
-        if (this.optionsState.vertical) {
-            this.setVertical();
-            this.setColor();
-            this.setBar();
-            this.setTooltip();
-        } else {
-            this.setVertical();
-            this.setColor();
-            this.setTooltip();
-            this.setBar();
         }
     };
 
@@ -271,16 +257,18 @@ class View extends Observer {
     };
 
     private setRange = () => {
-        const inputMax: JQuery = $(`${this.selectorState} .slider-app__input-max`);
-        const inputMin: JQuery = $(`${this.selectorState} .slider-app__input-min`);
-        const thumbsMain: JQuery = $(`${this.selectorState} .slider-app__bar-line`);
+        const $inputMax: JQuery = $(`${this.selectorState} .slider-app__input-max`);
+        const $inputMin: JQuery = $(`${this.selectorState} .slider-app__input-min`);
+        const $thumbsMain: JQuery = $(`${this.selectorState} .slider-app__bar-line`);
 
-        if (this.optionsState.range) {
+        const isRangeTrue: boolean = this.optionsState.range;
+
+        if (isRangeTrue) {
             this.setBar();
-            inputMin.length === 0 ? this.thumb.getMinThumb() : null;
-            inputMax.length === 0 ? this.thumb.getMaxThumb() : null;
+            $inputMin.length === 0 ? this.thumb.getMinThumb() : null;
+            $inputMax.length === 0 ? this.thumb.getMaxThumb() : null;
         } else {
-            thumbsMain.length !== 0 ? thumbsMain.remove() : null;
+            $thumbsMain.length !== 0 ? $thumbsMain.remove() : null;
             this.setBar();
             this.thumb.getMinThumb();
         }
@@ -299,7 +287,11 @@ class View extends Observer {
         const $range = $(`${this.selectorState} .slider-app__input`);
         const $minValue = $(`${this.selectorState} .slider-app__input-min`);
 
-        if (this.optionsState.progress) {
+        const isStateVertical: boolean = this.optionsState.vertical;
+        const isProgressTrue: boolean = this.optionsState.progress;
+        const isProgressAndRangeTrue: boolean = this.optionsState.range && this.optionsState.progress;
+
+        if (isProgressTrue) {
             $(`${this.selectorState} .slider-app__progress`).length === 0
                 ? this.progress.getProgress()
                 : null;
@@ -308,13 +300,13 @@ class View extends Observer {
         // noinspection JSJQueryEfficiency
         const $progress: JQuery = $(`${this.selectorState} .slider-app__progress`);
 
-        if (!this.optionsState.range && this.optionsState.progress) {
+        if (!isProgressAndRangeTrue) {
             const value: number = <number>$minValue.val();
             const min: number = parseInt($minValue.attr('min'));
             const max: number = parseInt($minValue.attr('max'));
             const percent: number = ((value - min) / (max - min)) * 100;
 
-            this.optionsState.vertical
+            isStateVertical
                 ? $progress.css({
                 height: percent + '%',
                 width: 100 + '%'})
@@ -322,18 +314,18 @@ class View extends Observer {
                 width: percent + '%',
                 height: 100 + '%'});
 
-        } else if (this.optionsState.range && this.optionsState.progress) {
-            const gap = this.optionsState.gap;
-            const $maxValue = $(`${this.selectorState} .slider-app__input-max`);
+        } else if (isProgressAndRangeTrue) {
+            const gap: number = this.optionsState.gap;
+            const $maxValue: JQuery = $(`${this.selectorState} .slider-app__input-max`);
 
-            const barTranslateX = () => {
-                const value: number = (Number($minValue.val()) / this.optionsState.max) * 100 + 1;
-                value > 45
+            const isTranslateBarX = (): void => {
+                const thumbValue: number = (Number($minValue.val()) / this.optionsState.max) * 100 + 1;
+                thumbValue > 45
                     ? $progress.css('transform', 'translateX(-15px)')
                     : $progress.css('transform', 'translateX(0px)');
             };
 
-            this.optionsState.vertical
+            isStateVertical
                 ? $progress.css({
                 height: 'auto',
                 bottom: (Number($minValue.val()) / Number($minValue.attr('max'))) * 100 + 1 + '%',
@@ -344,19 +336,23 @@ class View extends Observer {
                 left: (Number($minValue.val()) / Number($minValue.attr('max'))) * 100 + 1 + '%',
                 right: 100 - (Number($maxValue.val()) / Number($maxValue.attr('max'))) * 100 + '%'});
 
-            barTranslateX();
+            isTranslateBarX();
 
-            $range.each(function () {
+            $range.each(function (index, element) {
                 $($maxValue).css('pointerEvents', 'none');
 
-                $(this).on('input', () => {
+                $(element).on('input', (event) => {
                     const min = Number($minValue.val());
                     const max = Number($maxValue.val());
                     const minPercent: number = (min / Number($minValue.attr('max'))) * 100 + 1;
                     const maxPercent: number = 100 - (max / Number($maxValue.attr('max'))) * 100;
 
-                    if (max - min < gap) {
-                        $(this).hasClass('slider-app__input-min')
+                    const isValueLessGap: boolean = max - min < gap;
+                    const hasClassInputMin: boolean =
+                        $(event.currentTarget).hasClass('slider-app__input-min');
+
+                    if (isValueLessGap) {
+                        hasClassInputMin
                             ? $(this).val(max - gap)
                             : $(this).val(min + gap);
                     }
@@ -367,17 +363,18 @@ class View extends Observer {
                         right: maxPercent + '%'
                     });
 
-                    barTranslateX();
+                    isTranslateBarX();
                 });
             });
         }
     }
 
     private setVertical(): void {
-        // const $element: JQuery = $(this.selectorState);
-        // const $maxElement: JQuery = $(`${this.selectorState} .slider-app__max-value`);
-        // const $minElement: JQuery = $(`${this.selectorState} .slider-app__min-value`);
-        // const $tooltipElement: JQuery = $(`${this.selectorState} .slider-app__tooltip-value`);
+        const $element: JQuery = $(this.selectorState);
+        const $maxElement: JQuery = $(`${this.selectorState} .slider-app__max-value`);
+        const $minElement: JQuery = $(`${this.selectorState} .slider-app__min-value`);
+        const $tooltipElement: JQuery = $(`${this.selectorState} .slider-app__tooltip-value`);
+        const $rulersElement: JQuery = $(`${this.selectorState} .slider-app__rulers`);
 
         if (this.optionsState.vertical) {
 
@@ -390,7 +387,6 @@ class View extends Observer {
                 .addClass('slider-app__tooltip-line--vertical');
 
             $(`${this.selectorState} .slider-app__rulers`)
-                .removeClass('slider-app__rulers')
                 .addClass('slider-app__rulers--vertical');
 
             $(`${this.selectorState} .slider-app__bar-line`)
@@ -422,8 +418,7 @@ class View extends Observer {
                 .removeClass('slider-app__tooltip-line--vertical');
 
             $(`${this.selectorState} .slider-app__rulers--vertical`)
-                .removeClass('slider-app__rulers--vertical')
-                .addClass('slider-app__rulers');
+                .removeClass('slider-app__rulers--vertical');
 
 
             $(`${this.selectorState} .slider-app__bar-line`)
@@ -444,6 +439,11 @@ class View extends Observer {
             $(`${this.selectorState} .slider-app__max-value`)
                 .removeClass('slider-app__max-value--vertical');
         }
+
+        this.setColor();
+        this.setBar();
+        this.setTooltip();
+        this.setRulers();
     }
 
     private setTooltip(): void {

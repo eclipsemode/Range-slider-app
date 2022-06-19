@@ -184,6 +184,7 @@ body {
       bottom: 15px;
       width: 100%;
       border-top: 1px solid #686868;
+      border-right: 0;
     }
 
     &--vertical::before {
@@ -306,7 +307,6 @@ body {
 
 .slider {
   width: 500px;
-  height: 300px;
 }
 
 .second {

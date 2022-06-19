@@ -105,42 +105,50 @@ class View extends Observer {
         });
     };
 
-    private evaluateVar = (item: string) => eval(item);
+    private isEvaluateVar = (item: string) => eval(item);
 
     private setSlider = () => this.mainClass.getMainClass();
 
     private setConfig = (): void => {
-        if (this.optionsState.configPanel) {
-            $(`${this.selectorState} .slider-app__config`).length === 0
-                ? this.configPanel.getConfig()
-                : null;
+        const isConfigPanelTrue: boolean = this.optionsState.configPanel;
 
+        if (isConfigPanelTrue) {
+            const isGetConfigPanelIfMissing = () =>
+                $(`${this.selectorState} .slider-app__config`).length === 0
+                    ? this.configPanel.getConfig()
+                    : null;
+
+            isGetConfigPanelIfMissing();
             const newSelector: string = this.selectorState.slice(1);
-            const selectorControlTo = $(`#${newSelector}__control-to`);
+            const $controlTo = $(`#${newSelector}__control-to`);
+            const isRangeTrue: boolean = this.optionsState.range;
 
             $(`#${newSelector}__toggle-tooltip`).prop('checked', this.optionsState.tooltip);
 
-            !this.optionsState.range
-                ? selectorControlTo.prop('disabled', true)
-                : selectorControlTo.prop('disabled', false);
+            !isRangeTrue
+                ? $controlTo.prop('disabled', true)
+                : $controlTo.prop('disabled', false);
 
             this.optionsState.controlConfig.forEach(item => {
                 $(`#${newSelector}__control-${item}`)
-                    .val(this.evaluateVar(`this.optionsState.${item}`));
+                    .val(this.isEvaluateVar(`this.optionsState.${item}`));
             });
 
             this.optionsState.toggleConfig.forEach(item => {
                 $(`#${newSelector}__toggle-${item}`)
-                    .attr('checked', this.evaluateVar(`this.optionsState.${item}`));
+                    .attr('checked', this.isEvaluateVar(`this.optionsState.${item}`));
             });
         }
     };
 
     private setRulers = () => {
         const $rulers = $(`${this.selectorState} .slider-app__rulers`);
+        const isRulersTrue: boolean = this.optionsState.rulers;
 
-        if (this.optionsState.rulers) {
-            $rulers.length === 0 ? this.rulers.getRulers() : null;
+        if (isRulersTrue) {
+            const isGetRulersIfMissing = () => $rulers.length === 0 ? this.rulers.getRulers() : null;
+
+            isGetRulersIfMissing();
             const $values: JQuery = $(`${this.selectorState} .slider-app__rulers-values`);
             const $minThumb: JQuery = $(`${this.selectorState} .slider-app__input-min`);
             const $maxThumb: JQuery = $(`${this.selectorState} .slider-app__input-max`);
@@ -152,10 +160,11 @@ class View extends Observer {
             $values.children().each((index, element) => {
                 const max: number = this.optionsState.to;
                 const gap: number = this.optionsState.gap;
+                const isPercentTrue: boolean = this.optionsState.percent;
 
                 switch (index) {
                     case 0:
-                        this.optionsState.percent
+                        isPercentTrue
                             ? element.innerText = '0%'
                             : element.innerText = abbreviateNumber(max, 0);
 
@@ -166,13 +175,16 @@ class View extends Observer {
                         });
                         break;
                     case 1:
-                        this.optionsState.percent
+                        isPercentTrue
                             ? element.innerText = '20%'
                             : element.innerText = abbreviateNumber(max, 20);
 
                         element.addEventListener('click', () => {
                             if (this.optionsState.range) {
-                                max * 20 / 100 < Number($maxThumb.val()) - gap
+                                const isMinLessMaxWithGap: boolean =
+                                    max * 20 / 100 < Number($maxThumb.val()) - gap;
+
+                                isMinLessMaxWithGap
                                     ? $minThumb.val(max * 20 / 100)
                                     : $minThumb.val(Number($maxThumb.val()) - gap);
                             } else {
@@ -183,13 +195,16 @@ class View extends Observer {
                         });
                         break;
                     case 2:
-                        this.optionsState.percent
+                        isPercentTrue
                             ? element.innerText = '40%'
                             : element.innerText = abbreviateNumber(max, 40);
 
                         element.addEventListener('click', () => {
                             if (this.optionsState.range) {
-                                max * 40 / 100 < Number($maxThumb.val()) - gap
+                                const isMinLessMaxWithGap: boolean =
+                                    max * 40 / 100 < Number($maxThumb.val()) - gap;
+
+                                isMinLessMaxWithGap
                                     ? $minThumb.val(max * 40 / 100)
                                     : $minThumb.val(Number($maxThumb.val()) - gap);
                             } else {
@@ -200,13 +215,16 @@ class View extends Observer {
                         });
                         break;
                     case 3:
-                        this.optionsState.percent
+                        isPercentTrue
                             ? element.innerText = '60%'
                             : element.innerText = abbreviateNumber(max, 60);
 
                         element.addEventListener('click', () => {
                             if (this.optionsState.range) {
-                                max * 60 / 100 > Number($minThumb.val()) + gap
+                                const isMaxMoreThanMinWithGap: boolean =
+                                    max * 60 / 100 > Number($minThumb.val()) + gap;
+
+                                isMaxMoreThanMinWithGap
                                     ? $maxThumb.val(max * 60 / 100)
                                     : $maxThumb.val(Number($minThumb.val()) + gap);
                             } else {
@@ -217,13 +235,16 @@ class View extends Observer {
                         });
                         break;
                     case 4:
-                        this.optionsState.percent
+                        isPercentTrue
                             ? element.innerText = '80%'
                             : element.innerText = abbreviateNumber(max, 80);
 
                         element.addEventListener('click', () => {
                             if (this.optionsState.range) {
-                                max * 80 / 100 > Number($minThumb.val()) + gap
+                                const isMaxMoreThanMinWithGap: boolean =
+                                    max * 80 / 100 > Number($minThumb.val()) + gap;
+
+                                isMaxMoreThanMinWithGap
                                     ? $maxThumb.val(max * 80 / 100)
                                     : $maxThumb.val(Number($minThumb.val()) + gap);
                             } else {
@@ -234,16 +255,15 @@ class View extends Observer {
                         });
                         break;
                     case 5:
-                        this.optionsState.percent
+                        isPercentTrue
                             ? element.innerText = '100%'
                             : element.innerText = abbreviateNumber(max, 100);
 
                         element.addEventListener('click', () => {
-                            if (this.optionsState.range) {
-                                $maxThumb.val(this.optionsState.max);
-                            } else {
-                                $minThumb.val(this.optionsState.max);
-                            }
+                            this.optionsState.range
+                                ? $maxThumb.val(this.optionsState.max)
+                                : $minThumb.val(this.optionsState.max);
+                            
                             this.setBar();
                             this.setTooltip();
                         });
@@ -448,100 +468,112 @@ class View extends Observer {
 
     private setTooltip(): void {
         const tooltip: JQuery = $(`${this.selectorState} .slider-app__tooltip-line`);
+        const isTooltipTrue: boolean = this.optionsState.tooltip;
 
-        if (this.optionsState.tooltip) {
-            tooltip.length === 0 ? this.tooltip.getFirstTooltip() : null;
+        if (isTooltipTrue) {
+            const isGetTooltipIfMissing = (): void =>
+                tooltip.length === 0 ? this.tooltip.getFirstTooltip() : null;
 
+            isGetTooltipIfMissing();
             const maxValue: number = this.optionsState.max;
             const minValue: number = this.optionsState.min;
-            const tooltipValueFirst: JQuery = $(`${this.selectorState} .slider-app__tooltip-value-first`);
-            const tooltipContainerFirst: JQuery =
+            const $tooltipValueFirst: JQuery = $(`${this.selectorState} .slider-app__tooltip-value-first`);
+            const $tooltipContainerFirst: JQuery =
                 $(`${this.selectorState} .slider-app__tooltip-container-first`);
-            const inputMin: JQuery = $(`${this.selectorState} .slider-app__input-min`);
-            const fontSizeFirst: number = tooltipValueFirst.text().length - 2;
+            const $inputMin: JQuery = $(`${this.selectorState} .slider-app__input-min`);
+            const fontSizeFirst: number = $tooltipValueFirst.text().length - 2;
 
-            this.optionsState.vertical
-                ? tooltipContainerFirst.css({
-                    bottom: (( (+inputMin.val() - minValue) / (maxValue - minValue) ) * 100) + '%',
+            const isVerticalStateTrue: boolean = this.optionsState.vertical;
+            const isPercentTrue: boolean = this.optionsState.percent;
+            const isRangeTrue: boolean = this.optionsState.range;
+
+            isVerticalStateTrue
+                ? $tooltipContainerFirst.css({
+                    bottom: (( (+$inputMin.val() - minValue) / (maxValue - minValue) ) * 100) + '%',
                     left: '0'
                 })
-                : tooltipContainerFirst.css({
-                    left: (((+inputMin.val() - minValue) / (maxValue - minValue)) * 100) + '%',
+                : $tooltipContainerFirst.css({
+                    left: (((+$inputMin.val() - minValue) / (maxValue - minValue)) * 100) + '%',
                     bottom: '1.5rem'
                 });
 
-            tooltipValueFirst.css('font-size', 15 - fontSizeFirst + 'px');
+            $tooltipValueFirst.css('font-size', 15 - fontSizeFirst + 'px');
 
-            inputMin.on({
+            $inputMin.on({
                 input: () => {
-                    this.optionsState.vertical
-                        ? tooltipContainerFirst.css('bottom',
-                            (((+inputMin.val() - minValue) / (maxValue - minValue)) * 100) + '%')
-                        : tooltipContainerFirst.css('left',
-                            (((+inputMin.val() - minValue) / (maxValue - minValue)) * 100) + '%');
+                    const firstTooltipTextLength: number = $tooltipValueFirst.text().length;
 
-                    if (tooltipValueFirst.text().length > 4) {
-                        const fontSize: number = tooltipValueFirst.text().length - 2;
-                        tooltipValueFirst.css('font-size', 15 - fontSize + 'px');
+                    isVerticalStateTrue
+                        ? $tooltipContainerFirst.css('bottom',
+                            (((+$inputMin.val() - minValue) / (maxValue - minValue)) * 100) + '%')
+                        : $tooltipContainerFirst.css('left',
+                            (((+$inputMin.val() - minValue) / (maxValue - minValue)) * 100) + '%');
+
+                    if (firstTooltipTextLength > 4) {
+                        const fontSize: number = firstTooltipTextLength - 2;
+                        $tooltipValueFirst.css('font-size', 15 - fontSize + 'px');
                     } else {
-                        tooltipValueFirst.css('font-size', '15px');
+                        $tooltipValueFirst.css('font-size', '15px');
                     }
                 }
             });
 
-            if (!this.optionsState.percent) {
-                tooltipValueFirst.text(<string>inputMin.val());
-                inputMin.on('input', () => tooltipValueFirst.text(<string>inputMin.val()));
+            if (!isPercentTrue) {
+                $tooltipValueFirst.text(<string>$inputMin.val());
+                $inputMin.on('input', () => $tooltipValueFirst.text(<string>$inputMin.val()));
             } else {
-                tooltipValueFirst.text(parseInt(String(
-                    (+inputMin.val() - minValue) / (maxValue - minValue) * 100)) + '%');
+                $tooltipValueFirst.text(parseInt(String(
+                    (+$inputMin.val() - minValue) / (maxValue - minValue) * 100)) + '%');
 
-                inputMin.on('input', () =>
-                    tooltipValueFirst.text(parseInt(String(
-                        (+inputMin.val() - minValue) / (maxValue - minValue) * 100)) + '%'));
+                $inputMin.on('input', () =>
+                    $tooltipValueFirst.text(parseInt(String(
+                        (+$inputMin.val() - minValue) / (maxValue - minValue) * 100)) + '%'));
             }
 
-            if (this.optionsState.range) {
-                // noinspection JSJQueryEfficiency
-                $(`${this.selectorState} .slider-app__tooltip-container-second`).length === 0
-                    ? this.tooltip.getSecondTooltip()
-                    : null;
-                const tooltipValueSecond: JQuery =
+            if (isRangeTrue) {
+                const isGetSecondTooltipIfMissing = (): void => {
+                    $(`${this.selectorState} .slider-app__tooltip-container-second`).length === 0
+                        ? this.tooltip.getSecondTooltip()
+                        : null;
+                };
+
+                isGetSecondTooltipIfMissing();
+                const $tooltipValueSecond: JQuery =
                     $(`${this.selectorState} .slider-app__tooltip-value-second`);
-                const tooltipContainerSecond: JQuery =
+                const $tooltipContainerSecond: JQuery =
                     $(`${this.selectorState} .slider-app__tooltip-container-second`);
-                const inputMax: JQuery = $(`${this.selectorState} .slider-app__input-max`);
-                const fontSizeSecond: number = tooltipValueSecond.text().length - 2;
+                const $inputMax: JQuery = $(`${this.selectorState} .slider-app__input-max`);
+                const fontSizeSecond: number = $tooltipValueSecond.text().length - 2;
 
-                tooltipContainerSecond.css(
+                $tooltipContainerSecond.css(
                     'left',
-                    (((+inputMax.val() - minValue) / (maxValue - minValue)) * 100) + '%');
-                tooltipValueSecond.css('font-size', 15 - fontSizeSecond + 'px');
+                    (((+$inputMax.val() - minValue) / (maxValue - minValue)) * 100) + '%');
+                $tooltipValueSecond.css('font-size', 15 - fontSizeSecond + 'px');
 
-                inputMax.on({
+                $inputMax.on({
                     input: () => {
-                        tooltipContainerSecond.css('left',
-                            (((+inputMax.val() - minValue) / (maxValue - minValue)) * 100) + '%');
+                        $tooltipContainerSecond.css('left',
+                            (((+$inputMax.val() - minValue) / (maxValue - minValue)) * 100) + '%');
 
-                        if (tooltipValueSecond.text().length > 4) {
-                            const fontSize: number = tooltipValueSecond.text().length - 2;
-                            tooltipValueSecond.css('font-size', 15 - fontSize + 'px');
+                        if ($tooltipValueSecond.text().length > 4) {
+                            const fontSize: number = $tooltipValueSecond.text().length - 2;
+                            $tooltipValueSecond.css('font-size', 15 - fontSize + 'px');
                         } else {
-                            tooltipValueSecond.css('font-size', '15px');
+                            $tooltipValueSecond.css('font-size', '15px');
                         }
                     }
                 });
 
-                if (!this.optionsState.percent) {
-                    tooltipValueSecond.text(<string>inputMax.val());
-                    inputMax.on('input', () => tooltipValueSecond.text(<string>inputMax.val()));
+                if (!isPercentTrue) {
+                    $tooltipValueSecond.text(<string>$inputMax.val());
+                    $inputMax.on('input', () => $tooltipValueSecond.text(<string>$inputMax.val()));
                 } else {
-                    tooltipValueSecond.text(parseInt(String(
-                        (+inputMax.val() - minValue) / (maxValue - minValue) * 100)) + '%');
+                    $tooltipValueSecond.text(parseInt(String(
+                        (+$inputMax.val() - minValue) / (maxValue - minValue) * 100)) + '%');
 
-                    inputMax.on('input', () =>
-                        tooltipValueSecond.text(parseInt(String(
-                            (+inputMax.val() - minValue) / (maxValue - minValue) * 100)) + '%'));
+                    $inputMax.on('input', () =>
+                        $tooltipValueSecond.text(parseInt(String(
+                            (+$inputMax.val() - minValue) / (maxValue - minValue) * 100)) + '%'));
                 }
 
             }
@@ -551,23 +583,31 @@ class View extends Observer {
     }
 
     private setColor(): void {
-        if (this.optionsState.color.firstColor || this.optionsState.color.secondColor) {
+        const isColorAdded: string =
+            this.optionsState.color.firstColor || this.optionsState.color.secondColor;
+        const isTextColorAdded: string = this.optionsState.color.textColor;
+        const isThumbColorAdded: string = this.optionsState.color.thumbColor;
+
+        if (isColorAdded) {
             const colorOne: string = this.optionsState.color.firstColor;
             const colorTwo: string = this.optionsState.color.secondColor;
             const $progress: JQuery = $(`${this.selectorState} .slider-app__progress`);
-            this.optionsState.vertical
+            const isVerticalStateTrue: boolean = this.optionsState.vertical;
+
+
+            isVerticalStateTrue
                 ? $progress.css('background-image',
                 `linear-gradient(to top, ${colorOne} 0%, ${colorTwo} 100%)`)
                 : $progress.css('background-image',
                 `linear-gradient(90deg, ${colorOne} 0%, ${colorTwo} 100%)`);
         }
 
-        if (this.optionsState.color.textColor) {
+        if (isTextColorAdded) {
             $(`${this.selectorState} .slider-app__min-value, ${this.selectorState} .slider-app__max-value`)
                 .css('color', this.optionsState.color.textColor);
         }
 
-        if (this.optionsState.color.thumbColor) {
+        if (isThumbColorAdded) {
             // noinspection HtmlDeprecatedAttribute
             $(`<style type="text/css">${this.selectorState} .slider-app__input::-webkit-slider-thumb
                 {background-color: ${this.optionsState.color.thumbColor}}</style>`)

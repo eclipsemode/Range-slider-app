@@ -5,7 +5,7 @@ new Controller('.slider', {
     from: 150,
     configPanel: true,
     percent: false,
-    max: 1000,
+    max: 1000
 });
 
 // new Controller('.second', {

@@ -112,9 +112,13 @@ class View extends Observer {
     private setConfig = (): void => {
         const isConfigPanelTrue: boolean = this.optionsState.configPanel;
 
+        const configPanel: JQuery = $(`${this.selectorState} .slider-app__config`);
+
+        configPanel.parent().css('width', '100%');
+
         if (isConfigPanelTrue) {
             const isGetConfigPanelIfMissing = () =>
-                $(`${this.selectorState} .slider-app__config`).length === 0
+                configPanel.length === 0
                     ? this.configPanel.getConfig()
                     : null;
 
@@ -147,8 +151,8 @@ class View extends Observer {
 
         if (isRulersTrue) {
             const isGetRulersIfMissing = () => $rulers.length === 0 ? this.rulers.getRulers() : null;
-
             isGetRulersIfMissing();
+
             const $values: JQuery = $(`${this.selectorState} .slider-app__rulers-values`);
             const $minThumb: JQuery = $(`${this.selectorState} .slider-app__input-min`);
             const $maxThumb: JQuery = $(`${this.selectorState} .slider-app__input-max`);
@@ -340,9 +344,9 @@ class View extends Observer {
 
             const isTranslateBarX = (): void => {
                 const thumbValue: number = (Number($minValue.val()) / this.optionsState.max) * 100 + 1;
-                thumbValue > 45
-                    ? $progress.css('transform', 'translateX(-15px)')
-                    : $progress.css('transform', 'translateX(0px)');
+                thumbValue > 35 ? $progress.css('transform', 'translateX(-15px)') : null;
+                thumbValue > 90 ? $progress.css('transform', 'translateX(-20px)') : null;
+                thumbValue <= 35 ? $progress.css('transform', 'translateX(0px)') : null;
             };
 
             isStateVertical

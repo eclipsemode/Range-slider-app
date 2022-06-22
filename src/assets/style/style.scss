@@ -177,37 +177,36 @@ body {
 
     &--vertical {
       position: absolute;
-      content: '';
-      right: auto;
-      left: 150%;
-      top: 15px;
-      bottom: 15px;
-      width: 100%;
-      border-top: 1px solid #686868;
-      border-right: 0;
+      content: "";
+      top: 3px;
+      right: -20px;
+      left: 51px;
+      height: 100%;
+      border-right: 1px solid #686868;
+      transform: rotate(-90deg);
     }
 
-    &--vertical::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      background: linear-gradient(to top, #686868 1px, transparent 2px);
-      background-size: 100% 10%;
-    }
-
-    &--vertical::after {
-      content: '';
-      position: absolute;
-      left: 30px;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      background: linear-gradient(to top, #686868 1px, transparent 2px);
-      background-size: 100% 2%;
-    }
+    //&--vertical::before {
+    //  content: '';
+    //  position: absolute;
+    //  left: 0;
+    //  right: 0;
+    //  top: 0;
+    //  bottom: 0;
+    //  background: linear-gradient(to top, #686868 1px, transparent 2px);
+    //  background-size: 100% 10%;
+    //}
+    //
+    //&--vertical::after {
+    //  content: '';
+    //  position: absolute;
+    //  left: 30px;
+    //  right: 0;
+    //  top: 0;
+    //  bottom: 0;
+    //  background: linear-gradient(to top, #686868 1px, transparent 2px);
+    //  background-size: 100% 2%;
+    //}
   }
 
   &__rulers-values {
@@ -229,6 +228,18 @@ body {
       padding-left: 5px;
       padding-right: 5px;
       text-align: center;
+    }
+
+    &--vertical {
+      top: 0.4rem;
+      left: 70px;
+      width: 100%;
+      transform: rotate(-90deg);
+
+      & > * {
+        transform: rotate(90deg);
+        justify-content: flex-start;
+      }
     }
   }
 
@@ -259,13 +270,13 @@ body {
     color: $gr-main;
     cursor: pointer;
 
-    &--vertical {
-      right: 37px;
-      display: flex;
-      width: 27px;
-      justify-content: center;
-      top: -30px;
-    }
+    //&--vertical {
+    //  right: 37px;
+    //  display: flex;
+    //  width: 27px;
+    //  justify-content: center;
+    //  top: -30px;
+    //}
   }
 
   &__bar-line {
@@ -277,8 +288,7 @@ body {
     position: relative;
 
     &--vertical {
-      width: 20px;
-      height: 100%;
+      transform: rotate(-90deg);
     }
   }
 
@@ -292,16 +302,16 @@ body {
     background: linear-gradient(90deg, $gr-main 0%, $gr-secondary 100%);
     border-radius: inherit;
 
-    &--vertical {
-      position: absolute;
-      top: auto;
-      right: 0;
-      bottom: 0;
-      height: 0;
-      width: 100%;
-      background: linear-gradient(to top, $gr-main 0%, $gr-secondary 100%);
-      border-radius: inherit;
-    }
+    //&--vertical {
+    //  position: absolute;
+    //  top: auto;
+    //  right: 0;
+    //  bottom: 0;
+    //  height: 0;
+    //  width: 100%;
+    //  background: linear-gradient(to top, $gr-main 0%, $gr-secondary 100%);
+    //  border-radius: inherit;
+    //}
   }
 }
 

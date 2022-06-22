@@ -58,9 +58,9 @@ class View extends Observer {
         this.setBar();
         this.setRulers();
         this.setTooltip();
-        this.setVertical();
         this.setColor();
         this.setConfig();
+        this.setVertical();
         this.updateConfig();
     }
 
@@ -152,12 +152,11 @@ class View extends Observer {
         if (isRulersTrue) {
             const isGetRulersIfMissing = () => $rulers.length === 0 ? this.rulers.getRulers() : null;
             isGetRulersIfMissing();
+            this.setColor();
 
             const $values: JQuery = $(`${this.selectorState} .slider-app__rulers-values`);
             const $minThumb: JQuery = $(`${this.selectorState} .slider-app__input-min`);
             const $maxThumb: JQuery = $(`${this.selectorState} .slider-app__input-max`);
-
-            $values.css('color', this.optionsState.color.textColor);
 
             $values.children().css('font-size', $(this.selectorState).width() / 40 + 'px');
 
@@ -330,13 +329,16 @@ class View extends Observer {
             const max: number = parseInt($minValue.attr('max'));
             const percent: number = ((value - min) / (max - min)) * 100;
 
-            isStateVertical
-                ? $progress.css({
-                height: percent + '%',
-                width: 100 + '%'})
-                : $progress.css({
+            $progress.css({
                 width: percent + '%',
                 height: 100 + '%'});
+            // isStateVertical
+            //     ? $progress.css({
+            //     height: percent + '%',
+            //     width: 100 + '%'})
+            //     : $progress.css({
+            //     width: percent + '%',
+            //     height: 100 + '%'});
 
         } else if (isProgressAndRangeTrue) {
             const gap: number = this.optionsState.gap;
@@ -349,16 +351,21 @@ class View extends Observer {
                 thumbValue <= 35 ? $progress.css('transform', 'translateX(0px)') : null;
             };
 
-            isStateVertical
-                ? $progress.css({
-                height: 'auto',
-                bottom: (Number($minValue.val()) / Number($minValue.attr('max'))) * 100 + 1 + '%',
-                top: 100 - (Number($maxValue.val()) / Number($maxValue.attr('max'))) * 100 + '%'})
-                : $progress.css({
+            $progress.css({
                 width: 'auto',
                 height: 100 + '%',
                 left: (Number($minValue.val()) / Number($minValue.attr('max'))) * 100 + 1 + '%',
                 right: 100 - (Number($maxValue.val()) / Number($maxValue.attr('max'))) * 100 + '%'});
+            // isStateVertical
+            //     ? $progress.css({
+            //     height: 'auto',
+            //     bottom: (Number($minValue.val()) / Number($minValue.attr('max'))) * 100 + 1 + '%',
+            //     top: 100 - (Number($maxValue.val()) / Number($maxValue.attr('max'))) * 100 + '%'})
+            //     : $progress.css({
+            //     width: 'auto',
+            //     height: 100 + '%',
+            //     left: (Number($minValue.val()) / Number($minValue.attr('max'))) * 100 + 1 + '%',
+            //     right: 100 - (Number($maxValue.val()) / Number($maxValue.attr('max'))) * 100 + '%'});
 
             isTranslateBarX();
 
@@ -402,66 +409,85 @@ class View extends Observer {
 
         if (this.optionsState.vertical) {
 
-            $(`${this.selectorState} .slider-app`).addClass('slider-app--vertical');
-            $(`${this.selectorState} .slider-app__input`)
-                .addClass('slider-app__input--vertical')
-                .css('width', $(`${this.selectorState}`).css('height'));
-
-            $(`${this.selectorState} .slider-app__tooltip-line`)
-                .addClass('slider-app__tooltip-line--vertical');
+            $(`${this.selectorState} .slider-app__bar-line`)
+                .addClass('slider-app__bar-line--vertical');
 
             $(`${this.selectorState} .slider-app__rulers`)
                 .addClass('slider-app__rulers--vertical');
 
-            $(`${this.selectorState} .slider-app__bar-line`)
-                .addClass('slider-app__bar-line--vertical');
+            $(`${this.selectorState} .slider-app__rulers-values`)
+                .addClass('slider-app__rulers-values--vertical');
 
-            $(`${this.selectorState} .slider-app__progress`)
-                .addClass('slider-app__progress--vertical');
+            // $(`${this.selectorState} .slider-app`).addClass('slider-app--vertical');
+            // $(`${this.selectorState} .slider-app__input`)
+            //     .addClass('slider-app__input--vertical')
+            //     .css('width', $(`${this.selectorState}`).css('height'));
 
-            $(`${this.selectorState} .slider-app__tooltip-container`)
-                .addClass('slider-app__tooltip-container--vertical');
-
-            $(`${this.selectorState} .slider-app__tooltip-value`)
-                .addClass('slider-app__tooltip-value--vertical');
-
-            $(`${this.selectorState} .slider-app__min-value`)
-                .addClass('slider-app__min-value--vertical');
-
-            $(`${this.selectorState} .slider-app__max-value`)
-                .addClass('slider-app__max-value--vertical');
+            // $(`${this.selectorState} .slider-app__tooltip-line`)
+            //     .addClass('slider-app__tooltip-line--vertical');
+            //
+            // $(`${this.selectorState} .slider-app__rulers`)
+            //     .addClass('slider-app__rulers--vertical');
+            //
+            // $(`${this.selectorState} .slider-app__bar-line`)
+            //     .addClass('slider-app__bar-line--vertical');
+            //
+            // $(`${this.selectorState} .slider-app__progress`)
+            //     .addClass('slider-app__progress--vertical');
+            //
+            // $(`${this.selectorState} .slider-app__tooltip-container`)
+            //     .addClass('slider-app__tooltip-container--vertical');
+            //
+            // $(`${this.selectorState} .slider-app__tooltip-value`)
+            //     .addClass('slider-app__tooltip-value--vertical');
+            //
+            // $(`${this.selectorState} .slider-app__min-value`)
+            //     .addClass('slider-app__min-value--vertical');
+            //
+            // $(`${this.selectorState} .slider-app__max-value`)
+            //     .addClass('slider-app__max-value--vertical');
 
         } else {
-            $(`${this.selectorState} .slider-app`).removeClass('slider-app--vertical');
-
-            $(`${this.selectorState} .slider-app__input`)
-                .removeClass('slider-app__input--vertical')
-                .css('width', parseInt($(`${this.selectorState}`).css('width')) + 10 + 'px');
-
-            $(`${this.selectorState} .slider-app__tooltip-line`)
-                .removeClass('slider-app__tooltip-line--vertical');
-
-            $(`${this.selectorState} .slider-app__rulers--vertical`)
-                .removeClass('slider-app__rulers--vertical');
-
 
             $(`${this.selectorState} .slider-app__bar-line`)
                 .removeClass('slider-app__bar-line--vertical');
 
-            $(`${this.selectorState} .slider-app__progress`)
-                .removeClass('slider-app__progress--vertical');
+            $(`${this.selectorState} .slider-app__rulers`)
+                .removeClass('slider-app__rulers--vertical');
 
-            $(`${this.selectorState} .slider-app__tooltip-container`)
-                .removeClass('slider-app__tooltip-container--vertical');
+            $(`${this.selectorState} .slider-app__rulers-values`)
+                .removeClass('slider-app__rulers-values--vertical');
 
-            $(`${this.selectorState} .slider-app__tooltip-value`)
-                .removeClass('slider-app__tooltip-value--vertical');
-
-            $(`${this.selectorState} .slider-app__min-value`)
-                .removeClass('slider-app__min-value--vertical');
-
-            $(`${this.selectorState} .slider-app__max-value`)
-                .removeClass('slider-app__max-value--vertical');
+            // $(`${this.selectorState} .slider-app`).removeClass('slider-app--vertical');
+            //
+            // $(`${this.selectorState} .slider-app__input`)
+            //     .removeClass('slider-app__input--vertical')
+            //     .css('width', parseInt($(`${this.selectorState}`).css('width')) + 10 + 'px');
+            //
+            // $(`${this.selectorState} .slider-app__tooltip-line`)
+            //     .removeClass('slider-app__tooltip-line--vertical');
+            //
+            // $(`${this.selectorState} .slider-app__rulers--vertical`)
+            //     .removeClass('slider-app__rulers--vertical');
+            //
+            //
+            // $(`${this.selectorState} .slider-app__bar-line`)
+            //     .removeClass('slider-app__bar-line--vertical');
+            //
+            // $(`${this.selectorState} .slider-app__progress`)
+            //     .removeClass('slider-app__progress--vertical');
+            //
+            // $(`${this.selectorState} .slider-app__tooltip-container`)
+            //     .removeClass('slider-app__tooltip-container--vertical');
+            //
+            // $(`${this.selectorState} .slider-app__tooltip-value`)
+            //     .removeClass('slider-app__tooltip-value--vertical');
+            //
+            // $(`${this.selectorState} .slider-app__min-value`)
+            //     .removeClass('slider-app__min-value--vertical');
+            //
+            // $(`${this.selectorState} .slider-app__max-value`)
+            //     .removeClass('slider-app__max-value--vertical');
         }
 
         this.setColor();
@@ -591,6 +617,7 @@ class View extends Observer {
             this.optionsState.color.firstColor || this.optionsState.color.secondColor;
         const isTextColorAdded: string = this.optionsState.color.textColor;
         const isThumbColorAdded: string = this.optionsState.color.thumbColor;
+        const $values: JQuery = $(`${this.selectorState} .slider-app__rulers-values`);
 
         if (isColorAdded) {
             const colorOne: string = this.optionsState.color.firstColor;
@@ -599,16 +626,24 @@ class View extends Observer {
             const isVerticalStateTrue: boolean = this.optionsState.vertical;
 
 
-            isVerticalStateTrue
-                ? $progress.css('background-image',
-                `linear-gradient(to top, ${colorOne} 0%, ${colorTwo} 100%)`)
-                : $progress.css('background-image',
+            $progress.css('background-image',
                 `linear-gradient(90deg, ${colorOne} 0%, ${colorTwo} 100%)`);
+            // isVerticalStateTrue
+            //     ? $progress.css('background-image',
+            //     `linear-gradient(to top, ${colorOne} 0%, ${colorTwo} 100%)`)
+            //     : $progress.css('background-image',
+            //     `linear-gradient(90deg, ${colorOne} 0%, ${colorTwo} 100%)`);
         }
 
         if (isTextColorAdded) {
-            $(`${this.selectorState} .slider-app__min-value, ${this.selectorState} .slider-app__max-value`)
-                .css('color', this.optionsState.color.textColor);
+            $values.css('color', this.optionsState.color.textColor);
+            $(`${this.selectorState} .slider-app__config-text--inner`).css('color', this.optionsState.color.textColor);
+            $(`${this.selectorState} .slider-app__config-toggle-name`).css('color', this.optionsState.color.textColor);
+
+            // noinspection HtmlDeprecatedAttribute
+            $(`<style type="text/css">${this.selectorState} .slider-app__config-toggle-btn::before
+                {background-color: ${this.optionsState.color.textColor}}</style>`)
+                .appendTo($('head'));
         }
 
         if (isThumbColorAdded) {

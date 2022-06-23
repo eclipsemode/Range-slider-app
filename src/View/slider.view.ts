@@ -107,14 +107,22 @@ class View extends Observer {
 
     private isEvaluateVar = (item: string) => eval(item);
 
-    private setSlider = () => this.mainClass.getMainClass();
+    private setSlider = () => {
+        this.mainClass.getMainClass();
+        $(this.selectorState).css({
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            rowGap: '7rem',
+            marginTop: '5rem'
+        });
+    };
 
     private setConfig = (): void => {
         const isConfigPanelTrue: boolean = this.optionsState.configPanel;
 
         const configPanel: JQuery = $(`${this.selectorState} .js-slider-app__config`);
-
-        configPanel.parent().css('width', '100%');
 
         if (isConfigPanelTrue) {
             const isGetConfigPanelIfMissing = () =>
@@ -158,7 +166,7 @@ class View extends Observer {
             const $minThumb: JQuery = $(`${this.selectorState} .js-slider-app__input-min`);
             const $maxThumb: JQuery = $(`${this.selectorState} .js-slider-app__input-max`);
 
-            $values.children().css('font-size', $(this.selectorState).width() / 40 + 'px');
+            // $values.children().css('font-size', $(this.selectorState).width() / 40 + 'px');
 
             $values.children().each((index, element) => {
                 const max: number = this.optionsState.to;
@@ -383,6 +391,7 @@ class View extends Observer {
     }
 
     private setVertical(): void {
+
         if (this.optionsState.vertical) {
 
             $(`${this.selectorState} .js-slider-app__bar-line`)
@@ -394,6 +403,7 @@ class View extends Observer {
             $(`${this.selectorState} .js-slider-app__rulers-values`)
                 .addClass('slider-app__rulers-values--vertical');
 
+
         } else {
 
             $(`${this.selectorState} .js-slider-app__bar-line`)
@@ -404,6 +414,7 @@ class View extends Observer {
 
             $(`${this.selectorState} .js-slider-app__rulers-values`)
                 .removeClass('slider-app__rulers-values--vertical');
+
 
         }
 

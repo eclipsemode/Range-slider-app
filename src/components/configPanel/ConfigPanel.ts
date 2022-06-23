@@ -21,14 +21,11 @@ class ConfigPanel {
     }
 
     getMain = () => {
-        const selector = this.selector.slice(1);
-        $(this.selector).after(
-            `<div class=${selector}>
-                        <div class="slider-app__config js-slider-app__config">
-                            <div class="slider-app__config-section slider-app__config-section--control"></div>
-                            <div class="slider-app__config-section slider-app__config-section--toggle"></div>
-                        </div>
-                    </div>`
+        $(this.selector).append(
+            `<div class="slider-app__config js-slider-app__config">
+                <div class="slider-app__config-section slider-app__config-section--control"></div>
+                <div class="slider-app__config-section slider-app__config-section--toggle"></div>
+             </div>`
         );
     };
 

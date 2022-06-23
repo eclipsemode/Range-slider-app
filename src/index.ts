@@ -6,10 +6,7 @@ new Controller('.slider', {
     configPanel: true,
     percent: false,
     max: 1000,
-    gap: 0,
-    color: {
-        thumbColor: 'green'
-    }
+    gap: 0
 });
 
 // new Controller('.second', {
@@ -17,27 +14,3 @@ new Controller('.slider', {
 //     max: 500,
 //     configPanel: true
 // });
-
-// $('body').append($(`
-//     <textarea class="textField"></textarea>
-//     <div>Words Count:
-//         <p class="countField"></p>
-//     </div>
-// `));
-
-// const blogObserver = new Observer();
-//
-//
-// const textField = $('.textField');
-// const countField = $('.countField');
-//
-// blogObserver.subscribe((data: any)=> {
-//     console.log(data);
-//     countField.text(getWordsCount(data));
-// });
-//
-// textField.on('keyup', () => {
-//     blogObserver.broadcast(textField.val());
-// });
-//
-// const getWordsCount = (text: any) => text.length;

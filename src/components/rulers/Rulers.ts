@@ -15,8 +15,8 @@ class Rulers {
 
     getRulers() {
         return $(`
-            <div class="slider-app__rulers"></div>
-                <div class="slider-app__rulers-values">
+            <div class="slider-app__rulers js-slider-app__rulers"></div>
+                <div class="slider-app__rulers-values js-slider-app__rulers-values">
                     <div class="slider-app__rulers-values--0">0</div>
                     <div class="slider-app__rulers-values--20">20</div>
                     <div class="slider-app__rulers-values--40">40</div>

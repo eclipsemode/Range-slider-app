@@ -112,7 +112,7 @@ class View extends Observer {
     private setConfig = (): void => {
         const isConfigPanelTrue: boolean = this.optionsState.configPanel;
 
-        const configPanel: JQuery = $(`${this.selectorState} .slider-app__config`);
+        const configPanel: JQuery = $(`${this.selectorState} .js-slider-app__config`);
 
         configPanel.parent().css('width', '100%');
 
@@ -146,7 +146,7 @@ class View extends Observer {
     };
 
     private setRulers = () => {
-        const $rulers = $(`${this.selectorState} .slider-app__rulers`);
+        const $rulers = $(`${this.selectorState} .js-slider-app__rulers`);
         const isRulersTrue: boolean = this.optionsState.rulers;
 
         if (isRulersTrue) {
@@ -154,9 +154,9 @@ class View extends Observer {
             isGetRulersIfMissing();
             this.setColor();
 
-            const $values: JQuery = $(`${this.selectorState} .slider-app__rulers-values`);
-            const $minThumb: JQuery = $(`${this.selectorState} .slider-app__input-min`);
-            const $maxThumb: JQuery = $(`${this.selectorState} .slider-app__input-max`);
+            const $values: JQuery = $(`${this.selectorState} .js-slider-app__rulers-values`);
+            const $minThumb: JQuery = $(`${this.selectorState} .js-slider-app__input-min`);
+            const $maxThumb: JQuery = $(`${this.selectorState} .js-slider-app__input-max`);
 
             $values.children().css('font-size', $(this.selectorState).width() / 40 + 'px');
 
@@ -275,14 +275,14 @@ class View extends Observer {
             });
         } else {
             $rulers.remove();
-            $(`${this.selectorState} .slider-app__rulers-values`).remove();
+            $(`${this.selectorState} .js-slider-app__rulers-values`).remove();
         }
     };
 
     private setRange = () => {
-        const $inputMax: JQuery = $(`${this.selectorState} .slider-app__input-max`);
-        const $inputMin: JQuery = $(`${this.selectorState} .slider-app__input-min`);
-        const $thumbsMain: JQuery = $(`${this.selectorState} .slider-app__bar-line`);
+        const $inputMax: JQuery = $(`${this.selectorState} .js-slider-app__input-max`);
+        const $inputMin: JQuery = $(`${this.selectorState} .js-slider-app__input-min`);
+        const $thumbsMain: JQuery = $(`${this.selectorState} .js-slider-app__bar-line`);
 
         const isRangeTrue: boolean = this.optionsState.range;
 
@@ -299,29 +299,28 @@ class View extends Observer {
         this.setBar();
         this.setRulers();
         this.setConfig();
-        $(`${this.selectorState} .slider-app__input`).on('input', () => this.setBar());
+        $(`${this.selectorState} .js-slider-app__input`).on('input', () => this.setBar());
         this.setTooltip();
 
     };
 
     private setBar(): void {
-        const $bar: JQuery = $(`${this.selectorState} .slider-app__bar-line`);
+        const $bar: JQuery = $(`${this.selectorState} .js-slider-app__bar-line`);
         $bar.length === 0 ? this.bar.getBar() : null;
-        const $range = $(`${this.selectorState} .slider-app__input`);
-        const $minValue = $(`${this.selectorState} .slider-app__input-min`);
+        const $range = $(`${this.selectorState} .js-slider-app__input`);
+        const $minValue = $(`${this.selectorState} .js-slider-app__input-min`);
 
-        const isStateVertical: boolean = this.optionsState.vertical;
         const isProgressTrue: boolean = this.optionsState.progress;
         const isProgressAndRangeTrue: boolean = this.optionsState.range && this.optionsState.progress;
 
         if (isProgressTrue) {
-            $(`${this.selectorState} .slider-app__progress`).length === 0
+            $(`${this.selectorState} .js-slider-app__progress`).length === 0
                 ? this.progress.getProgress()
                 : null;
-        } else $(`${this.selectorState} .slider-app__progress`).remove();
+        } else $(`${this.selectorState} .js-slider-app__progress`).remove();
 
         // noinspection JSJQueryEfficiency
-        const $progress: JQuery = $(`${this.selectorState} .slider-app__progress`);
+        const $progress: JQuery = $(`${this.selectorState} .js-slider-app__progress`);
 
         if (!isProgressAndRangeTrue) {
             const value: number = <number>$minValue.val();
@@ -332,17 +331,10 @@ class View extends Observer {
             $progress.css({
                 width: percent + '%',
                 height: 100 + '%'});
-            // isStateVertical
-            //     ? $progress.css({
-            //     height: percent + '%',
-            //     width: 100 + '%'})
-            //     : $progress.css({
-            //     width: percent + '%',
-            //     height: 100 + '%'});
 
         } else if (isProgressAndRangeTrue) {
             const gap: number = this.optionsState.gap;
-            const $maxValue: JQuery = $(`${this.selectorState} .slider-app__input-max`);
+            const $maxValue: JQuery = $(`${this.selectorState} .js-slider-app__input-max`);
 
             const isTranslateBarX = (): void => {
                 const thumbValue: number = (Number($minValue.val()) / this.optionsState.max) * 100 + 1;
@@ -356,16 +348,6 @@ class View extends Observer {
                 height: 100 + '%',
                 left: (Number($minValue.val()) / Number($minValue.attr('max'))) * 100 + 1 + '%',
                 right: 100 - (Number($maxValue.val()) / Number($maxValue.attr('max'))) * 100 + '%'});
-            // isStateVertical
-            //     ? $progress.css({
-            //     height: 'auto',
-            //     bottom: (Number($minValue.val()) / Number($minValue.attr('max'))) * 100 + 1 + '%',
-            //     top: 100 - (Number($maxValue.val()) / Number($maxValue.attr('max'))) * 100 + '%'})
-            //     : $progress.css({
-            //     width: 'auto',
-            //     height: 100 + '%',
-            //     left: (Number($minValue.val()) / Number($minValue.attr('max'))) * 100 + 1 + '%',
-            //     right: 100 - (Number($maxValue.val()) / Number($maxValue.attr('max'))) * 100 + '%'});
 
             isTranslateBarX();
 
@@ -380,7 +362,7 @@ class View extends Observer {
 
                     const isValueLessGap: boolean = max - min < gap;
                     const hasClassInputMin: boolean =
-                        $(event.currentTarget).hasClass('slider-app__input-min');
+                        $(event.currentTarget).hasClass('js-slider-app__input-min');
 
                     if (isValueLessGap) {
                         hasClassInputMin
@@ -401,93 +383,28 @@ class View extends Observer {
     }
 
     private setVertical(): void {
-        const $element: JQuery = $(this.selectorState);
-        const $maxElement: JQuery = $(`${this.selectorState} .slider-app__max-value`);
-        const $minElement: JQuery = $(`${this.selectorState} .slider-app__min-value`);
-        const $tooltipElement: JQuery = $(`${this.selectorState} .slider-app__tooltip-value`);
-        const $rulersElement: JQuery = $(`${this.selectorState} .slider-app__rulers`);
-
         if (this.optionsState.vertical) {
 
-            $(`${this.selectorState} .slider-app__bar-line`)
+            $(`${this.selectorState} .js-slider-app__bar-line`)
                 .addClass('slider-app__bar-line--vertical');
 
-            $(`${this.selectorState} .slider-app__rulers`)
+            $(`${this.selectorState} .js-slider-app__rulers`)
                 .addClass('slider-app__rulers--vertical');
 
-            $(`${this.selectorState} .slider-app__rulers-values`)
+            $(`${this.selectorState} .js-slider-app__rulers-values`)
                 .addClass('slider-app__rulers-values--vertical');
-
-            // $(`${this.selectorState} .slider-app`).addClass('slider-app--vertical');
-            // $(`${this.selectorState} .slider-app__input`)
-            //     .addClass('slider-app__input--vertical')
-            //     .css('width', $(`${this.selectorState}`).css('height'));
-
-            // $(`${this.selectorState} .slider-app__tooltip-line`)
-            //     .addClass('slider-app__tooltip-line--vertical');
-            //
-            // $(`${this.selectorState} .slider-app__rulers`)
-            //     .addClass('slider-app__rulers--vertical');
-            //
-            // $(`${this.selectorState} .slider-app__bar-line`)
-            //     .addClass('slider-app__bar-line--vertical');
-            //
-            // $(`${this.selectorState} .slider-app__progress`)
-            //     .addClass('slider-app__progress--vertical');
-            //
-            // $(`${this.selectorState} .slider-app__tooltip-container`)
-            //     .addClass('slider-app__tooltip-container--vertical');
-            //
-            // $(`${this.selectorState} .slider-app__tooltip-value`)
-            //     .addClass('slider-app__tooltip-value--vertical');
-            //
-            // $(`${this.selectorState} .slider-app__min-value`)
-            //     .addClass('slider-app__min-value--vertical');
-            //
-            // $(`${this.selectorState} .slider-app__max-value`)
-            //     .addClass('slider-app__max-value--vertical');
 
         } else {
 
-            $(`${this.selectorState} .slider-app__bar-line`)
+            $(`${this.selectorState} .js-slider-app__bar-line`)
                 .removeClass('slider-app__bar-line--vertical');
 
-            $(`${this.selectorState} .slider-app__rulers`)
+            $(`${this.selectorState} .js-slider-app__rulers`)
                 .removeClass('slider-app__rulers--vertical');
 
-            $(`${this.selectorState} .slider-app__rulers-values`)
+            $(`${this.selectorState} .js-slider-app__rulers-values`)
                 .removeClass('slider-app__rulers-values--vertical');
 
-            // $(`${this.selectorState} .slider-app`).removeClass('slider-app--vertical');
-            //
-            // $(`${this.selectorState} .slider-app__input`)
-            //     .removeClass('slider-app__input--vertical')
-            //     .css('width', parseInt($(`${this.selectorState}`).css('width')) + 10 + 'px');
-            //
-            // $(`${this.selectorState} .slider-app__tooltip-line`)
-            //     .removeClass('slider-app__tooltip-line--vertical');
-            //
-            // $(`${this.selectorState} .slider-app__rulers--vertical`)
-            //     .removeClass('slider-app__rulers--vertical');
-            //
-            //
-            // $(`${this.selectorState} .slider-app__bar-line`)
-            //     .removeClass('slider-app__bar-line--vertical');
-            //
-            // $(`${this.selectorState} .slider-app__progress`)
-            //     .removeClass('slider-app__progress--vertical');
-            //
-            // $(`${this.selectorState} .slider-app__tooltip-container`)
-            //     .removeClass('slider-app__tooltip-container--vertical');
-            //
-            // $(`${this.selectorState} .slider-app__tooltip-value`)
-            //     .removeClass('slider-app__tooltip-value--vertical');
-            //
-            // $(`${this.selectorState} .slider-app__min-value`)
-            //     .removeClass('slider-app__min-value--vertical');
-            //
-            // $(`${this.selectorState} .slider-app__max-value`)
-            //     .removeClass('slider-app__max-value--vertical');
         }
 
         this.setColor();
@@ -497,7 +414,7 @@ class View extends Observer {
     }
 
     private setTooltip(): void {
-        const tooltip: JQuery = $(`${this.selectorState} .slider-app__tooltip-line`);
+        const tooltip: JQuery = $(`${this.selectorState} .js-slider-app__tooltip-line`);
         const isTooltipTrue: boolean = this.optionsState.tooltip;
 
         if (isTooltipTrue) {
@@ -507,10 +424,10 @@ class View extends Observer {
             isGetTooltipIfMissing();
             const maxValue: number = this.optionsState.max;
             const minValue: number = this.optionsState.min;
-            const $tooltipValueFirst: JQuery = $(`${this.selectorState} .slider-app__tooltip-value-first`);
+            const $tooltipValueFirst: JQuery = $(`${this.selectorState} .js-slider-app__tooltip-value-first`);
             const $tooltipContainerFirst: JQuery =
-                $(`${this.selectorState} .slider-app__tooltip-container-first`);
-            const $inputMin: JQuery = $(`${this.selectorState} .slider-app__input-min`);
+                $(`${this.selectorState} .js-slider-app__tooltip-container-first`);
+            const $inputMin: JQuery = $(`${this.selectorState} .js-slider-app__input-min`);
             const fontSizeFirst: number = $tooltipValueFirst.text().length - 2;
 
             const isVerticalStateTrue: boolean = this.optionsState.vertical;
@@ -562,17 +479,17 @@ class View extends Observer {
 
             if (isRangeTrue) {
                 const isGetSecondTooltipIfMissing = (): void => {
-                    $(`${this.selectorState} .slider-app__tooltip-container-second`).length === 0
+                    $(`${this.selectorState} .js-slider-app__tooltip-container-second`).length === 0
                         ? this.tooltip.getSecondTooltip()
                         : null;
                 };
 
                 isGetSecondTooltipIfMissing();
                 const $tooltipValueSecond: JQuery =
-                    $(`${this.selectorState} .slider-app__tooltip-value-second`);
+                    $(`${this.selectorState} .js-slider-app__tooltip-value-second`);
                 const $tooltipContainerSecond: JQuery =
-                    $(`${this.selectorState} .slider-app__tooltip-container-second`);
-                const $inputMax: JQuery = $(`${this.selectorState} .slider-app__input-max`);
+                    $(`${this.selectorState} .js-slider-app__tooltip-container-second`);
+                const $inputMax: JQuery = $(`${this.selectorState} .js-slider-app__input-max`);
                 const fontSizeSecond: number = $tooltipValueSecond.text().length - 2;
 
                 $tooltipContainerSecond.css(
@@ -617,38 +534,34 @@ class View extends Observer {
             this.optionsState.color.firstColor || this.optionsState.color.secondColor;
         const isTextColorAdded: string = this.optionsState.color.textColor;
         const isThumbColorAdded: string = this.optionsState.color.thumbColor;
-        const $values: JQuery = $(`${this.selectorState} .slider-app__rulers-values`);
+        const $values: JQuery = $(`${this.selectorState} .js-slider-app__rulers-values`);
 
         if (isColorAdded) {
             const colorOne: string = this.optionsState.color.firstColor;
             const colorTwo: string = this.optionsState.color.secondColor;
-            const $progress: JQuery = $(`${this.selectorState} .slider-app__progress`);
-            const isVerticalStateTrue: boolean = this.optionsState.vertical;
-
+            const $progress: JQuery = $(`${this.selectorState} .js-slider-app__progress`);
 
             $progress.css('background-image',
                 `linear-gradient(90deg, ${colorOne} 0%, ${colorTwo} 100%)`);
-            // isVerticalStateTrue
-            //     ? $progress.css('background-image',
-            //     `linear-gradient(to top, ${colorOne} 0%, ${colorTwo} 100%)`)
-            //     : $progress.css('background-image',
-            //     `linear-gradient(90deg, ${colorOne} 0%, ${colorTwo} 100%)`);
         }
 
         if (isTextColorAdded) {
             $values.css('color', this.optionsState.color.textColor);
-            $(`${this.selectorState} .slider-app__config-text--inner`).css('color', this.optionsState.color.textColor);
-            $(`${this.selectorState} .slider-app__config-toggle-name`).css('color', this.optionsState.color.textColor);
+            $(`${this.selectorState} .js-slider-app__config-text--inner`)
+                .css('color', this.optionsState.color.textColor);
+
+            $(`${this.selectorState} .js-slider-app__config-toggle-name`)
+                .css('color', this.optionsState.color.textColor);
 
             // noinspection HtmlDeprecatedAttribute
-            $(`<style type="text/css">${this.selectorState} .slider-app__config-toggle-btn::before
+            $(`<style type="text/css">${this.selectorState} .js-slider-app__config-toggle-btn::before
                 {background-color: ${this.optionsState.color.textColor}}</style>`)
                 .appendTo($('head'));
         }
 
         if (isThumbColorAdded) {
             // noinspection HtmlDeprecatedAttribute
-            $(`<style type="text/css">${this.selectorState} .slider-app__input::-webkit-slider-thumb
+            $(`<style type="text/css">${this.selectorState} .js-slider-app__input::-webkit-slider-thumb
                 {background-color: ${this.optionsState.color.thumbColor}}</style>`)
                     .appendTo($('head'));
         }

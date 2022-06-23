@@ -24,7 +24,7 @@ class ConfigPanel {
         const selector = this.selector.slice(1);
         $(this.selector).after(
             `<div class=${selector}>
-                        <div class="slider-app__config">
+                        <div class="slider-app__config js-slider-app__config">
                             <div class="slider-app__config-section slider-app__config-section--control"></div>
                             <div class="slider-app__config-section slider-app__config-section--toggle"></div>
                         </div>
@@ -41,7 +41,9 @@ class ConfigPanel {
             $('.slider-app__config-section--control').append(
                 `<div class="slider-app__config-container">
                     <div class="slider-app__config-text">
-                        <span class="slider-app__config-text--inner">${name}</span>
+                        <span class="slider-app__config-text--inner js-slider-app__config-text--inner">
+                            ${name}
+                        </span>
                     </div>
                     <input 
                     class='slider-app__config-input'
@@ -62,7 +64,7 @@ class ConfigPanel {
             $('.slider-app__config-section--toggle').append(
                 `<div class="slider-app__config-toggle-container">
                     <label 
-                    class="slider-app__config-toggle-name" 
+                    class="slider-app__config-toggle-name js-slider-app__config-toggle-name" 
                     for=${selector}>
                         ${name}
                     </label>
@@ -70,7 +72,7 @@ class ConfigPanel {
                         <input 
                         class="slider-app__config-toggle-box" 
                         type="checkbox" id=${selector}>
-                        <span class="slider-app__config-toggle-btn"></span>
+                        <span class="slider-app__config-toggle-btn js-slider-app__config-toggle-btn"></span>
                     </label>
                 </div>`
             );

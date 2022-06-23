@@ -26,7 +26,7 @@ class Thumb {
     
     getMinThumb() {
         return $('<input>', {
-            class: 'slider-app__input slider-app__input-min',
+            class: 'slider-app__input js-slider-app__input slider-app__input-min js-slider-app__input-min',
             type: 'range',
             min: this.min,
             max: this.max,
@@ -37,7 +37,7 @@ class Thumb {
 
     getMaxThumb() {
         return $('<input>', {
-            class: 'slider-app__input slider-app__input-max',
+            class: 'slider-app__input js-slider-app__input slider-app__input-max js-slider-app__input-max',
             type: 'range',
             min: this.min,
             max: this.max,

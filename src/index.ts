@@ -8,7 +8,7 @@ new Controller('.slider', {
     max: 1000,
     gap: 0,
     color: {
-        textColor: 'green'
+        thumbColor: 'green'
     }
 });
 

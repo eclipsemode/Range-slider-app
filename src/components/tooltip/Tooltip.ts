@@ -13,7 +13,7 @@ class Tooltip {
 
     getTooltipLine() {
         return $('<div>', {
-            class: 'slider-app__tooltip-line'
+            class: 'slider-app__tooltip-line js-slider-app__tooltip-line'
         }).prependTo(`${this.selector} .slider-app__bar-line`);
     }
 
@@ -32,15 +32,16 @@ class Tooltip {
 
     getFirstTooltip() {
         this.getTooltipLine();
-        this.getTooltipContainer('slider-app__tooltip-container-first');
-        this.getTooltip('slider-app__tooltip-value-first', 'slider-app__tooltip-container-first', this.value);
+        this.getTooltipContainer('js-slider-app__tooltip-container-first');
+        this.getTooltip('js-slider-app__tooltip-value-first',
+            'js-slider-app__tooltip-container-first', this.value);
     }
 
     getSecondTooltip() {
-        this.getTooltipContainer('slider-app__tooltip-container-second');
+        this.getTooltipContainer('js-slider-app__tooltip-container-second');
         this.getTooltip(
-            'slider-app__tooltip-value-second',
-            'slider-app__tooltip-container-second',
+            'js-slider-app__tooltip-value-second',
+            'js-slider-app__tooltip-container-second',
             this.valueSecond
         );
     }

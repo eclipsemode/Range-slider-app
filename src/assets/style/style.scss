@@ -5,6 +5,8 @@ body {
   padding: 0;
   height: 100vh;
   background-color: #35363a;
+  display: flex;
+  justify-content: center;
 }
 
 .slider-app {
@@ -12,9 +14,14 @@ body {
   height: 20px;
   width: 100%;
 
-  &--vertical {
+  &--additional {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 7rem;
     height: 100%;
-    width: 20px;
+    justify-content: center;
   }
 
   &__input {
@@ -290,5 +297,5 @@ body {
 }
 
 .first {
-  height: 500px;
+  width: 900px;
 }

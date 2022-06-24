@@ -109,14 +109,7 @@ class View extends Observer {
 
     private setSlider = () => {
         this.mainClass.getMainClass();
-        $(this.selectorState).css({
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            rowGap: '7rem',
-            marginTop: '5rem'
-        });
+        $(this.selectorState).addClass('slider-app--additional');
     };
 
     private setConfig = (): void => {
@@ -158,15 +151,15 @@ class View extends Observer {
         const isRulersTrue: boolean = this.optionsState.rulers;
 
         if (isRulersTrue) {
+
             const isGetRulersIfMissing = () => $rulers.length === 0 ? this.rulers.getRulers() : null;
             isGetRulersIfMissing();
+
             this.setColor();
 
             const $values: JQuery = $(`${this.selectorState} .js-slider-app__rulers-values`);
             const $minThumb: JQuery = $(`${this.selectorState} .js-slider-app__input-min`);
             const $maxThumb: JQuery = $(`${this.selectorState} .js-slider-app__input-max`);
-
-            // $values.children().css('font-size', $(this.selectorState).width() / 40 + 'px');
 
             $values.children().each((index, element) => {
                 const max: number = this.optionsState.to;

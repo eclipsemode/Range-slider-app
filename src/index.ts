@@ -6,7 +6,8 @@ new Controller('.slider', {
     configPanel: true,
     percent: false,
     max: 1000,
-    gap: 0
+    gap: 0,
+    rulers: false
 });
 
 // new Controller('.second', {

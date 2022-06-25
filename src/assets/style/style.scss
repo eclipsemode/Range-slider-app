@@ -10,19 +10,31 @@ body {
 }
 
 .slider-app {
-  position: relative;
-  height: 20px;
+  position: absolute;
+  height: 100%;
   width: 100%;
+  min-width: auto;
+  bottom: 3em;
+  left: 0;
+  display: flex;
+  align-items: flex-end;
 
   &--additional {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    row-gap: 7rem;
-    height: 100%;
+    height: 0;
+    padding-bottom: 100%;
     justify-content: center;
+    position: relative;
   }
+
+  &--vertical {
+    bottom: 0;
+    align-items: center;
+  }
+
 
   &__input {
     position: absolute;
@@ -250,14 +262,6 @@ body {
     justify-content: flex-start;
     color: $gr-main;
     cursor: pointer;
-
-    //&--vertical {
-    //  right: 37px;
-    //  display: flex;
-    //  width: 27px;
-    //  justify-content: center;
-    //  top: -30px;
-    //}
   }
 
   &__bar-line {
@@ -282,20 +286,9 @@ body {
     width: 0;
     background: linear-gradient(90deg, $gr-main 0%, $gr-secondary 100%);
     border-radius: inherit;
-
-    //&--vertical {
-    //  position: absolute;
-    //  top: auto;
-    //  right: 0;
-    //  bottom: 0;
-    //  height: 0;
-    //  width: 100%;
-    //  background: linear-gradient(to top, $gr-main 0%, $gr-secondary 100%);
-    //  border-radius: inherit;
-    //}
   }
 }
 
 .first {
-  width: 900px;
+  width: 500px;
 }

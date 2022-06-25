@@ -387,6 +387,9 @@ class View extends Observer {
 
         if (this.optionsState.vertical) {
 
+            $(`${this.selectorState} .slider-app`)
+                .addClass('slider-app--vertical');
+
             $(`${this.selectorState} .js-slider-app__bar-line`)
                 .addClass('slider-app__bar-line--vertical');
 
@@ -398,6 +401,9 @@ class View extends Observer {
 
 
         } else {
+
+            $(`${this.selectorState} .slider-app`)
+                .removeClass('slider-app--vertical');
 
             $(`${this.selectorState} .js-slider-app__bar-line`)
                 .removeClass('slider-app__bar-line--vertical');

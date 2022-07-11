@@ -7,12 +7,6 @@ class Rulers {
         this.selector = selector;
     }
 
-    // public getRulers() {
-    //     return $('<div>', {
-    //         class: 'slider-app__rulers'
-    //     }).prependTo(`${this.selector} .slider-app`);
-    // }
-
     getRulers() {
         return $(`
             <div class="slider-app__rulers js-slider-app__rulers"></div>

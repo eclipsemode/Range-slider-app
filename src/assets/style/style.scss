@@ -191,10 +191,10 @@ body {
     &--vertical {
       position: absolute;
       content: "";
-      top: 3px;
-      right: -20px;
-      left: 51px;
-      height: 100%;
+      top: 49%;
+      right: -21px;
+      left: 48px;
+      height: 3%;
       border-right: 1px solid #686868;
       transform: rotate(-90deg);
     }
@@ -224,7 +224,7 @@ body {
     }
 
     &--vertical {
-      top: 0.4rem;
+      top: 49%;
       left: 70px;
       width: 100%;
       transform: rotate(-90deg);

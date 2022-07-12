@@ -440,19 +440,13 @@ class View extends Observer {
             const $inputMin: JQuery = $(`${this.selectorState} .js-slider-app__input-min`);
             const fontSizeFirst: number = $tooltipValueFirst.text().length - 2;
 
-            const isVerticalStateTrue: boolean = this.optionsState.vertical;
             const isPercentTrue: boolean = this.optionsState.percent;
             const isRangeTrue: boolean = this.optionsState.range;
 
-            isVerticalStateTrue
-                ? $tooltipContainerFirst.css({
-                    bottom: (( (+$inputMin.val() - minValue) / (maxValue - minValue) ) * 100) + '%',
-                    left: '0'
-                })
-                : $tooltipContainerFirst.css({
-                    left: (((+$inputMin.val() - minValue) / (maxValue - minValue)) * 100) + '%',
-                    bottom: '1.5rem'
-                });
+            $tooltipContainerFirst.css({
+                left: (((+$inputMin.val() - minValue) / (maxValue - minValue)) * 100) + '%',
+                bottom: '1.5rem'
+            });
 
             $tooltipValueFirst.css('font-size', 15 - fontSizeFirst + 'px');
 
@@ -460,11 +454,8 @@ class View extends Observer {
                 input: () => {
                     const firstTooltipTextLength: number = $tooltipValueFirst.text().length;
 
-                    isVerticalStateTrue
-                        ? $tooltipContainerFirst.css('bottom',
-                            (((+$inputMin.val() - minValue) / (maxValue - minValue)) * 100) + '%')
-                        : $tooltipContainerFirst.css('left',
-                            (((+$inputMin.val() - minValue) / (maxValue - minValue)) * 100) + '%');
+                    $tooltipContainerFirst.css('left',
+                        (((+$inputMin.val() - minValue) / (maxValue - minValue)) * 100) + '%');
 
                     if (firstTooltipTextLength > 4) {
                         const fontSize: number = firstTooltipTextLength - 2;

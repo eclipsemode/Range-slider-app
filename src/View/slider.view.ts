@@ -156,6 +156,7 @@ class View extends Observer {
             isGetRulersIfMissing();
 
             this.setColor();
+            this.setVertical();
 
             const $values: JQuery = $(`${this.selectorState} .js-slider-app__rulers-values`);
             const $minThumb: JQuery = $(`${this.selectorState} .js-slider-app__input-min`);
@@ -302,6 +303,7 @@ class View extends Observer {
         this.setConfig();
         $(`${this.selectorState} .js-slider-app__input`).on('input', () => this.setBar());
         this.setTooltip();
+        this.setVertical();
 
     };
 
@@ -399,7 +401,6 @@ class View extends Observer {
             $(`${this.selectorState} .js-slider-app__rulers-values`)
                 .addClass('slider-app__rulers-values--vertical');
 
-
         } else {
 
             $(`${this.selectorState} .slider-app`)
@@ -420,7 +421,6 @@ class View extends Observer {
         this.setColor();
         this.setBar();
         this.setTooltip();
-        this.setRulers();
     }
 
     private setTooltip(): void {

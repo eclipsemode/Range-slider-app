@@ -401,6 +401,9 @@ class View extends Observer {
             $(`${this.selectorState} .js-slider-app__rulers-values`)
                 .addClass('slider-app__rulers-values--vertical');
 
+            $(`${this.selectorState} .slider-app__tooltip-value`)
+                .addClass('slider-app__tooltip-value--vertical');
+
         } else {
 
             $(`${this.selectorState} .slider-app`)
@@ -415,12 +418,13 @@ class View extends Observer {
             $(`${this.selectorState} .js-slider-app__rulers-values`)
                 .removeClass('slider-app__rulers-values--vertical');
 
+            $(`${this.selectorState} .slider-app__tooltip-value`)
+                .removeClass('slider-app__tooltip-value--vertical');
 
         }
 
         this.setColor();
         this.setBar();
-        this.setTooltip();
     }
 
     private setTooltip(): void {
@@ -432,6 +436,7 @@ class View extends Observer {
                 tooltip.length === 0 ? this.tooltip.getFirstTooltip() : null;
 
             isGetTooltipIfMissing();
+            this.setVertical();
             const maxValue: number = this.optionsState.max;
             const minValue: number = this.optionsState.min;
             const $tooltipValueFirst: JQuery = $(`${this.selectorState} .js-slider-app__tooltip-value-first`);
@@ -486,6 +491,7 @@ class View extends Observer {
                 };
 
                 isGetSecondTooltipIfMissing();
+                this.setVertical();
                 const $tooltipValueSecond: JQuery =
                     $(`${this.selectorState} .js-slider-app__tooltip-value-second`);
                 const $tooltipContainerSecond: JQuery =

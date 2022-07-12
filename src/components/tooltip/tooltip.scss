@@ -1,0 +1,58 @@
+.slider-app {
+  &__tooltip-line {
+    position: relative;
+    height: auto;
+    width: calc(100% - 26px);
+    transform: translateX(-14px);
+
+    &--vertical {
+      height: calc(100% - 33px);
+      width: auto;
+      top: 37px;
+      transform: translateX(-66px);
+    }
+  }
+
+  &__tooltip-container {
+    position: absolute;
+    content: "";
+    bottom: 1.5rem;
+    width: 30px;
+    height: 30px;
+    overflow: hidden;
+    background-color: #3e3e3e;
+    border: 2px solid #ffe53b;
+    z-index: -1;
+    transform: rotate(225deg);
+    border-bottom-left-radius: 50%;
+    border-bottom-right-radius: 50%;
+    border-top-right-radius: 50%;
+    padding: 6px;
+    box-shadow: 0 0 20px rgb(0 0 0 / 70%);
+    transition: opacity ease-in-out 0.4s;
+
+    &--vertical {
+      transform: rotate(135deg);
+    }
+  }
+
+  &__tooltip-value {
+    position: absolute;
+    bottom: 11px;
+    right: 11px;
+    transform: rotate(135deg);
+    width: 20px;
+    height: 20px;
+    color: #eeeeee;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    font-size: 15px;
+
+    &--vertical {
+      transform: rotate(225deg);
+    }
+  }
+}

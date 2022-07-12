@@ -1,0 +1,26 @@
+.slider-app {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  min-width: auto;
+  bottom: 3em;
+  left: 0;
+  display: flex;
+  align-items: flex-end;
+
+  &--additional {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 0;
+    padding-bottom: 100%;
+    justify-content: center;
+    position: relative;
+  }
+
+  &--vertical {
+    bottom: 0;
+    align-items: center;
+  }
+}

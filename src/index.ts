@@ -9,9 +9,3 @@ new Controller('.slider', {
     gap: 0,
     rulers: false
 });
-
-// new Controller('.second', {
-//     min: -10000,
-//     max: 500,
-//     configPanel: true
-// });

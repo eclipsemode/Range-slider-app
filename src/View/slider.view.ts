@@ -1,5 +1,5 @@
 import ModelOption from '../utils/ModelOption';
-import {TogglesEnum} from '../utils/Config.enum';
+import {TogglesEnum, ControlsEnum} from '../utils/Config.enum';
 import abbreviateNumber from '../utils/abbreviateNumber';
 
 import Rulers from '../components/rulers/Rulers';
@@ -61,8 +61,64 @@ class View extends Observer {
         this.setColor();
         this.setConfig();
         this.setVertical();
+
         this.updateConfig();
+        this.updateControl();
     }
+
+    updateControl = () => {
+        const newSelector: string = this.selectorState.slice(1);
+        const $thumbs = $(`${this.selectorState} .js-slider-app__input`);
+        const $thumbMin = $(`${this.selectorState} .js-slider-app__input-min`);
+        const $thumbMax = $(`${this.selectorState} .js-slider-app__input-max`);
+
+        const handleControl = (data: {key: string, value: number}) => {
+
+            switch (data.key) {
+                case ControlsEnum.MIN:
+                    this.optionsState.min = data.value;
+                    $thumbs.prop('min', data.value);
+                    this.setBar();
+                    this.setTooltip();
+                    break;
+                case ControlsEnum.MAX:
+                    this.optionsState.max = data.value;
+                    $thumbs.prop('max', data.value);
+                    this.setBar();
+                    this.setTooltip();
+                    break;
+                case ControlsEnum.STEP:
+                    this.optionsState.step = data.value;
+                    $thumbs.prop('step', data.value);
+                    this.setBar();
+                    this.setTooltip();
+                    break;
+                case ControlsEnum.FROM:
+                    this.optionsState.from = data.value;
+                    $thumbMin.val(data.value);
+                    this.setBar();
+                    this.setTooltip();
+                    break;
+                case ControlsEnum.TO:
+                    this.optionsState.to = data.value;
+                    $thumbMax.val(data.value);
+                    this.setBar();
+                    this.setTooltip();
+                    break;
+            }
+        };
+
+        this.optionsState.controlConfig.forEach((item) => {
+            $(`#${newSelector}__control-${item}`).on('change', () => {
+                this.subscribe(handleControl);
+                this.broadcast({
+                    key: item,
+                    value: $(`#${newSelector}__control-${item}`).val()
+                });
+                this.unsubscribe(handleControl);
+            });
+        });
+    };
 
     updateConfig = () => {
         const newSelector: string = this.selectorState.slice(1);

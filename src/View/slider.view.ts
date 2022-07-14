@@ -360,7 +360,7 @@ class View extends Observer {
         $(`${this.selectorState} .js-slider-app__input`).on('input', () => this.setBar());
         this.setTooltip();
         this.setVertical();
-
+        this.updateControl();
     };
 
     private setBar(): void {

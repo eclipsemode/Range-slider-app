@@ -210,6 +210,9 @@ class View extends Observer {
 
             const isGetRulersIfMissing = () => $rulers.length === 0 ? this.rulers.getRulers() : null;
             isGetRulersIfMissing();
+            const isFindValueByPercent = (percent: number): number =>
+                this.optionsState.min + ((this.optionsState.max - this.optionsState.min) * percent / 100);
+
 
             this.setColor();
             this.setVertical();
@@ -251,7 +254,7 @@ class View extends Observer {
                                     ? $minThumb.val(max * 20 / 100)
                                     : $minThumb.val(Number($maxThumb.val()) - gap);
                             } else {
-                                $minThumb.val(minVal + ((maxVal - minVal) * 20 / 100));
+                                $minThumb.val(isFindValueByPercent(20));
                             }
                             this.setBar();
                             this.setTooltip();
@@ -271,7 +274,7 @@ class View extends Observer {
                                     ? $minThumb.val(max * 40 / 100)
                                     : $minThumb.val(Number($maxThumb.val()) - gap);
                             } else {
-                                $minThumb.val(minVal + ((maxVal - minVal) * 40 / 100));
+                                $minThumb.val(isFindValueByPercent(40));
                             }
                             this.setBar();
                             this.setTooltip();
@@ -291,7 +294,7 @@ class View extends Observer {
                                     ? $maxThumb.val(max * 60 / 100)
                                     : $maxThumb.val(Number($minThumb.val()) + gap);
                             } else {
-                                $minThumb.val(minVal + ((maxVal - minVal) * 60 / 100));
+                                $minThumb.val(isFindValueByPercent(60));
                             }
                             this.setBar();
                             this.setTooltip();
@@ -311,7 +314,7 @@ class View extends Observer {
                                     ? $maxThumb.val(max * 80 / 100)
                                     : $maxThumb.val(Number($minThumb.val()) + gap);
                             } else {
-                                $minThumb.val(minVal + ((maxVal - minVal) * 80 / 100));
+                                $minThumb.val(isFindValueByPercent(80));
                             }
                             this.setBar();
                             this.setTooltip();

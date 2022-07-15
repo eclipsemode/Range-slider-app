@@ -219,6 +219,8 @@ class View extends Observer {
             const $maxThumb: JQuery = $(`${this.selectorState} .js-slider-app__input-max`);
 
             $values.children().each((index, element) => {
+                const minVal: number = this.optionsState.min;
+                const maxVal: number = this.optionsState.max;
                 const max: number = this.optionsState.to;
                 const gap: number = this.optionsState.gap;
                 const isPercentTrue: boolean = this.optionsState.percent;
@@ -227,7 +229,7 @@ class View extends Observer {
                     case 0:
                         isPercentTrue
                             ? element.innerText = '0%'
-                            : element.innerText = abbreviateNumber(max, 0);
+                            : element.innerText = abbreviateNumber(maxVal - minVal, minVal, 0);
 
                         element.addEventListener('click', () => {
                             $minThumb.val(this.optionsState.min);
@@ -238,7 +240,7 @@ class View extends Observer {
                     case 1:
                         isPercentTrue
                             ? element.innerText = '20%'
-                            : element.innerText = abbreviateNumber(max, 20);
+                            : element.innerText = abbreviateNumber(maxVal - minVal, minVal, 20);
 
                         element.addEventListener('click', () => {
                             if (this.optionsState.range) {
@@ -249,7 +251,7 @@ class View extends Observer {
                                     ? $minThumb.val(max * 20 / 100)
                                     : $minThumb.val(Number($maxThumb.val()) - gap);
                             } else {
-                                $minThumb.val(max * 20 / 100);
+                                $minThumb.val(minVal + ((maxVal - minVal) * 20 / 100));
                             }
                             this.setBar();
                             this.setTooltip();
@@ -258,7 +260,7 @@ class View extends Observer {
                     case 2:
                         isPercentTrue
                             ? element.innerText = '40%'
-                            : element.innerText = abbreviateNumber(max, 40);
+                            : element.innerText = abbreviateNumber(maxVal - minVal, minVal, 40);
 
                         element.addEventListener('click', () => {
                             if (this.optionsState.range) {
@@ -269,7 +271,7 @@ class View extends Observer {
                                     ? $minThumb.val(max * 40 / 100)
                                     : $minThumb.val(Number($maxThumb.val()) - gap);
                             } else {
-                                $minThumb.val(max * 40 / 100);
+                                $minThumb.val(minVal + ((maxVal - minVal) * 40 / 100));
                             }
                             this.setBar();
                             this.setTooltip();
@@ -278,7 +280,7 @@ class View extends Observer {
                     case 3:
                         isPercentTrue
                             ? element.innerText = '60%'
-                            : element.innerText = abbreviateNumber(max, 60);
+                            : element.innerText = abbreviateNumber(maxVal - minVal, minVal, 60);
 
                         element.addEventListener('click', () => {
                             if (this.optionsState.range) {
@@ -289,7 +291,7 @@ class View extends Observer {
                                     ? $maxThumb.val(max * 60 / 100)
                                     : $maxThumb.val(Number($minThumb.val()) + gap);
                             } else {
-                                $minThumb.val(max * 60 / 100);
+                                $minThumb.val(minVal + ((maxVal - minVal) * 60 / 100));
                             }
                             this.setBar();
                             this.setTooltip();
@@ -298,7 +300,7 @@ class View extends Observer {
                     case 4:
                         isPercentTrue
                             ? element.innerText = '80%'
-                            : element.innerText = abbreviateNumber(max, 80);
+                            : element.innerText = abbreviateNumber(maxVal - minVal, minVal, 80);
 
                         element.addEventListener('click', () => {
                             if (this.optionsState.range) {
@@ -309,7 +311,7 @@ class View extends Observer {
                                     ? $maxThumb.val(max * 80 / 100)
                                     : $maxThumb.val(Number($minThumb.val()) + gap);
                             } else {
-                                $minThumb.val(max * 80 / 100);
+                                $minThumb.val(minVal + ((maxVal - minVal) * 80 / 100));
                             }
                             this.setBar();
                             this.setTooltip();
@@ -318,7 +320,7 @@ class View extends Observer {
                     case 5:
                         isPercentTrue
                             ? element.innerText = '100%'
-                            : element.innerText = abbreviateNumber(max, 100);
+                            : element.innerText = abbreviateNumber(maxVal - minVal, minVal,  100);
 
                         element.addEventListener('click', () => {
                             this.optionsState.range

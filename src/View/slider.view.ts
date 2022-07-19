@@ -1,6 +1,7 @@
 import ModelOption from '../utils/ModelOption';
 import {TogglesEnum, ControlsEnum} from '../utils/Config.enum';
 import abbreviateNumber from '../utils/abbreviateNumber';
+import {findMaxPercent, findMinPercent} from '../utils/findThumbPercent';
 
 import Rulers from '../components/rulers/Rulers';
 import Thumb from '../components/thumb/Thumb';
@@ -370,12 +371,16 @@ class View extends Observer {
 
     private setBar(): void {
         const $bar: JQuery = $(`${this.selectorState} .js-slider-app__bar-line`);
-        $bar.length === 0 ? this.bar.getBar() : null;
-        const $range = $(`${this.selectorState} .js-slider-app__input`);
-        const $minValue = $(`${this.selectorState} .js-slider-app__input-min`);
 
+        $bar.length === 0 ? this.bar.getBar() : null;
+
+        const $range = $(`${this.selectorState} .js-slider-app__input`);
+        const $minThumb = $(`${this.selectorState} .js-slider-app__input-min`);
+        const minVal: number = this.optionsState.min;
         const isProgressTrue: boolean = this.optionsState.progress;
-        const isProgressAndRangeTrue: boolean = this.optionsState.range && this.optionsState.progress;
+        const isRangeTrue: boolean = this.optionsState.range;
+        const gap: number = this.optionsState.gap;
+        const $maxThumb: JQuery = $(`${this.selectorState} .js-slider-app__input-max`);
 
         if (isProgressTrue) {
             $(`${this.selectorState} .js-slider-app__progress`).length === 0
@@ -386,63 +391,45 @@ class View extends Observer {
         // noinspection JSJQueryEfficiency
         const $progress: JQuery = $(`${this.selectorState} .js-slider-app__progress`);
 
-        if (!isProgressAndRangeTrue) {
-            const value: number = <number>$minValue.val();
-            const min: number = parseInt($minValue.attr('min'));
-            const max: number = parseInt($minValue.attr('max'));
-            const percent: number = ((value - min) / (max - min)) * 100;
-
-            $progress.css({
-                width: percent + '%',
-                height: 100 + '%'});
-
-        } else if (isProgressAndRangeTrue) {
-            const gap: number = this.optionsState.gap;
-            const $maxValue: JQuery = $(`${this.selectorState} .js-slider-app__input-max`);
-
-            const isTranslateBarX = (): void => {
-                const thumbValue: number = (Number($minValue.val()) / this.optionsState.max) * 100 + 1;
-                thumbValue > 35 ? $progress.css('transform', 'translateX(-15px)') : null;
-                thumbValue > 90 ? $progress.css('transform', 'translateX(-20px)') : null;
-                thumbValue <= 35 ? $progress.css('transform', 'translateX(0px)') : null;
-            };
-
+        if (isRangeTrue) {
             $progress.css({
                 width: 'auto',
                 height: 100 + '%',
-                left: (Number($minValue.val()) / Number($minValue.attr('max'))) * 100 + 1 + '%',
-                right: 100 - (Number($maxValue.val()) / Number($maxValue.attr('max'))) * 100 + '%'});
-
-            isTranslateBarX();
+                left: findMinPercent(minVal, Number($minThumb.val()), parseInt($minThumb.attr('max'))),
+                right: findMaxPercent(minVal, Number($maxThumb.val()), parseInt($maxThumb.attr('max')))
+            });
 
             $range.each(function (index, element) {
-                $($maxValue).css('pointerEvents', 'none');
-
                 $(element).on('input', (event) => {
-                    const min = Number($minValue.val());
-                    const max = Number($maxValue.val());
-                    const minPercent: number = (min / Number($minValue.attr('max'))) * 100 + 1;
-                    const maxPercent: number = 100 - (max / Number($maxValue.attr('max'))) * 100;
-
-                    const isValueLessGap: boolean = max - min < gap;
+                    const minThumbValue = Number($minThumb.val());
+                    const maxThumbValue = Number($maxThumb.val());
+                    const isValueLessGap: boolean = maxThumbValue - minThumbValue < gap;
                     const hasClassInputMin: boolean =
                         $(event.currentTarget).hasClass('js-slider-app__input-min');
 
                     if (isValueLessGap) {
                         hasClassInputMin
-                            ? $(this).val(max - gap)
-                            : $(this).val(min + gap);
+                            ? $(this).val(maxThumbValue - gap)
+                            : $(this).val(minThumbValue + gap);
                     }
 
                     $progress.css({
                         width: 'auto',
-                        left: minPercent + '%',
-                        right: maxPercent + '%'
+                        left: findMinPercent(
+                            minVal,
+                            Number($minThumb.val()),
+                            parseInt($minThumb.attr('max'))),
+                        right: findMaxPercent(
+                            minVal,
+                            Number($maxThumb.val()),
+                            parseInt($maxThumb.attr('max'))),
                     });
-
-                    isTranslateBarX();
                 });
             });
+        } else {
+            $progress.css({
+                width: findMinPercent(minVal, Number($minThumb.val()), parseInt($minThumb.attr('max'))),
+                height: 100 + '%'});
         }
     }
 

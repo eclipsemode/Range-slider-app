@@ -11,6 +11,7 @@ import Bar from '../components/bar/Bar';
 import MainClass from '../components/mainClass/MainClass';
 import ConfigPanel from '../components/configPanel/ConfigPanel';
 import Observer from '../Observer/Observer';
+import ChangeEvent = JQuery.ChangeEvent;
 
 class View extends Observer {
     private readonly selectorState: string;
@@ -119,6 +120,16 @@ class View extends Observer {
                 this.unsubscribe(handleControl);
             });
         });
+
+        $thumbMin.on('input', (e: ChangeEvent) => {
+            this.optionsState.from = e.currentTarget.value;
+            this.setConfig();
+        });
+
+        $thumbMax.on('input', (e: ChangeEvent) => {
+            this.optionsState.to = e.currentTarget.value;
+            this.setConfig();
+        });
     };
 
     updateConfig = () => {
@@ -225,7 +236,7 @@ class View extends Observer {
             $values.children().each((index, element) => {
                 const minVal: number = this.optionsState.min;
                 const maxVal: number = this.optionsState.max;
-                const max: number = this.optionsState.to;
+                const toValue: number = this.optionsState.to;
                 const gap: number = this.optionsState.gap;
                 const isPercentTrue: boolean = this.optionsState.percent;
 
@@ -249,11 +260,12 @@ class View extends Observer {
                         element.addEventListener('click', () => {
                             if (this.optionsState.range) {
                                 const isMinLessMaxWithGap: boolean =
-                                    max * 20 / 100 < Number($maxThumb.val()) - gap;
+                                    this.optionsState.to -  Math.abs(parseInt(element.innerText)) >
+                                        this.optionsState.gap;
 
                                 isMinLessMaxWithGap
-                                    ? $minThumb.val(max * 20 / 100)
-                                    : $minThumb.val(Number($maxThumb.val()) - gap);
+                                    ? $minThumb.val(isFindValueByPercent(20))
+                                    : $minThumb.val(Number($maxThumb.val()) - this.optionsState.gap);
                             } else {
                                 $minThumb.val(isFindValueByPercent(20));
                             }
@@ -269,10 +281,10 @@ class View extends Observer {
                         element.addEventListener('click', () => {
                             if (this.optionsState.range) {
                                 const isMinLessMaxWithGap: boolean =
-                                    max * 40 / 100 < Number($maxThumb.val()) - gap;
+                                    toValue * 40 / 100 < Number($maxThumb.val()) - gap;
 
                                 isMinLessMaxWithGap
-                                    ? $minThumb.val(max * 40 / 100)
+                                    ? $minThumb.val(toValue * 40 / 100)
                                     : $minThumb.val(Number($maxThumb.val()) - gap);
                             } else {
                                 $minThumb.val(isFindValueByPercent(40));
@@ -289,10 +301,10 @@ class View extends Observer {
                         element.addEventListener('click', () => {
                             if (this.optionsState.range) {
                                 const isMaxMoreThanMinWithGap: boolean =
-                                    max * 60 / 100 > Number($minThumb.val()) + gap;
+                                    toValue * 60 / 100 > Number($minThumb.val()) + gap;
 
                                 isMaxMoreThanMinWithGap
-                                    ? $maxThumb.val(max * 60 / 100)
+                                    ? $maxThumb.val(toValue * 60 / 100)
                                     : $maxThumb.val(Number($minThumb.val()) + gap);
                             } else {
                                 $minThumb.val(isFindValueByPercent(60));
@@ -309,10 +321,10 @@ class View extends Observer {
                         element.addEventListener('click', () => {
                             if (this.optionsState.range) {
                                 const isMaxMoreThanMinWithGap: boolean =
-                                    max * 80 / 100 > Number($minThumb.val()) + gap;
+                                    toValue * 80 / 100 > Number($minThumb.val()) + gap;
 
                                 isMaxMoreThanMinWithGap
-                                    ? $maxThumb.val(max * 80 / 100)
+                                    ? $maxThumb.val(toValue * 80 / 100)
                                     : $maxThumb.val(Number($minThumb.val()) + gap);
                             } else {
                                 $minThumb.val(isFindValueByPercent(80));

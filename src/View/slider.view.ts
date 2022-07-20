@@ -246,8 +246,10 @@ class View extends Observer {
 
                         element.addEventListener('click', () => {
                             $minThumb.val(this.optionsState.min);
+                            this.optionsState.from = +$minThumb.val();
                             this.setBar();
                             this.setTooltip();
+                            this.setConfig();
                         });
                         break;
                     case 1:
@@ -258,17 +260,19 @@ class View extends Observer {
                         element.addEventListener('click', () => {
                             if (this.optionsState.range) {
                                 const isMinLessMaxWithGap: boolean =
-                                    this.optionsState.to -  Math.abs(parseInt(element.innerText)) >
-                                        this.optionsState.gap;
+                                    +this.optionsState.to -  +abbreviateNumber(maxVal - minVal, minVal, 20) >
+                                        +this.optionsState.gap;
 
                                 isMinLessMaxWithGap
                                     ? $minThumb.val(isFindValueByPercent(20))
-                                    : $minThumb.val(Number($maxThumb.val()) - this.optionsState.gap);
+                                    : $minThumb.val(+this.optionsState.to - +this.optionsState.gap);
                             } else {
                                 $minThumb.val(isFindValueByPercent(20));
                             }
+                            this.optionsState.from = +$minThumb.val();
                             this.setBar();
                             this.setTooltip();
+                            this.setConfig();
                         });
                         break;
                     case 2:
@@ -279,17 +283,19 @@ class View extends Observer {
                         element.addEventListener('click', () => {
                             if (this.optionsState.range) {
                                 const isMinLessMaxWithGap: boolean =
-                                    this.optionsState.to -  Math.abs(parseInt(element.innerText)) >
-                                    this.optionsState.gap;
+                                    +this.optionsState.to -  +abbreviateNumber(maxVal - minVal, minVal, 40) >
+                                    +this.optionsState.gap;
 
                                 isMinLessMaxWithGap
                                     ? $minThumb.val(isFindValueByPercent(40))
-                                    : $minThumb.val(Number($maxThumb.val()) - this.optionsState.gap);
+                                    : $minThumb.val(+this.optionsState.to - +this.optionsState.gap);
                             } else {
                                 $minThumb.val(isFindValueByPercent(40));
                             }
+                            this.optionsState.from = +$minThumb.val();
                             this.setBar();
                             this.setTooltip();
+                            this.setConfig();
                         });
                         break;
                     case 3:
@@ -300,17 +306,20 @@ class View extends Observer {
                         element.addEventListener('click', () => {
                             if (this.optionsState.range) {
                                 const isMaxMoreThanMinWithGap: boolean =
-                                    Math.abs(parseInt(element.innerText)) - Math.abs(this.optionsState.from) >
-                                    this.optionsState.gap;
+                                    +abbreviateNumber(maxVal - minVal, minVal, 60) - +this.optionsState.from >
+                                    +this.optionsState.gap;
 
                                 isMaxMoreThanMinWithGap
                                     ? $maxThumb.val(isFindValueByPercent(60))
-                                    : $maxThumb.val(Number(this.optionsState.from) + this.optionsState.gap);
+                                    : $maxThumb.val(+this.optionsState.from + +this.optionsState.gap);
+                                this.optionsState.to = +$maxThumb.val();
                             } else {
                                 $minThumb.val(isFindValueByPercent(60));
+                                this.optionsState.from = +$minThumb.val();
                             }
                             this.setBar();
                             this.setTooltip();
+                            this.setConfig();
                         });
                         break;
                     case 4:
@@ -321,17 +330,20 @@ class View extends Observer {
                         element.addEventListener('click', () => {
                             if (this.optionsState.range) {
                                 const isMaxMoreThanMinWithGap: boolean =
-                                    Math.abs(parseInt(element.innerText)) - Math.abs(this.optionsState.from) >
-                                    this.optionsState.gap;
+                                    +abbreviateNumber(maxVal - minVal, minVal, 80) - +this.optionsState.from >
+                                    +this.optionsState.gap;
 
                                 isMaxMoreThanMinWithGap
                                     ? $maxThumb.val(isFindValueByPercent(80))
-                                    : $maxThumb.val(Number(this.optionsState.from) + this.optionsState.gap);
+                                    : $maxThumb.val(+this.optionsState.from + +this.optionsState.gap);
+                                this.optionsState.to = +$maxThumb.val();
                             } else {
                                 $minThumb.val(isFindValueByPercent(80));
+                                this.optionsState.from = +$minThumb.val();
                             }
                             this.setBar();
                             this.setTooltip();
+                            this.setConfig();
                         });
                         break;
                     case 5:
@@ -340,12 +352,16 @@ class View extends Observer {
                             : element.innerText = abbreviateNumber(maxVal - minVal, minVal,  100);
 
                         element.addEventListener('click', () => {
-                            this.optionsState.range
-                                ? $maxThumb.val(this.optionsState.max)
-                                : $minThumb.val(this.optionsState.max);
-                            
+                            if (this.optionsState.range) {
+                                $maxThumb.val(this.optionsState.max);
+                                this.optionsState.to = +$maxThumb.val();
+                            } else {
+                                $minThumb.val(this.optionsState.max);
+                                this.optionsState.from = +$minThumb.val();
+                            }
                             this.setBar();
                             this.setTooltip();
+                            this.setConfig();
                         });
                         break;
                 }

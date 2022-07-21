@@ -18,32 +18,19 @@ class Tooltip {
     }
 
     getTooltipContainer(className: string) {
-        return $('<div>', {
-            class: `slider-app__tooltip-container ${className}`
+        return $('<span>', {
+            class: `slider-app__tooltip-container ${className}`,
+            text: 0
         }).prependTo(`${this.selector} .slider-app__tooltip-line`);
-    }
-
-    getTooltip(className: string, classNamePrepend: string, value: number) {
-        return $('<div>', {
-            class: `slider-app__tooltip-value ${className}`,
-            text: value
-        }).prependTo(`${this.selector} .${classNamePrepend}`);
     }
 
     getFirstTooltip() {
         this.getTooltipLine();
         this.getTooltipContainer('js-slider-app__tooltip-container-first');
-        this.getTooltip('js-slider-app__tooltip-value-first',
-            'js-slider-app__tooltip-container-first', this.value);
     }
 
     getSecondTooltip() {
         this.getTooltipContainer('js-slider-app__tooltip-container-second');
-        this.getTooltip(
-            'js-slider-app__tooltip-value-second',
-            'js-slider-app__tooltip-container-second',
-            this.valueSecond
-        );
     }
 }
 

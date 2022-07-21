@@ -520,7 +520,6 @@ class View extends Observer {
             const $tooltipContainerFirst: JQuery =
                 $(`${this.selectorState} .js-slider-app__tooltip-container-first`);
             const $inputMin: JQuery = $(`${this.selectorState} .js-slider-app__input-min`);
-            const fontSizeFirst: number = $tooltipValueFirst.text().length - 2;
 
             const isPercentTrue: boolean = this.optionsState.percent;
             const isRangeTrue: boolean = this.optionsState.range;
@@ -530,27 +529,20 @@ class View extends Observer {
                 bottom: '1.5rem'
             });
 
-            $tooltipValueFirst.css('font-size', 15 - fontSizeFirst + 'px');
-
             $inputMin.on({
                 input: () => {
-                    const firstTooltipTextLength: number = $tooltipValueFirst.text().length;
 
                     $tooltipContainerFirst.css('left',
                         (((+$inputMin.val() - minValue) / (maxValue - minValue)) * 100) + '%');
-
-                    if (firstTooltipTextLength > 4) {
-                        const fontSize: number = firstTooltipTextLength - 2;
-                        $tooltipValueFirst.css('font-size', 15 - fontSize + 'px');
-                    } else {
-                        $tooltipValueFirst.css('font-size', '15px');
-                    }
                 }
             });
 
             if (!isPercentTrue) {
-                $tooltipValueFirst.text(<string>$inputMin.val());
-                $inputMin.on('input', () => $tooltipValueFirst.text(<string>$inputMin.val()));
+                $tooltipContainerFirst.text(this.optionsState.from);
+
+                $inputMin.on('input', () => {
+                    $tooltipContainerFirst.text(this.optionsState.from);
+                });
             } else {
                 $tooltipValueFirst.text(parseInt(String(
                     (+$inputMin.val() - minValue) / (maxValue - minValue) * 100)) + '%');
@@ -574,24 +566,15 @@ class View extends Observer {
                 const $tooltipContainerSecond: JQuery =
                     $(`${this.selectorState} .js-slider-app__tooltip-container-second`);
                 const $inputMax: JQuery = $(`${this.selectorState} .js-slider-app__input-max`);
-                const fontSizeSecond: number = $tooltipValueSecond.text().length - 2;
 
                 $tooltipContainerSecond.css(
                     'left',
                     (((+$inputMax.val() - minValue) / (maxValue - minValue)) * 100) + '%');
-                $tooltipValueSecond.css('font-size', 15 - fontSizeSecond + 'px');
 
                 $inputMax.on({
                     input: () => {
                         $tooltipContainerSecond.css('left',
                             (((+$inputMax.val() - minValue) / (maxValue - minValue)) * 100) + '%');
-
-                        if ($tooltipValueSecond.text().length > 4) {
-                            const fontSize: number = $tooltipValueSecond.text().length - 2;
-                            $tooltipValueSecond.css('font-size', 15 - fontSize + 'px');
-                        } else {
-                            $tooltipValueSecond.css('font-size', '15px');
-                        }
                     }
                 });
 

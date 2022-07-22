@@ -378,7 +378,6 @@ class View extends Observer {
         const $thumbsMain: JQuery = $(`${this.selectorState} .js-slider-app__bar-line`);
 
         const isRangeTrue: boolean = this.optionsState.range;
-
         if (isRangeTrue) {
             this.setBar();
             $inputMin.length === 0 ? this.thumb.getMinThumb() : null;
@@ -478,9 +477,6 @@ class View extends Observer {
             $(`${this.selectorState} .js-slider-app__rulers-values`)
                 .addClass('slider-app__rulers-values--vertical');
 
-            $(`${this.selectorState} .slider-app__tooltip-value`)
-                .addClass('slider-app__tooltip-value--vertical');
-
         } else {
 
             $(`${this.selectorState} .slider-app`)
@@ -494,9 +490,6 @@ class View extends Observer {
 
             $(`${this.selectorState} .js-slider-app__rulers-values`)
                 .removeClass('slider-app__rulers-values--vertical');
-
-            $(`${this.selectorState} .slider-app__tooltip-value`)
-                .removeClass('slider-app__tooltip-value--vertical');
 
         }
 
@@ -514,86 +507,85 @@ class View extends Observer {
 
             isGetTooltipIfMissing();
             this.setVertical();
-            const maxValue: number = this.optionsState.max;
-            const minValue: number = this.optionsState.min;
-            const $tooltipValueFirst: JQuery = $(`${this.selectorState} .js-slider-app__tooltip-value-first`);
-            const $tooltipContainerFirst: JQuery =
-                $(`${this.selectorState} .js-slider-app__tooltip-container-first`);
+            const $tooltipMin: JQuery =
+                $(`${this.selectorState} .js-slider-app__tooltip--first`);
             const $inputMin: JQuery = $(`${this.selectorState} .js-slider-app__input-min`);
 
             const isPercentTrue: boolean = this.optionsState.percent;
             const isRangeTrue: boolean = this.optionsState.range;
 
-            $tooltipContainerFirst.css({
-                left: (((+$inputMin.val() - minValue) / (maxValue - minValue)) * 100) + '%',
+            $tooltipMin.css({
+                left: ((+this.optionsState.from - +this.optionsState.min)
+                    / (+this.optionsState.max - +this.optionsState.min)) * 100 + '%',
                 bottom: '1.5rem'
             });
 
             $inputMin.on({
                 input: () => {
-
-                    $tooltipContainerFirst.css('left',
-                        (((+$inputMin.val() - minValue) / (maxValue - minValue)) * 100) + '%');
+                    $tooltipMin.css('left',
+                        ((+this.optionsState.from - +this.optionsState.min)
+                            / (+this.optionsState.max - +this.optionsState.min)) * 100 + '%');
                 }
             });
 
             if (!isPercentTrue) {
-                $tooltipContainerFirst.text(this.optionsState.from);
+                $tooltipMin.text(this.optionsState.from);
 
                 $inputMin.on('input', () => {
-                    $tooltipContainerFirst.text(this.optionsState.from);
+                    $tooltipMin.text(this.optionsState.from);
                 });
             } else {
-                $tooltipValueFirst.text(parseInt(String(
-                    (+$inputMin.val() - minValue) / (maxValue - minValue) * 100)) + '%');
+                $tooltipMin.text(
+                    Math.trunc((+this.optionsState.from - +this.optionsState.min)
+                    / (+this.optionsState.max - +this.optionsState.min) * 100) + '%');
 
                 $inputMin.on('input', () =>
-                    $tooltipValueFirst.text(parseInt(String(
-                        (+$inputMin.val() - minValue) / (maxValue - minValue) * 100)) + '%'));
+                    $tooltipMin.text(
+                        Math.trunc((+this.optionsState.from - +this.optionsState.min)
+                            / (+this.optionsState.max - +this.optionsState.min) * 100) + '%'));
             }
 
             if (isRangeTrue) {
                 const isGetSecondTooltipIfMissing = (): void => {
-                    $(`${this.selectorState} .js-slider-app__tooltip-container-second`).length === 0
+                    $(`${this.selectorState} .js-slider-app__tooltip--second`).length === 0
                         ? this.tooltip.getSecondTooltip()
                         : null;
                 };
 
                 isGetSecondTooltipIfMissing();
                 this.setVertical();
-                const $tooltipValueSecond: JQuery =
-                    $(`${this.selectorState} .js-slider-app__tooltip-value-second`);
-                const $tooltipContainerSecond: JQuery =
-                    $(`${this.selectorState} .js-slider-app__tooltip-container-second`);
+                const $tooltipMax: JQuery =
+                    $(`${this.selectorState} .js-slider-app__tooltip--second`);
                 const $inputMax: JQuery = $(`${this.selectorState} .js-slider-app__input-max`);
 
-                $tooltipContainerSecond.css(
+                $tooltipMax.css(
                     'left',
-                    (((+$inputMax.val() - minValue) / (maxValue - minValue)) * 100) + '%');
+                    (((+this.optionsState.to - +this.optionsState.min)
+                        / (+this.optionsState.max - +this.optionsState.min)) * 100) + '%');
 
                 $inputMax.on({
                     input: () => {
-                        $tooltipContainerSecond.css('left',
-                            (((+$inputMax.val() - minValue) / (maxValue - minValue)) * 100) + '%');
+                        $tooltipMax.css('left',
+                            (((+this.optionsState.to - +this.optionsState.min)
+                                / (+this.optionsState.max - +this.optionsState.min)) * 100) + '%');
                     }
                 });
 
                 if (!isPercentTrue) {
-                    $tooltipValueSecond.text(<string>$inputMax.val());
-                    $inputMax.on('input', () => $tooltipValueSecond.text(<string>$inputMax.val()));
+                    $tooltipMax.text(this.optionsState.to);
+                    $inputMax.on('input', () => $tooltipMax.text(this.optionsState.to));
                 } else {
-                    $tooltipValueSecond.text(parseInt(String(
-                        (+$inputMax.val() - minValue) / (maxValue - minValue) * 100)) + '%');
+                    $tooltipMax.text(
+                        Math.trunc((+this.optionsState.to - +this.optionsState.min)
+                        / (+this.optionsState.max - +this.optionsState.min) * 100) + '%');
 
                     $inputMax.on('input', () =>
-                        $tooltipValueSecond.text(parseInt(String(
-                            (+$inputMax.val() - minValue) / (maxValue - minValue) * 100)) + '%'));
+                        $tooltipMax.text(
+                            Math.trunc((+this.optionsState.to - +this.optionsState.min)
+                                / (+this.optionsState.max - +this.optionsState.min) * 100) + '%'));
                 }
-
             }
-
         } else tooltip.remove();
-
     }
 
     private setColor(): void {

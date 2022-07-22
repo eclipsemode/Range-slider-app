@@ -2,8 +2,8 @@
   &__tooltip-line {
     position: relative;
     height: auto;
-    width: calc(101% - 25.5px);
-    transform: translateX(-23px);
+    width: calc(100% - 22px);
+    left: 10px;
 
     &--vertical {
       height: calc(100% - 33px);
@@ -13,7 +13,7 @@
     }
   }
 
-  &__tooltip-container {
+  &__tooltip {
     width: fit-content;
     background: rgba(0, 0, 0, 0.4);
     color: #fff;
@@ -23,6 +23,8 @@
     position: absolute;
     z-index: 1;
     box-shadow: 2px 10px 20px 1px rgba(0, 0, 0, 0.2);
+    transform: translate(-50%);
+    bottom: 1.5rem;
 
     &::after {
       content: " ";

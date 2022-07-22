@@ -52,26 +52,18 @@
 
     &::-webkit-slider-thumb:hover {
       border-color: #eeeeee;
-      //width: 20px;
-      //height: 20px;
     }
     &::-moz-range-thumb:hover {
       border-color: #eeeeee;
-      //width: 20px;
-      //height: 20px;
     }
 
     &::-webkit-slider-thumb:active {
-      box-shadow: 0 0 0 15px rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.1);
       border-color: #eeeeee;
-      //width: 20px;
-      //height: 20px;
     }
     &::-moz-range-thumb:active {
-      box-shadow: 0 0 0 15px rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.1);
       border-color: #eeeeee;
-      //width: 20px;
-      //height: 20px;
     }
   }
 }

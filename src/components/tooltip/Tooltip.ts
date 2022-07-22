@@ -19,18 +19,18 @@ class Tooltip {
 
     getTooltipContainer(className: string) {
         return $('<span>', {
-            class: `slider-app__tooltip-container ${className}`,
+            class: `slider-app__tooltip ${className}`,
             text: 0
         }).prependTo(`${this.selector} .slider-app__tooltip-line`);
     }
 
     getFirstTooltip() {
         this.getTooltipLine();
-        this.getTooltipContainer('js-slider-app__tooltip-container-first');
+        this.getTooltipContainer('js-slider-app__tooltip--first');
     }
 
     getSecondTooltip() {
-        this.getTooltipContainer('js-slider-app__tooltip-container-second');
+        this.getTooltipContainer('js-slider-app__tooltip--second');
     }
 }
 

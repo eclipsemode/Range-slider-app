@@ -74,50 +74,43 @@ class View extends Observer {
         const $thumbMin = $(`${this.selectorState} .js-slider-app__input-min`);
         const $thumbMax = $(`${this.selectorState} .js-slider-app__input-max`);
 
-        const handleControl = (data: {key: string, value: number}) => {
-
-            switch (data.key) {
-                case ControlsEnum.MIN:
-                    this.optionsState.min = data.value;
-                    $thumbs.prop('min', data.value);
-                    this.setBar();
-                    this.setTooltip();
-                    break;
-                case ControlsEnum.MAX:
-                    this.optionsState.max = data.value;
-                    $thumbs.prop('max', data.value);
-                    this.setBar();
-                    this.setTooltip();
-                    break;
-                case ControlsEnum.STEP:
-                    this.optionsState.step = data.value;
-                    $thumbs.prop('step', data.value);
-                    this.setBar();
-                    this.setTooltip();
-                    break;
-                case ControlsEnum.FROM:
-                    this.optionsState.from = data.value;
-                    $thumbMin.val(data.value);
-                    this.setBar();
-                    this.setTooltip();
-                    break;
-                case ControlsEnum.TO:
-                    this.optionsState.to = data.value;
-                    $thumbMax.val(data.value);
-                    this.setBar();
-                    this.setTooltip();
-                    break;
-            }
-        };
-
         this.optionsState.controlConfig.forEach((item) => {
-            $(`#${newSelector}__control-${item}`).on('change', () => {
-                this.subscribe(handleControl);
-                this.broadcast({
-                    key: item,
-                    value: $(`#${newSelector}__control-${item}`).val()
-                });
-                this.unsubscribe(handleControl);
+            const element: JQuery = $(`#${newSelector}__control-${item}`);
+
+            element.on('change', () => {
+                const value: number = +element.val();
+                switch (item) {
+                    case ControlsEnum.MIN:
+                        this.optionsState.min = value;
+                        $thumbs.prop('min', value);
+                        this.setBar();
+                        this.setTooltip();
+                        break;
+                    case ControlsEnum.MAX:
+                        this.optionsState.max = value;
+                        $thumbs.prop('max', value);
+                        this.setBar();
+                        this.setTooltip();
+                        break;
+                    case ControlsEnum.STEP:
+                        this.optionsState.step = value;
+                        $thumbs.prop('step', value);
+                        this.setBar();
+                        this.setTooltip();
+                        break;
+                    case ControlsEnum.FROM:
+                        this.optionsState.from = value;
+                        $thumbMin.val(value);
+                        this.setBar();
+                        this.setTooltip();
+                        break;
+                    case ControlsEnum.TO:
+                        this.optionsState.to = value;
+                        $thumbMax.val(value);
+                        this.setBar();
+                        this.setTooltip();
+                        break;
+                }
             });
         });
 
@@ -135,40 +128,34 @@ class View extends Observer {
     updateConfig = () => {
         const newSelector: string = this.selectorState.slice(1);
 
-        const handleToggle = (data: {key: string, value: boolean}) => {
-
-            switch (data.key) {
-                case TogglesEnum.VERTICAL:
-                    this.optionsState.vertical = data.value;
-                    this.setVertical();
-                    break;
-                case TogglesEnum.RULERS:
-                    this.optionsState.rulers = data.value;
-                    this.setRulers();
-                    break;
-                case TogglesEnum.PROGRESS:
-                    this.optionsState.progress = data.value;
-                    this.setBar();
-                    break;
-                case TogglesEnum.TOOLTIP:
-                    this.optionsState.tooltip = data.value;
-                    this.setTooltip();
-                    break;
-                case TogglesEnum.RANGE:
-                    this.optionsState.range = data.value;
-                    this.setRange();
-                    break;
-            }
-        };
-
         this.optionsState.toggleConfig.forEach(item => {
-            $(`#${newSelector}__toggle-${item}`).on('change', () => {
-                this.subscribe(handleToggle);
-                this.broadcast({
-                    key: item,
-                    value: $(`#${newSelector}__toggle-${item}`).prop('checked')
-                });
-                this.unsubscribe(handleToggle);
+            const element: JQuery = $(`#${newSelector}__toggle-${item}`);
+
+            element.on('change', () => {
+                const value: boolean = element.prop('checked');
+
+                switch (item) {
+                    case TogglesEnum.VERTICAL:
+                        this.optionsState.vertical = value;
+                        this.setVertical();
+                        break;
+                    case TogglesEnum.RULERS:
+                        this.optionsState.rulers = value;
+                        this.setRulers();
+                        break;
+                    case TogglesEnum.PROGRESS:
+                        this.optionsState.progress = value;
+                        this.setBar();
+                        break;
+                    case TogglesEnum.TOOLTIP:
+                        this.optionsState.tooltip = value;
+                        this.setTooltip();
+                        break;
+                    case TogglesEnum.RANGE:
+                        this.optionsState.range = value;
+                        this.setRange();
+                        break;
+                }
             });
         });
     };

@@ -2,6 +2,7 @@ import ModelOption from '../utils/ModelOption';
 import {TogglesEnum, ControlsEnum} from '../utils/Config.enum';
 import abbreviateNumber from '../utils/abbreviateNumber';
 import {findMaxPercent, findMinPercent} from '../utils/findThumbPercent';
+import evaluateVar from '../utils/evaluateVar';
 
 import Rulers from '../components/rulers/Rulers';
 import Thumb from '../components/thumb/Thumb';
@@ -154,8 +155,6 @@ class View {
         });
     };
 
-    private isEvaluateVar = (item: string) => eval(item);
-
     private setSlider = () => {
         this.mainClass.getMainClass();
         $(this.selectorState).addClass('slider-app--additional');
@@ -163,6 +162,7 @@ class View {
 
     private setConfig = (): void => {
         const isConfigPanelTrue: boolean = this.optionsState.configPanel;
+        const evaluateVarBind: CallableFunction = evaluateVar.bind(this);
 
         const configPanel: JQuery = $(`${this.selectorState} .js-slider-app__config`);
 
@@ -185,12 +185,12 @@ class View {
 
             this.optionsState.controlConfig.forEach(item => {
                 $(`#${newSelector}__control-${item}`)
-                    .val(this.isEvaluateVar(`this.optionsState.${item}`));
+                    .val(evaluateVarBind(`this.optionsState.${item}`));
             });
 
             this.optionsState.toggleConfig.forEach(item => {
                 $(`#${newSelector}__toggle-${item}`)
-                    .attr('checked', this.isEvaluateVar(`this.optionsState.${item}`));
+                    .attr('checked', evaluateVarBind(`this.optionsState.${item}`));
             });
         }
     };

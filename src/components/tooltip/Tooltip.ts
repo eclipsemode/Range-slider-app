@@ -2,13 +2,9 @@ import $ from 'jquery';
 
 class Tooltip {
     private readonly selector: string;
-    private readonly value: number;
-    private readonly valueSecond: number;
 
-    constructor(selector: string, value: number, valueSecond: number) {
+    constructor(selector: string) {
         this.selector = selector;
-        this.value = value;
-        this.valueSecond = valueSecond;
     }
 
     getTooltipLine() {

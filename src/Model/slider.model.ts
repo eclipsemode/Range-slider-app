@@ -1,11 +1,9 @@
 import ModelOption from '../utils/ModelOption';
-import Observer from '../Observer/Observer';
 import {TogglesEnum, ControlsEnum} from '../utils/Config.enum';
 
-class Model extends Observer {
+class Model {
     optionsState: Partial<ModelOption>;
     constructor(private options?: Partial<ModelOption>) {
-        super();
         this.optionsState = this.checkOptions(options);
     }
 

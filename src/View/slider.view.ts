@@ -10,10 +10,9 @@ import Tooltip from '../components/tooltip/Tooltip';
 import Bar from '../components/bar/Bar';
 import MainClass from '../components/mainClass/MainClass';
 import ConfigPanel from '../components/configPanel/ConfigPanel';
-import Observer from '../Observer/Observer';
 import ChangeEvent = JQuery.ChangeEvent;
 
-class View extends Observer {
+class View {
     private readonly selectorState: string;
     private readonly optionsState: Partial<ModelOption>;
 
@@ -27,7 +26,6 @@ class View extends Observer {
 
 
     constructor(private selector: string, private options: Partial<ModelOption>) {
-        super();
         this.selectorState = selector;
         this.optionsState = options;
         this.mainClass = new MainClass(this.selectorState);
@@ -41,11 +39,7 @@ class View extends Observer {
             this.optionsState.step
         );
         this.progress = new Progress(this.selectorState);
-        this.tooltip = new Tooltip(
-            this.selectorState,
-            this.optionsState.from,
-            this.optionsState.to
-        );
+        this.tooltip = new Tooltip(this.selectorState);
         this.bar = new Bar(this.selectorState);
         this.configPanel = new ConfigPanel(
             this.selectorState,

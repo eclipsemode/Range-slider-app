@@ -13,8 +13,6 @@ import ConfigPanel from '../components/configPanel/ConfigPanel';
 import Observer from '../Observer/Observer';
 import ChangeEvent = JQuery.ChangeEvent;
 
-import setTooltip from './subviews/tooltip.view';
-
 class View extends Observer {
     private readonly selectorState: string;
     private readonly optionsState: Partial<ModelOption>;
@@ -61,15 +59,13 @@ class View extends Observer {
         this.setRange();
         this.setBar();
         this.setRulers();
-        setTooltip(this);
+        this.setTooltip();
         this.setColor();
         this.setConfig();
         this.setVertical();
 
         this.updateConfig();
         this.updateControl();
-
-        console.log(typeof this);
     }
 
     updateControl = () => {
@@ -88,31 +84,31 @@ class View extends Observer {
                         this.optionsState.min = value;
                         $thumbs.prop('min', value);
                         this.setBar();
-                        setTooltip(this);
+                        this.setTooltip();
                         break;
                     case ControlsEnum.MAX:
                         this.optionsState.max = value;
                         $thumbs.prop('max', value);
                         this.setBar();
-                        setTooltip(this);
+                        this.setTooltip();
                         break;
                     case ControlsEnum.STEP:
                         this.optionsState.step = value;
                         $thumbs.prop('step', value);
                         this.setBar();
-                        setTooltip(this);
+                        this.setTooltip();
                         break;
                     case ControlsEnum.FROM:
                         this.optionsState.from = value;
                         $thumbMin.val(value);
                         this.setBar();
-                        setTooltip(this);
+                        this.setTooltip();
                         break;
                     case ControlsEnum.TO:
                         this.optionsState.to = value;
                         $thumbMax.val(value);
                         this.setBar();
-                        setTooltip(this);
+                        this.setTooltip();
                         break;
                 }
             });
@@ -153,7 +149,7 @@ class View extends Observer {
                         break;
                     case TogglesEnum.TOOLTIP:
                         this.optionsState.tooltip = value;
-                        setTooltip(this);
+                        this.setTooltip();
                         break;
                     case TogglesEnum.RANGE:
                         this.optionsState.range = value;
@@ -239,7 +235,7 @@ class View extends Observer {
                             $minThumb.val(this.optionsState.min);
                             this.optionsState.from = +$minThumb.val();
                             this.setBar();
-                            setTooltip(this);
+                            this.setTooltip();
                             this.setConfig();
                         });
                         break;
@@ -262,7 +258,7 @@ class View extends Observer {
                             }
                             this.optionsState.from = +$minThumb.val();
                             this.setBar();
-                            setTooltip(this);
+                            this.setTooltip();
                             this.setConfig();
                         });
                         break;
@@ -285,7 +281,7 @@ class View extends Observer {
                             }
                             this.optionsState.from = +$minThumb.val();
                             this.setBar();
-                            setTooltip(this);
+                            this.setTooltip();
                             this.setConfig();
                         });
                         break;
@@ -309,7 +305,7 @@ class View extends Observer {
                                 this.optionsState.from = +$minThumb.val();
                             }
                             this.setBar();
-                            setTooltip(this);
+                            this.setTooltip();
                             this.setConfig();
                         });
                         break;
@@ -333,7 +329,7 @@ class View extends Observer {
                                 this.optionsState.from = +$minThumb.val();
                             }
                             this.setBar();
-                            setTooltip(this);
+                            this.setTooltip();
                             this.setConfig();
                         });
                         break;
@@ -351,7 +347,7 @@ class View extends Observer {
                                 this.optionsState.from = +$minThumb.val();
                             }
                             this.setBar();
-                            setTooltip(this);
+                            this.setTooltip();
                             this.setConfig();
                         });
                         break;
@@ -383,7 +379,7 @@ class View extends Observer {
         this.setRulers();
         this.setConfig();
         $(`${this.selectorState} .js-slider-app__input`).on('input', () => this.setBar());
-        setTooltip(this);
+        this.setTooltip();
         this.setVertical();
         this.updateControl();
     };
@@ -449,6 +445,97 @@ class View extends Observer {
             $progress.css({
                 width: findMinPercent(minVal, Number($minThumb.val()), parseInt($minThumb.attr('max'))),
                 height: 100 + '%'});
+        }
+    }
+
+    setTooltip(): void {
+        const isTooltipTrue: boolean = this.optionsState.tooltip;
+        const isPercentTrue: boolean = this.optionsState.percent;
+        const isRangeTrue: boolean = this.optionsState.range;
+
+        const isGetTooltipIfMissing = (): void => {
+            if (isTooltipTrue) {
+                $(`${this.selectorState} .js-slider-app__tooltip--first`).length === 0
+                    ? this.tooltip.getFirstTooltip()
+                    : null;
+                this.optionsState.range &&
+                $(`${this.selectorState} .js-slider-app__tooltip--second`).length === 0
+                    ? this.tooltip.getSecondTooltip()
+                    : null;
+            } else {
+                $(`${this.selectorState} .js-slider-app__tooltip-line`).remove();
+                return;
+            }
+        };
+        isGetTooltipIfMissing();
+        this.setVertical();
+
+        const $tooltipMin: JQuery =
+            $(`${this.selectorState} .js-slider-app__tooltip--first`);
+        const $inputMin: JQuery = $(`${this.selectorState} .js-slider-app__input-min`);
+
+        $tooltipMin.css({
+            left: ((+this.optionsState.from - +this.optionsState.min)
+                / (+this.optionsState.max - +this.optionsState.min)) * 100 + '%',
+            bottom: '1.5rem'
+        });
+
+        $inputMin.on({
+            input: () => {
+                $tooltipMin.css('left',
+                    ((+this.optionsState.from - +this.optionsState.min)
+                        / (+this.optionsState.max - +this.optionsState.min)) * 100 + '%');
+            }
+        });
+
+        if (!isPercentTrue) {
+            $tooltipMin.text(this.optionsState.from);
+
+            $inputMin.on('input', () => {
+                $tooltipMin.text(this.optionsState.from);
+            });
+        } else {
+            $tooltipMin.text(
+                Math.trunc((+this.optionsState.from - +this.optionsState.min)
+                    / (+this.optionsState.max - +this.optionsState.min) * 100) + '%');
+
+            $inputMin.on('input', () =>
+                $tooltipMin.text(
+                    Math.trunc((+this.optionsState.from - +this.optionsState.min)
+                        / (+this.optionsState.max - +this.optionsState.min) * 100) + '%'));
+        }
+
+        if (isRangeTrue) {
+            const $tooltipMax: JQuery =
+                $(`${this.selectorState} .js-slider-app__tooltip--second`);
+            const $inputMax: JQuery = $(`${this.selectorState} .js-slider-app__input-max`);
+
+            $tooltipMax.css(
+                'left',
+                (((+this.optionsState.to - +this.optionsState.min)
+                    / (+this.optionsState.max - +this.optionsState.min)) * 100) + '%');
+
+            $inputMax.on({
+                input: () => {
+                    $tooltipMax.css('left',
+                        (((+this.optionsState.to - +this.optionsState.min)
+                            / (+this.optionsState.max - +this.optionsState.min)) * 100) + '%');
+                }
+            });
+
+            if (!isPercentTrue) {
+                $tooltipMax.text(this.optionsState.to);
+                $inputMax.on('input', () => $tooltipMax.text(this.optionsState.to));
+            } else {
+                $tooltipMax.text(
+                    Math.trunc((+this.optionsState.to - +this.optionsState.min)
+                        / (+this.optionsState.max - +this.optionsState.min) * 100) + '%');
+
+                $inputMax.on('input', () =>
+                    $tooltipMax.text(
+                        Math.trunc((+this.optionsState.to - +this.optionsState.min)
+                            / (+this.optionsState.max - +this.optionsState.min) * 100) + '%'));
+            }
         }
     }
 

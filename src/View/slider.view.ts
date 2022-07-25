@@ -61,6 +61,8 @@ class View {
 
         this.updateConfig();
         this.updateControl();
+
+        console.log(abbreviateNumber(10000000000, 0, 50));
     }
 
     updateControl = () => {

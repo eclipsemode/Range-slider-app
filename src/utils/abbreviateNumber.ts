@@ -1,13 +1,9 @@
 function abbreviateNumber(max: number, min: number, percent: number) {
-    let newValue: number | string;
+    let newValue: number | string = max * percent / 100;
 
-    (max * percent / 100) > 10000000
-        ? newValue = String((max * percent / 100).toPrecision(5))
-        : newValue = String(max * percent / 100);
+    newValue > 10000000 ? newValue = newValue.toPrecision(1) : null;
 
-    newValue = String(+newValue + min);
-
-    return newValue;
+    return String(newValue);
 }
 
 export default abbreviateNumber;

@@ -159,7 +159,7 @@ class View {
 
     private setSlider = () => {
         this.mainClass.getMainClass();
-        $(this.selectorState).addClass('slider-app--additional');
+        $(this.selectorState).addClass('root');
     };
 
     private setConfig = (): void => {
@@ -539,6 +539,8 @@ class View {
 
         if (this.optionsState.vertical) {
 
+            $(`${this.selectorState}`).addClass('root--vertical');
+
             $(`${this.selectorState} .slider-app`)
                 .addClass('slider-app--vertical');
 
@@ -552,6 +554,8 @@ class View {
                 .addClass('slider-app__rulers-values--vertical');
 
         } else {
+
+            $(`${this.selectorState}`).removeClass('root--vertical');
 
             $(`${this.selectorState} .slider-app`)
                 .removeClass('slider-app--vertical');

@@ -2,10 +2,10 @@
   &__rulers {
     position: absolute;
     content: "";
-    top: 103%;
+    top: 108%;
     right: 15px;
     left: 9px;
-    height: 3%;
+    height: 8%;
     border-right: 1px solid #686868;
 
     &::before {
@@ -44,7 +44,7 @@
 
   &__rulers-values {
     position: absolute;
-    top: 107%;
+    top: 118%;
     left: 0;
     width: 100%;
     display: flex;

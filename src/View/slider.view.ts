@@ -371,13 +371,14 @@ class View {
             this.thumb.getMinThumb();
         }
 
+        this.updateControl();
         this.setBar();
         this.setRulers();
         this.setConfig();
         $(`${this.selectorState} .js-slider-app__input`).on('input', () => this.setBar());
         this.setTooltip();
         this.setVertical();
-        this.updateControl();
+
     };
 
     private setBar(): void {
@@ -481,6 +482,9 @@ class View {
                 $tooltipMin.css('left',
                     ((+this.optionsState.from - +this.optionsState.min)
                         / (+this.optionsState.max - +this.optionsState.min)) * 100 + '%');
+
+                console.log('Options: ' + this.optionsState.from);
+                console.log('Value: ' + $(`${this.selectorState} .js-slider-app__input-min`).val());
             }
         });
 
@@ -488,7 +492,7 @@ class View {
             $tooltipMin.text(this.optionsState.from);
 
             $inputMin.on('input', () => {
-                $tooltipMin.text(this.optionsState.from);
+                $tooltipMin.text(+this.optionsState.from);
             });
         } else {
             $tooltipMin.text(

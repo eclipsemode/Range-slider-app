@@ -11,7 +11,9 @@ import Tooltip from '../components/tooltip/Tooltip';
 import Bar from '../components/bar/Bar';
 import MainClass from '../components/mainClass/MainClass';
 import ConfigPanel from '../components/configPanel/ConfigPanel';
+
 import ChangeEvent = JQuery.ChangeEvent;
+import $ from 'jquery';
 
 class View {
     private readonly selectorState: string;

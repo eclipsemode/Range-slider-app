@@ -8,7 +8,7 @@ class Progress {
         this.selector = selector;
     }
 
-    public getProgress() {
+    public getProgress(): JQuery<HTMLElement> {
         return $('<div>', {
             class: 'slider-app__progress js-slider-app__progress'
         }).prependTo(`${this.selector} .slider-app__bar-line`);

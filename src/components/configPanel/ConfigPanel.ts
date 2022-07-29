@@ -20,7 +20,7 @@ class ConfigPanel {
         this.getToggles();
     }
 
-    getMain = () => {
+    getMain = (): void => {
         $(this.selector).append(
             `<div class="slider-app__config js-slider-app__config">
                 <div class="slider-app__config-section slider-app__config-section--control"></div>
@@ -29,7 +29,7 @@ class ConfigPanel {
         );
     };
 
-    getControls = () => {
+    getControls = (): void => {
         const newSelector: string = this.selector.slice(1);
 
         this.controlConfig.forEach(name => {
@@ -52,7 +52,7 @@ class ConfigPanel {
         });
     };
 
-    getToggles = () => {
+    getToggles = (): void => {
         const newSelector: string = this.selector.slice(1);
 
         this.toggleConfig.forEach(name => {

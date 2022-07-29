@@ -65,7 +65,7 @@ class View {
         this.updateControl();
     }
 
-    updateControl = () => {
+    updateControl = ():void => {
         const newSelector: string = this.selectorState.slice(1);
         const $thumbs = $(`${this.selectorState} .js-slider-app__input`);
         const $thumbMin = $(`${this.selectorState} .js-slider-app__input-min`);
@@ -122,7 +122,7 @@ class View {
         });
     };
 
-    updateConfig = () => {
+    updateConfig = ():void => {
         const newSelector: string = this.selectorState.slice(1);
 
         this.optionsState.toggleConfig.forEach(item => {
@@ -157,7 +157,7 @@ class View {
         });
     };
 
-    private setSlider = () => {
+    private setSlider = ():void => {
         this.mainClass.getMainClass();
         $(this.selectorState).addClass('root');
     };
@@ -197,7 +197,7 @@ class View {
         }
     };
 
-    private setRulers = () => {
+    private setRulers = (): void => {
         const $rulers = $(`${this.selectorState} .js-slider-app__rulers`);
         const isRulersTrue: boolean = this.optionsState.rulers;
 
@@ -243,7 +243,7 @@ class View {
                         element.addEventListener('click', () => {
                             if (this.optionsState.range) {
                                 const isMinLessMaxWithGap: boolean =
-                                    +this.optionsState.to -  +abbreviateNumber(maxVal - minVal, minVal, 20) >
+                                    +this.optionsState.to - +abbreviateNumber(maxVal - minVal, minVal, 20) >
                                         +this.optionsState.gap;
 
                                 isMinLessMaxWithGap
@@ -266,7 +266,7 @@ class View {
                         element.addEventListener('click', () => {
                             if (this.optionsState.range) {
                                 const isMinLessMaxWithGap: boolean =
-                                    +this.optionsState.to -  +abbreviateNumber(maxVal - minVal, minVal, 40) >
+                                    +this.optionsState.to - +abbreviateNumber(maxVal - minVal, minVal, 40) >
                                     +this.optionsState.gap;
 
                                 isMinLessMaxWithGap
@@ -332,7 +332,7 @@ class View {
                     case 5:
                         isPercentTrue
                             ? element.innerText = '100%'
-                            : element.innerText = abbreviateNumber(maxVal - minVal, minVal,  100);
+                            : element.innerText = abbreviateNumber(maxVal - minVal, minVal, 100);
 
                         element.addEventListener('click', () => {
                             if (this.optionsState.range) {
@@ -355,7 +355,7 @@ class View {
         }
     };
 
-    private setRange = () => {
+    private setRange = ():void => {
         const $inputMax: JQuery = $(`${this.selectorState} .js-slider-app__input-max`);
         const $inputMin: JQuery = $(`${this.selectorState} .js-slider-app__input-min`);
         const $thumbsMain: JQuery = $(`${this.selectorState} .js-slider-app__bar-line`);

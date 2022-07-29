@@ -7,25 +7,25 @@ class Tooltip {
         this.selector = selector;
     }
 
-    getTooltipLine() {
+    getTooltipLine(): JQuery<HTMLElement> {
         return $('<div>', {
             class: 'slider-app__tooltip-line js-slider-app__tooltip-line'
         }).prependTo(`${this.selector} .slider-app__bar-line`);
     }
 
-    getTooltip(className: string) {
+    getTooltip(className: string): JQuery<HTMLElement> {
         return $('<span>', {
             class: `slider-app__tooltip ${className}`,
             text: 0
         }).prependTo(`${this.selector} .slider-app__tooltip-line`);
     }
 
-    getFirstTooltip() {
+    getFirstTooltip(): void {
             this.getTooltipLine();
             this.getTooltip('js-slider-app__tooltip--first');
     }
 
-    getSecondTooltip() {
+    getSecondTooltip(): void {
         this.getTooltip('js-slider-app__tooltip--second');
     }
 }

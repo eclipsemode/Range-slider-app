@@ -7,7 +7,7 @@ class Model {
         this.optionsState = this.checkOptions(options);
     }
 
-    checkOptions(options: Partial<ModelOption>): Partial<ModelOption> {
+    checkOptions(options: ModelOption): ModelOption {
         const verifiedOptions = {...options};
         verifiedOptions.min = verifiedOptions.min ?? 0;
         verifiedOptions.max = verifiedOptions.max ?? 1000;

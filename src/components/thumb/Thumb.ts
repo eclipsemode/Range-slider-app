@@ -24,7 +24,7 @@ class Thumb {
         this.step = step;
     }
     
-    getMinThumb() {
+    getMinThumb(): JQuery<HTMLElement> {
         return $('<input>', {
             class: 'slider-app__input js-slider-app__input slider-app__input-min js-slider-app__input-min',
             type: 'range',
@@ -35,7 +35,7 @@ class Thumb {
         }).appendTo(`${this.selector} .slider-app__bar-line`);
     }
 
-    getMaxThumb() {
+    getMaxThumb(): JQuery<HTMLElement> {
         return $('<input>', {
             class: 'slider-app__input js-slider-app__input slider-app__input-max js-slider-app__input-max',
             type: 'range',

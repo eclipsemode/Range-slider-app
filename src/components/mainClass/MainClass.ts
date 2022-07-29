@@ -7,7 +7,7 @@ class MainClass {
         this.selector = selector;
     }
 
-    public getMainClass() {
+    public getMainClass(): JQuery<HTMLElement> {
         return $('<div>', {
             class: 'slider-app'
         }).appendTo(`${this.selector}`);

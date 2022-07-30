@@ -12,6 +12,7 @@ import setRulers from './SubViews/setRulers.view';
 import setRange from './SubViews/setRange.view';
 import setBar from './SubViews/setBar.view';
 import setTooltip from './SubViews/setTooltip.view';
+import setColor from './SubViews/setColor.view';
 
 
 class View {
@@ -23,6 +24,7 @@ class View {
     private readonly setRulers: CallableFunction;
     private readonly setBar: CallableFunction;
     private readonly setTooltip: CallableFunction;
+    private readonly setColor: CallableFunction;
 
     private configPanel: ConfigPanel;
 
@@ -41,6 +43,7 @@ class View {
         this.setRange = setRange.bind(this);
         this.setBar = setBar.bind(this);
         this.setTooltip = setTooltip.bind(this);
+        this.setColor = setColor.bind(this);
 
     }
 
@@ -225,43 +228,6 @@ class View {
         this.setBar();
     }
 
-    private setColor(): void {
-        const isColorAdded: string =
-            this.optionsState.color.firstColor || this.optionsState.color.secondColor;
-        const isTextColorAdded: string = this.optionsState.color.textColor;
-        const isThumbColorAdded: string = this.optionsState.color.thumbColor;
-        const $values: JQuery = $(`${this.selectorState} .js-slider-app__rulers-values`);
-
-        if (isColorAdded) {
-            const colorOne: string = this.optionsState.color.firstColor;
-            const colorTwo: string = this.optionsState.color.secondColor;
-            const $progress: JQuery = $(`${this.selectorState} .js-slider-app__progress`);
-
-            $progress.css('background-image',
-                `linear-gradient(90deg, ${colorOne} 0%, ${colorTwo} 100%)`);
-        }
-
-        if (isTextColorAdded) {
-            $values.css('color', this.optionsState.color.textColor);
-            $(`${this.selectorState} .js-slider-app__config-text--inner`)
-                .css('color', this.optionsState.color.textColor);
-
-            $(`${this.selectorState} .js-slider-app__config-toggle-name`)
-                .css('color', this.optionsState.color.textColor);
-
-            // noinspection HtmlDeprecatedAttribute
-            $(`<style type="text/css">${this.selectorState} .js-slider-app__config-toggle-btn::before
-                {background-color: ${this.optionsState.color.textColor}}</style>`)
-                .appendTo($('head'));
-        }
-
-        if (isThumbColorAdded) {
-            // noinspection HtmlDeprecatedAttribute
-            $(`<style type="text/css">${this.selectorState} .js-slider-app__input::-webkit-slider-thumb
-                {background-color: ${this.optionsState.color.thumbColor}}</style>`)
-                    .appendTo($('head'));
-        }
-    }
 }
 
 export default View;

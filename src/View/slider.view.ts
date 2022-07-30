@@ -1,8 +1,4 @@
-import ChangeEvent = JQuery.ChangeEvent;
-import $ from 'jquery';
-
 import ModelOption from '../utils/ModelOption';
-import {TogglesEnum, ControlsEnum} from '../utils/Config.enum';
 
 import setSlider from './SubViews/setSlider.view';
 import setRulers from './SubViews/setRulers.view';
@@ -12,7 +8,8 @@ import setTooltip from './SubViews/setTooltip.view';
 import setColor from './SubViews/setColor.view';
 import setVertical from './SubViews/setVertical.view';
 import setConfig from './SubViews/setConfig.view';
-
+import updateConfig from './SubViews/updateConfig.view';
+import updateControl from './SubViews/updateControl.view';
 
 class View {
     private readonly selectorState: string;
@@ -25,6 +22,8 @@ class View {
     private readonly setColor: CallableFunction;
     private readonly setVertical: CallableFunction;
     private readonly setConfig: CallableFunction;
+    private readonly updateConfig: CallableFunction;
+    private readonly updateControl: CallableFunction;
 
     constructor(private selector: string, private options: Partial<ModelOption>) {
         this.selectorState = selector;
@@ -37,6 +36,8 @@ class View {
         this.setColor = setColor.bind(this);
         this.setVertical = setVertical.bind(this);
         this.setConfig = setConfig.bind(this);
+        this.updateConfig = updateConfig.bind(this);
+        this.updateControl = updateControl.bind(this);
     }
 
     render(): void {
@@ -51,99 +52,6 @@ class View {
         this.updateConfig();
         this.updateControl();
     }
-
-    updateControl = ():void => {
-        const newSelector: string = this.selectorState.slice(1);
-        const $thumbs = $(`${this.selectorState} .js-slider-app__input`);
-        const $thumbMin = $(`${this.selectorState} .js-slider-app__input-min`);
-        const $thumbMax = $(`${this.selectorState} .js-slider-app__input-max`);
-
-        this.optionsState.controlConfig.forEach((item) => {
-            const element: JQuery = $(`#${newSelector}__control-${item}`);
-
-            element.on('change', () => {
-                const value: number = +element.val();
-                switch (item) {
-                    case ControlsEnum.MIN:
-                        this.optionsState.min = value;
-                        $thumbs.prop('min', value);
-                        this.setBar();
-                        this.setTooltip();
-                        break;
-                    case ControlsEnum.MAX:
-                        this.optionsState.max = value;
-                        $thumbs.prop('max', value);
-                        this.setBar();
-                        this.setTooltip();
-                        break;
-                    case ControlsEnum.STEP:
-                        this.optionsState.step = value;
-                        $thumbs.prop('step', value);
-                        this.setBar();
-                        this.setTooltip();
-                        break;
-                    case ControlsEnum.FROM:
-                        this.optionsState.from = value;
-                        $thumbMin.val(value);
-                        this.setBar();
-                        this.setTooltip();
-                        break;
-                    case ControlsEnum.TO:
-                        this.optionsState.to = value;
-                        $thumbMax.val(value);
-                        this.setBar();
-                        this.setTooltip();
-                        break;
-                }
-            });
-        });
-
-        $thumbMin.on('input', (e: ChangeEvent) => {
-            this.optionsState.from = e.currentTarget.value;
-            this.setConfig();
-        });
-
-        $thumbMax.on('input', (e: ChangeEvent) => {
-            this.optionsState.to = e.currentTarget.value;
-            this.setConfig();
-        });
-    };
-
-    updateConfig = ():void => {
-        const newSelector: string = this.selectorState.slice(1);
-
-        this.optionsState.toggleConfig.forEach(item => {
-            const element: JQuery = $(`#${newSelector}__toggle-${item}`);
-
-            element.on('change', () => {
-                const value: boolean = element.prop('checked');
-
-                switch (item) {
-                    case TogglesEnum.VERTICAL:
-                        this.optionsState.vertical = value;
-                        this.setVertical();
-                        break;
-                    case TogglesEnum.RULERS:
-                        this.optionsState.rulers = value;
-                        this.setRulers();
-                        break;
-                    case TogglesEnum.PROGRESS:
-                        this.optionsState.progress = value;
-                        this.setBar();
-                        break;
-                    case TogglesEnum.TOOLTIP:
-                        this.optionsState.tooltip = value;
-                        this.setTooltip();
-                        break;
-                    case TogglesEnum.RANGE:
-                        this.optionsState.range = value;
-                        this.setRange();
-                        break;
-                }
-            });
-        });
-    };
-
 }
 
 export default View;

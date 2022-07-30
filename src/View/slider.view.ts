@@ -3,17 +3,15 @@ import $ from 'jquery';
 
 import ModelOption from '../utils/ModelOption';
 import {TogglesEnum, ControlsEnum} from '../utils/Config.enum';
-import {findMaxPercent, findMinPercent} from '../utils/findThumbPercent';
 import evaluateVar from '../utils/evaluateVar';
 
-import Progress from '../components/progress/Progress';
 import Tooltip from '../components/tooltip/Tooltip';
-import Bar from '../components/bar/Bar';
 import ConfigPanel from '../components/configPanel/ConfigPanel';
 
 import setSlider from './SubViews/setSlider.view';
 import setRulers from './SubViews/setRulers.view';
 import setRange from './SubViews/setRange.view';
+import setBar from './SubViews/setBar.view';
 
 
 class View {
@@ -23,19 +21,16 @@ class View {
     private readonly setSlider: CallableFunction;
     private readonly setRange: CallableFunction;
     private readonly setRulers: CallableFunction;
+    private readonly setBar: CallableFunction;
 
-    private progress: Progress;
     private tooltip: Tooltip;
-    private bar: Bar;
     private configPanel: ConfigPanel;
 
 
     constructor(private selector: string, private options: Partial<ModelOption>) {
         this.selectorState = selector;
         this.optionsState = options;
-        this.progress = new Progress(this.selectorState);
         this.tooltip = new Tooltip(this.selectorState);
-        this.bar = new Bar(this.selectorState);
         this.configPanel = new ConfigPanel(
             this.selectorState,
             this.optionsState.controlConfig,
@@ -45,6 +40,7 @@ class View {
         this.setSlider = setSlider.bind(this);
         this.setRulers = setRulers.bind(this);
         this.setRange = setRange.bind(this);
+        this.setBar = setBar.bind(this);
 
     }
 
@@ -188,70 +184,6 @@ class View {
             });
         }
     };
-
-    private setBar(): void {
-        const $bar: JQuery = $(`${this.selectorState} .js-slider-app__bar-line`);
-
-        $bar.length === 0 ? this.bar.getBar() : null;
-
-        const $range = $(`${this.selectorState} .js-slider-app__input`);
-        const $minThumb = $(`${this.selectorState} .js-slider-app__input-min`);
-        const minVal: number = this.optionsState.min;
-        const isProgressTrue: boolean = this.optionsState.progress;
-        const isRangeTrue: boolean = this.optionsState.range;
-        const gap: number = this.optionsState.gap;
-        const $maxThumb: JQuery = $(`${this.selectorState} .js-slider-app__input-max`);
-
-        if (isProgressTrue) {
-            $(`${this.selectorState} .js-slider-app__progress`).length === 0
-                ? this.progress.getProgress()
-                : null;
-        } else $(`${this.selectorState} .js-slider-app__progress`).remove();
-
-        // noinspection JSJQueryEfficiency
-        const $progress: JQuery = $(`${this.selectorState} .js-slider-app__progress`);
-
-        if (isRangeTrue) {
-            $progress.css({
-                width: 'auto',
-                height: 100 + '%',
-                left: findMinPercent(minVal, Number($minThumb.val()), parseInt($minThumb.attr('max'))),
-                right: findMaxPercent(minVal, Number($maxThumb.val()), parseInt($maxThumb.attr('max')))
-            });
-
-            $range.each(function (index, element) {
-                $(element).on('input', (event) => {
-                    const minThumbValue = Number($minThumb.val());
-                    const maxThumbValue = Number($maxThumb.val());
-                    const isValueLessGap: boolean = maxThumbValue - minThumbValue < gap;
-                    const hasClassInputMin: boolean =
-                        $(event.currentTarget).hasClass('js-slider-app__input-min');
-
-                    if (isValueLessGap) {
-                        hasClassInputMin
-                            ? $(this).val(maxThumbValue - gap)
-                            : $(this).val(minThumbValue + gap);
-                    }
-
-                    $progress.css({
-                        width: 'auto',
-                        left: findMinPercent(
-                            minVal,
-                            Number($minThumb.val()),
-                            parseInt($minThumb.attr('max'))),
-                        right: findMaxPercent(
-                            minVal,
-                            Number($maxThumb.val()),
-                            parseInt($maxThumb.attr('max'))),
-                    });
-                });
-            });
-        } else {
-            $progress.css({
-                width: findMinPercent(minVal, Number($minThumb.val()), parseInt($minThumb.attr('max'))),
-                height: 100 + '%'});
-        }
-    }
 
     setTooltip(): void {
         const isTooltipTrue: boolean = this.optionsState.tooltip;

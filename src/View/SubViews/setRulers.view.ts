@@ -5,7 +5,7 @@ import Rulers from '../../components/rulers/Rulers';
 import abbreviateNumber from '../../utils/abbreviateNumber';
 
 function setRulers (): void {
-    const rulers = new Rulers(this.selectorState);
+    const rulers: Rulers = new Rulers(this.selectorState);
     const $rulers = $(`${this.selectorState} .js-slider-app__rulers`);
     const isRulersTrue: boolean = this.optionsState.rulers;
 

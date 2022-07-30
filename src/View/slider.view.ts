@@ -6,7 +6,6 @@ import {TogglesEnum, ControlsEnum} from '../utils/Config.enum';
 import {findMaxPercent, findMinPercent} from '../utils/findThumbPercent';
 import evaluateVar from '../utils/evaluateVar';
 
-import Thumb from '../components/thumb/Thumb';
 import Progress from '../components/progress/Progress';
 import Tooltip from '../components/tooltip/Tooltip';
 import Bar from '../components/bar/Bar';
@@ -14,6 +13,7 @@ import ConfigPanel from '../components/configPanel/ConfigPanel';
 
 import setSlider from './SubViews/setSlider.view';
 import setRulers from './SubViews/setRulers.view';
+import setRange from './SubViews/setRange.view';
 
 
 class View {
@@ -21,9 +21,9 @@ class View {
     private readonly optionsState: Partial<ModelOption>;
 
     private readonly setSlider: CallableFunction;
+    private readonly setRange: CallableFunction;
     private readonly setRulers: CallableFunction;
 
-    private thumb: Thumb;
     private progress: Progress;
     private tooltip: Tooltip;
     private bar: Bar;
@@ -33,14 +33,6 @@ class View {
     constructor(private selector: string, private options: Partial<ModelOption>) {
         this.selectorState = selector;
         this.optionsState = options;
-        this.thumb = new Thumb(
-            this.selectorState,
-            this.optionsState.min,
-            this.optionsState.max,
-            this.optionsState.from,
-            this.optionsState.to,
-            this.optionsState.step
-        );
         this.progress = new Progress(this.selectorState);
         this.tooltip = new Tooltip(this.selectorState);
         this.bar = new Bar(this.selectorState);
@@ -52,6 +44,7 @@ class View {
 
         this.setSlider = setSlider.bind(this);
         this.setRulers = setRulers.bind(this);
+        this.setRange = setRange.bind(this);
 
     }
 
@@ -194,32 +187,6 @@ class View {
                     .attr('checked', evaluateVarBind(`this.optionsState.${item}`));
             });
         }
-    };
-
-    private setRange = ():void => {
-        const $inputMax: JQuery = $(`${this.selectorState} .js-slider-app__input-max`);
-        const $inputMin: JQuery = $(`${this.selectorState} .js-slider-app__input-min`);
-        const $thumbsMain: JQuery = $(`${this.selectorState} .js-slider-app__bar-line`);
-
-        const isRangeTrue: boolean = this.optionsState.range;
-        if (isRangeTrue) {
-            this.setBar();
-            $inputMin.length === 0 ? this.thumb.getMinThumb() : null;
-            $inputMax.length === 0 ? this.thumb.getMaxThumb() : null;
-        } else {
-            $thumbsMain.length !== 0 ? $thumbsMain.remove() : null;
-            this.setBar();
-            this.thumb.getMinThumb();
-        }
-
-        this.updateControl();
-        this.setBar();
-        this.setRulers();
-        this.setConfig();
-        $(`${this.selectorState} .js-slider-app__input`).on('input', () => this.setBar());
-        this.setTooltip();
-        this.setVertical();
-
     };
 
     private setBar(): void {

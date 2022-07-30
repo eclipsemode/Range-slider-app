@@ -8,6 +8,11 @@ function updateControl ():void {
     const $thumbs = $(`${this.selectorState} .js-slider-app__input`);
     const $thumbMin = $(`${this.selectorState} .js-slider-app__input-min`);
     const $thumbMax = $(`${this.selectorState} .js-slider-app__input-max`);
+    const $configFrom = $('#slider__control-from');
+    const $configTo = $('#slider__control-to');
+
+    $configFrom.prop('step', this.optionsState.step);
+    $configTo.prop('step', this.optionsState.step);
 
     this.optionsState.controlConfig.forEach((item: string) => {
         const element: JQuery = $(`#${newSelector}__control-${item}`);
@@ -29,7 +34,9 @@ function updateControl ():void {
                     break;
                 case ControlsEnum.STEP:
                     this.optionsState.step = value;
-                    $thumbs.prop('step', value);
+                    $configFrom.prop('step', this.optionsState.step);
+                    $configTo.prop('step', this.optionsState.step);
+                    $thumbs.prop('step', this.optionsState.step);
                     this.setBar();
                     this.setTooltip();
                     break;

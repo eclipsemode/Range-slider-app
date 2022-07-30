@@ -13,6 +13,7 @@ import setRange from './SubViews/setRange.view';
 import setBar from './SubViews/setBar.view';
 import setTooltip from './SubViews/setTooltip.view';
 import setColor from './SubViews/setColor.view';
+import setVertical from './SubViews/setVertical.view';
 
 
 class View {
@@ -25,6 +26,7 @@ class View {
     private readonly setBar: CallableFunction;
     private readonly setTooltip: CallableFunction;
     private readonly setColor: CallableFunction;
+    private readonly setVertical: CallableFunction;
 
     private configPanel: ConfigPanel;
 
@@ -44,7 +46,7 @@ class View {
         this.setBar = setBar.bind(this);
         this.setTooltip = setTooltip.bind(this);
         this.setColor = setColor.bind(this);
-
+        this.setVertical = setVertical.bind(this);
     }
 
     render(): void {
@@ -187,46 +189,6 @@ class View {
             });
         }
     };
-
-    private setVertical(): void {
-
-        if (this.optionsState.vertical) {
-
-            $(`${this.selectorState}`).addClass('root--vertical');
-
-            $(`${this.selectorState} .slider-app`)
-                .addClass('slider-app--vertical');
-
-            $(`${this.selectorState} .js-slider-app__bar-line`)
-                .addClass('slider-app__bar-line--vertical');
-
-            $(`${this.selectorState} .js-slider-app__rulers`)
-                .addClass('slider-app__rulers--vertical');
-
-            $(`${this.selectorState} .js-slider-app__rulers-values`)
-                .addClass('slider-app__rulers-values--vertical');
-
-        } else {
-
-            $(`${this.selectorState}`).removeClass('root--vertical');
-
-            $(`${this.selectorState} .slider-app`)
-                .removeClass('slider-app--vertical');
-
-            $(`${this.selectorState} .js-slider-app__bar-line`)
-                .removeClass('slider-app__bar-line--vertical');
-
-            $(`${this.selectorState} .js-slider-app__rulers`)
-                .removeClass('slider-app__rulers--vertical');
-
-            $(`${this.selectorState} .js-slider-app__rulers-values`)
-                .removeClass('slider-app__rulers-values--vertical');
-
-        }
-
-        this.setColor();
-        this.setBar();
-    }
 
 }
 

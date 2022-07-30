@@ -3,9 +3,6 @@ import $ from 'jquery';
 
 import ModelOption from '../utils/ModelOption';
 import {TogglesEnum, ControlsEnum} from '../utils/Config.enum';
-import evaluateVar from '../utils/evaluateVar';
-
-import ConfigPanel from '../components/configPanel/ConfigPanel';
 
 import setSlider from './SubViews/setSlider.view';
 import setRulers from './SubViews/setRulers.view';
@@ -14,12 +11,12 @@ import setBar from './SubViews/setBar.view';
 import setTooltip from './SubViews/setTooltip.view';
 import setColor from './SubViews/setColor.view';
 import setVertical from './SubViews/setVertical.view';
+import setConfig from './SubViews/setConfig.view';
 
 
 class View {
     private readonly selectorState: string;
     private readonly optionsState: Partial<ModelOption>;
-
     private readonly setSlider: CallableFunction;
     private readonly setRange: CallableFunction;
     private readonly setRulers: CallableFunction;
@@ -27,19 +24,11 @@ class View {
     private readonly setTooltip: CallableFunction;
     private readonly setColor: CallableFunction;
     private readonly setVertical: CallableFunction;
-
-    private configPanel: ConfigPanel;
-
+    private readonly setConfig: CallableFunction;
 
     constructor(private selector: string, private options: Partial<ModelOption>) {
         this.selectorState = selector;
         this.optionsState = options;
-        this.configPanel = new ConfigPanel(
-            this.selectorState,
-            this.optionsState.controlConfig,
-            this.optionsState.toggleConfig
-        );
-
         this.setSlider = setSlider.bind(this);
         this.setRulers = setRulers.bind(this);
         this.setRange = setRange.bind(this);
@@ -47,6 +36,7 @@ class View {
         this.setTooltip = setTooltip.bind(this);
         this.setColor = setColor.bind(this);
         this.setVertical = setVertical.bind(this);
+        this.setConfig = setConfig.bind(this);
     }
 
     render(): void {
@@ -58,7 +48,6 @@ class View {
         this.setColor();
         this.setConfig();
         this.setVertical();
-
         this.updateConfig();
         this.updateControl();
     }
@@ -153,41 +142,6 @@ class View {
                 }
             });
         });
-    };
-
-    private setConfig = (): void => {
-        const isConfigPanelTrue: boolean = this.optionsState.configPanel;
-        const evaluateVarBind: CallableFunction = evaluateVar.bind(this);
-
-        const configPanel: JQuery = $(`${this.selectorState} .js-slider-app__config`);
-
-        if (isConfigPanelTrue) {
-            const isGetConfigPanelIfMissing = () =>
-                configPanel.length === 0
-                    ? this.configPanel.getConfig()
-                    : null;
-
-            isGetConfigPanelIfMissing();
-            const newSelector: string = this.selectorState.slice(1);
-            const $controlTo = $(`#${newSelector}__control-to`);
-            const isRangeTrue: boolean = this.optionsState.range;
-
-            $(`#${newSelector}__toggle-tooltip`).prop('checked', this.optionsState.tooltip);
-
-            !isRangeTrue
-                ? $controlTo.prop('disabled', true)
-                : $controlTo.prop('disabled', false);
-
-            this.optionsState.controlConfig.forEach(item => {
-                $(`#${newSelector}__control-${item}`)
-                    .val(evaluateVarBind(`this.optionsState.${item}`));
-            });
-
-            this.optionsState.toggleConfig.forEach(item => {
-                $(`#${newSelector}__toggle-${item}`)
-                    .attr('checked', evaluateVarBind(`this.optionsState.${item}`));
-            });
-        }
     };
 
 }

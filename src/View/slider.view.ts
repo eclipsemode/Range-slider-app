@@ -5,13 +5,13 @@ import ModelOption from '../utils/ModelOption';
 import {TogglesEnum, ControlsEnum} from '../utils/Config.enum';
 import evaluateVar from '../utils/evaluateVar';
 
-import Tooltip from '../components/tooltip/Tooltip';
 import ConfigPanel from '../components/configPanel/ConfigPanel';
 
 import setSlider from './SubViews/setSlider.view';
 import setRulers from './SubViews/setRulers.view';
 import setRange from './SubViews/setRange.view';
 import setBar from './SubViews/setBar.view';
+import setTooltip from './SubViews/setTooltip.view';
 
 
 class View {
@@ -22,15 +22,14 @@ class View {
     private readonly setRange: CallableFunction;
     private readonly setRulers: CallableFunction;
     private readonly setBar: CallableFunction;
+    private readonly setTooltip: CallableFunction;
 
-    private tooltip: Tooltip;
     private configPanel: ConfigPanel;
 
 
     constructor(private selector: string, private options: Partial<ModelOption>) {
         this.selectorState = selector;
         this.optionsState = options;
-        this.tooltip = new Tooltip(this.selectorState);
         this.configPanel = new ConfigPanel(
             this.selectorState,
             this.optionsState.controlConfig,
@@ -41,6 +40,7 @@ class View {
         this.setRulers = setRulers.bind(this);
         this.setRange = setRange.bind(this);
         this.setBar = setBar.bind(this);
+        this.setTooltip = setTooltip.bind(this);
 
     }
 
@@ -184,100 +184,6 @@ class View {
             });
         }
     };
-
-    setTooltip(): void {
-        const isTooltipTrue: boolean = this.optionsState.tooltip;
-        const isPercentTrue: boolean = this.optionsState.percent;
-        const isRangeTrue: boolean = this.optionsState.range;
-
-        const isGetTooltipIfMissing = (): void => {
-            if (isTooltipTrue) {
-                $(`${this.selectorState} .js-slider-app__tooltip--first`).length === 0
-                    ? this.tooltip.getFirstTooltip()
-                    : null;
-                this.optionsState.range &&
-                $(`${this.selectorState} .js-slider-app__tooltip--second`).length === 0
-                    ? this.tooltip.getSecondTooltip()
-                    : null;
-            } else {
-                $(`${this.selectorState} .js-slider-app__tooltip-line`).remove();
-                return;
-            }
-        };
-        isGetTooltipIfMissing();
-        this.setVertical();
-
-        const $tooltipMin: JQuery =
-            $(`${this.selectorState} .js-slider-app__tooltip--first`);
-        const $inputMin: JQuery = $(`${this.selectorState} .js-slider-app__input-min`);
-
-        $tooltipMin.css({
-            left: ((+this.optionsState.from - +this.optionsState.min)
-                / (+this.optionsState.max - +this.optionsState.min)) * 100 + '%',
-            bottom: '1.5rem'
-        });
-
-        $inputMin.on({
-            input: () => {
-                $tooltipMin.css('left',
-                    ((+this.optionsState.from - +this.optionsState.min)
-                        / (+this.optionsState.max - +this.optionsState.min)) * 100 + '%');
-
-                console.log('Options: ' + this.optionsState.from);
-                console.log('Value: ' + $(`${this.selectorState} .js-slider-app__input-min`).val());
-            }
-        });
-
-        if (!isPercentTrue) {
-            $tooltipMin.text(this.optionsState.from);
-
-            $inputMin.on('input', () => {
-                $tooltipMin.text(+this.optionsState.from);
-            });
-        } else {
-            $tooltipMin.text(
-                Math.trunc((+this.optionsState.from - +this.optionsState.min)
-                    / (+this.optionsState.max - +this.optionsState.min) * 100) + '%');
-
-            $inputMin.on('input', () =>
-                $tooltipMin.text(
-                    Math.trunc((+this.optionsState.from - +this.optionsState.min)
-                        / (+this.optionsState.max - +this.optionsState.min) * 100) + '%'));
-        }
-
-        if (isRangeTrue) {
-            const $tooltipMax: JQuery =
-                $(`${this.selectorState} .js-slider-app__tooltip--second`);
-            const $inputMax: JQuery = $(`${this.selectorState} .js-slider-app__input-max`);
-
-            $tooltipMax.css(
-                'left',
-                (((+this.optionsState.to - +this.optionsState.min)
-                    / (+this.optionsState.max - +this.optionsState.min)) * 100) + '%');
-
-            $inputMax.on({
-                input: () => {
-                    $tooltipMax.css('left',
-                        (((+this.optionsState.to - +this.optionsState.min)
-                            / (+this.optionsState.max - +this.optionsState.min)) * 100) + '%');
-                }
-            });
-
-            if (!isPercentTrue) {
-                $tooltipMax.text(this.optionsState.to);
-                $inputMax.on('input', () => $tooltipMax.text(this.optionsState.to));
-            } else {
-                $tooltipMax.text(
-                    Math.trunc((+this.optionsState.to - +this.optionsState.min)
-                        / (+this.optionsState.max - +this.optionsState.min) * 100) + '%');
-
-                $inputMax.on('input', () =>
-                    $tooltipMax.text(
-                        Math.trunc((+this.optionsState.to - +this.optionsState.min)
-                            / (+this.optionsState.max - +this.optionsState.min) * 100) + '%'));
-            }
-        }
-    }
 
     private setVertical(): void {
 

@@ -1,38 +1,38 @@
+import ChangeEvent = JQuery.ChangeEvent;
+import $ from 'jquery';
+
 import ModelOption from '../utils/ModelOption';
 import {TogglesEnum, ControlsEnum} from '../utils/Config.enum';
-import abbreviateNumber from '../utils/abbreviateNumber';
 import {findMaxPercent, findMinPercent} from '../utils/findThumbPercent';
 import evaluateVar from '../utils/evaluateVar';
 
-import Rulers from '../components/rulers/Rulers';
 import Thumb from '../components/thumb/Thumb';
 import Progress from '../components/progress/Progress';
 import Tooltip from '../components/tooltip/Tooltip';
 import Bar from '../components/bar/Bar';
-import MainClass from '../components/mainClass/MainClass';
 import ConfigPanel from '../components/configPanel/ConfigPanel';
 
-import ChangeEvent = JQuery.ChangeEvent;
-import $ from 'jquery';
+import setSlider from './SubViews/setSlider.view';
+import setRulers from './SubViews/setRulers.view';
+
 
 class View {
     private readonly selectorState: string;
     private readonly optionsState: Partial<ModelOption>;
 
-    private rulers: Rulers;
+    private readonly setSlider: CallableFunction;
+    private readonly setRulers: CallableFunction;
+
     private thumb: Thumb;
     private progress: Progress;
     private tooltip: Tooltip;
     private bar: Bar;
-    private mainClass: MainClass;
     private configPanel: ConfigPanel;
 
 
     constructor(private selector: string, private options: Partial<ModelOption>) {
         this.selectorState = selector;
         this.optionsState = options;
-        this.mainClass = new MainClass(this.selectorState);
-        this.rulers = new Rulers(this.selectorState);
         this.thumb = new Thumb(
             this.selectorState,
             this.optionsState.min,
@@ -49,6 +49,10 @@ class View {
             this.optionsState.controlConfig,
             this.optionsState.toggleConfig
         );
+
+        this.setSlider = setSlider.bind(this);
+        this.setRulers = setRulers.bind(this);
+
     }
 
     render(): void {
@@ -157,11 +161,6 @@ class View {
         });
     };
 
-    private setSlider = ():void => {
-        this.mainClass.getMainClass();
-        $(this.selectorState).addClass('root');
-    };
-
     private setConfig = (): void => {
         const isConfigPanelTrue: boolean = this.optionsState.configPanel;
         const evaluateVarBind: CallableFunction = evaluateVar.bind(this);
@@ -194,164 +193,6 @@ class View {
                 $(`#${newSelector}__toggle-${item}`)
                     .attr('checked', evaluateVarBind(`this.optionsState.${item}`));
             });
-        }
-    };
-
-    private setRulers = (): void => {
-        const $rulers = $(`${this.selectorState} .js-slider-app__rulers`);
-        const isRulersTrue: boolean = this.optionsState.rulers;
-
-        if (isRulersTrue) {
-
-            const isGetRulersIfMissing = () => $rulers.length === 0 ? this.rulers.getRulers() : null;
-            isGetRulersIfMissing();
-            const isFindValueByPercent = (percent: number): number =>
-                this.optionsState.min + ((this.optionsState.max - this.optionsState.min) * percent / 100);
-
-
-            this.setColor();
-            this.setVertical();
-
-            const $values: JQuery = $(`${this.selectorState} .js-slider-app__rulers-values`);
-            const $minThumb: JQuery = $(`${this.selectorState} .js-slider-app__input-min`);
-            const $maxThumb: JQuery = $(`${this.selectorState} .js-slider-app__input-max`);
-
-            $values.children().each((index, element) => {
-                const minVal: number = this.optionsState.min;
-                const maxVal: number = this.optionsState.max;
-                const isPercentTrue: boolean = this.optionsState.percent;
-
-                switch (index) {
-                    case 0:
-                        isPercentTrue
-                            ? element.innerText = '0%'
-                            : element.innerText = abbreviateNumber(maxVal - minVal, minVal, 0);
-
-                        element.addEventListener('click', () => {
-                            $minThumb.val(this.optionsState.min);
-                            this.optionsState.from = +$minThumb.val();
-                            this.setBar();
-                            this.setTooltip();
-                            this.setConfig();
-                        });
-                        break;
-                    case 1:
-                        isPercentTrue
-                            ? element.innerText = '20%'
-                            : element.innerText = abbreviateNumber(maxVal - minVal, minVal, 20);
-
-                        element.addEventListener('click', () => {
-                            if (this.optionsState.range) {
-                                const isMinLessMaxWithGap: boolean =
-                                    +this.optionsState.to - +abbreviateNumber(maxVal - minVal, minVal, 20) >
-                                        +this.optionsState.gap;
-
-                                isMinLessMaxWithGap
-                                    ? $minThumb.val(isFindValueByPercent(20))
-                                    : $minThumb.val(+this.optionsState.to - +this.optionsState.gap);
-                            } else {
-                                $minThumb.val(isFindValueByPercent(20));
-                            }
-                            this.optionsState.from = +$minThumb.val();
-                            this.setBar();
-                            this.setTooltip();
-                            this.setConfig();
-                        });
-                        break;
-                    case 2:
-                        isPercentTrue
-                            ? element.innerText = '40%'
-                            : element.innerText = abbreviateNumber(maxVal - minVal, minVal, 40);
-
-                        element.addEventListener('click', () => {
-                            if (this.optionsState.range) {
-                                const isMinLessMaxWithGap: boolean =
-                                    +this.optionsState.to - +abbreviateNumber(maxVal - minVal, minVal, 40) >
-                                    +this.optionsState.gap;
-
-                                isMinLessMaxWithGap
-                                    ? $minThumb.val(isFindValueByPercent(40))
-                                    : $minThumb.val(+this.optionsState.to - +this.optionsState.gap);
-                            } else {
-                                $minThumb.val(isFindValueByPercent(40));
-                            }
-                            this.optionsState.from = +$minThumb.val();
-                            this.setBar();
-                            this.setTooltip();
-                            this.setConfig();
-                        });
-                        break;
-                    case 3:
-                        isPercentTrue
-                            ? element.innerText = '60%'
-                            : element.innerText = abbreviateNumber(maxVal - minVal, minVal, 60);
-
-                        element.addEventListener('click', () => {
-                            if (this.optionsState.range) {
-                                const isMaxMoreThanMinWithGap: boolean =
-                                    +abbreviateNumber(maxVal - minVal, minVal, 60) - +this.optionsState.from >
-                                    +this.optionsState.gap;
-
-                                isMaxMoreThanMinWithGap
-                                    ? $maxThumb.val(isFindValueByPercent(60))
-                                    : $maxThumb.val(+this.optionsState.from + +this.optionsState.gap);
-                                this.optionsState.to = +$maxThumb.val();
-                            } else {
-                                $minThumb.val(isFindValueByPercent(60));
-                                this.optionsState.from = +$minThumb.val();
-                            }
-                            this.setBar();
-                            this.setTooltip();
-                            this.setConfig();
-                        });
-                        break;
-                    case 4:
-                        isPercentTrue
-                            ? element.innerText = '80%'
-                            : element.innerText = abbreviateNumber(maxVal - minVal, minVal, 80);
-
-                        element.addEventListener('click', () => {
-                            if (this.optionsState.range) {
-                                const isMaxMoreThanMinWithGap: boolean =
-                                    +abbreviateNumber(maxVal - minVal, minVal, 80) - +this.optionsState.from >
-                                    +this.optionsState.gap;
-
-                                isMaxMoreThanMinWithGap
-                                    ? $maxThumb.val(isFindValueByPercent(80))
-                                    : $maxThumb.val(+this.optionsState.from + +this.optionsState.gap);
-                                this.optionsState.to = +$maxThumb.val();
-                            } else {
-                                $minThumb.val(isFindValueByPercent(80));
-                                this.optionsState.from = +$minThumb.val();
-                            }
-                            this.setBar();
-                            this.setTooltip();
-                            this.setConfig();
-                        });
-                        break;
-                    case 5:
-                        isPercentTrue
-                            ? element.innerText = '100%'
-                            : element.innerText = abbreviateNumber(maxVal - minVal, minVal, 100);
-
-                        element.addEventListener('click', () => {
-                            if (this.optionsState.range) {
-                                $maxThumb.val(this.optionsState.max);
-                                this.optionsState.to = +$maxThumb.val();
-                            } else {
-                                $minThumb.val(this.optionsState.max);
-                                this.optionsState.from = +$minThumb.val();
-                            }
-                            this.setBar();
-                            this.setTooltip();
-                            this.setConfig();
-                        });
-                        break;
-                }
-            });
-        } else {
-            $rulers.remove();
-            $(`${this.selectorState} .js-slider-app__rulers-values`).remove();
         }
     };
 

@@ -35,11 +35,22 @@
       border-width: 5px;
       border-style: solid;
       border-color: rgba(0, 0, 0, 0.4) transparent transparent transparent;
-
     }
 
     &--vertical {
-      transform: rotate(135deg);
+      transform: translate(-50%) rotate(90deg);
+      bottom: 3.5rem;
+
+      &::after {
+        content: " ";
+        position: absolute;
+        top: 40%;
+        left: 100%;
+        margin-left: -1px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: transparent transparent transparent rgba(0, 0, 0, 0.4);
+      }
     }
   }
 }

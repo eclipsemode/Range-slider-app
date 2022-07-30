@@ -32,7 +32,6 @@ function setTooltip(): void {
     $tooltipMin.css({
         left: ((+this.optionsState.from - +this.optionsState.min)
             / (+this.optionsState.max - +this.optionsState.min)) * 100 + '%',
-        bottom: '1.5rem'
     });
 
     $inputMin.on({
@@ -40,6 +39,8 @@ function setTooltip(): void {
             $tooltipMin.css('left',
                 ((+this.optionsState.from - +this.optionsState.min)
                     / (+this.optionsState.max - +this.optionsState.min)) * 100 + '%');
+
+            console.log($('.slider-app__tooltip--vertical').innerWidth());
         }
     });
 

@@ -1,15 +1,15 @@
 .slider-app {
   &__tooltip-line {
-    position: relative;
+    position: absolute;
     height: auto;
     width: calc(100% - 22px);
     left: 10px;
+    bottom: 5px;
 
     &--vertical {
-      height: calc(100% - 33px);
+      height: calc(100% - 22px);
       width: auto;
-      top: 37px;
-      transform: translateX(-66px);
+      left: 50%;
     }
   }
 
@@ -38,8 +38,10 @@
     }
 
     &--vertical {
-      transform: translate(-50%) rotate(90deg);
-      bottom: 3.5rem;
+      transform: none;
+      left: auto;
+      right: 2rem;
+      bottom: calc(0% - 7px);
 
       &::after {
         content: " ";

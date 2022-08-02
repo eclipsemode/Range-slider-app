@@ -38,8 +38,8 @@ function updateConfig ():void {
                     this.setRulers();
                     this.setConfig();
                     $(`${this.selectorState} .js-slider-app__input`).on('input', () => this.setBar());
-                    this.setTooltip();
                     this.updateControl();
+                    this.setTooltip();
                     this.setVertical();
                     break;
             }

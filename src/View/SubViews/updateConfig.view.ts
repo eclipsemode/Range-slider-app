@@ -34,9 +34,9 @@ function updateConfig ():void {
                 case TogglesEnum.RANGE:
                     this.optionsState.range = value;
                     this.setRange();
-                    this.setBar();
                     this.setRulers();
                     this.setConfig();
+                    this.setBar();
                     $(`${this.selectorState} .js-slider-app__input`).on('input', () => this.setBar());
                     this.updateControl();
                     this.setTooltip();

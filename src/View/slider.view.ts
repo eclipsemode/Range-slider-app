@@ -48,9 +48,10 @@ class View {
         this.setTooltip();
         this.setColor();
         this.setConfig();
-        this.setVertical();
         this.updateConfig();
         this.updateControl();
+        this.setVertical();
+
     }
 }
 

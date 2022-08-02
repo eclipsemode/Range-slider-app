@@ -25,12 +25,13 @@ function setRange ():void {
         thumb.getMinThumb();
     }
 
-    this.updateControl();
+
     this.setBar();
     this.setRulers();
     this.setConfig();
     $(`${this.selectorState} .js-slider-app__input`).on('input', () => this.setBar());
     this.setTooltip();
+    this.updateControl();
     this.setVertical();
 
 }

@@ -14,6 +14,9 @@ function updateConfig ():void {
                 case TogglesEnum.VERTICAL:
                     this.optionsState.vertical = value;
                     this.setVertical();
+                    this.setColor();
+                    this.setBar();
+                    this.setTooltip();
                     break;
                 case TogglesEnum.RULERS:
                     this.optionsState.rulers = value;
@@ -26,10 +29,18 @@ function updateConfig ():void {
                 case TogglesEnum.TOOLTIP:
                     this.optionsState.tooltip = value;
                     this.setTooltip();
+                    this.setVertical();
                     break;
                 case TogglesEnum.RANGE:
                     this.optionsState.range = value;
                     this.setRange();
+                    this.setBar();
+                    this.setRulers();
+                    this.setConfig();
+                    $(`${this.selectorState} .js-slider-app__input`).on('input', () => this.setBar());
+                    this.setTooltip();
+                    this.updateControl();
+                    this.setVertical();
                     break;
             }
         });

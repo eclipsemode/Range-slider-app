@@ -46,10 +46,6 @@ function setVertical(): void {
         $(`${this.selectorState} .slider-app__tooltip`)
             .removeClass('slider-app__tooltip--vertical');
     }
-
-    this.setColor();
-    this.setBar();
-    this.setTooltip();
 }
 
 export default setVertical;

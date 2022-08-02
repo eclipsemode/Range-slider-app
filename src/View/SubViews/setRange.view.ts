@@ -24,16 +24,6 @@ function setRange ():void {
         this.setBar();
         thumb.getMinThumb();
     }
-
-
-    this.setBar();
-    this.setRulers();
-    this.setConfig();
-    $(`${this.selectorState} .js-slider-app__input`).on('input', () => this.setBar());
-    this.setTooltip();
-    this.updateControl();
-    this.setVertical();
-
 }
 
 export default setRange;

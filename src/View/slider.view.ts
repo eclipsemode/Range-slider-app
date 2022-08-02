@@ -45,13 +45,12 @@ class View {
         this.setRange();
         this.setBar();
         this.setRulers();
-        this.setTooltip();
         this.setColor();
         this.setConfig();
         this.updateConfig();
         this.updateControl();
+        this.setTooltip();
         this.setVertical();
-
     }
 }
 

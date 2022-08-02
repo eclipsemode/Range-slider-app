@@ -21,6 +21,8 @@ function updateConfig ():void {
                 case TogglesEnum.RULERS:
                     this.optionsState.rulers = value;
                     this.setRulers();
+                    this.setColor();
+                    this.setVertical();
                     break;
                 case TogglesEnum.PROGRESS:
                     this.optionsState.progress = value;
@@ -39,6 +41,7 @@ function updateConfig ():void {
                     this.setBar();
                     $(`${this.selectorState} .js-slider-app__input`).on('input', () => this.setBar());
                     this.updateControl();
+                    this.setColor();
                     this.setTooltip();
                     this.setVertical();
                     break;

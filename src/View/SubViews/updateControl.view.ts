@@ -25,12 +25,16 @@ function updateControl ():void {
                     $thumbs.prop('min', value);
                     this.setBar();
                     this.setTooltip();
+                    this.setRulers();
+                    this.setColor();
                     break;
                 case ControlsEnum.MAX:
                     this.optionsState.max = value;
                     $thumbs.prop('max', value);
                     this.setBar();
                     this.setTooltip();
+                    this.setRulers();
+                    this.setColor();
                     break;
                 case ControlsEnum.STEP:
                     this.optionsState.step = value;

@@ -11,15 +11,15 @@ function setRulers (): void {
 
     if (isRulersTrue) {
 
-        const isGetRulersIfMissing = () => $rulers.length === 0 ? rulers.getRulers() : null;
-        isGetRulersIfMissing();
+        $rulers.remove();
+        // noinspection JSJQueryEfficiency
+        $(`${this.selectorState} .js-slider-app__rulers-values`).remove();
+        rulers.getRulers();
+
         const isFindValueByPercent = (percent: number): number =>
             this.optionsState.min + ((this.optionsState.max - this.optionsState.min) * percent / 100);
 
-
-        this.setColor();
-        this.setVertical();
-
+        // noinspection JSJQueryEfficiency
         const $values: JQuery = $(`${this.selectorState} .js-slider-app__rulers-values`);
         const $minThumb: JQuery = $(`${this.selectorState} .js-slider-app__input-min`);
         const $maxThumb: JQuery = $(`${this.selectorState} .js-slider-app__input-max`);

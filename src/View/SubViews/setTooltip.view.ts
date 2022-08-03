@@ -9,6 +9,7 @@ function setTooltip(): void {
     const isRangeTrue: boolean = this.optionsState.range;
     const isVerticalTrue: boolean = this.optionsState.vertical;
 
+
     const isGetTooltipIfMissing = (): void => {
         if (isTooltipTrue) {
             // noinspection JSJQueryEfficiency

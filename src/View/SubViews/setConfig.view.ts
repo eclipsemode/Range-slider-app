@@ -32,6 +32,18 @@ function setConfig(): void {
             ? $controlTo.prop('disabled', true)
             : $controlTo.prop('disabled', false);
 
+        const isCheckThumbValues = () => {
+            const toMoreThanMax: boolean = +this.optionsState.to > +this.optionsState.max;
+            const fromLessThanMin: boolean = +this.optionsState.from < +this.optionsState.min;
+            const fromMoreThanMax: boolean = +this.optionsState.from > +this.optionsState.max;
+
+            toMoreThanMax ? this.optionsState.to = this.optionsState.max : null;
+            fromLessThanMin ? this.optionsState.from = this.optionsState.min : null;
+            fromMoreThanMax ? this.optionsState.from = this.optionsState.max : null;
+        };
+
+        isCheckThumbValues();
+
         this.optionsState.controlConfig.forEach((item: string) => {
             $(`#${newSelector}__control-${item}`)
                 .val(evaluateVarBind(`this.optionsState.${item}`));

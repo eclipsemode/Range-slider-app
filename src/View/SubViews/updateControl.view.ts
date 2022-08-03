@@ -24,6 +24,7 @@ function updateControl ():void {
                     this.optionsState.min = value;
                     $thumbs.prop('min', value);
                     this.setBar();
+                    this.setConfig();
                     this.setTooltip();
                     this.setRulers();
                     this.setColor();
@@ -32,6 +33,7 @@ function updateControl ():void {
                     this.optionsState.max = value;
                     $thumbs.prop('max', value);
                     this.setBar();
+                    this.setConfig();
                     this.setTooltip();
                     this.setRulers();
                     this.setColor();

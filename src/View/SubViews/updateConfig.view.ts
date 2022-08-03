@@ -17,7 +17,6 @@ function updateConfig ():void {
                     this.setVertical();
                     this.setColor();
                     this.setBar();
-
                     break;
                 case TogglesEnum.RULERS:
                     this.optionsState.rulers = value;

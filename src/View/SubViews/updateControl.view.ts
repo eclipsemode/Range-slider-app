@@ -20,12 +20,13 @@ function updateControl ():void {
         const fromMoreThanMax: boolean = +this.optionsState.from > +this.optionsState.max;
 
         const toLessThanFrom: boolean =
-            +this.optionsState.to < +this.optionsState.from + +this.optionsState.gap;
+            +this.optionsState.to - +this.optionsState.step
+            < +this.optionsState.from + +this.optionsState.gap;
 
         if (target === ControlsEnum.TO) {
-            toLessThanFrom ? this.optionsState.to = +this.optionsState.from + +this.optionsState.gap : null;
+            toLessThanFrom ? this.optionsState.to = +this.optionsState.from + +this.optionsState.step : null;
         } else if (target === ControlsEnum.FROM) {
-            toLessThanFrom ? this.optionsState.from = +this.optionsState.to - +this.optionsState.gap : null;
+            toLessThanFrom ? this.optionsState.from = +this.optionsState.to - +this.optionsState.step : null;
         }
 
         toMoreThanMax ? this.optionsState.to = this.optionsState.max : null;
@@ -72,16 +73,16 @@ function updateControl ():void {
                     break;
                 case ControlsEnum.FROM:
                     this.optionsState.from = value;
-                    $thumbMin.val(value);
                     isCheckValues(ControlsEnum.FROM);
+                    $thumbMin.val(+this.optionsState.from);
                     this.setConfig();
                     this.setBar();
                     this.setTooltip();
                     break;
                 case ControlsEnum.TO:
                     this.optionsState.to = value;
-                    $thumbMax.val(value);
                     isCheckValues(ControlsEnum.TO);
+                    $thumbMax.val(+this.optionsState.to);
                     this.setConfig();
                     this.setBar();
                     this.setTooltip();

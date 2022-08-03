@@ -14,10 +14,19 @@ function updateControl ():void {
     $configFrom.prop('step', this.optionsState.step);
     $configTo.prop('step', this.optionsState.step);
 
-    const isCheckValues = () => {
+    const isCheckValues = (target?: string) => {
         const toMoreThanMax: boolean = +this.optionsState.to > +this.optionsState.max;
         const fromLessThanMin: boolean = +this.optionsState.from < +this.optionsState.min;
         const fromMoreThanMax: boolean = +this.optionsState.from > +this.optionsState.max;
+
+        const toLessThanFrom: boolean =
+            +this.optionsState.to < +this.optionsState.from + +this.optionsState.gap;
+
+        if (target === ControlsEnum.TO) {
+            toLessThanFrom ? this.optionsState.to = +this.optionsState.from + +this.optionsState.gap : null;
+        } else if (target === ControlsEnum.FROM) {
+            toLessThanFrom ? this.optionsState.from = +this.optionsState.to - +this.optionsState.gap : null;
+        }
 
         toMoreThanMax ? this.optionsState.to = this.optionsState.max : null;
         fromLessThanMin ? this.optionsState.from = this.optionsState.min : null;
@@ -55,13 +64,16 @@ function updateControl ():void {
                     $configFrom.prop('step', this.optionsState.step);
                     $configTo.prop('step', this.optionsState.step);
                     $thumbs.prop('step', this.optionsState.step);
+                    this.optionsState.from = $thumbMin.val();
+                    this.optionsState.to = $thumbMax.val();
+                    this.setConfig();
                     this.setBar();
                     this.setTooltip();
                     break;
                 case ControlsEnum.FROM:
                     this.optionsState.from = value;
                     $thumbMin.val(value);
-                    isCheckValues();
+                    isCheckValues(ControlsEnum.FROM);
                     this.setConfig();
                     this.setBar();
                     this.setTooltip();
@@ -69,7 +81,7 @@ function updateControl ():void {
                 case ControlsEnum.TO:
                     this.optionsState.to = value;
                     $thumbMax.val(value);
-                    isCheckValues();
+                    isCheckValues(ControlsEnum.TO);
                     this.setConfig();
                     this.setBar();
                     this.setTooltip();

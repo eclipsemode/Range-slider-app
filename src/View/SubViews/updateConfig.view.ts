@@ -13,10 +13,11 @@ function updateConfig ():void {
             switch (item) {
                 case TogglesEnum.VERTICAL:
                     this.optionsState.vertical = value;
+                    this.setTooltip();
                     this.setVertical();
                     this.setColor();
                     this.setBar();
-                    this.setTooltip();
+
                     break;
                 case TogglesEnum.RULERS:
                     this.optionsState.rulers = value;

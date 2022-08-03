@@ -14,6 +14,16 @@ function updateControl ():void {
     $configFrom.prop('step', this.optionsState.step);
     $configTo.prop('step', this.optionsState.step);
 
+    const isCheckValues = () => {
+        const toMoreThanMax: boolean = +this.optionsState.to > +this.optionsState.max;
+        const fromLessThanMin: boolean = +this.optionsState.from < +this.optionsState.min;
+        const fromMoreThanMax: boolean = +this.optionsState.from > +this.optionsState.max;
+
+        toMoreThanMax ? this.optionsState.to = this.optionsState.max : null;
+        fromLessThanMin ? this.optionsState.from = this.optionsState.min : null;
+        fromMoreThanMax ? this.optionsState.from = this.optionsState.max : null;
+    };
+
     this.optionsState.controlConfig.forEach((item: string) => {
         const element: JQuery = $(`#${newSelector}__control-${item}`);
 
@@ -24,6 +34,7 @@ function updateControl ():void {
                     this.optionsState.min = value;
                     $thumbs.prop('min', value);
                     this.setBar();
+                    isCheckValues();
                     this.setConfig();
                     this.setTooltip();
                     this.setRulers();
@@ -33,6 +44,7 @@ function updateControl ():void {
                     this.optionsState.max = value;
                     $thumbs.prop('max', value);
                     this.setBar();
+                    isCheckValues();
                     this.setConfig();
                     this.setTooltip();
                     this.setRulers();
@@ -49,12 +61,16 @@ function updateControl ():void {
                 case ControlsEnum.FROM:
                     this.optionsState.from = value;
                     $thumbMin.val(value);
+                    isCheckValues();
+                    this.setConfig();
                     this.setBar();
                     this.setTooltip();
                     break;
                 case ControlsEnum.TO:
                     this.optionsState.to = value;
                     $thumbMax.val(value);
+                    isCheckValues();
+                    this.setConfig();
                     this.setBar();
                     this.setTooltip();
                     break;

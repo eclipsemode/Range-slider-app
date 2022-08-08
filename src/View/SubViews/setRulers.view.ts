@@ -33,7 +33,7 @@ function setRulers (): void {
                 case 0:
                     isPercentTrue
                         ? element.innerText = '0%'
-                        : element.innerText = abbreviateNumber(maxVal - minVal, minVal, 0);
+                        : element.innerText = abbreviateNumber(maxVal, minVal, 0);
 
                     element.addEventListener('click', () => {
                         $minThumb.val(this.optionsState.min);
@@ -46,17 +46,17 @@ function setRulers (): void {
                 case 1:
                     isPercentTrue
                         ? element.innerText = '20%'
-                        : element.innerText = abbreviateNumber(maxVal - minVal, minVal, 20);
+                        : element.innerText = abbreviateNumber(maxVal, minVal, 20);
 
                     element.addEventListener('click', () => {
                         if (this.optionsState.range) {
                             const isMinLessMaxWithGap: boolean =
-                                +this.optionsState.to - +abbreviateNumber(maxVal - minVal, minVal, 20) >
-                                +this.optionsState.gap;
+                                +isFindValueByPercent(20) >
+                                +this.optionsState.to - +this.optionsState.gap;
 
                             isMinLessMaxWithGap
-                                ? $minThumb.val(isFindValueByPercent(20))
-                                : $minThumb.val(+this.optionsState.to - +this.optionsState.gap);
+                                ? $minThumb.val(+this.optionsState.to - +this.optionsState.gap)
+                                : $minThumb.val(isFindValueByPercent(20));
                         } else {
                             $minThumb.val(isFindValueByPercent(20));
                         }
@@ -69,17 +69,17 @@ function setRulers (): void {
                 case 2:
                     isPercentTrue
                         ? element.innerText = '40%'
-                        : element.innerText = abbreviateNumber(maxVal - minVal, minVal, 40);
+                        : element.innerText = abbreviateNumber(maxVal, minVal, 40);
 
                     element.addEventListener('click', () => {
                         if (this.optionsState.range) {
                             const isMinLessMaxWithGap: boolean =
-                                +this.optionsState.to - +abbreviateNumber(maxVal - minVal, minVal, 40) >
-                                +this.optionsState.gap;
+                                +isFindValueByPercent(40) >
+                                +this.optionsState.to - +this.optionsState.gap;
 
                             isMinLessMaxWithGap
-                                ? $minThumb.val(isFindValueByPercent(40))
-                                : $minThumb.val(+this.optionsState.to - +this.optionsState.gap);
+                                ? $minThumb.val(+this.optionsState.to - +this.optionsState.gap)
+                                : $minThumb.val(isFindValueByPercent(40));
                         } else {
                             $minThumb.val(isFindValueByPercent(40));
                         }
@@ -92,17 +92,16 @@ function setRulers (): void {
                 case 3:
                     isPercentTrue
                         ? element.innerText = '60%'
-                        : element.innerText = abbreviateNumber(maxVal - minVal, minVal, 60);
+                        : element.innerText = abbreviateNumber(maxVal, minVal, 60);
 
                     element.addEventListener('click', () => {
                         if (this.optionsState.range) {
-                            const isMaxMoreThanMinWithGap: boolean =
-                                +abbreviateNumber(maxVal - minVal, minVal, 60) - +this.optionsState.from >
-                                +this.optionsState.gap;
+                            const isMaxMoreThanMinWithGap: boolean = +isFindValueByPercent(60)
+                                < +this.optionsState.from + +this.optionsState.gap;
 
                             isMaxMoreThanMinWithGap
-                                ? $maxThumb.val(isFindValueByPercent(60))
-                                : $maxThumb.val(+this.optionsState.from + +this.optionsState.gap);
+                                ? $maxThumb.val(+this.optionsState.from + +this.optionsState.gap)
+                                : $maxThumb.val(isFindValueByPercent(60));
                             this.optionsState.to = +$maxThumb.val();
                         } else {
                             $minThumb.val(isFindValueByPercent(60));
@@ -116,17 +115,16 @@ function setRulers (): void {
                 case 4:
                     isPercentTrue
                         ? element.innerText = '80%'
-                        : element.innerText = abbreviateNumber(maxVal - minVal, minVal, 80);
+                        : element.innerText = abbreviateNumber(maxVal, minVal, 80);
 
                     element.addEventListener('click', () => {
                         if (this.optionsState.range) {
-                            const isMaxMoreThanMinWithGap: boolean =
-                                +abbreviateNumber(maxVal - minVal, minVal, 80) - +this.optionsState.from >
-                                +this.optionsState.gap;
+                            const isMaxMoreThanMinWithGap: boolean = +isFindValueByPercent(80)
+                                < +this.optionsState.from + +this.optionsState.gap;
 
                             isMaxMoreThanMinWithGap
-                                ? $maxThumb.val(isFindValueByPercent(80))
-                                : $maxThumb.val(+this.optionsState.from + +this.optionsState.gap);
+                                ? $maxThumb.val(+this.optionsState.from + +this.optionsState.gap)
+                                : $maxThumb.val(isFindValueByPercent(80));
                             this.optionsState.to = +$maxThumb.val();
                         } else {
                             $minThumb.val(isFindValueByPercent(80));
@@ -140,7 +138,7 @@ function setRulers (): void {
                 case 5:
                     isPercentTrue
                         ? element.innerText = '100%'
-                        : element.innerText = abbreviateNumber(maxVal - minVal, minVal, 100);
+                        : element.innerText = abbreviateNumber(maxVal, minVal, 100);
 
                     element.addEventListener('click', () => {
                         if (this.optionsState.range) {

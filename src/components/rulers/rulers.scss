@@ -51,6 +51,13 @@
     justify-content: space-between;
 
     & > * {
+      transition: color ease-in-out .1s;
+      &:hover {
+        color: #ffffff;
+      }
+    }
+
+    & > * {
       &:not(:first-of-type) {
         padding-left: 5px;
       }

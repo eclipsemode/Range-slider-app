@@ -24,7 +24,6 @@ function updateControl ():void {
             (Math.floor(+this.optionsState.max / +this.optionsState.step) * +this.optionsState.step);
         const fromLessThanMin: boolean = +this.optionsState.from < +this.optionsState.min;
         const fromMoreThanMax: boolean = +this.optionsState.from > +this.optionsState.max;
-
         const toLessThanFrom: boolean =
             +this.optionsState.to - +this.optionsState.step
             < +this.optionsState.from + +this.optionsState.gap;
@@ -40,7 +39,6 @@ function updateControl ():void {
         fromLessThanMin ? this.optionsState.from = this.optionsState.min : null;
         fromMoreThanMax ? this.optionsState.from = this.optionsState.max : null;
 
-
     };
 
     this.optionsState.controlConfig.forEach((item: string) => {
@@ -50,8 +48,10 @@ function updateControl ():void {
             const value: number = +element.val();
             switch (item) {
                 case ControlsEnum.MIN:
-                    this.optionsState.min = value;
-                    $thumbs.prop('min', value);
+                    if (value < +this.optionsState.max - +this.optionsState.gap) {
+                        this.optionsState.min = value;
+                    }
+                    $thumbs.prop('min', this.optionsState.min);
                     this.setBar();
                     isCheckValues();
                     this.setConfig();
@@ -60,8 +60,10 @@ function updateControl ():void {
                     this.setColor();
                     break;
                 case ControlsEnum.MAX:
-                    this.optionsState.max = value;
-                    $thumbs.prop('max', value);
+                    if (value >= +this.optionsState.min + +this.optionsState.gap) {
+                        this.optionsState.max = value;
+                    }
+                    $thumbs.prop('max', this.optionsState.max);
                     this.setBar();
                     isCheckValues();
                     this.setConfig();

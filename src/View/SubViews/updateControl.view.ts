@@ -10,12 +10,18 @@ function updateControl ():void {
     const $thumbMax = $(`${this.selectorState} .js-slider-app__input-max`);
     const $configFrom = $('#slider__control-from');
     const $configTo = $('#slider__control-to');
+    const $configMin = $('#slider__control-min');
+    const $configMax = $('#slider__control-max');
 
     $configFrom.prop('step', this.optionsState.step);
     $configTo.prop('step', this.optionsState.step);
+    $configMin.prop('step', this.optionsState.step);
+    $configMax.prop('step', this.optionsState.step);
+
 
     const isCheckValues = (target?: string) => {
-        const toMoreThanMax: boolean = +this.optionsState.to > +this.optionsState.max;
+        const toMoreThanMax: boolean = +this.optionsState.to >
+            (Math.floor(+this.optionsState.max / +this.optionsState.step) * +this.optionsState.step);
         const fromLessThanMin: boolean = +this.optionsState.from < +this.optionsState.min;
         const fromMoreThanMax: boolean = +this.optionsState.from > +this.optionsState.max;
 
@@ -29,9 +35,12 @@ function updateControl ():void {
             toLessThanFrom ? this.optionsState.from = +this.optionsState.to - +this.optionsState.step : null;
         }
 
-        toMoreThanMax ? this.optionsState.to = this.optionsState.max : null;
+        toMoreThanMax ? this.optionsState.to =
+            (Math.floor(+this.optionsState.max / +this.optionsState.step) * +this.optionsState.step) : null;
         fromLessThanMin ? this.optionsState.from = this.optionsState.min : null;
         fromMoreThanMax ? this.optionsState.from = this.optionsState.max : null;
+
+
     };
 
     this.optionsState.controlConfig.forEach((item: string) => {
@@ -64,6 +73,8 @@ function updateControl ():void {
                     this.optionsState.step = value;
                     $configFrom.prop('step', this.optionsState.step);
                     $configTo.prop('step', this.optionsState.step);
+                    $configMin.prop('step', this.optionsState.step);
+                    $configMax.prop('step', this.optionsState.step);
                     $thumbs.prop('step', this.optionsState.step);
                     this.optionsState.from = $thumbMin.val();
                     this.optionsState.to = $thumbMax.val();
@@ -92,12 +103,22 @@ function updateControl ():void {
     });
 
     $thumbMin.on('input', (e: ChangeEvent) => {
-        this.optionsState.from = e.currentTarget.value;
+        if (e.currentTarget.value > +this.optionsState.to - +this.optionsState.step) {
+            $thumbMin.val(+this.optionsState.to - +this.optionsState.step);
+            this.optionsState.from = $thumbMin.val();
+        } else {
+            this.optionsState.from = e.currentTarget.value;
+        }
         this.setConfig();
     });
 
     $thumbMax.on('input', (e: ChangeEvent) => {
-        this.optionsState.to = e.currentTarget.value;
+        if (e.currentTarget.value < +this.optionsState.from + +this.optionsState.step) {
+            $thumbMax.val(+this.optionsState.from + +this.optionsState.step);
+            this.optionsState.to = $thumbMax.val();
+        } else {
+            this.optionsState.to = e.currentTarget.value;
+        }
         this.setConfig();
     });
 }

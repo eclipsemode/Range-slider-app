@@ -1,19 +1,27 @@
+import ObserverTypesEnum from './ObserverTypes.enum';
+
 class Observer {
-    private observers: any[];
+    observers: CallableFunction[];
+
     constructor() {
         this.observers = [];
     }
 
-    subscribe (fn: any) {
-        this.observers.push(fn);
+    subscribe (...fn: CallableFunction[]) {
+        this.observers.push(...fn);
     }
 
-    unsubscribe (fn: any) {
+    unsubscribe (fn: CallableFunction) {
         this.observers = this.observers.filter(subscriber => subscriber !== fn);
     }
 
-    broadcast (data: any) {
-        this.observers.forEach(subscriber => subscriber(data));
+    broadcast (type: ObserverTypesEnum) {
+        this.observers.forEach(subscriber => {
+            if (type === ObserverTypesEnum.THUMBS) {
+                subscriber.name.slice(6) === 'setConfig' ? subscriber() : null;
+                subscriber.name.slice(6) === 'setTooltip' ? subscriber() : null;
+            }
+        });
     }
 }
 

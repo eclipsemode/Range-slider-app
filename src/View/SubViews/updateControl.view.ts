@@ -103,26 +103,6 @@ function updateControl ():void {
             }
         });
     });
-
-    $thumbMin.on('input', (e: ChangeEvent) => {
-        if (e.currentTarget.value > +this.optionsState.to - +this.optionsState.step) {
-            $thumbMin.val(+this.optionsState.to - +this.optionsState.step);
-            this.optionsState.from = $thumbMin.val();
-        } else {
-            this.optionsState.from = e.currentTarget.value;
-        }
-        this.setConfig();
-    });
-
-    $thumbMax.on('input', (e: ChangeEvent) => {
-        if (e.currentTarget.value < +this.optionsState.from + +this.optionsState.step) {
-            $thumbMax.val(+this.optionsState.from + +this.optionsState.step);
-            this.optionsState.to = $thumbMax.val();
-        } else {
-            this.optionsState.to = e.currentTarget.value;
-        }
-        this.setConfig();
-    });
 }
 
 export default updateControl;

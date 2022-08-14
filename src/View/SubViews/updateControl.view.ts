@@ -90,17 +90,12 @@ function updateControl ():void {
         });
     });
 
-
-    const thumbClassName = '.slider-app__input';
-    const thumbMinClassName = '.slider-app__input-min';
-    const thumbMaxClassName = '.slider-app__input-max';
-
-    $(thumbClassName).on('input', (e: ChangeEvent) => {
+    $thumbs.on('input', (e: ChangeEvent) => {
         if (e.currentTarget.classList.contains('js-slider-app__input-min')) {
 
             if (e.currentTarget.value > +this.optionsState.to - +this.optionsState.step) {
-                $(thumbMinClassName).val(+this.optionsState.to - +this.optionsState.step);
-                this.optionsState.from = +$(thumbMinClassName).val();
+                $thumbMin.val(+this.optionsState.to - +this.optionsState.step);
+                this.optionsState.from = +$thumbMin.val();
             } else {
                 this.optionsState.from = e.currentTarget.value;
             }
@@ -108,8 +103,8 @@ function updateControl ():void {
         } else {
 
             if (e.currentTarget.value < +this.optionsState.from + +this.optionsState.step) {
-                $(thumbMaxClassName).val(+this.optionsState.from + +this.optionsState.step);
-                this.optionsState.to = +$(thumbMaxClassName).val();
+                $thumbMax.val(+this.optionsState.from + +this.optionsState.step);
+                this.optionsState.to = +$thumbMax.val();
             } else {
                 this.optionsState.to = e.currentTarget.value;
             }

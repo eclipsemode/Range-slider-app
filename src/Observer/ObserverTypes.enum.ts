@@ -4,7 +4,8 @@ enum ObserverTypesEnum {
     MAX,
     STEP,
     FROM,
-    TO
+    TO,
+    RANGE
 }
 
 export default ObserverTypesEnum;

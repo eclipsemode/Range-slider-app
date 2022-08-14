@@ -64,6 +64,7 @@ class View extends Observer {
             this.setColor,
             this.setConfig,
             this.setTooltip,
+            this.setVertical
         );
     }
 }

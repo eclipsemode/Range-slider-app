@@ -13,37 +13,25 @@ function updateConfig ():void {
             switch (item) {
                 case TogglesEnum.VERTICAL:
                     this.optionsState.vertical = value;
-                    this.setTooltip();
-                    this.setVertical();
-                    this.setColor();
-                    this.setBar();
+                    this.broadcast();
                     break;
                 case TogglesEnum.RULERS:
                     this.optionsState.rulers = value;
-                    this.setRulers();
-                    this.setColor();
-                    this.setVertical();
+                    this.broadcast();
                     break;
                 case TogglesEnum.PROGRESS:
                     this.optionsState.progress = value;
-                    this.setBar();
+                    this.broadcast();
                     break;
                 case TogglesEnum.TOOLTIP:
                     this.optionsState.tooltip = value;
-                    this.setTooltip();
-                    this.setVertical();
+                    this.broadcast();
                     break;
                 case TogglesEnum.RANGE:
                     this.optionsState.range = value;
                     this.setRange();
-                    this.setRulers();
-                    this.setConfig();
-                    this.setBar();
-                    $(`${this.selectorState} .js-slider-app__input`).on('input', () => this.setBar());
                     this.updateControl();
-                    this.setColor();
-                    this.setTooltip();
-                    this.setVertical();
+                    this.broadcast();
                     break;
             }
         });

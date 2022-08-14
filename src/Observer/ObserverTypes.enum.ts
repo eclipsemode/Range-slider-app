@@ -1,5 +1,10 @@
 enum ObserverTypesEnum {
-    THUMBS = 'thumbs'
+    THUMBS,
+    MIN,
+    MAX,
+    STEP,
+    FROM,
+    TO
 }
 
 export default ObserverTypesEnum;

@@ -1,7 +1,5 @@
 import ModelOption from '../utils/ModelOption';
 import Observer from '../Observer/Observer';
-import ObserverTypesEnum from '../Observer/ObserverTypes.enum';
-import ChangeEvent = JQuery.ChangeEvent;
 
 import setSlider from './SubViews/setSlider.view';
 import setRulers from './SubViews/setRulers.view';
@@ -13,7 +11,6 @@ import setVertical from './SubViews/setVertical.view';
 import setConfig from './SubViews/setConfig.view';
 import updateConfig from './SubViews/updateConfig.view';
 import updateControl from './SubViews/updateControl.view';
-
 
 class View extends Observer {
     private readonly selectorState: string;
@@ -58,51 +55,16 @@ class View extends Observer {
         this.setVertical();
 
         this.subscribeObservers();
-        this.broadcastObservers();
     }
 
     subscribeObservers(): void {
         this.subscribe(
-            this.setSlider,
-            this.setRange,
             this.setBar,
             this.setRulers,
             this.setColor,
             this.setConfig,
-            this.updateConfig,
-            this.updateControl,
             this.setTooltip,
-            this.setVertical
         );
-    }
-
-    broadcastObservers(): void {
-        const thumbClassName = '.slider-app__input';
-        const thumbMinClassName = '.slider-app__input-min';
-        const thumbMaxClassName = '.slider-app__input-max';
-        
-        $(thumbClassName).on('input', (e: ChangeEvent) => {
-            if (e.currentTarget.classList.contains('js-slider-app__input-min')) {
-
-                    if (e.currentTarget.value > +this.optionsState.to - +this.optionsState.step) {
-                        $(thumbMinClassName).val(+this.optionsState.to - +this.optionsState.step);
-                        this.optionsState.from = +$(thumbMinClassName).val();
-                    } else {
-                        this.optionsState.from = e.currentTarget.value;
-                    }
-
-            } else {
-
-                    if (e.currentTarget.value < +this.optionsState.from + +this.optionsState.step) {
-                        $(thumbMaxClassName).val(+this.optionsState.from + +this.optionsState.step);
-                        this.optionsState.to = +$(thumbMaxClassName).val();
-                    } else {
-                        this.optionsState.to = e.currentTarget.value;
-                    }
-
-            }
-            this.broadcast(ObserverTypesEnum.THUMBS);
-        });
     }
 }
 

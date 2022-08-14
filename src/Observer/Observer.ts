@@ -1,5 +1,3 @@
-import ObserverTypesEnum from './ObserverTypes.enum';
-
 class Observer {
     observers: CallableFunction[];
 
@@ -15,12 +13,9 @@ class Observer {
         this.observers = this.observers.filter(subscriber => subscriber !== fn);
     }
 
-    broadcast (type: ObserverTypesEnum) {
+    broadcast () {
         this.observers.forEach(subscriber => {
-            if (type === ObserverTypesEnum.THUMBS) {
-                subscriber.name.slice(6) === 'setConfig' ? subscriber() : null;
-                subscriber.name.slice(6) === 'setTooltip' ? subscriber() : null;
-            }
+            subscriber();
         });
     }
 }

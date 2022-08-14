@@ -1,7 +1,7 @@
 import $ from 'jquery';
-import ChangeEvent = JQuery.ChangeEvent;
 
 import {ControlsEnum} from '../../utils/Config.enum';
+import ChangeEvent = JQuery.ChangeEvent;
 
 function updateControl ():void {
     const newSelector: string = this.selectorState.slice(1);
@@ -19,7 +19,7 @@ function updateControl ():void {
     $configMax.prop('step', this.optionsState.step);
 
 
-    const isCheckValues = (target?: string) => {
+    const isCheckControlValues = (target?: string) => {
         const toMoreThanMax: boolean = +this.optionsState.to >
             (Math.floor(+this.optionsState.max / +this.optionsState.step) * +this.optionsState.step);
         const fromLessThanMin: boolean = +this.optionsState.from < +this.optionsState.min;
@@ -52,24 +52,16 @@ function updateControl ():void {
                         this.optionsState.min = value;
                     }
                     $thumbs.prop('min', this.optionsState.min);
-                    this.setBar();
-                    isCheckValues();
-                    this.setConfig();
-                    this.setTooltip();
-                    this.setRulers();
-                    this.setColor();
+                    isCheckControlValues();
+                    this.broadcast();
                     break;
                 case ControlsEnum.MAX:
                     if (value >= +this.optionsState.min + +this.optionsState.gap) {
                         this.optionsState.max = value;
                     }
                     $thumbs.prop('max', this.optionsState.max);
-                    this.setBar();
-                    isCheckValues();
-                    this.setConfig();
-                    this.setTooltip();
-                    this.setRulers();
-                    this.setColor();
+                    isCheckControlValues();
+                    this.broadcast();
                     break;
                 case ControlsEnum.STEP:
                     this.optionsState.step = value;
@@ -80,29 +72,52 @@ function updateControl ():void {
                     $thumbs.prop('step', this.optionsState.step);
                     this.optionsState.from = $thumbMin.val();
                     this.optionsState.to = $thumbMax.val();
-                    this.setConfig();
-                    this.setBar();
-                    this.setTooltip();
+                    this.broadcast();
                     break;
                 case ControlsEnum.FROM:
                     this.optionsState.from = value;
-                    isCheckValues(ControlsEnum.FROM);
+                    isCheckControlValues(ControlsEnum.FROM);
                     $thumbMin.val(+this.optionsState.from);
-                    this.setConfig();
-                    this.setBar();
-                    this.setTooltip();
+                    this.broadcast();
                     break;
                 case ControlsEnum.TO:
                     this.optionsState.to = value;
-                    isCheckValues(ControlsEnum.TO);
+                    isCheckControlValues(ControlsEnum.TO);
                     $thumbMax.val(+this.optionsState.to);
-                    this.setConfig();
-                    this.setBar();
-                    this.setTooltip();
+                    this.broadcast();
                     break;
             }
         });
     });
+
+
+    const thumbClassName = '.slider-app__input';
+    const thumbMinClassName = '.slider-app__input-min';
+    const thumbMaxClassName = '.slider-app__input-max';
+
+    $(thumbClassName).on('input', (e: ChangeEvent) => {
+        if (e.currentTarget.classList.contains('js-slider-app__input-min')) {
+
+            if (e.currentTarget.value > +this.optionsState.to - +this.optionsState.step) {
+                $(thumbMinClassName).val(+this.optionsState.to - +this.optionsState.step);
+                this.optionsState.from = +$(thumbMinClassName).val();
+            } else {
+                this.optionsState.from = e.currentTarget.value;
+            }
+
+        } else {
+
+            if (e.currentTarget.value < +this.optionsState.from + +this.optionsState.step) {
+                $(thumbMaxClassName).val(+this.optionsState.from + +this.optionsState.step);
+                this.optionsState.to = +$(thumbMaxClassName).val();
+            } else {
+                this.optionsState.to = e.currentTarget.value;
+            }
+
+        }
+        this.broadcast();
+    });
+
 }
 
 export default updateControl;

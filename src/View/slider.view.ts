@@ -1,4 +1,5 @@
 import ModelOption from '../utils/ModelOption';
+import Observer from '../Observer/Observer';
 
 import setSlider from './SubViews/setSlider.view';
 import setRulers from './SubViews/setRulers.view';
@@ -11,7 +12,7 @@ import setConfig from './SubViews/setConfig.view';
 import updateConfig from './SubViews/updateConfig.view';
 import updateControl from './SubViews/updateControl.view';
 
-class View {
+class View extends Observer {
     private readonly selectorState: string;
     private readonly optionsState: Partial<ModelOption>;
     private readonly setSlider: CallableFunction;
@@ -26,6 +27,7 @@ class View {
     private readonly updateControl: CallableFunction;
 
     constructor(private selector: string, private options: Partial<ModelOption>) {
+        super();
         this.selectorState = selector;
         this.optionsState = options;
         this.setSlider = setSlider.bind(this);

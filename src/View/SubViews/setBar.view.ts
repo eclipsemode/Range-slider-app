@@ -30,11 +30,6 @@ function setBar(): void {
     const $progress: JQuery = $(`${this.selectorState} .js-slider-app__progress`);
 
     if (isRangeTrue) {
-        // if (+this.optionsState.min < 0) {
-        //     gap = ((+this.optionsState.max + Math.abs(+this.optionsState.min))
-        //         - (+this.optionsState.min + Math.abs(+this.optionsState.min))) / 100 * 10;
-        // }
-
         $progress.css({
             width: 'auto',
             height: 100 + '%',

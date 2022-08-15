@@ -1,7 +1,7 @@
 import './assets/style/style.scss';
-import Controller from './Controller/slider.controller';
+import {Slider} from './Controller/slider.controller';
 
-new Controller('.slider', {
+new Slider('.slider', {
     configPanel: true,
     tooltip: true,
     range: true

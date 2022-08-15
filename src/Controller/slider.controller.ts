@@ -20,4 +20,4 @@ class Controller extends Observer{
     }
 }
 
-export default Controller;
+export { Controller as Slider };

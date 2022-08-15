@@ -26,9 +26,9 @@
 <h3>Slider initialization:</h3>
 <hr>
 <pre>
-import Slider-plugin;
+import { Slider };
 
-new Slider-plugin('.slider', {...})
+new Slider('.slider', {...})
 </pre>
 
 <h4>User options: </h4>

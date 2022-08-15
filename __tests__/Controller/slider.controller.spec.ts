@@ -1,4 +1,4 @@
-import Controller from '../../src/Controller/slider.controller';
+import {Slider} from '../../src/Controller/slider.controller';
 import $ from 'jquery';
 
 describe('Testing Controller', () => {
@@ -7,7 +7,7 @@ describe('Testing Controller', () => {
             class: 'test'
         }).appendTo('body');
 
-        new Controller('.test');
+        new Slider('.test');
 
         expect($('.test')).toHaveLength(1);
     });

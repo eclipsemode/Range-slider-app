@@ -23,11 +23,12 @@
     }
 
     &::-webkit-slider-thumb {
+      -webkit-appearance: none;
       pointer-events: auto;
       content: '';
       appearance: none;
-      width: 12px;
-      height: 12px;
+      width: 28px;
+      height: 28px;
       border: 8px solid $thumb;
       border-radius: 50%;
       background-color: $gr-main;

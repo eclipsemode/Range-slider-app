@@ -93,12 +93,12 @@ function updateControl(): void {
     $thumbs.on('input', (e: ChangeEvent) => {
         if (e.currentTarget.classList.contains('slider-app__input-min')) {
             e.currentTarget.value > +this.optionsState.to - +this.optionsState.gap
-                ? this.optionsState.from = +this.optionsState.to - +this.optionsState.step
+                ? e.currentTarget.value = +this.optionsState.to - +this.optionsState.step
                 : this.optionsState.from = e.currentTarget.value;
 
         } else {
             e.currentTarget.value < +this.optionsState.from + +this.optionsState.gap
-                ? this.optionsState.to = +this.optionsState.from + +this.optionsState.step
+                ? e.currentTarget.value = +this.optionsState.from + +this.optionsState.step
                 : this.optionsState.to = e.currentTarget.value;
         }
         this.broadcast();

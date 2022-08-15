@@ -4,7 +4,7 @@ import {TogglesEnum} from '../../utils/Config.enum';
 function updateConfig ():void {
     const newSelector: string = this.selectorState.slice(1);
 
-    this.optionsState.toggleConfig.forEach((item: string) => {
+    this.optionsState.toggleConfig.forEach((item: string): void => {
         const element: JQuery = $(`#${newSelector}__toggle-${item}`);
 
         element.on('change', (): void => {

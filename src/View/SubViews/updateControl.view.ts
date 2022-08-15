@@ -3,7 +3,7 @@ import $ from 'jquery';
 import {ControlsEnum} from '../../utils/Config.enum';
 import ChangeEvent = JQuery.ChangeEvent;
 
-function updateControl ():void {
+function updateControl(): void {
     const newSelector: string = this.selectorState.slice(1);
     const $thumbs = $(`${this.selectorState} .js-slider-app__input`);
     const $thumbMin = $(`${this.selectorState} .js-slider-app__input-min`);
@@ -91,24 +91,15 @@ function updateControl ():void {
     });
 
     $thumbs.on('input', (e: ChangeEvent) => {
-        if (e.currentTarget.classList.contains('js-slider-app__input-min')) {
-
-            if (e.currentTarget.value > +this.optionsState.to - +this.optionsState.step) {
-                $thumbMin.val(+this.optionsState.to - +this.optionsState.step);
-                this.optionsState.from = +$thumbMin.val();
-            } else {
-                this.optionsState.from = e.currentTarget.value;
-            }
+        if (e.currentTarget.classList.contains('slider-app__input-min')) {
+            e.currentTarget.value > +this.optionsState.to - +this.optionsState.gap
+                ? this.optionsState.from = +this.optionsState.to - +this.optionsState.step
+                : this.optionsState.from = e.currentTarget.value;
 
         } else {
-
-            if (e.currentTarget.value < +this.optionsState.from + +this.optionsState.step) {
-                $thumbMax.val(+this.optionsState.from + +this.optionsState.step);
-                this.optionsState.to = +$thumbMax.val();
-            } else {
-                this.optionsState.to = e.currentTarget.value;
-            }
-
+            e.currentTarget.value < +this.optionsState.from + +this.optionsState.gap
+                ? this.optionsState.to = +this.optionsState.from + +this.optionsState.step
+                : this.optionsState.to = e.currentTarget.value;
         }
         this.broadcast();
     });

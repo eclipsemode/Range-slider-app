@@ -14,9 +14,7 @@ class Observer {
     }
 
     broadcast () {
-        this.observers.forEach(subscriber => {
-            subscriber();
-        });
+        this.observers.forEach(subscriber => subscriber());
     }
 }
 

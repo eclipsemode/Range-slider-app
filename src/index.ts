@@ -3,6 +3,6 @@ import Controller from './Controller/slider.controller';
 
 new Controller('.slider', {
     configPanel: true,
-    tooltip: true,
+    tooltip: false,
     range: true
 });

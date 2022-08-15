@@ -77,13 +77,13 @@ function updateControl(): void {
                 case ControlsEnum.FROM:
                     this.optionsState.from = value;
                     isCheckControlValues(ControlsEnum.FROM);
-                    $thumbMin.val(+this.optionsState.from);
+                    this.updateAll();
                     this.broadcast();
                     break;
                 case ControlsEnum.TO:
                     this.optionsState.to = value;
                     isCheckControlValues(ControlsEnum.TO);
-                    $thumbMax.val(+this.optionsState.to);
+                    this.updateAll();
                     this.broadcast();
                     break;
             }
@@ -93,14 +93,15 @@ function updateControl(): void {
     $thumbs.on('input', (e: ChangeEvent) => {
         if (e.currentTarget.classList.contains('slider-app__input-min')) {
             e.currentTarget.value > +this.optionsState.to - +this.optionsState.gap
-                ? e.currentTarget.value = +this.optionsState.to - +this.optionsState.step
+                ? this.optionsState.from = +this.optionsState.to - +this.optionsState.step
                 : this.optionsState.from = e.currentTarget.value;
 
         } else {
             e.currentTarget.value < +this.optionsState.from + +this.optionsState.gap
-                ? e.currentTarget.value = +this.optionsState.from + +this.optionsState.step
+                ? this.optionsState.to = +this.optionsState.from + +this.optionsState.step
                 : this.optionsState.to = e.currentTarget.value;
         }
+        this.updateAll();
         this.broadcast();
     });
 

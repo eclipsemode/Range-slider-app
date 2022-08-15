@@ -11,6 +11,7 @@ import setVertical from './SubViews/setVertical.view';
 import setConfig from './SubViews/setConfig.view';
 import updateConfig from './SubViews/updateConfig.view';
 import updateControl from './SubViews/updateControl.view';
+import updateAll from './SubViews/updateAll';
 
 class View extends Observer {
     private readonly selectorState: string;
@@ -25,6 +26,7 @@ class View extends Observer {
     private readonly setConfig: CallableFunction;
     private readonly updateConfig: CallableFunction;
     private readonly updateControl: CallableFunction;
+    private readonly updateAll: CallableFunction;
 
     constructor(private selector: string, private options: Partial<ModelOption>) {
         super();
@@ -40,6 +42,7 @@ class View extends Observer {
         this.setConfig = setConfig.bind(this);
         this.updateConfig = updateConfig.bind(this);
         this.updateControl = updateControl.bind(this);
+        this.updateAll = updateAll.bind(this);
     }
 
     render(): void {
@@ -55,6 +58,7 @@ class View extends Observer {
         this.setVertical();
 
         this.subscribeObservers();
+        this.subscribeOpts(this.optionsState);
     }
 
     subscribeObservers(): void {

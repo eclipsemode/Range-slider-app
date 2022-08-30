@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-import MainClass from '../../components/mainClass/MainClass';
+import { MainClass } from '../../components';
 
 function setSlider(): void {
     const mainClass: MainClass = new MainClass(this.selectorState);

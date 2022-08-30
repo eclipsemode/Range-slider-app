@@ -1,7 +1,10 @@
 {
     "env": {
         "browser": true,
-        "es2021": true
+        "es2021": true,
+        "jquery": true,
+        "node": true,
+        "amd": true
     },
     "extends": [
         "eslint:recommended",
@@ -22,6 +25,8 @@
         "quotes": ["error", "single"],
         "max-len": [1, 110, 2, {"ignoreComments": true}],
         "no-use-before-define": "error",
-        "no-multiple-empty-lines": "error"
+        "no-multiple-empty-lines": "error",
+        "prefer-const": "error",
+        "template-curly-spacing": ["error", "always"]
     }
 }

@@ -1,10 +1,10 @@
 import $ from 'jquery';
 
-import Thumb from '../../components/thumb/Thumb';
+import { Thumb } from '../../components';
 
 function setRange(): void {
     const thumb: Thumb = new Thumb(this.selectorState);
-    const $thumbsMain: JQuery = $(`${this.selectorState} .js-slider-app__bar-line`);
+    const $thumbsMain: JQuery = $(`${ this.selectorState } .js-slider-app__bar-line`);
     const isRangeTrue: boolean = this.optionsState.range;
 
     const checkValueThumbs = () => {

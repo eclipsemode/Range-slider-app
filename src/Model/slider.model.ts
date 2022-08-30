@@ -1,5 +1,5 @@
-import ModelOption from '../utils/ModelOption';
-import {TogglesEnum, ControlsEnum} from '../utils/Config.enum';
+import { ModelOption } from '../utils';
+import { TogglesEnum, ControlsEnum } from '../utils';
 import Observer from '../Observer/Observer';
 
 class Model extends Observer{

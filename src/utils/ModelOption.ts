@@ -1,4 +1,4 @@
-declare type ModelOption  = {
+declare type ModelOption = {
     from?: number,
     to?: number,
     gap?: number,

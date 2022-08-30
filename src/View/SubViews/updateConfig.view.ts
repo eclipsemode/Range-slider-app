@@ -1,11 +1,11 @@
 import $ from 'jquery';
-import {TogglesEnum} from '../../utils/Config.enum';
+import { TogglesEnum } from '../../utils';
 
 function updateConfig ():void {
     const newSelector: string = this.selectorState.slice(1);
 
     this.optionsState.toggleConfig.forEach((item: string): void => {
-        const element: JQuery = $(`#${newSelector}__toggle-${item}`);
+        const element: JQuery = $(`#${ newSelector }__toggle-${ item }`);
 
         element.on('change', (): void => {
             const value: boolean = element.prop('checked');

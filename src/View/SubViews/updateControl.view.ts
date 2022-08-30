@@ -1,13 +1,13 @@
 import $ from 'jquery';
 
-import {ControlsEnum} from '../../utils/Config.enum';
+import { ControlsEnum } from '../../utils';
 import ChangeEvent = JQuery.ChangeEvent;
 
 function updateControl(): void {
     const newSelector: string = this.selectorState.slice(1);
-    const $thumbs = $(`${this.selectorState} .js-slider-app__input`);
-    const $thumbMin = $(`${this.selectorState} .js-slider-app__input-min`);
-    const $thumbMax = $(`${this.selectorState} .js-slider-app__input-max`);
+    const $thumbs = $(`${ this.selectorState } .js-slider-app__input`);
+    const $thumbMin = $(`${ this.selectorState } .js-slider-app__input-min`);
+    const $thumbMax = $(`${ this.selectorState } .js-slider-app__input-max`);
     const $configFrom = $('#slider__control-from');
     const $configTo = $('#slider__control-to');
     const $configMin = $('#slider__control-min');
@@ -42,7 +42,7 @@ function updateControl(): void {
     };
 
     this.optionsState.controlConfig.forEach((item: string) => {
-        const element: JQuery = $(`#${newSelector}__control-${item}`);
+        const element: JQuery = $(`#${ newSelector }__control-${ item }`);
 
         element.on('change', () => {
             const value: number = +element.val();

@@ -1,17 +1,19 @@
-import ModelOption from '../utils/ModelOption';
+import { ModelOption } from '../utils';
 import Observer from '../Observer/Observer';
 
-import setSlider from './SubViews/setSlider.view';
-import setRulers from './SubViews/setRulers.view';
-import setRange from './SubViews/setRange.view';
-import setBar from './SubViews/setBar.view';
-import setTooltip from './SubViews/setTooltip.view';
-import setColor from './SubViews/setColor.view';
-import setVertical from './SubViews/setVertical.view';
-import setConfig from './SubViews/setConfig.view';
-import updateConfig from './SubViews/updateConfig.view';
-import updateControl from './SubViews/updateControl.view';
-import updateAll from './SubViews/updateAll';
+import {
+    updateAll,
+    setBar,
+    setSlider,
+    setRulers,
+    setRange,
+    setTooltip,
+    setColor,
+    setVertical,
+    setConfig,
+    updateConfig,
+    updateControl
+} from './SubViews';
 
 class View extends Observer {
     private readonly selectorState: string;

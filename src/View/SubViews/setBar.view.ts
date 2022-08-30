@@ -1,33 +1,32 @@
 import $ from 'jquery';
 
-import Progress from '../../components/progress/Progress';
-import Bar from '../../components/bar/Bar';
+import { Bar, Progress } from '../../components';
 
-import {findMaxPercent, findMinPercent} from '../../utils/findThumbPercent';
+import { findMaxPercent, findMinPercent } from '../../utils';
 
 function setBar(): void {
     const bar: Bar = new Bar(this.selectorState);
     const progress: Progress = new Progress(this.selectorState);
-    const $bar: JQuery = $(`${this.selectorState} .js-slider-app__bar-line`);
+    const $bar: JQuery = $(`${ this.selectorState } .js-slider-app__bar-line`);
 
     $bar.length === 0 ? bar.getBar() : null;
 
-    const $range = $(`${this.selectorState} .js-slider-app__input`);
-    const $minThumb = $(`${this.selectorState} .js-slider-app__input-min`);
+    const $range = $(`${ this.selectorState } .js-slider-app__input`);
+    const $minThumb = $(`${ this.selectorState } .js-slider-app__input-min`);
     const minVal: number = this.optionsState.min;
     const isProgressTrue: boolean = this.optionsState.progress;
     const isRangeTrue: boolean = this.optionsState.range;
     const gap: number = this.optionsState.gap;
-    const $maxThumb: JQuery = $(`${this.selectorState} .js-slider-app__input-max`);
+    const $maxThumb: JQuery = $(`${ this.selectorState } .js-slider-app__input-max`);
 
     if (isProgressTrue) {
-        $(`${this.selectorState} .js-slider-app__progress`).length === 0
+        $(`${ this.selectorState } .js-slider-app__progress`).length === 0
             ? progress.getProgress()
             : null;
-    } else $(`${this.selectorState} .js-slider-app__progress`).remove();
+    } else $(`${ this.selectorState } .js-slider-app__progress`).remove();
 
 // noinspection JSJQueryEfficiency
-    const $progress: JQuery = $(`${this.selectorState} .js-slider-app__progress`);
+    const $progress: JQuery = $(`${ this.selectorState } .js-slider-app__progress`);
 
     if (isRangeTrue) {
         $progress.css({

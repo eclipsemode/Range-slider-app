@@ -14,6 +14,7 @@ class ConfigPanel {
         this.controlConfig = controlConfig;
         this.toggleConfig = toggleConfig;
     }
+
     getConfig(): void {
         this.getMain();
         this.getControls();

@@ -7,13 +7,13 @@ class Tooltip {
         this.selector = selector;
     }
 
-    getTooltipLine(): JQuery<HTMLElement> {
+    getTooltipLine(): JQuery {
         return $('<div>', {
             class: 'slider-app__tooltip-line js-slider-app__tooltip-line'
         }).appendTo(`${this.selector} .slider-app`);
     }
 
-    getTooltip(className: string): JQuery<HTMLElement> {
+    getTooltip(className: string): JQuery {
         return $('<span>', {
             class: `slider-app__tooltip ${className}`,
             text: 0
@@ -21,7 +21,7 @@ class Tooltip {
     }
 
     getFirstTooltip(): void {
-            this.getTooltip('js-slider-app__tooltip--first');
+        this.getTooltip('js-slider-app__tooltip--first');
     }
 
     getSecondTooltip(): void {

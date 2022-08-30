@@ -1,4 +1,4 @@
-import ModelOption from '../utils/ModelOption';
+import { ModelOption } from '../utils';
 
 class Observer {
     observers: CallableFunction[];

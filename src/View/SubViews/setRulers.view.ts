@@ -1,28 +1,28 @@
 import $ from 'jquery';
 
-import Rulers from '../../components/rulers/Rulers';
+import { Rulers } from '../../components';
 
-import abbreviateNumber from '../../utils/abbreviateNumber';
+import { abbreviateNumber } from '../../utils';
 
 function setRulers (): void {
     const rulers: Rulers = new Rulers(this.selectorState);
-    const $rulers = $(`${this.selectorState} .js-slider-app__rulers`);
+    const $rulers = $(`${ this.selectorState } .js-slider-app__rulers`);
     const isRulersTrue: boolean = this.optionsState.rulers;
 
     if (isRulersTrue) {
 
         $rulers.remove();
         // noinspection JSJQueryEfficiency
-        $(`${this.selectorState} .js-slider-app__rulers-values`).remove();
+        $(`${ this.selectorState } .js-slider-app__rulers-values`).remove();
         rulers.getRulers();
 
         const isFindValueByPercent = (percent: number): number =>
             this.optionsState.min + ((this.optionsState.max - this.optionsState.min) * percent / 100);
 
         // noinspection JSJQueryEfficiency
-        const $values: JQuery = $(`${this.selectorState} .js-slider-app__rulers-values`);
-        const $minThumb: JQuery = $(`${this.selectorState} .js-slider-app__input-min`);
-        const $maxThumb: JQuery = $(`${this.selectorState} .js-slider-app__input-max`);
+        const $values: JQuery = $(`${ this.selectorState } .js-slider-app__rulers-values`);
+        const $minThumb: JQuery = $(`${ this.selectorState } .js-slider-app__input-min`);
+        const $maxThumb: JQuery = $(`${ this.selectorState } .js-slider-app__input-max`);
 
         $values.children().each((index, element) => {
             const minVal: number = this.optionsState.min;
@@ -157,7 +157,7 @@ function setRulers (): void {
         });
     } else {
         $rulers.remove();
-        $(`${this.selectorState} .js-slider-app__rulers-values`).remove();
+        $(`${ this.selectorState } .js-slider-app__rulers-values`).remove();
     }
 }
 

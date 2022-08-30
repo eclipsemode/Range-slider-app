@@ -14,4 +14,4 @@ enum ControlsEnum {
     TO = 'to'
 }
 
-export {TogglesEnum, ControlsEnum};
+export { TogglesEnum, ControlsEnum };

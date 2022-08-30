@@ -7,7 +7,7 @@ class Rulers {
         this.selector = selector;
     }
 
-    getRulers(): JQuery<HTMLElement> {
+    getRulers(): JQuery {
         return $(`
             <div class="slider-app__rulers js-slider-app__rulers"></div>
                 <div class="slider-app__rulers-values js-slider-app__rulers-values">

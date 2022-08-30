@@ -1,7 +1,7 @@
 <h2>Slider Plugin (beta)</h2>
 <h6>Development in progress...</h6>
 <hr>
-<a href="https://eclipsemode.github.io/Jquery-range-app" target="_blank">--- Watch Demo ---</a>
+<a href="https://eclipsemode.github.io/Range-slider-app/" target="_blank">--- Watch Demo ---</a>
 <h3>Libraries:</h3>
 <hr>
 <ul>

@@ -7,7 +7,7 @@ class Bar {
         this.selector = selector;
     }
 
-    public getBar(): JQuery<HTMLElement> {
+    public getBar(): JQuery {
         return $('<div>', {
             class: 'slider-app__bar-line js-slider-app__bar-line'
         }).appendTo(`${this.selector} .slider-app`);

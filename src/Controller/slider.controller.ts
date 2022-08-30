@@ -1,10 +1,10 @@
-import ModelOption from '../utils/ModelOption';
+import { ModelOption } from '../utils';
 
 import View from '../View/slider.view';
 import Model from '../Model/slider.model';
 import Observer from '../Observer/Observer';
 
-class Controller extends Observer{
+class Controller extends Observer {
     private model: Model;
     private view: View;
 
@@ -20,4 +20,4 @@ class Controller extends Observer{
     }
 }
 
-export { Controller as Slider };
+export {Controller as Slider};

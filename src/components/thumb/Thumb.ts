@@ -6,8 +6,8 @@ class Thumb {
     constructor(selector: string) {
         this.selector = selector;
     }
-    
-    getMinThumb(min: number, max: number, value: number, step: number): JQuery<HTMLElement> {
+
+    getMinThumb(min: number, max: number, value: number, step: number): JQuery {
         return $('<input>', {
             class: 'slider-app__input js-slider-app__input slider-app__input-min js-slider-app__input-min',
             type: 'range',
@@ -18,7 +18,7 @@ class Thumb {
         }).appendTo(`${this.selector} .slider-app__bar-line`);
     }
 
-    getMaxThumb(min: number, max: number, value: number, step: number): JQuery<HTMLElement> {
+    getMaxThumb(min: number, max: number, value: number, step: number): JQuery {
         return $('<input>', {
             class: 'slider-app__input js-slider-app__input slider-app__input-max js-slider-app__input-max',
             type: 'range',
@@ -28,7 +28,7 @@ class Thumb {
             step: step
         }).appendTo(`${this.selector} .slider-app__bar-line`);
     }
-    
+
 }
 
 export default Thumb;

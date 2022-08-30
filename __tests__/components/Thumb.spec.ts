@@ -1,4 +1,4 @@
-import Thumb from '../../src/components/thumb/Thumb';
+import { Thumb } from '../../src/components';
 import $ from 'jquery';
 
 const className = '.slider';

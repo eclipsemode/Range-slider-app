@@ -1,6 +1,6 @@
-import ConfigPanel from '../../src/components/configPanel/ConfigPanel';
+import { ConfigPanel } from '../../src/components';
 import $ from 'jquery';
-import {clearCaches} from '@typescript-eslint/parser';
+import { clearCaches } from '@typescript-eslint/parser';
 
 const newControlConfig = ['min', 'max', 'step', 'from', 'to'];
 const newToggleConfig = ['vertical', 'range', 'rulers', 'progress', 'tooltip'];
@@ -59,7 +59,7 @@ describe('getControls method', () => {
     test('Should have an id', () => {
         newControlConfig.forEach(name => {
             expect($('.slider-app__config-section--control')
-                .find($(`#slider__control-${name}`))).toBeTruthy();
+                .find($(`#slider__control-${ name }`))).toBeTruthy();
         });
     });
 

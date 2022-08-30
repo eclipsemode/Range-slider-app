@@ -1,4 +1,4 @@
-import MainClass from '../../src/components/mainClass/MainClass';
+import { MainClass } from '../../src/components';
 import $ from 'jquery';
 
 describe('Main class element', () => {

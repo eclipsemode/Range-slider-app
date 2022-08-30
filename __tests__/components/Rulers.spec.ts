@@ -1,4 +1,4 @@
-import Rulers from '../../src/components/rulers/Rulers';
+import { Rulers } from '../../src/components';
 import $ from 'jquery';
 
 describe('Progress element', () => {

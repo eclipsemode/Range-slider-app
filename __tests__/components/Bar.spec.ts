@@ -1,4 +1,4 @@
-import Bar from '../../src/components/bar/Bar';
+import { Bar } from '../../src/components';
 import $ from 'jquery';
 
 describe('Bar element', () => {

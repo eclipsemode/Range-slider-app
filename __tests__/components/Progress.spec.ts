@@ -1,4 +1,4 @@
-import Progress from '../../src/components/progress/Progress';
+import { Progress } from '../../src/components';
 import $ from 'jquery';
 
 describe('Progress element', () => {

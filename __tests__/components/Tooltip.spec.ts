@@ -1,4 +1,4 @@
-import Tooltip from '../../src/components/tooltip/Tooltip';
+import { Tooltip } from '../../src/components';
 import $ from 'jquery';
 
 const className = '.slider';

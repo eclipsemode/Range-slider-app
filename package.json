@@ -6,8 +6,10 @@
   "scripts": {
     "dev": "webpack --mode development",
     "start": "webpack serve --mode development --open",
-    "build": "webpack --config ./webpack.prod.js",
-    "test": "jest --coverage"
+    "build": "webpack --mode production",
+    "test": "jest --coverage",
+    "deploy": "gh-pages -d dist",
+    "predeploy": "npm run build"
   },
   "keywords": [],
   "author": "",
@@ -40,6 +42,7 @@
     "webpack-dev-server": "^4.8.1"
   },
   "dependencies": {
+    "gh-pages": "^4.0.0",
     "jquery": "^3.6.0"
   }
 }

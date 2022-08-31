@@ -40,13 +40,13 @@ class ConfigPanel {
                 `<div class="slider-app__config-container">
                     <div class="slider-app__config-text">
                         <span class="slider-app__config-text--inner js-slider-app__config-text--inner">
-                            ${name}
+                            ${ name }
                         </span>
                     </div>
                     <input 
                     class='slider-app__config-input'
                     type="number" 
-                    id=${selector} 
+                    id=${ selector } 
                     />
                 </div>`
             );
@@ -63,13 +63,13 @@ class ConfigPanel {
                 `<div class="slider-app__config-toggle-container">
                     <label 
                     class="slider-app__config-toggle-name js-slider-app__config-toggle-name" 
-                    for=${selector}>
-                        ${name}
+                    for=${ selector }>
+                        ${ name }
                     </label>
                     <label class="slider-app__config-toggle">
                         <input 
                         class="slider-app__config-toggle-box" 
-                        type="checkbox" id=${selector}>
+                        type="checkbox" id=${ selector }>
                         <span class="slider-app__config-toggle-btn js-slider-app__config-toggle-btn"></span>
                     </label>
                 </div>`

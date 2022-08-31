@@ -2,7 +2,8 @@ import $ from 'jquery';
 
 import { ConfigPanel } from '../../components';
 
-import { evaluateVar } from '../../utils';
+import { ClassName, evaluateVar, ModelOption } from '../../utils';
+import ChangeEvent = JQuery.ChangeEvent;
 
 function setConfig(): void {
     const configPanel: ConfigPanel = new ConfigPanel(
@@ -12,8 +13,7 @@ function setConfig(): void {
     );
     const isConfigPanelTrue: boolean = this.optionsState.configPanel;
     const evaluateVarBind: CallableFunction = evaluateVar.bind(this);
-
-    const configPanelElement: JQuery = $(`${ this.selectorState } .js-slider-app__config`);
+    const configPanelElement: JQuery = $(this.selectorState + ' ' + ClassName.CONFIG);
 
     if (isConfigPanelTrue) {
         const isGetConfigPanelIfMissing = () =>
@@ -23,10 +23,56 @@ function setConfig(): void {
 
         isGetConfigPanelIfMissing();
         const newSelector: string = this.selectorState.slice(1);
-        const $controlTo = $(`#${ newSelector }__control-to`);
         const isRangeTrue: boolean = this.optionsState.range;
+        const opts: ModelOption = this.getOpts();
+        const $thumbMin = $(this.selectorState + ' ' + ClassName.MIN);
+        const $thumbMax = $(this.selectorState + ' ' + ClassName.MAX);
 
-        $(`#${ newSelector }__toggle-tooltip`).prop('checked', this.optionsState.tooltip);
+        const $controlTo = $(`#${ newSelector }__control-to`);
+        const $controlFrom = $(`#${ newSelector }__control-from`);
+        const $controlMin = $(`#${ newSelector }__control-min`);
+        const $controlMax = $(`#${ newSelector }__control-max`);
+        const $controlStep = $(`#${ newSelector }__control-step`);
+
+        const $toggleTooltip = $(`#${ newSelector }__toggle-tooltip`);
+
+        $thumbMin.on('input', () => {
+            if (+$thumbMin.val() > +$thumbMax.val() - opts.gap) {
+                +$thumbMax.val() - opts.step < +$thumbMax.val() - opts.gap
+                    ? $thumbMin.val(+$thumbMax.val() - opts.step)
+                    : $thumbMin.val(+$thumbMax.val() - (opts.step * 2));
+            }
+        });
+        $controlFrom.on('input', (e: ChangeEvent) => {
+            opts.from = e.currentTarget.value;
+            $thumbMin.val(e.currentTarget.value);
+            if (opts.from > opts.to - opts.gap) {
+                if (+$thumbMax.val() - opts.step < +$thumbMax.val() - opts.gap) {
+                    $thumbMin.val(opts.to - opts.step);
+                    opts.from = opts.to - opts.step;
+                } else {
+                    $thumbMin.val(opts.to - (opts.step * 2));
+                    opts.from = opts.to - (opts.step * 2);
+                }
+            }
+        });
+
+        $controlFrom.prop('step', opts.step);
+        $controlTo.prop('step', opts.step);
+        $controlMin.prop('step', opts.step);
+        $controlMax.prop('step', opts.step);
+
+        $controlStep.prop('min', 0);
+        $controlStep.prop('max', opts.max);
+
+        $controlFrom.prop('min', opts.min);
+        $controlFrom.prop('max', opts.max);
+        $controlTo.prop('min', opts.min);
+        $controlTo.prop('max', opts.max);
+
+
+        $toggleTooltip.prop('checked', opts.tooltip);
+
 
         !isRangeTrue
             ? $controlTo.prop('disabled', true)

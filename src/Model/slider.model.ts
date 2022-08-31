@@ -8,15 +8,6 @@ class Model extends Observer{
         this.optionsState = this.checkOptions(options);
     }
 
-    // subscribeOptions(options: ModelOption) {
-    //     this.subscribeOpts(this.checkOptions(options));
-    // }
-
-    // updateOptionsState(options: ModelOption): void {
-    //     this.updateOpts(this.checkOptions(options));
-    //     this.optionsState = this.checkOptions(options);
-    // }
-
     checkOptions(options: ModelOption): ModelOption {
         const verifiedOptions = {...options};
         verifiedOptions.min = verifiedOptions.min ?? 0;
@@ -24,7 +15,7 @@ class Model extends Observer{
         verifiedOptions.from = verifiedOptions.from ?? verifiedOptions.min;
         verifiedOptions.to = verifiedOptions.to ?? verifiedOptions.max;
         verifiedOptions.gap = verifiedOptions.gap ?? ((verifiedOptions.max - verifiedOptions.min) * 10) / 100;
-        verifiedOptions.step = verifiedOptions.step ?? 0.1;
+        verifiedOptions.step = verifiedOptions.step ?? 1;
         verifiedOptions.vertical = verifiedOptions.vertical ?? false;
         verifiedOptions.rulers = verifiedOptions.rulers ?? true;
         verifiedOptions.tooltip = verifiedOptions.tooltip ?? false;

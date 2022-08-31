@@ -1,5 +1,4 @@
 import $ from 'jquery';
-import ChangeEvent = JQuery.ChangeEvent;
 
 import { Bar, Progress } from '../../components';
 
@@ -34,26 +33,6 @@ function setBar(): void {
             height: 100 + '%',
             left: findMinPercent(minVal, +opts.from, +opts.max),
             right: findMaxPercent(minVal, +opts.to, +opts.max)
-        });
-
-        $range.on('input', (e: ChangeEvent) => {
-            if (e.currentTarget.classList.contains(ClassName.MIN.slice(1))) {
-                if (+$minThumb.val() >= +$maxThumb.val() - +opts.gap) {
-                    +opts.gap < +opts.step
-                        ? +$minThumb.val(+$maxThumb.val() - +opts.step)
-                        : +$minThumb.val(+$maxThumb.val() - +opts.gap);
-
-                }
-            } else {
-                if (+$maxThumb.val() <= +$minThumb.val() + +opts.gap) {
-                    +opts.gap < +opts.step
-                        ? +$maxThumb.val(+$minThumb.val() + +opts.step)
-                        : +$maxThumb.val(+$minThumb.val() + +opts.gap);
-                }
-            }
-
-            opts.from = +$minThumb.val();
-            opts.to = +$maxThumb.val();
         });
     } else {
         $progress.css({

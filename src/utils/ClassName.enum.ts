@@ -4,6 +4,7 @@ enum ClassName {
     MAX = '.js-slider-app__input-max',
     PROGRESS = '.js-slider-app__progress',
     BAR_LINE = '.js-slider-app__bar-line',
+    CONFIG = '.js-slider-app__config'
 }
 
 export default ClassName;

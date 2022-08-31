@@ -1,5 +1,4 @@
-import { ModelOption } from '../utils';
-import { TogglesEnum, ControlsEnum } from '../utils';
+import { ModelOption, TogglesEnum, ControlsEnum } from '../utils';
 import Observer from '../Observer/Observer';
 
 class Model extends Observer{
@@ -8,6 +7,15 @@ class Model extends Observer{
         super();
         this.optionsState = this.checkOptions(options);
     }
+
+    // subscribeOptions(options: ModelOption) {
+    //     this.subscribeOpts(this.checkOptions(options));
+    // }
+
+    // updateOptionsState(options: ModelOption): void {
+    //     this.updateOpts(this.checkOptions(options));
+    //     this.optionsState = this.checkOptions(options);
+    // }
 
     checkOptions(options: ModelOption): ModelOption {
         const verifiedOptions = {...options};

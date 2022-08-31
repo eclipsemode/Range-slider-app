@@ -2,7 +2,7 @@ import { ModelOption } from '../utils';
 
 class Observer {
     observers: CallableFunction[];
-    opts: ModelOption;
+    private opts: ModelOption;
 
     constructor() {
         this.observers = [];
@@ -27,6 +27,10 @@ class Observer {
 
     broadcast () {
         this.observers.forEach(subscriber => subscriber());
+    }
+
+    getOpts() {
+        return this.opts;
     }
 }
 

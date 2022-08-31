@@ -1,7 +1,6 @@
 import $ from 'jquery';
 
-import { ControlsEnum } from '../../utils';
-import ChangeEvent = JQuery.ChangeEvent;
+import {ControlsEnum, ModelOption} from '../../utils';
 
 function updateControl(): void {
     const newSelector: string = this.selectorState.slice(1);
@@ -12,6 +11,7 @@ function updateControl(): void {
     const $configTo = $('#slider__control-to');
     const $configMin = $('#slider__control-min');
     const $configMax = $('#slider__control-max');
+    const opts: ModelOption = this.getOpts();
 
     $configFrom.prop('step', this.optionsState.step);
     $configTo.prop('step', this.optionsState.step);
@@ -76,13 +76,13 @@ function updateControl(): void {
                     break;
                 case ControlsEnum.FROM:
                     this.optionsState.from = value;
-                    isCheckControlValues(ControlsEnum.FROM);
+                    // isCheckControlValues(ControlsEnum.FROM);
                     this.updateAll();
                     this.broadcast();
                     break;
                 case ControlsEnum.TO:
                     this.optionsState.to = value;
-                    isCheckControlValues(ControlsEnum.TO);
+                    // isCheckControlValues(ControlsEnum.TO);
                     this.updateAll();
                     this.broadcast();
                     break;
@@ -90,19 +90,9 @@ function updateControl(): void {
         });
     });
 
-    $thumbs.on('input', (e: ChangeEvent) => {
-        if (e.currentTarget.classList.contains('slider-app__input-min')) {
-            e.currentTarget.value > +this.optionsState.to - +this.optionsState.gap
-                ? this.optionsState.from = +this.optionsState.to - +this.optionsState.step
-                : this.optionsState.from = e.currentTarget.value;
-
-        } else {
-            e.currentTarget.value < +this.optionsState.from + +this.optionsState.gap
-                ? this.optionsState.to = +this.optionsState.from + +this.optionsState.step
-                : this.optionsState.to = e.currentTarget.value;
-        }
-        this.updateAll();
-        this.broadcast();
+    $thumbs.on('input', () => {
+        this.setBar();
+        this.setConfig();
     });
 
 }

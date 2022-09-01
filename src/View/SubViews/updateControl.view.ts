@@ -13,6 +13,10 @@ function updateControl(): void {
     const $configMax = $('#slider__control-max');
     const opts: ModelOption = this.getOpts();
 
+    opts.from = +$thumbMin.val();
+    opts.to = +$thumbMax.val();
+    this.setBar();
+
     // const isCheckControlValues = (target?: string) => {
     //     const toMoreThanMax: boolean = +this.optionsState.to >
     //         (Math.floor(+this.optionsState.max / +this.optionsState.step) * +this.optionsState.step);
@@ -74,8 +78,6 @@ function updateControl(): void {
                     this.setTooltip();
                     break;
                 case ControlsEnum.TO:
-                    $thumbMax.val(value);
-                    opts.to = value;
                     this.setConfig();
                     this.setBar();
                     this.setTooltip();

@@ -22,6 +22,7 @@ function setConfig(): void {
                 : null;
 
         isGetConfigPanelIfMissing();
+
         const newSelector: string = this.selectorState.slice(1);
         const isRangeTrue: boolean = this.optionsState.range;
         const opts: ModelOption = this.getOpts();
@@ -37,22 +38,45 @@ function setConfig(): void {
         const $toggleTooltip = $(`#${ newSelector }__toggle-tooltip`);
 
         $thumbMin.on('input', () => {
-            if (+$thumbMin.val() > +$thumbMax.val() - opts.gap) {
-                +$thumbMax.val() - opts.step < +$thumbMax.val() - opts.gap
-                    ? $thumbMin.val(+$thumbMax.val() - opts.step)
-                    : $thumbMin.val(+$thumbMax.val() - (opts.step * 2));
+            if (+$thumbMin.val() > +$thumbMax.val() - +opts.gap) {
+                +$thumbMax.val() - +opts.step < +$thumbMax.val() - +opts.gap
+                    ? $thumbMin.val(+$thumbMax.val() - +opts.step)
+                    : $thumbMin.val(+$thumbMax.val() - +opts.gap);
             }
         });
+
         $controlFrom.on('input', (e: ChangeEvent) => {
             opts.from = e.currentTarget.value;
             $thumbMin.val(e.currentTarget.value);
-            if (opts.from > opts.to - opts.gap) {
-                if (+$thumbMax.val() - opts.step < +$thumbMax.val() - opts.gap) {
-                    $thumbMin.val(opts.to - opts.step);
-                    opts.from = opts.to - opts.step;
+            if (opts.from > +opts.to - +opts.gap) {
+                if (+$thumbMax.val() - +opts.step < +$thumbMax.val() - +opts.gap) {
+                    $thumbMin.val(+opts.to - +opts.step);
+                    opts.from = +opts.to - +opts.step;
                 } else {
-                    $thumbMin.val(opts.to - (opts.step * 2));
-                    opts.from = opts.to - (opts.step * 2);
+                    $thumbMin.val(+opts.to - +opts.gap);
+                    opts.from = +opts.to - +opts.gap;
+                }
+            }
+        });
+
+        $thumbMax.on('input', () => {
+            if (+$thumbMin.val() > +$thumbMax.val() - +opts.gap) {
+                +$thumbMin.val() + +opts.step > +$thumbMin.val() + +opts.gap
+                    ? $thumbMax.val(+$thumbMin.val() + +opts.step)
+                    : $thumbMax.val(+$thumbMin.val() + +opts.gap);
+            }
+        });
+
+        $controlTo.on('input', (e: ChangeEvent) => {
+            opts.to = e.currentTarget.value;
+            $thumbMax.val(e.currentTarget.value);
+            if (+opts.from > +opts.to - +opts.gap) {
+                if (+$thumbMin.val() + +opts.step > +$thumbMin.val() + +opts.gap) {
+                    $thumbMax.val(+opts.from + +opts.step);
+                    opts.to = +opts.from + +opts.step;
+                } else {
+                    $thumbMax.val(+opts.from + +opts.gap);
+                    opts.to = +opts.from + +opts.gap;
                 }
             }
         });

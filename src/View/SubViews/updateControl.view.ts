@@ -62,15 +62,17 @@ function updateControl(): void {
                     // this.broadcast();
                     break;
                 case ControlsEnum.STEP:
-                    // this.optionsState.step = value;
-                    // $configFrom.prop('step', this.optionsState.step);
-                    // $configTo.prop('step', this.optionsState.step);
-                    // $configMin.prop('step', this.optionsState.step);
-                    // $configMax.prop('step', this.optionsState.step);
-                    // $thumbs.prop('step', this.optionsState.step);
-                    // this.optionsState.from = $thumbMin.val();
-                    // this.optionsState.to = $thumbMax.val();
-                    // this.broadcast();
+                    this.optionsState.step = value;
+                    $configFrom.prop('step', this.optionsState.step);
+                    $configTo.prop('step', this.optionsState.step);
+                    $configMin.prop('step', this.optionsState.step);
+                    $configMax.prop('step', this.optionsState.step);
+                    $thumbs.prop('step', this.optionsState.step);
+                    this.optionsState.from = $thumbMin.val();
+                    this.optionsState.to = $thumbMax.val();
+                    this.setConfig();
+                    this.setBar();
+                    this.setTooltip();
                     break;
                 case ControlsEnum.FROM:
                     this.setConfig();

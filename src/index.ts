@@ -5,5 +5,4 @@ new Slider('.slider', {
     configPanel: true,
     tooltip: true,
     range: true,
-    step: 200
 });

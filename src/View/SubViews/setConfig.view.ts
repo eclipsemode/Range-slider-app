@@ -1,8 +1,8 @@
 import $ from 'jquery';
 
-import { ConfigPanel } from '../../components';
+import {ConfigPanel} from '../../components';
 
-import { ClassName, evaluateVar, ModelOption } from '../../utils';
+import {ClassName, evaluateVar, ModelOption} from '../../utils';
 import ChangeEvent = JQuery.ChangeEvent;
 
 function setConfig(): void {
@@ -28,6 +28,7 @@ function setConfig(): void {
         const opts: ModelOption = this.getOpts();
         const $thumbMin = $(this.selectorState + ' ' + ClassName.MIN);
         const $thumbMax = $(this.selectorState + ' ' + ClassName.MAX);
+        const $thumbs = $(this.selectorState + ' ' + ClassName.THUMBS);
 
         const $controlTo = $(`#${ newSelector }__control-to`);
         const $controlFrom = $(`#${ newSelector }__control-from`);
@@ -79,6 +80,57 @@ function setConfig(): void {
                     opts.to = +opts.from + +opts.gap;
                 }
             }
+        });
+
+        const isCheckControlValues = () => {
+            const toMoreThanMax: boolean = +opts.to >
+                (Math.floor(+opts.max / +opts.step) * +opts.step);
+            const fromLessThanMin: boolean = +opts.from < +opts.min;
+            const fromMoreThanMax: boolean = +opts.from > +opts.max;
+
+            toMoreThanMax ? opts.to =
+                (Math.floor(+opts.max / +opts.step) * +opts.step) : null;
+            fromLessThanMin ? opts.from = opts.min : null;
+            fromMoreThanMax ? opts.from = opts.max : null;
+        };
+
+        $controlMin.on('input', (e: ChangeEvent) => {
+            if (+e.currentTarget.value < +opts.max - +opts.gap) {
+                opts.min = +e.currentTarget.value;
+            }
+            $controlFrom.prop('min', opts.min);
+            $controlTo.prop('min', opts.min);
+            $thumbs.prop('min', opts.min);
+
+            isCheckControlValues();
+        });
+
+        $controlMax.on('input', (e: ChangeEvent) => {
+            if (+e.currentTarget.value >= +opts.min + +opts.gap) {
+                opts.max = +e.currentTarget.value;
+            }
+
+            $controlFrom.prop('max', opts.max);
+            $controlTo.prop('max', opts.max);
+            $thumbs.prop('max', opts.max);
+
+            isCheckControlValues();
+        });
+
+        $controlStep.on('input', (e: ChangeEvent) => {
+            opts.step = +e.currentTarget.value;
+            $controlFrom.prop('step', opts.step);
+            $controlTo.prop('step', opts.step);
+            $controlMin.prop('step', opts.step);
+            $controlMax.prop('step', opts.step);
+            $thumbs.prop('step', opts.step);
+            opts.from = +$thumbMin.val();
+            opts.to = +$thumbMax.val();
+        });
+
+        $thumbs.on('input', () => {
+            opts.from = +$thumbMin.val();
+            opts.to = +$thumbMax.val();
         });
 
         $controlFrom.prop('step', opts.step);

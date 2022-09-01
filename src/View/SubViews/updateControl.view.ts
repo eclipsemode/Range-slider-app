@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-import {ControlsEnum, ModelOption, ClassName} from '../../utils';
+import { ControlsEnum, ModelOption, ClassName } from '../../utils';
 
 function updateControl(): void {
     const newSelector: string = this.selectorState.slice(1);
@@ -19,31 +19,31 @@ function updateControl(): void {
         element.on('input', () => {
             switch (item) {
                 case ControlsEnum.MIN:
-                    this.setConfig();
+                    this.setControl();
                     this.setBar();
                     this.setTooltip();
                     this.setRulers();
                     this.setColor();
                     break;
                 case ControlsEnum.MAX:
-                    this.setConfig();
+                    this.setControl();
                     this.setBar();
                     this.setTooltip();
                     this.setRulers();
                     this.setColor();
                     break;
                 case ControlsEnum.STEP:
-                    this.setConfig();
+                    this.setControl();
                     this.setBar();
                     this.setTooltip();
                     break;
                 case ControlsEnum.FROM:
-                    this.setConfig();
+                    this.setControl();
                     this.setBar();
                     this.setTooltip();
                     break;
                 case ControlsEnum.TO:
-                    this.setConfig();
+                    this.setControl();
                     this.setBar();
                     this.setTooltip();
                     break;
@@ -52,7 +52,7 @@ function updateControl(): void {
     });
 
     $thumbs.on('input', () => {
-        this.setConfig();
+        this.setControl();
         this.setBar();
     });
 

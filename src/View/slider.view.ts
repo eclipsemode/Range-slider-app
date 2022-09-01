@@ -9,6 +9,7 @@ import {
     setTooltip,
     setColor,
     setVertical,
+    setControl,
     setConfig,
     updateConfig,
     updateControl
@@ -24,6 +25,7 @@ class View extends Observer {
     private readonly setTooltip: CallableFunction;
     private readonly setColor: CallableFunction;
     private readonly setVertical: CallableFunction;
+    private readonly setControl: CallableFunction;
     private readonly setConfig: CallableFunction;
     private readonly updateConfig: CallableFunction;
     private readonly updateControl: CallableFunction;
@@ -39,6 +41,7 @@ class View extends Observer {
         this.setTooltip = setTooltip.bind(this);
         this.setColor = setColor.bind(this);
         this.setVertical = setVertical.bind(this);
+        this.setControl = setControl.bind(this);
         this.setConfig = setConfig.bind(this);
         this.updateConfig = updateConfig.bind(this);
         this.updateControl = updateControl.bind(this);
@@ -51,6 +54,7 @@ class View extends Observer {
         this.setBar();
         this.setRulers();
         this.setColor();
+        this.setControl();
         this.setConfig();
         this.updateConfig();
         this.updateControl();
@@ -65,6 +69,7 @@ class View extends Observer {
             this.setBar,
             this.setRulers,
             this.setColor,
+            this.setControl,
             this.setConfig,
             this.setTooltip,
             this.setVertical

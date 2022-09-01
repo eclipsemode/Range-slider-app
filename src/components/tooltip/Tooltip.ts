@@ -10,14 +10,14 @@ class Tooltip {
     getTooltipLine(): JQuery {
         return $('<div>', {
             class: 'slider-app__tooltip-line js-slider-app__tooltip-line'
-        }).appendTo(`${this.selector} .slider-app`);
+        }).appendTo(`${ this.selector } .slider-app`);
     }
 
     getTooltip(className: string): JQuery {
         return $('<span>', {
-            class: `slider-app__tooltip ${className}`,
+            class: `slider-app__tooltip ${ className }`,
             text: 0
-        }).prependTo(`${this.selector} .slider-app__tooltip-line`);
+        }).prependTo(`${ this.selector } .slider-app__tooltip-line`);
     }
 
     getFirstTooltip(): void {

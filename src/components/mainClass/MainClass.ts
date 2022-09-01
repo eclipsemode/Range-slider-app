@@ -10,7 +10,7 @@ class MainClass {
     public getMainClass(): JQuery {
         return $('<div>', {
             class: 'slider-app'
-        }).appendTo(`${this.selector}`);
+        }).appendTo(`${ this.selector }`);
     }
 }
 

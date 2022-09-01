@@ -18,7 +18,7 @@ class Rulers {
                     <div class="slider-app__rulers-values--80"><span>80</span></div>
                     <div class="slider-app__rulers-values--100"><span>100</span></div>
                 </div>
-        `).prependTo(`${this.selector} .slider-app`);
+        `).prependTo(`${ this.selector } .slider-app`);
     }
 }
 

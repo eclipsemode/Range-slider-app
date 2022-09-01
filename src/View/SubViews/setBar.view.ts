@@ -12,12 +12,10 @@ function setBar(): void {
 
     $bar.length === 0 ? bar.getBar() : null;
 
-    const $range = $(this.selectorState + ' ' + ClassName.THUMBS);
     const $minThumb = $(this.selectorState + ' ' + ClassName.MIN);
     const minVal: number = this.optionsState.min;
     const isProgressTrue: boolean = this.optionsState.progress;
     const isRangeTrue: boolean = this.optionsState.range;
-    const $maxThumb: JQuery = $(this.selectorState + ' ' + ClassName.MAX);
 
     if (isProgressTrue) {
         $(this.selectorState + ' ' + ClassName.PROGRESS).length === 0

@@ -15,7 +15,7 @@ class Thumb {
             max: max,
             value: value,
             step: step
-        }).appendTo(`${this.selector} .slider-app__bar-line`);
+        }).appendTo(`${ this.selector } .slider-app__bar-line`);
     }
 
     getMaxThumb(min: number, max: number, value: number, step: number): JQuery {
@@ -26,7 +26,7 @@ class Thumb {
             max: max,
             value: value,
             step: step
-        }).appendTo(`${this.selector} .slider-app__bar-line`);
+        }).appendTo(`${ this.selector } .slider-app__bar-line`);
     }
 
 }

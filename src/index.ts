@@ -1,5 +1,5 @@
 import './assets/style/style.scss';
-import {Slider} from './Controller/slider.controller';
+import { Slider } from './Controller/slider.controller';
 
 new Slider('.slider', {
     configPanel: true,

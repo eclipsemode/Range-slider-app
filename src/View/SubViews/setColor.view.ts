@@ -1,16 +1,17 @@
 import $ from 'jquery';
+import { ClassName } from '../../utils';
 
 function setColor(): void {
     const isColorAdded: string =
         this.optionsState.color.firstColor || this.optionsState.color.secondColor;
     const isTextColorAdded: string = this.optionsState.color.textColor;
     const isThumbColorAdded: string = this.optionsState.color.thumbColor;
-    const $values: JQuery = $(`${ this.selectorState } .js-slider-app__rulers-values`);
+    const $values: JQuery = $(this.selectorState + ' ' + ClassName.RULERS_VALUES);
 
     if (isColorAdded) {
         const colorOne: string = this.optionsState.color.firstColor;
         const colorTwo: string = this.optionsState.color.secondColor;
-        const $progress: JQuery = $(`${ this.selectorState } .js-slider-app__progress`);
+        const $progress: JQuery = $(this.selectorState + ' ' + ClassName.PROGRESS);
 
         $progress.css('background-image',
             `linear-gradient(90deg, ${ colorOne } 0%, ${ colorTwo } 100%)`);

@@ -1,6 +1,7 @@
 import $ from 'jquery';
 
 import { Tooltip } from '../../components';
+import { ClassName } from '../../utils';
 
 function setTooltip(): void {
     const tooltip: Tooltip = new Tooltip(this.selectorState);
@@ -9,39 +10,37 @@ function setTooltip(): void {
     const isRangeTrue: boolean = this.optionsState.range;
     const isVerticalTrue: boolean = this.optionsState.vertical;
 
-
     const isGetTooltipIfMissing = (): void => {
         if (isTooltipTrue) {
-            // noinspection JSJQueryEfficiency
-            $(`${ this.selectorState } .js-slider-app__tooltip-line`).length === 0
+            $(this.selectorState + ' ' + ClassName.TOOLTIP_LINE).length === 0
                 ? tooltip.getTooltipLine()
                 : null;
-            // noinspection JSJQueryEfficiency
-            $(`${ this.selectorState } .js-slider-app__tooltip--first`).length === 0
+
+            $(this.selectorState + ' ' + ClassName.TOOLTIP_FIRST).length === 0
                 ? tooltip.getFirstTooltip()
                 : null;
 
             if (isRangeTrue) {
-                $(`${ this.selectorState } .js-slider-app__tooltip--second`).length === 0
+                $(this.selectorState + ' ' + ClassName.TOOLTIP_SECOND).length === 0
                     ? tooltip.getSecondTooltip()
                     : null;
             } else {
-                $(`${ this.selectorState } .js-slider-app__tooltip-line`).remove();
+                $(this.selectorState + ' ' + ClassName.TOOLTIP_LINE).remove();
                 tooltip.getTooltipLine();
-                $(`${ this.selectorState } .js-slider-app__tooltip--first`).length === 0
+                $(this.selectorState + ' ' + ClassName.TOOLTIP_FIRST).length === 0
                     ? tooltip.getFirstTooltip()
                     : null;
             }
         } else {
-            $(`${ this.selectorState } .js-slider-app__tooltip-line`).remove();
+            $(this.selectorState + ' ' + ClassName.TOOLTIP_LINE).remove();
             return;
         }
     };
     isGetTooltipIfMissing();
 
     const $tooltipMin: JQuery =
-        $(`${ this.selectorState } .js-slider-app__tooltip--first`);
-    const $inputMin: JQuery = $(`${ this.selectorState } .js-slider-app__input-min`);
+        $(this.selectorState + ' ' + ClassName.TOOLTIP_FIRST);
+    const $inputMin: JQuery = $(this.selectorState + ' ' + ClassName.MIN);
 
     $tooltipMin.css({
         left: isVerticalTrue ? 'auto' : ((+this.optionsState.from - +this.optionsState.min)
@@ -80,8 +79,8 @@ function setTooltip(): void {
 
     if (isRangeTrue) {
         const $tooltipMax: JQuery =
-            $(`${ this.selectorState } .js-slider-app__tooltip--second`);
-        const $inputMax: JQuery = $(`${ this.selectorState } .js-slider-app__input-max`);
+            $(this.selectorState + ' ' + ClassName.TOOLTIP_SECOND);
+        const $inputMax: JQuery = $(this.selectorState + ' ' + ClassName.MAX);
 
         $tooltipMax.css({
             left: isVerticalTrue ? 'auto' : (((+this.optionsState.to - +this.optionsState.min)

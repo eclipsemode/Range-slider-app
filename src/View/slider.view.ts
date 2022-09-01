@@ -2,7 +2,6 @@ import { ModelOption } from '../utils';
 import Observer from '../Observer/Observer';
 
 import {
-    updateAll,
     setBar,
     setSlider,
     setRulers,
@@ -28,7 +27,6 @@ class View extends Observer {
     private readonly setConfig: CallableFunction;
     private readonly updateConfig: CallableFunction;
     private readonly updateControl: CallableFunction;
-    private readonly updateAll: CallableFunction;
 
     constructor(private selector: string, private options: Partial<ModelOption>) {
         super();
@@ -44,7 +42,6 @@ class View extends Observer {
         this.setConfig = setConfig.bind(this);
         this.updateConfig = updateConfig.bind(this);
         this.updateControl = updateControl.bind(this);
-        this.updateAll = updateAll.bind(this);
     }
 
     render(): void {

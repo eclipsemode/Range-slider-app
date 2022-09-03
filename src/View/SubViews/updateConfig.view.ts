@@ -1,8 +1,9 @@
 import $ from 'jquery';
-import { TogglesEnum } from '../../utils';
+import {ModelOption, TogglesEnum} from '../../utils';
 
 function updateConfig ():void {
     const newSelector: string = this.selectorState.slice(1);
+    const opts: ModelOption = this.getOpts();
 
     this.optionsState.toggleConfig.forEach((item: string): void => {
         const element: JQuery = $(`#${ newSelector }__toggle-${ item }`);
@@ -28,7 +29,7 @@ function updateConfig ():void {
                     this.broadcast();
                     break;
                 case TogglesEnum.RANGE:
-                    this.optionsState.range = value;
+                    this.opts.range = value;
                     this.setRange();
                     this.updateControl();
                     this.broadcast();

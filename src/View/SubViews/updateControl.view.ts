@@ -5,12 +5,12 @@ import { ControlsEnum, ModelOption, ClassName } from '../../utils';
 function updateControl(): void {
     const newSelector: string = this.selectorState.slice(1);
     const $thumbs = $(this.selectorState + ' ' + ClassName.THUMBS);
-    const $thumbMin = $(this.selectorState + ' ' + ClassName.MIN);
-    const $thumbMax = $(this.selectorState + ' ' + ClassName.MAX);
+    // const $thumbMin = $(this.selectorState + ' ' + ClassName.MIN);
+    // const $thumbMax = $(this.selectorState + ' ' + ClassName.MAX);
     const opts: ModelOption = this.getOpts();
 
-    opts.from = +$thumbMin.val();
-    opts.to = +$thumbMax.val();
+    // opts.from = +$thumbMin.val();
+    // opts.to = +$thumbMax.val();
     this.setBar();
 
     opts.controlConfig.forEach((item: string) => {

@@ -1,20 +1,19 @@
 import $ from 'jquery';
 
 import { Thumb } from '../../components';
-import { ClassName } from '../../utils';
+import {ClassName, ModelOption} from '../../utils';
 
 function setRange(): void {
     const thumb: Thumb = new Thumb(this.selectorState);
     const $thumbsMain: JQuery = $(this.selectorState + ' ' + ClassName.BAR_LINE);
+    const opts: ModelOption = this.getOpts();
     const isRangeTrue: boolean = this.optionsState.range;
 
     const checkValueThumbs = () => {
-        if (+this.optionsState.to < +this.optionsState.from + +this.optionsState.gap) {
-            if (+this.optionsState.from + +this.optionsState.gap > +this.optionsState.max) {
-                this.optionsState.from = +this.optionsState.to - +this.optionsState.gap;
-            } else {
-                this.optionsState.to = +this.optionsState.from + +this.optionsState.gap;
-            }
+        if (+opts.to < +opts.from + +opts.gap) {
+            +opts.from + +opts.gap > +opts.max
+                ? opts.from = +opts.to - +opts.gap
+                : opts.to = +opts.from + +opts.gap;
         }
     };
 
@@ -24,24 +23,24 @@ function setRange(): void {
         $thumbsMain.length !== 0 ? $thumbsMain.remove() : null;
         this.setBar();
         thumb.getMinThumb(
-            this.optionsState.min,
-            this.optionsState.max,
-            this.optionsState.from,
-            this.optionsState.step);
+            opts.min,
+            opts.max,
+            opts.from,
+            opts.step);
         thumb.getMaxThumb(
-            this.optionsState.min,
-            this.optionsState.max,
-            this.optionsState.to,
-            this.optionsState.step);
+            opts.min,
+            opts.max,
+            opts.to,
+            opts.step);
 
     } else {
         $thumbsMain.length !== 0 ? $thumbsMain.remove() : null;
         this.setBar();
         thumb.getMinThumb(
-            this.optionsState.min,
-            this.optionsState.max,
-            this.optionsState.from,
-            this.optionsState.step);
+            opts.min,
+            opts.max,
+            opts.from,
+            opts.step);
     }
 }
 

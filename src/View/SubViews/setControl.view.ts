@@ -41,6 +41,7 @@ function setControl(): void {
                     ? $thumbMin.val(+$thumbMax.val() - +opts.step)
                     : $thumbMin.val(+$thumbMax.val() - +opts.gap);
             }
+            opts.from = +$thumbMin.val();
         });
 
         $controlFrom.on('input', (e: ChangeEvent) => {
@@ -63,6 +64,7 @@ function setControl(): void {
                     ? $thumbMax.val(+$thumbMin.val() + +opts.step)
                     : $thumbMax.val(+$thumbMin.val() + +opts.gap);
             }
+            opts.to = +$thumbMax.val();
         });
 
         $controlTo.on('input', (e: ChangeEvent) => {
@@ -122,12 +124,7 @@ function setControl(): void {
             $controlMax.prop('step', opts.step);
             $thumbs.prop('step', opts.step);
             opts.from = +$thumbMin.val();
-            opts.to = +$thumbMax.val();
-        });
-
-        $thumbs.on('input', () => {
-            opts.from = +$thumbMin.val();
-            opts.to = +$thumbMax.val();
+            opts.range ? opts.to = +$thumbMax.val() : null;
         });
 
         $controlFrom.prop('step', opts.step);

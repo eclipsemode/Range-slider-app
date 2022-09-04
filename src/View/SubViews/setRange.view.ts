@@ -7,7 +7,7 @@ function setRange(): void {
     const thumb: Thumb = new Thumb(this.selectorState);
     const $thumbsMain: JQuery = $(this.selectorState + ' ' + ClassName.BAR_LINE);
     const opts: ModelOption = this.getOpts();
-    const isRangeTrue: boolean = this.optionsState.range;
+    const isRangeTrue: boolean = opts.range;
     const $thumbMin = $(this.selectorState + ' ' + ClassName.MIN);
     const $thumbMax = $(this.selectorState + ' ' + ClassName.MAX);
 
@@ -19,23 +19,15 @@ function setRange(): void {
 
     if (isRangeTrue) {
         checkValueThumbs(opts.from, opts.to, opts.max, opts.gap);
-
-        $thumbsMain.length !== 0 ? $thumbsMain.remove() : null;
         this.setBar();
-        thumb.getMinThumb(
-            opts.min,
-            opts.max,
-            opts.from,
-            opts.step);
-        thumb.getMaxThumb(
-            opts.min,
-            opts.max,
-            opts.to,
-            opts.step);
+        this.setConfig();
+        $thumbMax.length === 0 ? thumb.getMaxThumb(opts.min, opts.max, opts.to, opts.step) : null;
 
     } else {
-        $thumbsMain.length !== 0 ? $thumbMax.remove() : null;
+        $thumbMax.length !== 0 ? $thumbMax.remove() : null;
+        this.setBar();
         this.setConfig();
+        $thumbMin.length === 0 ? thumb.getMinThumb(opts.min, opts.max, opts.from, opts.step) : null;
     }
 }
 

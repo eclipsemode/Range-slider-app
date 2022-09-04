@@ -33,6 +33,7 @@ function updateConfig ():void {
                     this.setRange();
                     this.updateControl();
                     this.setBar();
+                    this.setConfig();
                     this.setTooltip();
                     break;
             }

@@ -50,8 +50,8 @@ class View extends Observer {
     render(): void {
         this.subscribeOpts(this.optionsState);
         this.setSlider();
-        this.setRange();
         this.setBar();
+        this.setRange();
         this.setRulers();
         this.setColor();
         this.setControl();

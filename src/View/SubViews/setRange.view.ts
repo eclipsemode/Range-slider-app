@@ -19,14 +19,10 @@ function setRange(): void {
 
     if (isRangeTrue) {
         checkValueThumbs(opts.from, opts.to, opts.max, opts.gap);
-        this.setBar();
-        this.setConfig();
         $thumbMax.length === 0 ? thumb.getMaxThumb(opts.min, opts.max, opts.to, opts.step) : null;
 
     } else {
         $thumbMax.length !== 0 ? $thumbMax.remove() : null;
-        this.setBar();
-        this.setConfig();
         $thumbMin.length === 0 ? thumb.getMinThumb(opts.min, opts.max, opts.from, opts.step) : null;
     }
 }

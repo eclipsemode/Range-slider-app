@@ -8,17 +8,17 @@ function setRange(): void {
     const $thumbsMain: JQuery = $(this.selectorState + ' ' + ClassName.BAR_LINE);
     const opts: ModelOption = this.getOpts();
     const isRangeTrue: boolean = this.optionsState.range;
+    const $thumbMin = $(this.selectorState + ' ' + ClassName.MIN);
+    const $thumbMax = $(this.selectorState + ' ' + ClassName.MAX);
 
-    const checkValueThumbs = () => {
-        if (+opts.to < +opts.from + +opts.gap) {
-            +opts.from + +opts.gap > +opts.max
-                ? opts.from = +opts.to - +opts.gap
-                : opts.to = +opts.from + +opts.gap;
+    const checkValueThumbs = (from: number, to: number, max: number, gap: number) => {
+        if (to < from + gap) {
+            from + gap > max ? opts.from = to - gap : opts.to = from + gap;
         }
     };
 
     if (isRangeTrue) {
-        checkValueThumbs();
+        checkValueThumbs(opts.from, opts.to, opts.max, opts.gap);
 
         $thumbsMain.length !== 0 ? $thumbsMain.remove() : null;
         this.setBar();
@@ -34,13 +34,8 @@ function setRange(): void {
             opts.step);
 
     } else {
-        $thumbsMain.length !== 0 ? $thumbsMain.remove() : null;
-        this.setBar();
-        thumb.getMinThumb(
-            opts.min,
-            opts.max,
-            opts.from,
-            opts.step);
+        $thumbsMain.length !== 0 ? $thumbMax.remove() : null;
+        this.setConfig();
     }
 }
 

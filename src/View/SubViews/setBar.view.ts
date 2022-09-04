@@ -35,7 +35,8 @@ function setBar(): void {
     } else {
         $progress.css({
             width: findMinPercent(minVal, +opts.from, parseInt($minThumb.attr('max'))),
-            height: 100 + '%'
+            height: 100 + '%',
+            left: 0
         });
     }
 }

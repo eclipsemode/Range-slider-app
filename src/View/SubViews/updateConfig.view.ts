@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import {ModelOption, TogglesEnum} from '../../utils';
+import { ModelOption, TogglesEnum } from '../../utils';
 
 function updateConfig ():void {
     const newSelector: string = this.selectorState.slice(1);
@@ -30,11 +30,14 @@ function updateConfig ():void {
                     break;
                 case TogglesEnum.RANGE:
                     opts.range = value;
-                    this.setRange();
-                    this.updateControl();
                     this.setBar();
-                    this.setConfig();
+                    this.setRange();
+                    this.setRulers();
+                    this.setColor();
+                    this.setControl();
+                    this.updateControl();
                     this.setTooltip();
+                    this.setVertical();
                     break;
             }
         });

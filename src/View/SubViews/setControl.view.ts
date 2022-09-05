@@ -36,7 +36,7 @@ function setControl(): void {
         const $controlStep = $(`#${ newSelector }__control-step`);
 
         $thumbMin.on('input', () => {
-            if (+$thumbMin.val() > +$thumbMax.val() - +opts.gap) {
+            if (+$thumbMin.val() > +$thumbMax.val() - +opts.gap && opts.range) {
                 +$thumbMax.val() - +opts.step < +$thumbMax.val() - +opts.gap
                     ? $thumbMin.val(+$thumbMax.val() - +opts.step)
                     : $thumbMin.val(+$thumbMax.val() - +opts.gap);

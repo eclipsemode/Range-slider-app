@@ -14,19 +14,26 @@ function updateConfig ():void {
             switch (item) {
                 case TogglesEnum.VERTICAL:
                     opts.vertical = value;
-                    this.broadcast();
+                    this.setBar();
+                    this.setRulers();
+                    this.setColor();
+                    this.setControl();
+                    this.setConfig();
+                    this.setTooltip();
+                    this.setVertical();
                     break;
                 case TogglesEnum.RULERS:
                     opts.rulers = value;
-                    this.broadcast();
+                    this.setRulers();
+                    this.setColor();
                     break;
                 case TogglesEnum.PROGRESS:
                     opts.progress = value;
-                    this.broadcast();
+                    this.setBar();
                     break;
                 case TogglesEnum.TOOLTIP:
                     opts.tooltip = value;
-                    this.broadcast();
+                    this.setTooltip();
                     break;
                 case TogglesEnum.RANGE:
                     opts.range = value;

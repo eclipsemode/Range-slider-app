@@ -60,20 +60,6 @@ class View extends Observer {
         this.updateControl();
         this.setTooltip();
         this.setVertical();
-
-        this.subscribeObservers();
-    }
-
-    subscribeObservers(): void {
-        this.subscribe(
-            this.setBar,
-            this.setRulers,
-            this.setColor,
-            this.setControl,
-            this.setConfig,
-            this.setTooltip,
-            this.setVertical
-        );
     }
 }
 

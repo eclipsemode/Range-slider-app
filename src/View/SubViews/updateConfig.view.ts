@@ -36,6 +36,7 @@ function updateConfig ():void {
                     this.setColor();
                     this.setControl();
                     this.updateControl();
+                    this.setConfig();
                     this.setTooltip();
                     this.setVertical();
                     break;

@@ -7,7 +7,7 @@ import { abbreviateNumber, ClassName } from '../../utils';
 function setRulers (): void {
     const rulers: Rulers = new Rulers(this.selectorState);
     const $rulers = $(this.selectorState + ' ' + ClassName.RULERS);
-    const isRulersTrue: boolean = this.optionsState.rulers;
+    const isRulersTrue: boolean = this.opts.rulers;
 
     if (isRulersTrue) {
 
@@ -16,16 +16,16 @@ function setRulers (): void {
         rulers.getRulers();
 
         const isFindValueByPercent = (percent: number): number =>
-            this.optionsState.min + ((this.optionsState.max - this.optionsState.min) * percent / 100);
+            this.opts.min + ((this.opts.max - this.opts.min) * percent / 100);
 
         const $values: JQuery = $(this.selectorState + ' ' + ClassName.RULERS_VALUES);
         const $minThumb: JQuery = $(this.selectorState + ' ' + ClassName.MIN);
         const $maxThumb: JQuery = $(this.selectorState + ' ' + ClassName.MAX);
 
         $values.children().each((index, element) => {
-            const minVal: number = this.optionsState.min;
-            const maxVal: number = this.optionsState.max;
-            const isPercentTrue: boolean = this.optionsState.percent;
+            const minVal: number = this.opts.min;
+            const maxVal: number = this.opts.max;
+            const isPercentTrue: boolean = this.opts.percent;
 
             switch (index) {
                 case 0:
@@ -34,8 +34,8 @@ function setRulers (): void {
                         : element.innerText = abbreviateNumber(maxVal, minVal, 0);
 
                     element.addEventListener('click', () => {
-                        $minThumb.val(this.optionsState.min);
-                        this.optionsState.from = +$minThumb.val();
+                        $minThumb.val(this.opts.min);
+                        this.opts.from = +$minThumb.val();
                         this.setBar();
                         this.setTooltip();
                         this.setConfig();
@@ -47,18 +47,18 @@ function setRulers (): void {
                         : element.innerText = abbreviateNumber(maxVal, minVal, 20);
 
                     element.addEventListener('click', () => {
-                        if (this.optionsState.range) {
+                        if (this.opts.range) {
                             const isMinLessMaxWithGap: boolean =
                                 +isFindValueByPercent(20) >
-                                +this.optionsState.to - +this.optionsState.gap;
+                                +this.opts.to - +this.opts.gap;
 
                             isMinLessMaxWithGap
-                                ? $minThumb.val(+this.optionsState.to - +this.optionsState.gap)
+                                ? $minThumb.val(+this.opts.to - +this.opts.gap)
                                 : $minThumb.val(isFindValueByPercent(20));
                         } else {
                             $minThumb.val(isFindValueByPercent(20));
                         }
-                        this.optionsState.from = +$minThumb.val();
+                        this.opts.from = +$minThumb.val();
                         this.setBar();
                         this.setTooltip();
                         this.setConfig();
@@ -70,18 +70,18 @@ function setRulers (): void {
                         : element.innerText = abbreviateNumber(maxVal, minVal, 40);
 
                     element.addEventListener('click', () => {
-                        if (this.optionsState.range) {
+                        if (this.opts.range) {
                             const isMinLessMaxWithGap: boolean =
                                 +isFindValueByPercent(40) >
-                                +this.optionsState.to - +this.optionsState.gap;
+                                +this.opts.to - +this.opts.gap;
 
                             isMinLessMaxWithGap
-                                ? $minThumb.val(+this.optionsState.to - +this.optionsState.gap)
+                                ? $minThumb.val(+this.opts.to - +this.opts.gap)
                                 : $minThumb.val(isFindValueByPercent(40));
                         } else {
                             $minThumb.val(isFindValueByPercent(40));
                         }
-                        this.optionsState.from = +$minThumb.val();
+                        this.opts.from = +$minThumb.val();
                         this.setBar();
                         this.setTooltip();
                         this.setConfig();
@@ -93,17 +93,17 @@ function setRulers (): void {
                         : element.innerText = abbreviateNumber(maxVal, minVal, 60);
 
                     element.addEventListener('click', () => {
-                        if (this.optionsState.range) {
+                        if (this.opts.range) {
                             const isMaxMoreThanMinWithGap: boolean = +isFindValueByPercent(60)
-                                < +this.optionsState.from + +this.optionsState.gap;
+                                < +this.opts.from + +this.opts.gap;
 
                             isMaxMoreThanMinWithGap
-                                ? $maxThumb.val(+this.optionsState.from + +this.optionsState.gap)
+                                ? $maxThumb.val(+this.opts.from + +this.opts.gap)
                                 : $maxThumb.val(isFindValueByPercent(60));
-                            this.optionsState.to = +$maxThumb.val();
+                            this.opts.to = +$maxThumb.val();
                         } else {
                             $minThumb.val(isFindValueByPercent(60));
-                            this.optionsState.from = +$minThumb.val();
+                            this.opts.from = +$minThumb.val();
                         }
                         this.setBar();
                         this.setTooltip();
@@ -116,17 +116,17 @@ function setRulers (): void {
                         : element.innerText = abbreviateNumber(maxVal, minVal, 80);
 
                     element.addEventListener('click', () => {
-                        if (this.optionsState.range) {
+                        if (this.opts.range) {
                             const isMaxMoreThanMinWithGap: boolean = +isFindValueByPercent(80)
-                                < +this.optionsState.from + +this.optionsState.gap;
+                                < +this.opts.from + +this.opts.gap;
 
                             isMaxMoreThanMinWithGap
-                                ? $maxThumb.val(+this.optionsState.from + +this.optionsState.gap)
+                                ? $maxThumb.val(+this.opts.from + +this.opts.gap)
                                 : $maxThumb.val(isFindValueByPercent(80));
-                            this.optionsState.to = +$maxThumb.val();
+                            this.opts.to = +$maxThumb.val();
                         } else {
                             $minThumb.val(isFindValueByPercent(80));
-                            this.optionsState.from = +$minThumb.val();
+                            this.opts.from = +$minThumb.val();
                         }
                         this.setBar();
                         this.setTooltip();
@@ -139,12 +139,12 @@ function setRulers (): void {
                         : element.innerText = abbreviateNumber(maxVal, minVal, 100);
 
                     element.addEventListener('click', () => {
-                        if (this.optionsState.range) {
-                            $maxThumb.val(this.optionsState.max);
-                            this.optionsState.to = +$maxThumb.val();
+                        if (this.opts.range) {
+                            $maxThumb.val(this.opts.max);
+                            this.opts.to = +$maxThumb.val();
                         } else {
-                            $minThumb.val(this.optionsState.max);
-                            this.optionsState.from = +$minThumb.val();
+                            $minThumb.val(this.opts.max);
+                            this.opts.from = +$minThumb.val();
                         }
                         this.setBar();
                         this.setTooltip();

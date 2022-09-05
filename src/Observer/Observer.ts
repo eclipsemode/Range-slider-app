@@ -1,18 +1,18 @@
 import { ModelOption } from '../utils';
 
 class Observer {
-    private opts: ModelOption;
+    private optionsObserver: ModelOption;
 
     constructor() {
-        this.opts = {};
+        this.optionsObserver = {};
     }
 
-    subscribeOpts (obj: ModelOption) {
-        this.opts = obj;
+    set opts(opts: ModelOption) {
+        this.optionsObserver = opts;
     }
 
-    getOpts() {
-        return this.opts;
+    get opts() {
+        return this.optionsObserver;
     }
 }
 

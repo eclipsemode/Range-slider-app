@@ -2,13 +2,12 @@ import $ from 'jquery';
 
 import { Bar, Progress } from '../../components';
 
-import {findMaxPercent, findMinPercent, ModelOption, ClassName} from '../../utils';
+import { findMaxPercent, findMinPercent, ClassName } from '../../utils';
 
 function setBar(): void {
     const bar: Bar = new Bar(this.selectorState);
     const progress: Progress = new Progress(this.selectorState);
     const $bar: JQuery = $(this.selectorState + ' ' + ClassName.BAR_LINE);
-    const opts: ModelOption = this.getOpts();
 
     $bar.length === 0 ? bar.getBar() : null;
 
@@ -29,12 +28,12 @@ function setBar(): void {
         $progress.css({
             width: 'auto',
             height: 100 + '%',
-            left: findMinPercent(minVal, +opts.from, +opts.max),
-            right: findMaxPercent(minVal, +opts.to, +opts.max)
+            left: findMinPercent(minVal, +this.opts.from, +this.opts.max),
+            right: findMaxPercent(minVal, +this.opts.to, +this.opts.max)
         });
     } else {
         $progress.css({
-            width: findMinPercent(minVal, +opts.from, parseInt($minThumb.attr('max'))),
+            width: findMinPercent(minVal, +this.opts.from, parseInt($minThumb.attr('max'))),
             height: 100 + '%',
             left: 0
         });

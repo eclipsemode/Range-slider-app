@@ -1,15 +1,12 @@
 import $ from 'jquery';
 
-import { ControlsEnum, ModelOption, ClassName } from '../../utils';
+import { ControlsEnum, ClassName } from '../../utils';
 
 function updateControl(): void {
     const newSelector: string = this.selectorState.slice(1);
     const $thumbs = $(this.selectorState + ' ' + ClassName.THUMBS);
-    const opts: ModelOption = this.getOpts();
 
-    // this.setBar();
-
-    opts.controlConfig.forEach((item: string) => {
+    this.opts.controlConfig.forEach((item: string) => {
         const element: JQuery = $(`#${ newSelector }__control-${ item }`);
 
         element.on('input', () => {

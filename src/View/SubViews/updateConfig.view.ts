@@ -1,9 +1,8 @@
 import $ from 'jquery';
-import { ModelOption, TogglesEnum } from '../../utils';
+import { TogglesEnum } from '../../utils';
 
 function updateConfig ():void {
     const newSelector: string = this.selectorState.slice(1);
-    const opts: ModelOption = this.getOpts();
 
     this.optionsState.toggleConfig.forEach((item: string): void => {
         const element: JQuery = $(`#${ newSelector }__toggle-${ item }`);
@@ -13,7 +12,7 @@ function updateConfig ():void {
 
             switch (item) {
                 case TogglesEnum.VERTICAL:
-                    opts.vertical = value;
+                    this.opts.vertical = value;
                     this.setBar();
                     this.setRulers();
                     this.setColor();
@@ -23,20 +22,22 @@ function updateConfig ():void {
                     this.setVertical();
                     break;
                 case TogglesEnum.RULERS:
-                    opts.rulers = value;
+                    this.opts.rulers = value;
                     this.setRulers();
                     this.setColor();
+                    this.setVertical();
                     break;
                 case TogglesEnum.PROGRESS:
-                    opts.progress = value;
+                    this.opts.progress = value;
                     this.setBar();
                     break;
                 case TogglesEnum.TOOLTIP:
-                    opts.tooltip = value;
+                    this.opts.tooltip = value;
                     this.setTooltip();
+                    this.setVertical();
                     break;
                 case TogglesEnum.RANGE:
-                    opts.range = value;
+                    this.opts.range = value;
                     this.setBar();
                     this.setRange();
                     this.setRulers();

@@ -2,7 +2,7 @@ import $ from 'jquery';
 
 function setVertical(): void {
 
-    if (this.optionsState.vertical) {
+    if (this.opts.vertical) {
 
         $(`${ this.selectorState }`).addClass('root--vertical');
 

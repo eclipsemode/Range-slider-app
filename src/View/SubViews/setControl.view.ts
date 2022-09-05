@@ -41,6 +41,7 @@ function setControl(): void {
                     : $thumbMin.val(+$thumbMax.val() - +this.opts.gap);
             }
             this.opts.from = +$thumbMin.val();
+            $controlFrom.val(this.opts.from);
         });
 
         $controlFrom.on('input', (e: ChangeEvent) => {
@@ -64,6 +65,7 @@ function setControl(): void {
                     : $thumbMax.val(+$thumbMin.val() + +this.opts.gap);
             }
             this.opts.to = +$thumbMax.val();
+            $controlTo.val(this.opts.to);
         });
 
         $controlTo.on('input', (e: ChangeEvent) => {

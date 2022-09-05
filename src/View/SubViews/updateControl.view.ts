@@ -46,6 +46,7 @@ function updateControl(): void {
 
     $thumbs.on('input', () => {
         this.setBar();
+        // this.setControl();
     });
 
 }

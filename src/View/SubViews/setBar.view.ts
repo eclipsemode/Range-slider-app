@@ -28,12 +28,12 @@ function setBar(): void {
         $progress.css({
             width: 'auto',
             height: 100 + '%',
-            left: findMinPercent(minVal, +this.opts.from, +this.opts.max),
-            right: findMaxPercent(minVal, +this.opts.to, +this.opts.max)
+            left: findMinPercent(minVal, this.opts.from, this.opts.max),
+            right: findMaxPercent(minVal, this.opts.to, this.opts.max)
         });
     } else {
         $progress.css({
-            width: findMinPercent(minVal, +this.opts.from, parseInt($minThumb.attr('max'))),
+            width: findMinPercent(minVal, this.opts.from, parseInt($minThumb.attr('max'))),
             height: 100 + '%',
             left: 0
         });

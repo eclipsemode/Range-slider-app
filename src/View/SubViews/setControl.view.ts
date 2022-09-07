@@ -35,10 +35,10 @@ function setControl(): void {
         const $controlStep = $(`#${ newSelector }__control-step`);
 
         $thumbMin.on('input', () => {
-            if (+$thumbMin.val() > +$thumbMax.val() - +this.opts.gap && this.opts.range) {
-                +$thumbMax.val() - +this.opts.step < +$thumbMax.val() - +this.opts.gap
-                    ? $thumbMin.val(+$thumbMax.val() - +this.opts.step)
-                    : $thumbMin.val(+$thumbMax.val() - +this.opts.gap);
+            if (+$thumbMin.val() > +$thumbMax.val() - this.opts.gap && this.opts.range) {
+                +$thumbMax.val() - this.opts.step < +$thumbMax.val() - this.opts.gap
+                    ? $thumbMin.val(+$thumbMax.val() - this.opts.step)
+                    : $thumbMin.val(+$thumbMax.val() - this.opts.gap);
             }
             this.opts.from = +$thumbMin.val();
             $controlFrom.val(this.opts.from);
@@ -47,22 +47,22 @@ function setControl(): void {
         $controlFrom.on('input', (e: ChangeEvent) => {
             this.opts.from = e.currentTarget.value;
             $thumbMin.val(e.currentTarget.value);
-            if (this.opts.from > +this.opts.to - +this.opts.gap) {
-                if (+$thumbMax.val() - +this.opts.step < +$thumbMax.val() - +this.opts.gap) {
-                    $thumbMin.val(+this.opts.to - +this.opts.step);
-                    this.opts.from = +this.opts.to - +this.opts.step;
+            if (this.opts.from > this.opts.to - this.opts.gap) {
+                if (+$thumbMax.val() - this.opts.step < +$thumbMax.val() - this.opts.gap) {
+                    $thumbMin.val(this.opts.to - this.opts.step);
+                    this.opts.from = this.opts.to - this.opts.step;
                 } else {
-                    $thumbMin.val(+this.opts.to - +this.opts.gap);
-                    this.opts.from = +this.opts.to - +this.opts.gap;
+                    $thumbMin.val(this.opts.to - this.opts.gap);
+                    this.opts.from = this.opts.to - this.opts.gap;
                 }
             }
         });
 
         $thumbMax.on('input', () => {
-            if (+$thumbMin.val() > +$thumbMax.val() - +this.opts.gap) {
-                +$thumbMin.val() + +this.opts.step > +$thumbMin.val() + +this.opts.gap
-                    ? $thumbMax.val(+$thumbMin.val() + +this.opts.step)
-                    : $thumbMax.val(+$thumbMin.val() + +this.opts.gap);
+            if (+$thumbMin.val() > +$thumbMax.val() - this.opts.gap) {
+                +$thumbMin.val() + this.opts.step > +$thumbMin.val() + this.opts.gap
+                    ? $thumbMax.val(+$thumbMin.val() + this.opts.step)
+                    : $thumbMax.val(+$thumbMin.val() + this.opts.gap);
             }
             this.opts.to = +$thumbMax.val();
             $controlTo.val(this.opts.to);
@@ -71,31 +71,31 @@ function setControl(): void {
         $controlTo.on('input', (e: ChangeEvent) => {
             this.opts.to = e.currentTarget.value;
             $thumbMax.val(e.currentTarget.value);
-            if (+this.opts.from > +this.opts.to - +this.opts.gap) {
-                if (+$thumbMin.val() + +this.opts.step > +$thumbMin.val() + +this.opts.gap) {
-                    $thumbMax.val(+this.opts.from + +this.opts.step);
-                    this.opts.to = +this.opts.from + +this.opts.step;
+            if (this.opts.from > this.opts.to - this.opts.gap) {
+                if (+$thumbMin.val() + this.opts.step > +$thumbMin.val() + this.opts.gap) {
+                    $thumbMax.val(this.opts.from + this.opts.step);
+                    this.opts.to = this.opts.from + this.opts.step;
                 } else {
-                    $thumbMax.val(+this.opts.from + +this.opts.gap);
-                    this.opts.to = +this.opts.from + +this.opts.gap;
+                    $thumbMax.val(this.opts.from + this.opts.gap);
+                    this.opts.to = this.opts.from + this.opts.gap;
                 }
             }
         });
 
         const isCheckControlValues = () => {
-            const toMoreThanMax: boolean = +this.opts.to >
-                (Math.floor(+this.opts.max / +this.opts.step) * +this.opts.step);
-            const fromLessThanMin: boolean = +this.opts.from < +this.opts.min;
-            const fromMoreThanMax: boolean = +this.opts.from > +this.opts.max;
+            const toMoreThanMax: boolean = this.opts.to >
+                (Math.floor(+this.opts.max / this.opts.step) * this.opts.step);
+            const fromLessThanMin: boolean = this.opts.from < this.opts.min;
+            const fromMoreThanMax: boolean = this.opts.from > this.opts.max;
 
             toMoreThanMax ? this.opts.to =
-                (Math.floor(+this.opts.max / +this.opts.step) * +this.opts.step) : null;
+                (Math.floor(+this.opts.max / this.opts.step) * this.opts.step) : null;
             fromLessThanMin ? this.opts.from = this.opts.min : null;
             fromMoreThanMax ? this.opts.from = this.opts.max : null;
         };
 
         $controlMin.on('input', (e: ChangeEvent) => {
-            if (+e.currentTarget.value < +this.opts.max - +this.opts.gap) {
+            if (+e.currentTarget.value < this.opts.max - this.opts.gap) {
                 this.opts.min = +e.currentTarget.value;
             }
             $controlFrom.prop('min', this.opts.min);
@@ -106,7 +106,7 @@ function setControl(): void {
         });
 
         $controlMax.on('input', (e: ChangeEvent) => {
-            if (+e.currentTarget.value >= +this.opts.min + +this.opts.gap) {
+            if (+e.currentTarget.value >= this.opts.min + this.opts.gap) {
                 this.opts.max = +e.currentTarget.value;
             }
 

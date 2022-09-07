@@ -10,10 +10,7 @@ function setRulers (): void {
     const isRulersTrue: boolean = this.opts.rulers;
 
     if (isRulersTrue) {
-
-        $rulers.remove();
-        $(this.selectorState + ' ' + ClassName.RULERS_VALUES).remove();
-        rulers.getRulers();
+        $rulers.length === 0 ? rulers.getRulers() : null;
 
         const isFindValueByPercent = (percent: number): number =>
             this.opts.min + ((this.opts.max - this.opts.min) * percent / 100);
@@ -38,7 +35,7 @@ function setRulers (): void {
                         this.opts.from = +$minThumb.val();
                         this.setBar();
                         this.setTooltip();
-                        this.setConfig();
+                        this.setControl();
                     });
                     break;
                 case 1:
@@ -49,11 +46,11 @@ function setRulers (): void {
                     element.addEventListener('click', () => {
                         if (this.opts.range) {
                             const isMinLessMaxWithGap: boolean =
-                                +isFindValueByPercent(20) >
-                                +this.opts.to - +this.opts.gap;
+                                isFindValueByPercent(20) >
+                                this.opts.to - this.opts.gap;
 
                             isMinLessMaxWithGap
-                                ? $minThumb.val(+this.opts.to - +this.opts.gap)
+                                ? $minThumb.val(this.opts.to - this.opts.gap)
                                 : $minThumb.val(isFindValueByPercent(20));
                         } else {
                             $minThumb.val(isFindValueByPercent(20));
@@ -61,7 +58,7 @@ function setRulers (): void {
                         this.opts.from = +$minThumb.val();
                         this.setBar();
                         this.setTooltip();
-                        this.setConfig();
+                        this.setControl();
                     });
                     break;
                 case 2:
@@ -72,11 +69,11 @@ function setRulers (): void {
                     element.addEventListener('click', () => {
                         if (this.opts.range) {
                             const isMinLessMaxWithGap: boolean =
-                                +isFindValueByPercent(40) >
-                                +this.opts.to - +this.opts.gap;
+                                isFindValueByPercent(40) >
+                                this.opts.to - this.opts.gap;
 
                             isMinLessMaxWithGap
-                                ? $minThumb.val(+this.opts.to - +this.opts.gap)
+                                ? $minThumb.val(this.opts.to - this.opts.gap)
                                 : $minThumb.val(isFindValueByPercent(40));
                         } else {
                             $minThumb.val(isFindValueByPercent(40));
@@ -84,7 +81,7 @@ function setRulers (): void {
                         this.opts.from = +$minThumb.val();
                         this.setBar();
                         this.setTooltip();
-                        this.setConfig();
+                        this.setControl();
                     });
                     break;
                 case 3:
@@ -94,11 +91,11 @@ function setRulers (): void {
 
                     element.addEventListener('click', () => {
                         if (this.opts.range) {
-                            const isMaxMoreThanMinWithGap: boolean = +isFindValueByPercent(60)
-                                < +this.opts.from + +this.opts.gap;
+                            const isMaxMoreThanMinWithGap: boolean = isFindValueByPercent(60)
+                                < this.opts.from + this.opts.gap;
 
                             isMaxMoreThanMinWithGap
-                                ? $maxThumb.val(+this.opts.from + +this.opts.gap)
+                                ? $maxThumb.val(this.opts.from + this.opts.gap)
                                 : $maxThumb.val(isFindValueByPercent(60));
                             this.opts.to = +$maxThumb.val();
                         } else {
@@ -107,7 +104,7 @@ function setRulers (): void {
                         }
                         this.setBar();
                         this.setTooltip();
-                        this.setConfig();
+                        this.setControl();
                     });
                     break;
                 case 4:
@@ -117,11 +114,11 @@ function setRulers (): void {
 
                     element.addEventListener('click', () => {
                         if (this.opts.range) {
-                            const isMaxMoreThanMinWithGap: boolean = +isFindValueByPercent(80)
-                                < +this.opts.from + +this.opts.gap;
+                            const isMaxMoreThanMinWithGap: boolean = isFindValueByPercent(80)
+                                < this.opts.from + this.opts.gap;
 
                             isMaxMoreThanMinWithGap
-                                ? $maxThumb.val(+this.opts.from + +this.opts.gap)
+                                ? $maxThumb.val(this.opts.from + this.opts.gap)
                                 : $maxThumb.val(isFindValueByPercent(80));
                             this.opts.to = +$maxThumb.val();
                         } else {
@@ -130,7 +127,7 @@ function setRulers (): void {
                         }
                         this.setBar();
                         this.setTooltip();
-                        this.setConfig();
+                        this.setControl();
                     });
                     break;
                 case 5:
@@ -148,7 +145,7 @@ function setRulers (): void {
                         }
                         this.setBar();
                         this.setTooltip();
-                        this.setConfig();
+                        this.setControl();
                     });
                     break;
             }

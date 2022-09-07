@@ -12,31 +12,26 @@ function updateControl(): void {
         element.on('input', () => {
             switch (item) {
                 case ControlsEnum.MIN:
-                    this.setControl();
                     this.setBar();
                     this.setTooltip();
                     this.setRulers();
                     this.setColor();
                     break;
                 case ControlsEnum.MAX:
-                    this.setControl();
                     this.setBar();
                     this.setTooltip();
                     this.setRulers();
                     this.setColor();
                     break;
                 case ControlsEnum.STEP:
-                    this.setControl();
                     this.setBar();
                     this.setTooltip();
                     break;
                 case ControlsEnum.FROM:
-                    this.setControl();
                     this.setBar();
                     this.setTooltip();
                     break;
                 case ControlsEnum.TO:
-                    this.setControl();
                     this.setBar();
                     this.setTooltip();
                     break;

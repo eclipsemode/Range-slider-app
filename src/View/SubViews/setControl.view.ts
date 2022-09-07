@@ -45,7 +45,7 @@ function setControl(): void {
         });
 
         $controlFrom.on('input', (e: ChangeEvent) => {
-            this.opts.from = e.currentTarget.value;
+            this.opts.from = +e.currentTarget.value;
             $thumbMin.val(e.currentTarget.value);
             if (this.opts.from > this.opts.to - this.opts.gap) {
                 if (+$thumbMax.val() - this.opts.step < +$thumbMax.val() - this.opts.gap) {
@@ -56,6 +56,7 @@ function setControl(): void {
                     this.opts.from = this.opts.to - this.opts.gap;
                 }
             }
+            e.currentTarget.value = this.opts.from;
         });
 
         $thumbMax.on('input', () => {
@@ -80,6 +81,7 @@ function setControl(): void {
                     this.opts.to = this.opts.from + this.opts.gap;
                 }
             }
+            e.currentTarget.value = this.opts.to;
         });
 
         const isCheckControlValues = () => {

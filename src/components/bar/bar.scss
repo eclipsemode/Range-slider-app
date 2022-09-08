@@ -5,6 +5,7 @@
     background-color: rgba(0, 0, 0, 0.2);
     outline: none;
     position: relative;
+    border-radius: 6px;
 
     &--vertical:not(span) {
       transform: rotate(-90deg);

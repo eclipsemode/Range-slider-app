@@ -61,12 +61,6 @@ class View extends Observer {
         this.updateControl();
         this.setTooltip();
         this.setVertical();
-
-        $('.test').on('click', () => {
-            this.opts.to = +$(this.selectorState + ' .js-slider-app__input-max').val();
-            this.setBar();
-            this.setTooltip();
-        });
     }
 }
 

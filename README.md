@@ -106,3 +106,4 @@ and this components synchronized with <code>Observer</code> subscriptions.
 <h3>UML:</h3>
 <hr>
 In progress...
+<img src="__images__/diagram.png" alt="diagram">

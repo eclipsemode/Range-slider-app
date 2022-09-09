@@ -1,4 +1,4 @@
-import { ModelOption } from '../utils';
+import {ClassName, ModelOption} from '../utils';
 import Observer from '../Observer/Observer';
 
 import {
@@ -14,6 +14,7 @@ import {
     updateConfig,
     updateControl
 } from './SubViews';
+import $ from 'jquery';
 
 class View extends Observer {
     private readonly selectorState: string;
@@ -60,6 +61,12 @@ class View extends Observer {
         this.updateControl();
         this.setTooltip();
         this.setVertical();
+
+        $('.test').on('click', () => {
+            this.opts.to = +$(this.selectorState + ' .js-slider-app__input-max').val();
+            this.setBar();
+            this.setTooltip();
+        });
     }
 }
 

@@ -128,6 +128,8 @@ function setControl(): void {
             $thumbs.prop('step', this.opts.step);
             this.opts.from = +$thumbMin.val();
             this.opts.range ? this.opts.to = +$thumbMax.val() : null;
+            $controlFrom.val(this.opts.from);
+            $controlTo.val(this.opts.to);
         });
 
         $controlFrom.prop('step', this.opts.step);

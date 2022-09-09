@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import { TogglesEnum } from '../../utils';
+import { TogglesEnum} from '../../utils';
 
 function updateConfig ():void {
     const newSelector: string = this.selectorState.slice(1);
@@ -45,6 +45,8 @@ function updateConfig ():void {
                     this.setControl();
                     this.updateControl();
                     this.setConfig();
+                    this.opts.to = +$(this.selectorState + ' .js-slider-app__input-max').val();
+                    this.setBar();
                     this.setTooltip();
                     this.setVertical();
                     break;

@@ -1,4 +1,4 @@
-import {ClassName, ModelOption} from '../utils';
+import { ModelOption } from '../utils';
 import Observer from '../Observer/Observer';
 
 import {

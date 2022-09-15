@@ -40,6 +40,7 @@ function updateConfig ():void {
                     this.opts.range = value;
                     this.setBar();
                     this.setRange();
+                    this.setBar();
                     this.setRulers();
                     this.setColor();
                     this.setControl();

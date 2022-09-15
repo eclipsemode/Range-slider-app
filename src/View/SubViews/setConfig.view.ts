@@ -11,19 +11,17 @@ function setConfig() {
         const newSelector: string = this.selectorState.slice(1);
         const isRangeTrue: boolean = this.opts.range;
         const $controlTo = $(`#${ newSelector }__control-to`);
-        const $controlFrom = $(`#${ newSelector }__control-from`);
-        const $controlMin = $(`#${ newSelector }__control-min`);
-        const $controlMax = $(`#${ newSelector }__control-max`);
         const $toggleTooltip = $(`#${ newSelector }__toggle-tooltip`);
         const $toggleRange = $(`#${ newSelector }__toggle-range`);
         const $thumbMin = $(this.selectorState + ' ' + ClassName.MIN);
         const $thumbMax = $(this.selectorState + ' ' + ClassName.MAX);
 
 
-        $toggleRange.on('change', () => {
+        $toggleRange.one('change', () => {
             $thumbMin.val(this.opts.from);
             $thumbMax.val(this.opts.to);
         });
+
 
         $toggleTooltip.prop('checked', this.opts.tooltip);
 

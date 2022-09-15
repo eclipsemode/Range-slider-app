@@ -3,7 +3,6 @@ import $ from 'jquery';
 import { ConfigPanel } from '../../components';
 
 import { ClassName, evaluateVar } from '../../utils';
-import ChangeEvent = JQuery.ChangeEvent;
 
 function setControl(): void {
     const configPanel: ConfigPanel = new ConfigPanel(
@@ -44,7 +43,7 @@ function setControl(): void {
             $controlFrom.val(this.opts.from);
         });
 
-        $controlFrom.on('input', (e: ChangeEvent) => {
+        $controlFrom.on('input', (e: JQuery.ChangeEvent) => {
             this.opts.from = +e.currentTarget.value;
             $thumbMin.val(e.currentTarget.value);
             if (this.opts.from > this.opts.to - this.opts.gap) {
@@ -69,7 +68,7 @@ function setControl(): void {
             $controlTo.val(this.opts.to);
         });
 
-        $controlTo.on('input', (e: ChangeEvent) => {
+        $controlTo.on('input', (e: JQuery.ChangeEvent) => {
             this.opts.to = e.currentTarget.value;
             $thumbMax.val(e.currentTarget.value);
             if (this.opts.from > this.opts.to - this.opts.gap) {
@@ -96,7 +95,7 @@ function setControl(): void {
             fromMoreThanMax ? this.opts.from = this.opts.max : null;
         };
 
-        $controlMin.on('input', (e: ChangeEvent) => {
+        $controlMin.on('input', (e: JQuery.ChangeEvent) => {
             if (+e.currentTarget.value < this.opts.max - this.opts.gap) {
                 this.opts.min = +e.currentTarget.value;
             }
@@ -107,7 +106,7 @@ function setControl(): void {
             isCheckControlValues();
         });
 
-        $controlMax.on('input', (e: ChangeEvent) => {
+        $controlMax.on('input', (e: JQuery.ChangeEvent) => {
             if (+e.currentTarget.value >= this.opts.min + this.opts.gap) {
                 this.opts.max = +e.currentTarget.value;
             }
@@ -119,7 +118,7 @@ function setControl(): void {
             isCheckControlValues();
         });
 
-        $controlStep.on('input', (e: ChangeEvent) => {
+        $controlStep.on('input', (e: JQuery.ChangeEvent) => {
             this.opts.step = +e.currentTarget.value;
             $controlFrom.prop('step', this.opts.step);
             $controlTo.prop('step', this.opts.step);

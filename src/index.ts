@@ -13,7 +13,7 @@ new Slider('.slider', {
 //     if (!$elem) return;
 //
 //     const value = $elem.text();
-//     const observable = new Observ(value);
+//     const observable = new Observer(value);
 //
 //     observable.subscribe((val: string) => $elem.text(val));
 //

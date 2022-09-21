@@ -48,6 +48,8 @@ function updateConfig ():void {
                     this.setConfig();
                     this.setTooltip();
                     this.setVertical();
+
+                    this.thumbsUpdate();
                     break;
             }
         });

@@ -1,6 +1,5 @@
 import {ModelOption} from '../utils';
 import Observer from '../Observer/Observer';
-import Observ from '../Observer/Observ';
 
 import {
     setBar,
@@ -63,26 +62,39 @@ class View extends Observer {
         this.setTooltip();
         this.setVertical();
 
-        const myElem = this.observeHtml();
-
-
-        $('.test').on('click', () => {
-            myElem.options = {
-                ...this.options,
-                min: -10000
-            };
-            console.log(myElem.options);
-        });
+        this.thumbsUpdate();
     }
 
-    observeHtml() {
-        const observable = new Observ(this.optionsState);
+    thumbsUpdate() {
+        const ObserveThumbs = this.observeThumbs();
+
+        $('.js-slider-app__input').on('input', (e: JQuery.ChangeEvent) => {
+            if ($(e.currentTarget).hasClass('js-slider-app__input-min')) {
+                ObserveThumbs.opts = {
+                    ...this.options,
+                    from: e.target.value
+                };
+            } else {
+                ObserveThumbs.opts = {
+                    ...this.options,
+                    to: e.target.value
+                };
+            }
+        });
+
+        return () => {
+            $('.js-slider-app__input').off();
+        };
+    }
+
+    observeThumbs() {
+        const observable = new Observer(this.opts);
 
         observable.subscribe((option: ModelOption) => {
-            $('.js-slider-app__input-min').val(option.from);
-            $('.js-slider-app__input-max').val(option.to);
-            $('.js-slider-app__input-min').prop('min', option.min);
-            $('.js-slider-app__input-max').prop('max', option.max);
+            $('#slider__control-from').val(option.from);
+            $('#slider__control-to').val(option.to);
+
+            this.opts = option;
         });
 
         return observable;

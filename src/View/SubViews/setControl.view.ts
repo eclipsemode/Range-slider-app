@@ -33,15 +33,15 @@ function setControl(): void {
         const $controlMax = $(`#${ newSelector }__control-max`);
         const $controlStep = $(`#${ newSelector }__control-step`);
 
-        $thumbMin.on('input', () => {
-            if (+$thumbMin.val() > +$thumbMax.val() - this.opts.gap && this.opts.range) {
-                +$thumbMax.val() - this.opts.step < +$thumbMax.val() - this.opts.gap
-                    ? $thumbMin.val(+$thumbMax.val() - this.opts.step)
-                    : $thumbMin.val(+$thumbMax.val() - this.opts.gap);
-            }
-            this.opts.from = +$thumbMin.val();
-            $controlFrom.val(this.opts.from);
-        });
+        // $thumbMin.on('input', () => {
+        //     if (+$thumbMin.val() > +$thumbMax.val() - this.opts.gap && this.opts.range) {
+        //         +$thumbMax.val() - this.opts.step < +$thumbMax.val() - this.opts.gap
+        //             ? $thumbMin.val(+$thumbMax.val() - this.opts.step)
+        //             : $thumbMin.val(+$thumbMax.val() - this.opts.gap);
+        //     }
+        //     this.opts.from = +$thumbMin.val();
+        //     $controlFrom.val(this.opts.from);
+        // });
 
         $controlFrom.on('input', (e: JQuery.ChangeEvent) => {
             this.opts.from = +e.currentTarget.value;
@@ -58,15 +58,15 @@ function setControl(): void {
             e.currentTarget.value = this.opts.from;
         });
 
-        $thumbMax.on('input', () => {
-            if (+$thumbMin.val() > +$thumbMax.val() - this.opts.gap) {
-                +$thumbMin.val() + this.opts.step > +$thumbMin.val() + this.opts.gap
-                    ? $thumbMax.val(+$thumbMin.val() + this.opts.step)
-                    : $thumbMax.val(+$thumbMin.val() + this.opts.gap);
-            }
-            this.opts.to = +$thumbMax.val();
-            $controlTo.val(this.opts.to);
-        });
+        // $thumbMax.on('input', () => {
+        //     if (+$thumbMin.val() > +$thumbMax.val() - this.opts.gap) {
+        //         +$thumbMin.val() + this.opts.step > +$thumbMin.val() + this.opts.gap
+        //             ? $thumbMax.val(+$thumbMin.val() + this.opts.step)
+        //             : $thumbMax.val(+$thumbMin.val() + this.opts.gap);
+        //     }
+        //     this.opts.to = +$thumbMax.val();
+        //     $controlTo.val(this.opts.to);
+        // });
 
         $controlTo.on('input', (e: JQuery.ChangeEvent) => {
             this.opts.to = e.currentTarget.value;

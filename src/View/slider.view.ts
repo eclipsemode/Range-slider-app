@@ -1,5 +1,6 @@
-import { ModelOption } from '../utils';
+import {ModelOption} from '../utils';
 import Observer from '../Observer/Observer';
+import Observ from '../Observer/Observ';
 
 import {
     setBar,
@@ -15,9 +16,10 @@ import {
     updateControl
 } from './SubViews';
 
+
 class View extends Observer {
     private readonly selectorState: string;
-    private readonly optionsState: Partial<ModelOption>;
+    private readonly optionsState: ModelOption;
     private readonly setSlider: CallableFunction;
     private readonly setRange: CallableFunction;
     private readonly setRulers: CallableFunction;
@@ -30,7 +32,7 @@ class View extends Observer {
     private readonly updateConfig: CallableFunction;
     private readonly updateControl: CallableFunction;
 
-    constructor(private selector: string, private options: Partial<ModelOption>) {
+    constructor(private selector: string, private options: ModelOption) {
         super();
         this.selectorState = selector;
         this.optionsState = options;
@@ -60,7 +62,32 @@ class View extends Observer {
         this.updateControl();
         this.setTooltip();
         this.setVertical();
+
+        const myElem = this.observeHtml();
+
+
+        $('.test').on('click', () => {
+            myElem.options = {
+                ...this.options,
+                min: -10000
+            };
+            console.log(myElem.options);
+        });
     }
+
+    observeHtml() {
+        const observable = new Observ(this.optionsState);
+
+        observable.subscribe((option: ModelOption) => {
+            $('.js-slider-app__input-min').val(option.from);
+            $('.js-slider-app__input-max').val(option.to);
+            $('.js-slider-app__input-min').prop('min', option.min);
+            $('.js-slider-app__input-max').prop('max', option.max);
+        });
+
+        return observable;
+    }
+
 }
 
 export default View;

@@ -2,13 +2,13 @@ import { ModelOption, TogglesEnum, ControlsEnum } from '../utils';
 import Observer from '../Observer/Observer';
 
 class Model extends Observer{
-    optionsState: Partial<ModelOption>;
+    optionsState: ModelOption;
     constructor(private options?: Partial<ModelOption>) {
         super();
         this.optionsState = this.checkOptions(options);
     }
 
-    checkOptions(options: Partial<ModelOption>): Partial<ModelOption> {
+    checkOptions(options: Partial<ModelOption>): ModelOption {
         const verifiedOptions = {...options};
         verifiedOptions.min = verifiedOptions.min ?? 0;
         verifiedOptions.max = verifiedOptions.max ?? 1000;
@@ -46,7 +46,7 @@ class Model extends Observer{
                 verifiedOptions.from :
                 verifiedOptions.min;
 
-        return verifiedOptions;
+        return verifiedOptions as ModelOption;
     }
 
 

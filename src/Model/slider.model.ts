@@ -8,7 +8,7 @@ class Model extends Observer{
         this.optionsState = this.checkOptions(options);
     }
 
-    checkOptions(options: ModelOption): ModelOption {
+    checkOptions(options: Partial<ModelOption>): Partial<ModelOption> {
         const verifiedOptions = {...options};
         verifiedOptions.min = verifiedOptions.min ?? 0;
         verifiedOptions.max = verifiedOptions.max ?? 1000;

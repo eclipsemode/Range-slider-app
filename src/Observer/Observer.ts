@@ -1,13 +1,13 @@
 import { ModelOption } from '../utils';
 
 class Observer {
-    private optionsObserver: ModelOption;
+    private optionsObserver: Partial<ModelOption>;
 
     constructor() {
         this.optionsObserver = {};
     }
 
-    set opts(opts: ModelOption) {
+    set opts(opts: Partial<ModelOption>) {
         this.optionsObserver = opts;
     }
 

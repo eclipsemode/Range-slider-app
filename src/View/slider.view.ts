@@ -14,7 +14,6 @@ import {
     updateConfig,
     updateControl
 } from './SubViews';
-import $ from 'jquery';
 
 class View extends Observer {
     private readonly selectorState: string;

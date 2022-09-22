@@ -1,10 +1,10 @@
 import $ from 'jquery';
 
-import { ControlsEnum, ClassName } from '../../utils';
+import { ControlsEnum } from '../../utils';
 
 function updateControl(): void {
     const newSelector: string = this.selectorState.slice(1);
-    const $thumbs = $(this.selectorState + ' ' + ClassName.THUMBS);
+    // const $thumbs = $(this.selectorState + ' ' + ClassName.THUMBS);
 
     this.opts.controlConfig.forEach((item: string) => {
         const element: JQuery = $(`#${ newSelector }__control-${ item }`);

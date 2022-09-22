@@ -43,9 +43,9 @@ function updateConfig ():void {
                     this.setBar();
                     // this.setRulers();
                     // this.setColor();
-                    // this.setControl();
+                    this.setControl();
                     // this.updateControl();
-                    // this.setConfig();
+                    this.setConfig();
                     this.setTooltip();
                     // this.setVertical();
 

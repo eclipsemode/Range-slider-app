@@ -131,22 +131,29 @@ function setControl(): void {
         //     $controlTo.val(this.opts.to);
         // });
 
-        $controlFrom.prop('step', this.opts.step);
-        $controlTo.prop('step', this.opts.step);
         $controlMin.prop('step', this.opts.step);
         $controlMax.prop('step', this.opts.step);
 
-        $controlStep.prop('min', 0);
-        $controlStep.prop('max', this.opts.max);
+        $controlStep.prop({
+            min: 0,
+            max: this.opts.max
+        });
 
-        $controlFrom.prop('min', this.opts.min);
-        $controlFrom.prop('max', this.opts.max);
-        $controlTo.prop('min', this.opts.min);
-        $controlTo.prop('max', this.opts.max);
+        $controlFrom.prop({
+            min: this.opts.min,
+            max: this.opts.max,
+            step: this.opts.step
+        });
+
+        $controlTo.prop({
+            min: this.opts.min,
+            max: this.opts.max,
+            step: this.opts.step
+        });
 
         this.opts.controlConfig.forEach((item: string) => {
             $(`#${ newSelector }__control-${ item }`)
-                .val(evaluateVarBind(`this.optionsState.${ item }`));
+                .val(evaluateVarBind(`this.opts.${ item }`));
         });
     }
 }

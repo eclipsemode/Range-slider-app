@@ -1,4 +1,4 @@
-import {ModelOption} from '../utils';
+import { ClassName, ModelOption } from '../utils';
 import Observer from '../Observer/Observer';
 
 import {
@@ -68,18 +68,32 @@ class View extends Observer {
     thumbsUpdate() {
         const ObserveThumbs = this.observeThumbs();
         const $thumbs: JQuery = $('.js-slider-app__input');
+        const $thumbMin = $(this.selectorState + ' ' + ClassName.MIN);
+        const $thumbMax = $(this.selectorState + ' ' + ClassName.MAX);
 
         $thumbs.off();
         $thumbs.on('input', (e: JQuery.ChangeEvent) => {
             if ($(e.currentTarget).hasClass('js-slider-app__input-min')) {
+                    if (+$thumbMin.val() > +$thumbMax.val() - this.opts.gap && this.opts.range) {
+                        +$thumbMax.val() - this.opts.step < +$thumbMax.val() - this.opts.gap
+                            ? $thumbMin.val(+$thumbMax.val() - this.opts.step)
+                            : $thumbMin.val(+$thumbMax.val() - this.opts.gap);
+                    }
+
                 ObserveThumbs.opts = {
                     ...this.opts,
-                    from: e.target.value
+                    from: +e.target.value
                 };
             } else {
+                    if (+$thumbMin.val() > +$thumbMax.val() - this.opts.gap) {
+                        +$thumbMin.val() + this.opts.step > +$thumbMin.val() + this.opts.gap
+                            ? $thumbMax.val(+$thumbMin.val() + this.opts.step)
+                            : $thumbMax.val(+$thumbMin.val() + this.opts.gap);
+                    }
+
                 ObserveThumbs.opts = {
                     ...this.opts,
-                    to: e.target.value
+                    to: +e.target.value
                 };
             }
         });
@@ -92,7 +106,6 @@ class View extends Observer {
             $('#slider__control-from').val(option.from);
             $('#slider__control-to').val(option.to);
             this.opts = option;
-
             this.setBar();
             this.setTooltip();
         });

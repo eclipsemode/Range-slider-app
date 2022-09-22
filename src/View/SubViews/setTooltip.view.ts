@@ -40,7 +40,7 @@ function setTooltip(): void {
 
     const $tooltipMin: JQuery =
         $(this.selectorState + ' ' + ClassName.TOOLTIP_FIRST);
-    const $inputMin: JQuery = $(this.selectorState + ' ' + ClassName.MIN);
+    // const $inputMin: JQuery = $(this.selectorState + ' ' + ClassName.MIN);
 
     $tooltipMin.css({
         left: isVerticalTrue ? 'auto' : ((this.opts.from - this.opts.min)
@@ -49,6 +49,7 @@ function setTooltip(): void {
             / (this.opts.max - this.opts.min)) * 100 + '% - 7px)' : '1.5rem'
     });
 
+    // $inputMin.off();
     // $inputMin.on({
     //     input: () => {
     //         $tooltipMin.css({
@@ -63,24 +64,26 @@ function setTooltip(): void {
     if (!isPercentTrue) {
         $tooltipMin.text(this.opts.from);
 
-        $inputMin.on('input', () => {
-            $tooltipMin.text(this.opts.from);
-        });
+        // $inputMin.off();
+        // $inputMin.on('input', () => {
+        //     $tooltipMin.text(this.opts.from);
+        // });
     } else {
         $tooltipMin.text(
             Math.trunc((this.opts.from - this.opts.min)
                 / (this.opts.max - this.opts.min) * 100) + '%');
 
-        $inputMin.on('input', () =>
-            $tooltipMin.text(
-                Math.trunc((this.opts.from - this.opts.min)
-                    / (this.opts.max - this.opts.min) * 100) + '%'));
+        // $inputMin.off();
+        // $inputMin.on('input', () =>
+        //     $tooltipMin.text(
+        //         Math.trunc((this.opts.from - this.opts.min)
+        //             / (this.opts.max - this.opts.min) * 100) + '%'));
     }
 
     if (isRangeTrue) {
         const $tooltipMax: JQuery =
             $(this.selectorState + ' ' + ClassName.TOOLTIP_SECOND);
-        const $inputMax: JQuery = $(this.selectorState + ' ' + ClassName.MAX);
+        // const $inputMax: JQuery = $(this.selectorState + ' ' + ClassName.MAX);
 
         $tooltipMax.css({
             left: isVerticalTrue ? 'auto' : (((this.opts.to - this.opts.min)
@@ -89,6 +92,7 @@ function setTooltip(): void {
                 / (this.opts.max - this.opts.min)) * 100) + '% - 7px)' : '1.5rem'
         });
 
+        // $inputMax.off();
         // $inputMax.on({
         //     input: () => {
         //         $tooltipMax.css({
@@ -102,12 +106,14 @@ function setTooltip(): void {
 
         if (!isPercentTrue) {
             $tooltipMax.text(this.opts.to);
+            // $inputMax.off();
             // $inputMax.on('input', () => $tooltipMax.text(this.opts.to));
         } else {
             $tooltipMax.text(
                 Math.trunc((this.opts.to - this.opts.min)
                     / (this.opts.max - this.opts.min) * 100) + '%');
 
+            // $inputMax.off();
             // $inputMax.on('input', () =>
             //     $tooltipMax.text(
             //         Math.trunc((this.opts.to - this.opts.min)

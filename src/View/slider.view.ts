@@ -67,8 +67,10 @@ class View extends Observer {
 
     thumbsUpdate() {
         const ObserveThumbs = this.observeThumbs();
+        const $thumbs: JQuery = $('.js-slider-app__input');
 
-        $('.js-slider-app__input').on('input', (e: JQuery.ChangeEvent) => {
+        $thumbs.off();
+        $thumbs.on('input', (e: JQuery.ChangeEvent) => {
             if ($(e.currentTarget).hasClass('js-slider-app__input-min')) {
                 ObserveThumbs.opts = {
                     ...this.opts,
@@ -81,10 +83,6 @@ class View extends Observer {
                 };
             }
         });
-
-        return () => {
-            $('.js-slider-app__input').off();
-        };
     }
 
     observeThumbs() {
@@ -94,6 +92,7 @@ class View extends Observer {
             $('#slider__control-from').val(option.from);
             $('#slider__control-to').val(option.to);
             this.opts = option;
+
             this.setBar();
             this.setTooltip();
         });

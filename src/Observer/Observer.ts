@@ -1,11 +1,9 @@
 import { ModelOption } from '../utils';
 
-interface IListener {
-    [key: string]: any;
-}
+type IListener = (option: ModelOption) => void;
 
 interface ISubscribers {
-    [key: string]: any;
+    [key: string]: IListener;
 }
 
 class Observer {

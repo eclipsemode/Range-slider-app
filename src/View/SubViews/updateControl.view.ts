@@ -39,9 +39,9 @@ function updateControl(): void {
         });
     });
 
-    $thumbs.on('input', () => {
-        this.setBar();
-    });
+    // $thumbs.on('input', () => {
+    //     this.setBar();
+    // });
 
 }
 

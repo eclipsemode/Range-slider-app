@@ -38,16 +38,16 @@ function updateConfig ():void {
                     break;
                 case TogglesEnum.RANGE:
                     this.opts.range = value;
-                    this.setBar();
+                    // this.setBar();
                     this.setRange();
                     this.setBar();
-                    this.setRulers();
-                    this.setColor();
-                    this.setControl();
-                    this.updateControl();
-                    this.setConfig();
+                    // this.setRulers();
+                    // this.setColor();
+                    // this.setControl();
+                    // this.updateControl();
+                    // this.setConfig();
                     this.setTooltip();
-                    this.setVertical();
+                    // this.setVertical();
 
                     this.thumbsUpdate();
                     break;

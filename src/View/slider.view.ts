@@ -71,12 +71,12 @@ class View extends Observer {
         $('.js-slider-app__input').on('input', (e: JQuery.ChangeEvent) => {
             if ($(e.currentTarget).hasClass('js-slider-app__input-min')) {
                 ObserveThumbs.opts = {
-                    ...this.options,
+                    ...this.opts,
                     from: e.target.value
                 };
             } else {
                 ObserveThumbs.opts = {
-                    ...this.options,
+                    ...this.opts,
                     to: e.target.value
                 };
             }
@@ -93,8 +93,9 @@ class View extends Observer {
         observable.subscribe((option: ModelOption) => {
             $('#slider__control-from').val(option.from);
             $('#slider__control-to').val(option.to);
-
             this.opts = option;
+            this.setBar();
+            this.setTooltip();
         });
 
         return observable;

@@ -12,9 +12,9 @@ function setBar(): void {
     $bar.length === 0 ? bar.getBar() : null;
 
     const $minThumb = $(this.selectorState + ' ' + ClassName.MIN);
-    const minVal: number = this.optionsState.min;
-    const isProgressTrue: boolean = this.optionsState.progress;
-    const isRangeTrue: boolean = this.optionsState.range;
+    const minVal: number = this.opts.min;
+    const isProgressTrue: boolean = this.opts.progress;
+    const isRangeTrue: boolean = this.opts.range;
 
     if (isProgressTrue) {
         $(this.selectorState + ' ' + ClassName.PROGRESS).length === 0
@@ -35,7 +35,8 @@ function setBar(): void {
         $progress.css({
             width: findMinPercent(minVal, +this.opts.from, parseInt($minThumb.attr('max'))),
             height: 100 + '%',
-            left: 0
+            left: 0,
+            right: 0
         });
     }
 }

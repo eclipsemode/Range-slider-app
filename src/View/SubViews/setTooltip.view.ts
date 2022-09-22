@@ -49,16 +49,16 @@ function setTooltip(): void {
             / (this.opts.max - this.opts.min)) * 100 + '% - 7px)' : '1.5rem'
     });
 
-    $inputMin.on({
-        input: () => {
-            $tooltipMin.css({
-                left: isVerticalTrue ? 'auto' : ((this.opts.from - this.opts.min)
-                    / (this.opts.max - this.opts.min)) * 100 + '%',
-                bottom: isVerticalTrue ? 'calc(' + ((this.opts.from - this.opts.min)
-                    / (this.opts.max - this.opts.min)) * 100 + '% - 7px)' : '1.5rem'
-            });
-        }
-    });
+    // $inputMin.on({
+    //     input: () => {
+    //         $tooltipMin.css({
+    //             left: isVerticalTrue ? 'auto' : ((this.opts.from - this.opts.min)
+    //                 / (this.opts.max - this.opts.min)) * 100 + '%',
+    //             bottom: isVerticalTrue ? 'calc(' + ((this.opts.from - this.opts.min)
+    //                 / (this.opts.max - this.opts.min)) * 100 + '% - 7px)' : '1.5rem'
+    //         });
+    //     }
+    // });
 
     if (!isPercentTrue) {
         $tooltipMin.text(this.opts.from);
@@ -89,29 +89,29 @@ function setTooltip(): void {
                 / (this.opts.max - this.opts.min)) * 100) + '% - 7px)' : '1.5rem'
         });
 
-        $inputMax.on({
-            input: () => {
-                $tooltipMax.css({
-                    left: isVerticalTrue ? 'auto' : (((this.opts.to - this.opts.min)
-                        / (this.opts.max - this.opts.min)) * 100) + '%',
-                    bottom: isVerticalTrue ? 'calc(' + (((this.opts.to - this.opts.min)
-                        / (this.opts.max - this.opts.min)) * 100) + '% - 7px)' : '1.5rem'
-                });
-            }
-        });
+        // $inputMax.on({
+        //     input: () => {
+        //         $tooltipMax.css({
+        //             left: isVerticalTrue ? 'auto' : (((this.opts.to - this.opts.min)
+        //                 / (this.opts.max - this.opts.min)) * 100) + '%',
+        //             bottom: isVerticalTrue ? 'calc(' + (((this.opts.to - this.opts.min)
+        //                 / (this.opts.max - this.opts.min)) * 100) + '% - 7px)' : '1.5rem'
+        //         });
+        //     }
+        // });
 
         if (!isPercentTrue) {
             $tooltipMax.text(this.opts.to);
-            $inputMax.on('input', () => $tooltipMax.text(this.opts.to));
+            // $inputMax.on('input', () => $tooltipMax.text(this.opts.to));
         } else {
             $tooltipMax.text(
                 Math.trunc((this.opts.to - this.opts.min)
                     / (this.opts.max - this.opts.min) * 100) + '%');
 
-            $inputMax.on('input', () =>
-                $tooltipMax.text(
-                    Math.trunc((this.opts.to - this.opts.min)
-                        / (this.opts.max - this.opts.min) * 100) + '%'));
+            // $inputMax.on('input', () =>
+            //     $tooltipMax.text(
+            //         Math.trunc((this.opts.to - this.opts.min)
+            //             / (this.opts.max - this.opts.min) * 100) + '%'));
         }
     }
 }

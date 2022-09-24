@@ -61,11 +61,10 @@ class View extends Observer {
         this.updateControl();
         this.setTooltip();
         this.setVertical();
-
-        this.thumbsUpdate();
+        this.thumbsObserver();
     }
 
-    thumbsUpdate() {
+    thumbsObserver() {
         const ObserveThumbs = this.observeThumbs();
         const $thumbs: JQuery = $('.js-slider-app__input');
         const $thumbMin = $(this.selectorState + ' ' + ClassName.MIN);
@@ -101,19 +100,15 @@ class View extends Observer {
 
     observeThumbs() {
         const observable = new Observer(this.opts);
-
         observable.subscribe((option: ModelOption) => {
             $('#slider__control-from').val(option.from);
             $('#slider__control-to').val(option.to);
             this.opts = option;
             this.setBar();
             this.setTooltip();
-            // this.setVertical();
         });
-
         return observable;
     }
-
 }
 
 export default View;

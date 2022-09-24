@@ -5,7 +5,7 @@ import { ControlsEnum } from '../../utils';
 function updateControl(): void {
     const newSelector: string = this.selectorState.slice(1);
 
-    const handleControl = (item: string): void => {
+    const handleControl = (item: string, e: JQuery.ChangeEvent): void => {
         switch (item) {
             case ControlsEnum.MIN:
                 this.setBar();
@@ -24,6 +24,7 @@ function updateControl(): void {
                 this.setTooltip();
                 break;
             case ControlsEnum.FROM:
+                this.opts.from = e.currentTarget.value;
                 this.setBar();
                 this.setTooltip();
                 break;
@@ -36,8 +37,8 @@ function updateControl(): void {
 
     this.opts.controlConfig.forEach((item: string) => {
         const $element: JQuery = $(`#${ newSelector }__control-${ item }`);
-        $element.off('input', () => handleControl(item));
-        $element.on('input', () => handleControl(item));
+        $element.off('input', (e: JQuery.ChangeEvent) => handleControl(item, e));
+        $element.on('input', (e: JQuery.ChangeEvent) => handleControl(item, e));
     });
 }
 

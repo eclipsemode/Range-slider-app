@@ -1,4 +1,4 @@
-import { ClassName, ModelOption } from '../utils';
+import { ClassName, ModelOption, ControlsEnum } from '../utils';
 import Observer from '../Observer/Observer';
 
 import {
@@ -14,6 +14,7 @@ import {
     updateConfig,
     updateControl
 } from './SubViews';
+import $ from 'jquery';
 
 
 class View extends Observer {
@@ -62,6 +63,7 @@ class View extends Observer {
         this.setTooltip();
         this.setVertical();
         this.thumbsObserver();
+        this.controlObserver();
     }
 
     thumbsObserver() {
@@ -98,14 +100,97 @@ class View extends Observer {
         });
     }
 
+    controlObserver() {
+        const ObserveControl = this.observeControl();
+        this.opts.controlConfig.forEach((item: string) => {
+            const $element: JQuery = $(`#${ this.selectorState.slice(1) }__control-${ item }`);
+
+            $element.off();
+            $element.on('input', (e: JQuery.ChangeEvent) => {
+                switch (item) {
+                    case ControlsEnum.MIN:
+                        ObserveControl.opts = {
+                            ...this.opts,
+                            min: +e.target.value
+                        };
+                        break;
+                    case ControlsEnum.MAX:
+                        ObserveControl.opts = {
+                            ...this.opts,
+                            max: +e.target.value
+                        };
+                        break;
+                    case ControlsEnum.STEP:
+                        ObserveControl.opts = {
+                            ...this.opts,
+                            step: +e.target.value
+                        };
+                        break;
+                    case ControlsEnum.FROM:
+                        ObserveControl.opts = {
+                            ...this.opts,
+                            from: +e.target.value
+                        };
+                        break;
+                    case ControlsEnum.TO:
+                        ObserveControl.opts = {
+                            ...this.opts,
+                            to: +e.target.value
+                        };
+                        break;
+                }
+            });
+        });
+    }
+
     observeThumbs() {
         const observable = new Observer(this.opts);
-        observable.subscribe((option: ModelOption) => {
+        observable.subscribe(option => {
             $('#slider__control-from').val(option.from);
             $('#slider__control-to').val(option.to);
             this.opts = option;
             this.setBar();
             this.setTooltip();
+        });
+        return observable;
+    }
+
+    observeControl() {
+        const observable = new Observer(this.opts);
+        const $controlTo = $(`#${ this.selectorState.slice(1) }__control-to`);
+        const $controlFrom = $(`#${ this.selectorState.slice(1) }__control-from`);
+        const $controlMin = $(`#${ this.selectorState.slice(1) }__control-min`);
+        const $controlMax = $(`#${ this.selectorState.slice(1) }__control-max`);
+        const $controlStep = $(`#${ this.selectorState.slice(1) }__control-step`);
+        const $thumbMin = $(this.selectorState + ' ' + ClassName.MIN);
+        const $thumbMax = $(this.selectorState + ' ' + ClassName.MAX);
+
+        observable.subscribe(option => {
+            $thumbMin.val(option.from);
+            $thumbMax.val(option.to);
+            this.opts = {
+                ...option,
+                from: +$(ClassName.MIN).val(),
+                to: +$(ClassName.MAX).val()
+            };
+            $thumbMin.prop({
+                step: this.opts.step
+            });
+            $thumbMax.prop({
+                step: this.opts.step
+            });
+            $controlFrom.prop({
+                step: this.opts.step,
+                value: this.opts.from
+            });
+            $controlTo.prop({
+                step: this.opts.step,
+                value: this.opts.to
+            });
+
+            this.setBar();
+            this.setTooltip();
+            this.setRulers();
         });
         return observable;
     }

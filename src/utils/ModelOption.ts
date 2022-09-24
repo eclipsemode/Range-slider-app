@@ -11,10 +11,10 @@ declare type ModelOption = {
     tooltip: boolean,
     percent: boolean,
     color: {
-        firstColor: string,
-        secondColor: string,
-        textColor: string,
-        thumbColor: string
+        firstColor?: string,
+        secondColor?: string,
+        textColor?: string,
+        thumbColor?: string
     },
     configPanel: boolean,
     controlConfig: string[],

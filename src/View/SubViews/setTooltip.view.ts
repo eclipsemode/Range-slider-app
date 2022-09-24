@@ -46,8 +46,6 @@ function setTooltip(): void {
             / (this.opts.max - this.opts.min)) * 100 + '% - 7px)' : '1.5rem'
     });
 
-    console.log(isVerticalTrue);
-
     if (!isPercentTrue) {
         $tooltipMin.text(this.opts.from);
     } else {

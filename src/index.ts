@@ -4,7 +4,7 @@ import { Slider } from './Controller/slider.controller';
 new Slider('.slider', {
     configPanel: true,
     tooltip: true,
-    range: true,
+    range: false,
     min: -1000
 });
 

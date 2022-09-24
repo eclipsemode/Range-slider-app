@@ -4,7 +4,6 @@ import { ControlsEnum } from '../../utils';
 
 function updateControl(): void {
     const newSelector: string = this.selectorState.slice(1);
-    // const $thumbs = $(this.selectorState + ' ' + ClassName.THUMBS);
 
     this.opts.controlConfig.forEach((item: string) => {
         const element: JQuery = $(`#${ newSelector }__control-${ item }`);
@@ -38,11 +37,6 @@ function updateControl(): void {
             }
         });
     });
-
-    // $thumbs.on('input', () => {
-    //     this.setBar();
-    // });
-
 }
 
 export default updateControl;

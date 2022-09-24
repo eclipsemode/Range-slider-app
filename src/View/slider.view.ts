@@ -108,6 +108,7 @@ class View extends Observer {
             this.opts = option;
             this.setBar();
             this.setTooltip();
+            // this.setVertical();
         });
 
         return observable;

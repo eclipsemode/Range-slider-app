@@ -47,7 +47,7 @@ function updateConfig ():void {
                     // this.updateControl();
                     this.setConfig();
                     this.setTooltip();
-                    // this.setVertical();
+                    this.setVertical();
 
                     this.thumbsUpdate();
                     break;

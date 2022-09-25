@@ -27,11 +27,11 @@ function setControl(): void {
         // const $thumbMax = $(this.selectorState + ' ' + ClassName.MAX);
         // const $thumbs = $(this.selectorState + ' ' + ClassName.THUMBS);
 
-        const $controlTo = $(`#${ newSelector }__control-to`);
-        const $controlFrom = $(`#${ newSelector }__control-from`);
-        const $controlMin = $(`#${ newSelector }__control-min`);
-        const $controlMax = $(`#${ newSelector }__control-max`);
-        const $controlStep = $(`#${ newSelector }__control-step`);
+        const $controlTo = $(`.${ newSelector }__control-to`);
+        const $controlFrom = $(`.${ newSelector }__control-from`);
+        const $controlMin = $(`.${ newSelector }__control-min`);
+        const $controlMax = $(`.${ newSelector }__control-max`);
+        const $controlStep = $(`.${ newSelector }__control-step`);
 
         // $thumbMin.on('input', () => {
         //     if (+$thumbMin.val() > +$thumbMax.val() - this.opts.gap && this.opts.range) {
@@ -152,7 +152,7 @@ function setControl(): void {
         });
 
         this.opts.controlConfig.forEach((item: string) => {
-            $(`#${ newSelector }__control-${ item }`)
+            $(`.${ newSelector }__control-${ item }`)
                 .val(evaluateVarBind(`this.opts.${ item }`));
         });
     }

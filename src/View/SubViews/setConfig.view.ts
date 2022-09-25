@@ -9,9 +9,9 @@ function setConfig() {
     if (isConfigPanelTrue) {
         const newSelector: string = this.selectorState.slice(1);
         const isRangeTrue: boolean = this.opts.range;
-        const $controlTo: JQuery = $(`#${ newSelector }__control-to`);
-        const $toggleTooltip: JQuery = $(`#${ newSelector }__toggle-tooltip`);
-        const $toggleRange: JQuery = $(`#${ newSelector }__toggle-range`);
+        const $controlTo: JQuery = $(`.${ newSelector }__control-to`);
+        const $toggleTooltip: JQuery = $(`.${ newSelector }__toggle-tooltip`);
+        const $toggleRange: JQuery = $(`.${ newSelector }__toggle-range`);
         const $thumbMin: JQuery = $(this.selectorState + ' ' + ClassName.MIN);
         const $thumbMax: JQuery = $(this.selectorState + ' ' + ClassName.MAX);
 
@@ -27,7 +27,7 @@ function setConfig() {
             : $controlTo.prop('disabled', false);
 
         this.opts.toggleConfig.forEach((item: string): void => {
-            $(`#${ newSelector }__toggle-${ item }`)
+            $(`.${ newSelector }__toggle-${ item }`)
                 .attr('checked', evaluateVarBind(`this.optionsState.${ item }`));
         });
     }

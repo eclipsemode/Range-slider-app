@@ -103,7 +103,7 @@ class View extends Observer {
     controlObserver() {
         const ObserveControl = this.observeControl();
         this.opts.controlConfig.forEach((item: string) => {
-            const $element: JQuery = $(`#${ this.selectorState.slice(1) }__control-${ item }`);
+            const $element: JQuery = $(`.${ this.selectorState.slice(1) }__control-${ item }`);
 
             $element.off();
             $element.on('input', (e: JQuery.ChangeEvent) => {
@@ -146,8 +146,8 @@ class View extends Observer {
     observeThumbs() {
         const observable = new Observer(this.opts);
         observable.subscribe(option => {
-            $('#slider__control-from').val(option.from);
-            $('#slider__control-to').val(option.to);
+            $(`${ this.selectorState }__control-from`).val(option.from);
+            $(`${ this.selectorState }__control-to`).val(option.to);
             this.opts = option;
             this.setBar();
             this.setTooltip();
@@ -159,11 +159,11 @@ class View extends Observer {
         const observable = new Observer(this.opts);
 
         observable.subscribe(option => {
-            const $controlTo = $(`#${ this.selectorState.slice(1) }__control-to`);
-            const $controlFrom = $(`#${ this.selectorState.slice(1) }__control-from`);
-            const $controlMin = $(`#${ this.selectorState.slice(1) }__control-min`);
-            const $controlMax = $(`#${ this.selectorState.slice(1) }__control-max`);
-            const $controlStep = $(`#${ this.selectorState.slice(1) }__control-step`);
+            const $controlTo = $(`${ this.selectorState }__control-to`);
+            const $controlFrom = $(`${ this.selectorState }__control-from`);
+            const $controlMin = $(`${ this.selectorState }__control-min`);
+            const $controlMax = $(`${ this.selectorState }__control-max`);
+            const $controlStep = $(`${ this.selectorState }__control-step`);
             const $thumbMin = $(this.selectorState + ' ' + ClassName.MIN);
             const $thumbMax = $(this.selectorState + ' ' + ClassName.MAX);
 

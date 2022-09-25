@@ -44,9 +44,8 @@ class ConfigPanel {
                         </span>
                     </div>
                     <input 
-                    class='slider-app__config-input'
+                    class="slider-app__config-input ${ selector }"
                     type="number" 
-                    id=${ selector } 
                     />
                 </div>`
             );
@@ -67,9 +66,7 @@ class ConfigPanel {
                         ${ name }
                     </label>
                     <label class="slider-app__config-toggle">
-                        <input 
-                        class="slider-app__config-toggle-box" 
-                        type="checkbox" id=${ selector }>
+                        <input class='slider-app__config-toggle-box ${ selector }' type="checkbox">
                         <span class="slider-app__config-toggle-btn js-slider-app__config-toggle-btn"></span>
                     </label>
                 </div>`

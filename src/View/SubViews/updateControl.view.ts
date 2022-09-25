@@ -36,7 +36,7 @@ function updateControl(): void {
     };
 
     this.opts.controlConfig.forEach((item: string) => {
-        const $element: JQuery = $(`#${ newSelector }__control-${ item }`);
+        const $element: JQuery = $(`.${ newSelector }__control-${ item }`);
         $element.off('input', (e: JQuery.ChangeEvent) => handleControl(item, e));
         $element.on('input', (e: JQuery.ChangeEvent) => handleControl(item, e));
     });

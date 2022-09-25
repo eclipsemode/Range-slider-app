@@ -5,8 +5,5 @@ new Slider('.slider', {
     configPanel: true,
     tooltip: true,
     range: false,
-    min: -1000,
-    color: {
-        firstColor: 'blue'
-    }
+    min: -1000
 });

@@ -46,7 +46,7 @@ function updateConfig ():void {
     };
 
     this.optionsState.toggleConfig.forEach((item: string): void => {
-        const $element: JQuery = $(`#${ newSelector }__toggle-${ item }`);
+        const $element: JQuery = $(`.${ newSelector }__toggle-${ item }`);
 
         $element.off('change', () => {
             const value: boolean = $element.prop('checked');

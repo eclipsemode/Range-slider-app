@@ -21,7 +21,7 @@ function setRange(): void {
             ? thumb.getMinThumb(this.opts.min, this.opts.max, this.opts.from, this.opts.step) : null;
         $thumbMax.length === 0
             ? thumb.getMaxThumb(this.opts.min, this.opts.max, this.opts.to, this.opts.step) : null;
-
+        this.opts.to = $(this.selectorState + ' ' + ClassName.MAX).val();
     } else {
         $thumbMax.length !== 0 ? $thumbMax.remove() : null;
         $thumbMin.length === 0

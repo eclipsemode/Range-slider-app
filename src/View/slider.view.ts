@@ -157,28 +157,36 @@ class View extends Observer {
 
     observeControl() {
         const observable = new Observer(this.opts);
-        const $controlTo = $(`#${ this.selectorState.slice(1) }__control-to`);
-        const $controlFrom = $(`#${ this.selectorState.slice(1) }__control-from`);
-        const $controlMin = $(`#${ this.selectorState.slice(1) }__control-min`);
-        const $controlMax = $(`#${ this.selectorState.slice(1) }__control-max`);
-        const $controlStep = $(`#${ this.selectorState.slice(1) }__control-step`);
-        const $thumbMin = $(this.selectorState + ' ' + ClassName.MIN);
-        const $thumbMax = $(this.selectorState + ' ' + ClassName.MAX);
 
         observable.subscribe(option => {
+            const $controlTo = $(`#${ this.selectorState.slice(1) }__control-to`);
+            const $controlFrom = $(`#${ this.selectorState.slice(1) }__control-from`);
+            const $controlMin = $(`#${ this.selectorState.slice(1) }__control-min`);
+            const $controlMax = $(`#${ this.selectorState.slice(1) }__control-max`);
+            const $controlStep = $(`#${ this.selectorState.slice(1) }__control-step`);
+            const $thumbMin = $(this.selectorState + ' ' + ClassName.MIN);
+            const $thumbMax = $(this.selectorState + ' ' + ClassName.MAX);
+
             $thumbMin.val(option.from);
-            $thumbMax.val(option.to);
+            this.opts.range ? $thumbMax?.val(option.to) : null;
             this.opts = {
                 ...option,
-                from: +$(ClassName.MIN).val(),
-                to: +$(ClassName.MAX).val()
+                from: +$thumbMin.val(),
+                to: this.opts.range ? +$thumbMax?.val() : this.opts.to
             };
+
             $thumbMin.prop({
                 step: this.opts.step
             });
-            $thumbMax.prop({
+            this.opts.range ?
+                $thumbMax.prop({
                 step: this.opts.step
-            });
+            }) : null;
+            this.opts = {
+                ...this.opts,
+                from: +$thumbMin.val(),
+                to: this.opts.range ? +$thumbMax?.val() : this.opts.to
+            };
             $controlFrom.prop({
                 step: this.opts.step,
                 value: this.opts.from

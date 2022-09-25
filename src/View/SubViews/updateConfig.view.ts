@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import { TogglesEnum} from '../../utils';
+import {ClassName, TogglesEnum} from '../../utils';
 
 function updateConfig ():void {
     const newSelector: string = this.selectorState.slice(1);

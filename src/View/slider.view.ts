@@ -12,6 +12,11 @@ import {
     setControl,
     setConfig
 } from './SubViews';
+import {
+    observeThumbs,
+    observeControl,
+    observeConfig
+} from '../Observer';
 import $ from 'jquery';
 
 
@@ -27,6 +32,9 @@ class View extends Observer {
     private readonly setVertical: CallableFunction;
     private readonly setControl: CallableFunction;
     private readonly setConfig: CallableFunction;
+    private readonly observeThumbs: CallableFunction;
+    private readonly observeControl: CallableFunction;
+    private readonly observeConfig: CallableFunction;
 
     constructor(private selector: string, private options: ModelOption) {
         super();
@@ -41,6 +49,9 @@ class View extends Observer {
         this.setVertical = setVertical.bind(this);
         this.setControl = setControl.bind(this);
         this.setConfig = setConfig.bind(this);
+        this.observeThumbs = observeThumbs.bind(this);
+        this.observeControl = observeControl.bind(this);
+        this.observeConfig = observeConfig.bind(this);
     }
 
     render(): void {
@@ -192,88 +203,6 @@ class View extends Observer {
                 }
             });
         });
-    }
-
-    observeThumbs() {
-        const observable = new Observer(this.opts);
-        observable.subscribe(option => {
-            $(`${ this.selectorState }__control-from`).val(option.from);
-            $(`${ this.selectorState }__control-to`).val(option.to);
-            this.opts = option;
-            this.setBar();
-            this.setTooltip();
-        });
-        return observable;
-    }
-
-    observeControl() {
-        const observable = new Observer(this.opts);
-
-        observable.subscribe(option => {
-            const $controlTo = $(`${ this.selectorState }__control-to`);
-            const $controlFrom = $(`${ this.selectorState }__control-from`);
-            const $thumbMin = $(this.selectorState + ' ' + ClassName.MIN);
-            const $thumbMax = $(this.selectorState + ' ' + ClassName.MAX);
-
-            $thumbMin.val(option.from);
-            this.opts.range ? $thumbMax?.val(option.to) : null;
-            this.opts = {
-                ...option,
-                from: +$thumbMin.val(),
-                to: this.opts.range ? +$thumbMax?.val() : this.opts.to
-            };
-
-            $thumbMin.prop({
-                step: this.opts.step,
-                min: this.opts.min,
-                max: this.opts.max
-            });
-            this.opts.range ?
-                $thumbMax.prop({
-                    step: this.opts.step,
-                    min: this.opts.min,
-                    max: this.opts.max
-                }) : null;
-            this.opts = {
-                ...this.opts,
-                from: +$thumbMin.val(),
-                to: this.opts.range ? +$thumbMax?.val() : this.opts.to
-            };
-            $controlFrom.prop({
-                step: this.opts.step,
-                value: this.opts.from
-            });
-            $controlTo.prop({
-                step: this.opts.step,
-                value: this.opts.to
-            });
-
-            this.setBar();
-            this.setTooltip();
-            this.setRulers();
-        });
-        return observable;
-    }
-
-    observeConfig() {
-        const observable = new Observer(this.opts);
-
-        observable.subscribe(option => {
-            this.opts = {
-                ...option
-            };
-            this.setRange();
-            this.setBar();
-            this.setControl();
-            this.setConfig();
-            this.setTooltip();
-            this.setRulers();
-            this.setColor();
-            this.setVertical();
-            this.thumbsObserver();
-        });
-
-        return observable;
     }
 }
 

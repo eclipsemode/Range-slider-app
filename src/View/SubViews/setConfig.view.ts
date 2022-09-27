@@ -27,7 +27,7 @@ function setConfig() {
             : $controlTo.prop('disabled', false);
 
         this.opts.toggleConfig.forEach((item: string): void => {
-            $(`.${ newSelector }__toggle-${ item }`)
+            $(`${ this.selectorState }__toggle-${ item }`)
                 .attr('checked', evaluateVarBind(`this.optionsState.${ item }`));
         });
     }

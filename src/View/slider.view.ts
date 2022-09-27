@@ -1,4 +1,4 @@
-import {ClassName, ModelOption, ControlsEnum} from '../utils';
+import {ClassName, ModelOption, ControlsEnum, TogglesEnum} from '../utils';
 import Observer from '../Observer/Observer';
 
 import {
@@ -10,9 +10,7 @@ import {
     setColor,
     setVertical,
     setControl,
-    setConfig,
-    updateConfig,
-    updateControl
+    setConfig
 } from './SubViews';
 import $ from 'jquery';
 
@@ -29,8 +27,6 @@ class View extends Observer {
     private readonly setVertical: CallableFunction;
     private readonly setControl: CallableFunction;
     private readonly setConfig: CallableFunction;
-    private readonly updateConfig: CallableFunction;
-    private readonly updateControl: CallableFunction;
 
     constructor(private selector: string, private options: ModelOption) {
         super();
@@ -45,8 +41,6 @@ class View extends Observer {
         this.setVertical = setVertical.bind(this);
         this.setControl = setControl.bind(this);
         this.setConfig = setConfig.bind(this);
-        this.updateConfig = updateConfig.bind(this);
-        this.updateControl = updateControl.bind(this);
     }
 
     render(): void {
@@ -58,12 +52,11 @@ class View extends Observer {
         this.setColor();
         this.setControl();
         this.setConfig();
-        this.updateConfig();
-        this.updateControl();
         this.setTooltip();
         this.setVertical();
         this.thumbsObserver();
         this.controlObserver();
+        this.configObserver();
     }
 
     thumbsObserver() {
@@ -102,8 +95,8 @@ class View extends Observer {
 
     controlObserver() {
         const ObserveControl = this.observeControl();
-        this.opts.controlConfig.forEach((item: string) => {
-            const $element: JQuery = $(`.${ this.selectorState.slice(1) }__control-${ item }`);
+        this.opts.controlConfig.forEach((item: string): void => {
+            const $element: JQuery = $(`${ this.selectorState }__control-${ item }`);
 
             $element.off();
             $element.on('change', (e: JQuery.ChangeEvent) => {
@@ -157,6 +150,50 @@ class View extends Observer {
         });
     }
 
+    configObserver() {
+        const ObserveConfig = this.observeConfig();
+
+        this.opts.toggleConfig.forEach((item: string): void => {
+            const $element: JQuery = $(`${ this.selectorState }__toggle-${ item }`);
+
+            $element.off();
+            $element.on('change', (e: JQuery.ChangeEvent) => {
+                switch (item) {
+                    case TogglesEnum.VERTICAL:
+                        ObserveConfig.opts = {
+                            ...this.opts,
+                            vertical: e.target.checked
+                        };
+                        break;
+                    case TogglesEnum.RANGE:
+                        ObserveConfig.opts = {
+                            ...this.opts,
+                            range: e.target.checked
+                        };
+                        break;
+                    case TogglesEnum.RULERS:
+                        ObserveConfig.opts = {
+                            ...this.opts,
+                            rulers: e.target.checked
+                        };
+                        break;
+                    case TogglesEnum.PROGRESS:
+                        ObserveConfig.opts = {
+                            ...this.opts,
+                            progress: e.target.checked
+                        };
+                        break;
+                    case TogglesEnum.TOOLTIP:
+                        ObserveConfig.opts = {
+                            ...this.opts,
+                            tooltip: e.target.checked
+                        };
+                        break;
+                }
+            });
+        });
+    }
+
     observeThumbs() {
         const observable = new Observer(this.opts);
         observable.subscribe(option => {
@@ -175,9 +212,6 @@ class View extends Observer {
         observable.subscribe(option => {
             const $controlTo = $(`${ this.selectorState }__control-to`);
             const $controlFrom = $(`${ this.selectorState }__control-from`);
-            const $controlMin = $(`${ this.selectorState }__control-min`);
-            const $controlMax = $(`${ this.selectorState }__control-max`);
-            const $controlStep = $(`${ this.selectorState }__control-step`);
             const $thumbMin = $(this.selectorState + ' ' + ClassName.MIN);
             const $thumbMax = $(this.selectorState + ' ' + ClassName.MAX);
 
@@ -218,6 +252,27 @@ class View extends Observer {
             this.setTooltip();
             this.setRulers();
         });
+        return observable;
+    }
+
+    observeConfig() {
+        const observable = new Observer(this.opts);
+
+        observable.subscribe(option => {
+            this.opts = {
+                ...option
+            };
+            this.setRange();
+            this.setBar();
+            this.setControl();
+            this.setConfig();
+            this.setTooltip();
+            this.setRulers();
+            this.setColor();
+            this.setVertical();
+            this.thumbsObserver();
+        });
+
         return observable;
     }
 }

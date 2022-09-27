@@ -76,8 +76,7 @@ class View extends Observer {
         const $thumbMin = $(this.selectorState + ' ' + ClassName.MIN);
         const $thumbMax = $(this.selectorState + ' ' + ClassName.MAX);
 
-        $thumbs.off();
-        $thumbs.on('input', (e: JQuery.ChangeEvent) => {
+        const handleObserver = (e: JQuery.ChangeEvent) => {
             if ($(e.currentTarget).hasClass('js-slider-app__input-min')) {
                 if (+$thumbMin.val() > +$thumbMax.val() - this.opts.gap && this.opts.range) {
                     +$thumbMax.val() - this.opts.step < +$thumbMax.val() - this.opts.gap
@@ -101,16 +100,19 @@ class View extends Observer {
                     to: +e.target.value
                 };
             }
-        });
+        };
+
+        $thumbs.off('input', handleObserver);
+        $thumbs.on('input', handleObserver);
     }
 
     controlObserver() {
         const ObserveControl = this.observeControl();
+
         this.opts.controlConfig.forEach((item: string): void => {
             const $element: JQuery = $(`${ this.selectorState }__control-${ item }`);
 
-            $element.off();
-            $element.on('change', (e: JQuery.ChangeEvent) => {
+            const handleObserver = (e: JQuery.ChangeEvent) => {
                 const $thumbMin = $(this.selectorState + ' ' + ClassName.MIN);
                 const $thumbMax = $(this.selectorState + ' ' + ClassName.MAX);
                 switch (item) {
@@ -166,7 +168,10 @@ class View extends Observer {
                         };
                         break;
                 }
-            });
+            };
+
+            $element.off('change', handleObserver);
+            $element.on('change', handleObserver);
         });
     }
 
@@ -176,8 +181,7 @@ class View extends Observer {
         this.opts.toggleConfig.forEach((item: string): void => {
             const $element: JQuery = $(`${ this.selectorState }__toggle-${ item }`);
 
-            $element.off();
-            $element.on('change', (e: JQuery.ChangeEvent) => {
+            const handleObserver = (e: JQuery.ChangeEvent) => {
                 switch (item) {
                     case TogglesEnum.VERTICAL:
                         ObserveConfig.opts = {
@@ -210,7 +214,10 @@ class View extends Observer {
                         };
                         break;
                 }
-            });
+            };
+
+            $element.off('change', handleObserver);
+            $element.on('change', handleObserver);
         });
     }
 }

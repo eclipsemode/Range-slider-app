@@ -44,6 +44,7 @@ function observeControl() {
             value: this.opts.to
         });
 
+        this.setControl();
         this.setBar();
         this.setTooltip();
         this.setRulers();

@@ -115,18 +115,27 @@ class View extends Observer {
                 const $thumbMax = $(this.selectorState + ' ' + ClassName.MAX);
                 switch (item) {
                     case ControlsEnum.MIN:
+                        if (+e.target.value > this.opts.max - this.opts.gap) {
+                            e.target.value = this.opts.max - this.opts.gap;
+                        }
                         ObserveControl.opts = {
                             ...this.opts,
                             min: +e.target.value
                         };
                         break;
                     case ControlsEnum.MAX:
+                        if (+e.target.value < this.opts.min + this.opts.gap) {
+                            e.target.value = this.opts.min + this.opts.gap;
+                        }
                         ObserveControl.opts = {
                             ...this.opts,
                             max: +e.target.value
                         };
                         break;
                     case ControlsEnum.STEP:
+                        if (+e.target.value > this.opts.max - this.opts.min) {
+                            e.target.value = this.opts.max - this.opts.min;
+                        }
                         ObserveControl.opts = {
                             ...this.opts,
                             step: +e.target.value

@@ -1,4 +1,4 @@
-import { ClassName, ModelOption, ControlsEnum } from '../utils';
+import {ClassName, ModelOption, ControlsEnum} from '../utils';
 import Observer from '../Observer/Observer';
 
 import {
@@ -75,22 +75,22 @@ class View extends Observer {
         $thumbs.off();
         $thumbs.on('input', (e: JQuery.ChangeEvent) => {
             if ($(e.currentTarget).hasClass('js-slider-app__input-min')) {
-                    if (+$thumbMin.val() > +$thumbMax.val() - this.opts.gap && this.opts.range) {
-                        +$thumbMax.val() - this.opts.step < +$thumbMax.val() - this.opts.gap
-                            ? $thumbMin.val(+$thumbMax.val() - this.opts.step)
-                            : $thumbMin.val(+$thumbMax.val() - this.opts.gap);
-                    }
+                if (+$thumbMin.val() > +$thumbMax.val() - this.opts.gap && this.opts.range) {
+                    +$thumbMax.val() - this.opts.step < +$thumbMax.val() - this.opts.gap
+                        ? $thumbMin.val(+$thumbMax.val() - this.opts.step)
+                        : $thumbMin.val(+$thumbMax.val() - this.opts.gap);
+                }
 
                 ObserveThumbs.opts = {
                     ...this.opts,
                     from: +e.target.value
                 };
             } else {
-                    if (+$thumbMin.val() > +$thumbMax.val() - this.opts.gap) {
-                        +$thumbMin.val() + this.opts.step > +$thumbMin.val() + this.opts.gap
-                            ? $thumbMax.val(+$thumbMin.val() + this.opts.step)
-                            : $thumbMax.val(+$thumbMin.val() + this.opts.gap);
-                    }
+                if (+$thumbMin.val() > +$thumbMax.val() - this.opts.gap) {
+                    +$thumbMin.val() + this.opts.step > +$thumbMin.val() + this.opts.gap
+                        ? $thumbMax.val(+$thumbMin.val() + this.opts.step)
+                        : $thumbMax.val(+$thumbMin.val() + this.opts.gap);
+                }
 
                 ObserveThumbs.opts = {
                     ...this.opts,
@@ -106,7 +106,9 @@ class View extends Observer {
             const $element: JQuery = $(`.${ this.selectorState.slice(1) }__control-${ item }`);
 
             $element.off();
-            $element.on('input', (e: JQuery.ChangeEvent) => {
+            $element.on('change', (e: JQuery.ChangeEvent) => {
+                const $thumbMin = $(this.selectorState + ' ' + ClassName.MIN);
+                const $thumbMax = $(this.selectorState + ' ' + ClassName.MAX);
                 switch (item) {
                     case ControlsEnum.MIN:
                         ObserveControl.opts = {
@@ -127,12 +129,24 @@ class View extends Observer {
                         };
                         break;
                     case ControlsEnum.FROM:
+                        if (+e.target.value > +$thumbMax.val() - this.opts.gap && this.opts.range) {
+                            +$thumbMax.val() - this.opts.step < +$thumbMax.val() - this.opts.gap
+                                ? e.target.value = +$thumbMax.val() - this.opts.step
+                                : e.target.value = +$thumbMax.val() - this.opts.gap;
+                        }
+
                         ObserveControl.opts = {
                             ...this.opts,
                             from: +e.target.value
                         };
                         break;
                     case ControlsEnum.TO:
+                        if (+$thumbMin.val() > +e.target.value - this.opts.gap) {
+                            +$thumbMin.val() + this.opts.step > +$thumbMin.val() + this.opts.gap
+                                ? e.target.value = +$thumbMin.val() + this.opts.step
+                                : e.target.value = +$thumbMin.val() + this.opts.gap;
+                        }
+
                         ObserveControl.opts = {
                             ...this.opts,
                             to: +e.target.value
@@ -176,12 +190,16 @@ class View extends Observer {
             };
 
             $thumbMin.prop({
-                step: this.opts.step
+                step: this.opts.step,
+                min: this.opts.min,
+                max: this.opts.max
             });
             this.opts.range ?
                 $thumbMax.prop({
-                step: this.opts.step
-            }) : null;
+                    step: this.opts.step,
+                    min: this.opts.min,
+                    max: this.opts.max
+                }) : null;
             this.opts = {
                 ...this.opts,
                 from: +$thumbMin.val(),

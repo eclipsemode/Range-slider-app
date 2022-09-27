@@ -9,19 +9,18 @@ function setRange(): void {
     const $thumbMin = $(this.selectorState + ' ' + ClassName.MIN);
     const $thumbMax = $(this.selectorState + ' ' + ClassName.MAX);
 
-    const checkValueThumbs = (from: number, to: number, max: number, gap: number) => {
-        if (to < from + gap) {
-            from + gap > max ? this.opts.from = to - gap : this.opts.to = from + gap;
+    const checkValueThumbs = (from: number, to: number, max: number, gap: number, step: number) => {
+        if (from > to - gap) {
+            to - step > to - gap ? this.opts.from = to - gap : this.opts.from = to - step;
         }
     };
 
     if (isRangeTrue) {
-        checkValueThumbs(this.opts.from, this.opts.to, this.opts.max, this.opts.gap);
+        checkValueThumbs(this.opts.from, this.opts.to, this.opts.max, this.opts.gap, this.opts.step);
         $thumbMin.length === 0
             ? thumb.getMinThumb(this.opts.min, this.opts.max, this.opts.from, this.opts.step) : null;
         $thumbMax.length === 0
             ? thumb.getMaxThumb(this.opts.min, this.opts.max, this.opts.to, this.opts.step) : null;
-        this.opts.to = $(this.selectorState + ' ' + ClassName.MAX).val();
     } else {
         $thumbMax.length !== 0 ? $thumbMax.remove() : null;
         $thumbMin.length === 0

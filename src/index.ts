@@ -7,5 +7,3 @@ new Slider('.slider', {
     // range: false,
     min: -1000
 });
-
-// new Slider('.slider2');

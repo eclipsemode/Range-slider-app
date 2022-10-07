@@ -4,12 +4,13 @@
     height: auto;
     width: calc(100% - 22px);
     left: 10px;
-    bottom: 5px;
+    top: 15.5rem;
 
     &--vertical {
-      height: calc(100% - 22px);
+      height: calc(100% - 22%);
       width: auto;
-      left: 52%;
+      left: 51%;
+      top: 6.1rem;
     }
   }
 

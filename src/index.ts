@@ -4,6 +4,6 @@ import { Slider } from './Controller/slider.controller';
 new Slider('.slider', {
     configPanel: true,
     tooltip: true,
-    range: false,
+    // range: false,
     min: -1000
 });

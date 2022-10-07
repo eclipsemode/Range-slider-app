@@ -1,15 +1,16 @@
 .root {
   width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  height: 0;
+  padding-bottom: 30%;
+  justify-content: center;
   position: relative;
 
   &--vertical {
-    //padding-bottom: 100%;
-    //padding-top: 0 !important;
+    padding-bottom: 100%;
+    padding-top: 0 !important;
   }
 }
 
@@ -20,20 +21,17 @@
 }
 
 .slider-app {
-  position: relative;
+  position: absolute;
   height: 100%;
   width: 100%;
   min-width: auto;
+  bottom: 3em;
+  left: 0;
   display: flex;
-  padding-top: 4rem;
-  padding-bottom: 6rem;
-  align-items: center;
+  align-items: flex-end;
 
   &--vertical {
     bottom: 0;
     align-items: center;
-    padding-top: 5rem;
-    padding-bottom: 7rem;
-    width: 50%;
   }
 }

@@ -2,7 +2,7 @@
   &__rulers {
     position: absolute;
     content: "";
-    bottom: 4.5rem;
+    top: 17rem;
     right: 15px;
     left: 9px;
     height: 15px;
@@ -33,7 +33,7 @@
     &--vertical {
       position: absolute;
       content: "";
-      top: 41%;
+      top: 53%;
       right: -21px;
       left: 48px;
       height: 3%;
@@ -44,7 +44,7 @@
 
   &__rulers-values {
     position: absolute;
-    bottom: 3.5rem;
+    top: 18.5rem;
     left: 0;
     width: 100%;
     display: flex;
@@ -73,7 +73,7 @@
     }
 
     &--vertical {
-      top: 39%;
+      top: 53%;
       left: 70px;
       width: 100%;
       transform: rotate(-90deg);

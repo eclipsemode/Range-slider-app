@@ -65,6 +65,7 @@ class View extends Observer {
         this.setConfig();
         this.setTooltip();
         this.setVertical();
+
         this.thumbsObserver();
         this.controlObserver();
         this.configObserver();

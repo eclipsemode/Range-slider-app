@@ -26,4 +26,20 @@ describe('Abbreviate number function', () => {
             expect(abbreviateNumber(10000000000, 0, 50)).toMatch('5e+9');
         }
     });
+
+    test('Should return value if min < 0', () => {
+        expect(abbreviateNumber(1000, -1000, 50)).toBe('0');
+    });
+
+    test('Should return value if min > 0', () => {
+        expect(abbreviateNumber(2000, 1000, 50)).toBe('1500');
+    });
+
+    test('Should return value if percent === 0', () => {
+        expect(abbreviateNumber(1000, 0, 0)).toBe('0');
+    });
+
+    test('Should return value if percent === 100', () => {
+        expect(abbreviateNumber(1000, 0, 100)).toBe('1000');
+    });
 });

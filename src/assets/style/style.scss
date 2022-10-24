@@ -1,20 +1,85 @@
 @import "variables";
-@import "src/components/mainClass/main-class";
-@import "src/components/configPanel/configPanel";
-@import "src/components/tooltip/tooltip";
-@import "src/components/rulers/rulers";
-@import "src/components/bar/bar";
-@import "src/components/progress/progress";
-@import "src/components/thumb/thumb";
+//@import "src/components/mainClass/main-class";
+//@import "src/components/configPanel/configPanel";
+//@import "src/components/tooltip/tooltip";
+//@import "src/components/rulers/rulers";
+//@import "src/components/bar/bar";
+//@import "src/components/progress/progress";
+//@import "src/components/thumb/thumb";
 
-body {
-  padding: 1rem;
-  height: 100vh;
-  background-color: #35363a;
-  display: flex;
-  justify-content: center;
+html, * {
+  font-size: 10px;
+  box-sizing: border-box;
 }
 
-.first {
+body {
+  //padding: 1rem;
+  //height: 100vh;
+  background-color: #35363a;
+  //display: flex;
+  //justify-content: center;
+  margin: 2rem;
+}
+
+//.first {
+//  width: 500px;
+//}
+
+.cont {
   width: 500px;
+  height: 500px;
+}
+
+.slider-app {
+  width: 100%;
+  height: 100%;
+
+  &__line {
+    width: 100%;
+    height: 8px;
+    background: rgba(0,0,0,.2);
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 100%;
+      width: 10px;
+      height: 8px;
+      background: rgba(0,0,0,.2);
+      border-radius: 6px 0 0 6px;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 100%;
+      width: 10px;
+      height: 8px;
+      background: rgba(0,0,0,.2);
+      border-radius: 0 6px 6px 0;
+    }
+  }
+
+  &__thumb-min {
+    width: 2.5em;
+    height: 2.5em;
+    background: $gr-main;
+    position: absolute;
+    top: 0.4em;
+    left: 0;
+    z-index: 1;
+    border: 8px solid $thumb;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    transition: border ease-in-out 0.1s;
+    transform: translate(-50%, -50%);
+
+    &:hover {
+      border: 6px solid $thumb;
+    }
+  }
 }

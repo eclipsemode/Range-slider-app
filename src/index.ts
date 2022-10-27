@@ -15,8 +15,12 @@ const thumbMin: JQuery = $('.slider-app__thumb-min');
 thumbMin.on('mousedown', (e) => {
 
     thumbMin.on('dragstart', () => false);
+
     function moveAt(e: MouseMoveEvent | MouseDownEvent) {
-        thumbMin.css('left', e.pageX - thumbMin.width() + '%');
+        const percent: string = (e.pageX - thumbMin.width() / 2 - 13) / 500 * 100 + '%';
+        if (parseInt(percent) <= 100 && parseInt(percent) >=0) {
+            thumbMin.css('left', percent);
+        }
     }
 
     moveAt(e);

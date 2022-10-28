@@ -10,7 +10,9 @@ import MouseDownEvent = JQuery.MouseDownEvent;
 //     min: -1000
 // });
 
+
 const thumbMin: JQuery = $('.slider-app__thumb-min');
+const bar: JQuery = $('.slider-app__line');
 
 thumbMin.on('mousedown', (e) => {
     const sliderWidth: number = e.target.parentElement.offsetWidth;
@@ -18,21 +20,20 @@ thumbMin.on('mousedown', (e) => {
     thumbMin.on('dragstart', () => false);
 
     function moveAt(e: MouseMoveEvent | MouseDownEvent) {
-        // const percent: number = parseInt(
-        //     String((e.pageX - thumbMin.width() / 2 - thumbMin.width()) / sliderWidth * 100));
-        // if (e.pageX > 530) {
-        //     percent = 100;
-        // }
-        // if (percent <= 100 && percent >= 0) {
-        //     thumbMin.css('left', percent + '%');
-        //     thumbMin.attr('data-value', percent + '%');
-        // }
-        console.log(e.offsetX);
-        const percent: number = e.offsetX / sliderWidth * 100;
-        if (e.offsetX <= 500 && e.offsetX >= 0) {
-            thumbMin.css('left', percent + '%');
-            thumbMin.attr('data-value', percent + '%');
+        const min: number = bar.offset().left;
+        const max: number = bar.offset().left + sliderWidth;
+
+        let percent: number = (e.pageX - min) / sliderWidth * 100;
+
+        if (e.pageX <= max && e.pageX >= min) {
+            percent = (e.pageX - min) / sliderWidth * 100;
+        } else if (e.pageX >= max) {
+            percent = 100;
+        } else if (e.pageX <= min) {
+            percent = 0;
         }
+        thumbMin.css('left', percent + '%');
+        thumbMin.attr('data-value', percent + '%');
     }
 
     moveAt(e);

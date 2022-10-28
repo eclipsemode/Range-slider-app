@@ -13,21 +13,31 @@ import MouseDownEvent = JQuery.MouseDownEvent;
 const thumbMin: JQuery = $('.slider-app__thumb-min');
 
 thumbMin.on('mousedown', (e) => {
+    const sliderWidth: number = e.target.parentElement.offsetWidth;
 
     thumbMin.on('dragstart', () => false);
 
     function moveAt(e: MouseMoveEvent | MouseDownEvent) {
-        const percent: string = (e.pageX - thumbMin.width() / 2 - 13) / 500 * 100 + '%';
-        if (parseInt(percent) <= 100 && parseInt(percent) >=0) {
-            thumbMin.css('left', percent);
+        // const percent: number = parseInt(
+        //     String((e.pageX - thumbMin.width() / 2 - thumbMin.width()) / sliderWidth * 100));
+        // if (e.pageX > 530) {
+        //     percent = 100;
+        // }
+        // if (percent <= 100 && percent >= 0) {
+        //     thumbMin.css('left', percent + '%');
+        //     thumbMin.attr('data-value', percent + '%');
+        // }
+        console.log(e.offsetX);
+        const percent: number = e.offsetX / sliderWidth * 100;
+        if (e.offsetX <= 500 && e.offsetX >= 0) {
+            thumbMin.css('left', percent + '%');
+            thumbMin.attr('data-value', percent + '%');
         }
     }
 
     moveAt(e);
 
-    $(document).on('mousemove', (e) => {
-        moveAt(e);
-    });
+    $(document).on('mousemove', e => moveAt(e));
 
     thumbMin.on('mouseup', () => {
         $(document).off('mousemove');

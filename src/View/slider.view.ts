@@ -69,8 +69,6 @@ class View extends Observer {
         this.thumbsObserver();
         this.controlObserver();
         this.configObserver();
-
-        console.log(abbreviateNumber(2000, 1000, 0));
     }
 
     thumbsObserver() {

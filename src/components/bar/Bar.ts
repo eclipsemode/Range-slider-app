@@ -9,7 +9,7 @@ class Bar {
 
     public getBar(): JQuery {
         return $('<div>', {
-            class: 'slider-app__bar-line js-slider-app__bar-line'
+            class: 'slider-app__line js-slider-app__line'
         }).appendTo(`${ this.selector } .slider-app`);
     }
 }

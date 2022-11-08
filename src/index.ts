@@ -14,26 +14,30 @@ import MouseDownEvent = JQuery.MouseDownEvent;
 const thumbMin: JQuery = $('.slider-app__thumb-min');
 const bar: JQuery = $('.slider-app__line');
 
+function barCalc(e: JQuery.MouseEventBase, sliderWidth: number) {
+    const min: number = bar.offset().left;
+    const max: number = bar.offset().left + sliderWidth;
+
+    let percent: number = (e.pageX - min) / sliderWidth * 100;
+
+    if (e.pageX <= max && e.pageX >= min) {
+        percent = (e.pageX - min) / sliderWidth * 100;
+    } else if (e.pageX >= max) {
+        percent = 100;
+    } else if (e.pageX <= min) {
+        percent = 0;
+    }
+    return percent;
+}
+
 thumbMin.on('mousedown', (e) => {
     const sliderWidth: number = e.target.parentElement.offsetWidth;
 
     thumbMin.on('dragstart', () => false);
 
     function moveAt(e: MouseMoveEvent | MouseDownEvent) {
-        const min: number = bar.offset().left;
-        const max: number = bar.offset().left + sliderWidth;
-
-        let percent: number = (e.pageX - min) / sliderWidth * 100;
-
-        if (e.pageX <= max && e.pageX >= min) {
-            percent = (e.pageX - min) / sliderWidth * 100;
-        } else if (e.pageX >= max) {
-            percent = 100;
-        } else if (e.pageX <= min) {
-            percent = 0;
-        }
-        thumbMin.css('left', percent + '%');
-        thumbMin.attr('data-value', percent + '%');
+        thumbMin.css('left', Math.ceil(barCalc(e, sliderWidth)) + '%');
+        thumbMin.attr('data-value', Math.ceil(barCalc(e, sliderWidth)) + '%');
     }
 
     moveAt(e);
@@ -55,30 +59,11 @@ thumbMin.on('mousedown', (e) => {
 
 function barLine() {
     const $bar = $('.slider-app__fill');
-
     thumbMin.on('mousedown', (e) => {
         const sliderWidth: number = e.target.parentElement.offsetWidth;
         $(document).on('mousemove', (e) => {
-            // const styleValues: string = $('.slider-app__thumb-min').attr('style');
-            // const styleArr: string[] = styleValues.split(';');
-
-            const min: number = bar.offset().left;
-            const max: number = bar.offset().left + sliderWidth;
-
-            let percent: number = (e.pageX - min) / sliderWidth * 100;
-
-            if (e.pageX <= max && e.pageX >= min) {
-                percent = (e.pageX - min) / sliderWidth * 100;
-            } else if (e.pageX >= max) {
-                percent = 100;
-            } else if (e.pageX <= min) {
-                percent = 0;
-            }
-
-            console.log(percent);
-            $bar.css('width', percent + '%');
+            $bar.css('width', Math.ceil(barCalc(e, sliderWidth)) + '%');
         });
-        // thumbMin.off('mousedown mousemove');
     });
 }
 

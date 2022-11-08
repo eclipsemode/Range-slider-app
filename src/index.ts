@@ -43,7 +43,7 @@ thumbMin.on('mousedown', (e) => {
     thumbMin.on('mouseleave', () => {
         $(document).on('mouseup', () => {
             $(document).off('mousemove');
-            thumbMin.off('mouseup');
+            $(document).off('mouseup');
             thumbMin.off('mouseleave');
         });
     });
@@ -52,3 +52,34 @@ thumbMin.on('mousedown', (e) => {
         thumbMin.off('mouseup');
     });
 });
+
+function barLine() {
+    const $bar = $('.slider-app__fill');
+
+    thumbMin.on('mousedown', (e) => {
+        const sliderWidth: number = e.target.parentElement.offsetWidth;
+        $(document).on('mousemove', (e) => {
+            // const styleValues: string = $('.slider-app__thumb-min').attr('style');
+            // const styleArr: string[] = styleValues.split(';');
+
+            const min: number = bar.offset().left;
+            const max: number = bar.offset().left + sliderWidth;
+
+            let percent: number = (e.pageX - min) / sliderWidth * 100;
+
+            if (e.pageX <= max && e.pageX >= min) {
+                percent = (e.pageX - min) / sliderWidth * 100;
+            } else if (e.pageX >= max) {
+                percent = 100;
+            } else if (e.pageX <= min) {
+                percent = 0;
+            }
+
+            console.log(percent);
+            $bar.css('width', percent + '%');
+        });
+        // thumbMin.off('mousedown mousemove');
+    });
+}
+
+barLine();

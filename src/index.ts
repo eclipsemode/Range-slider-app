@@ -40,6 +40,13 @@ thumbMin.on('mousedown', (e) => {
 
     $(document).on('mousemove', e => moveAt(e));
 
+    thumbMin.on('mouseleave', () => {
+        $(document).on('mouseup', () => {
+            $(document).off('mousemove');
+            thumbMin.off('mouseup');
+            thumbMin.off('mouseleave');
+        });
+    });
     thumbMin.on('mouseup', () => {
         $(document).off('mousemove');
         thumbMin.off('mouseup');

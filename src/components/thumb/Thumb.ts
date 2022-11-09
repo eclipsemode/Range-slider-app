@@ -8,25 +8,25 @@ class Thumb {
     }
 
     getMinThumb(min: number, max: number, value: number, step: number): JQuery {
-        return $('<input>', {
-            class: 'slider-app__input js-slider-app__input slider-app__input-min js-slider-app__input-min',
+        return $('<div>', {
+            class: 'slider-app__thumb js-slider-app__thumb slider-app__thumb-min js-slider-app__thumb-min',
             type: 'range',
             min: min,
             max: max,
             value: value,
             step: step
-        }).appendTo(`${ this.selector } .slider-app__bar-line`);
+        }).appendTo(`${ this.selector } .slider-app__line`);
     }
 
     getMaxThumb(min: number, max: number, value: number, step: number): JQuery {
-        return $('<input>', {
-            class: 'slider-app__input js-slider-app__input slider-app__input-max js-slider-app__input-max',
+        return $('<div>', {
+            class: 'slider-app__thumb js-slider-app__thumb slider-app__thumb-max js-slider-app__thumb-max',
             type: 'range',
             min: min,
             max: max,
             value: value,
             step: step
-        }).appendTo(`${ this.selector } .slider-app__bar-line`);
+        }).appendTo(`${ this.selector } .slider-app__line`);
     }
 
 }

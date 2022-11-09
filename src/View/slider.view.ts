@@ -41,17 +41,17 @@ class View extends Observer {
         this.selectorState = selector;
         this.optionsState = options;
         this.setSlider = setSlider.bind(this);
-        this.setRulers = setRulers.bind(this);
+        // this.setRulers = setRulers.bind(this);
         this.setRange = setRange.bind(this);
         this.setBar = setBar.bind(this);
-        this.setTooltip = setTooltip.bind(this);
-        this.setColor = setColor.bind(this);
-        this.setVertical = setVertical.bind(this);
-        this.setControl = setControl.bind(this);
-        this.setConfig = setConfig.bind(this);
-        this.observeThumbs = observeThumbs.bind(this);
-        this.observeControl = observeControl.bind(this);
-        this.observeConfig = observeConfig.bind(this);
+        // this.setTooltip = setTooltip.bind(this);
+        // this.setColor = setColor.bind(this);
+        // this.setVertical = setVertical.bind(this);
+        // this.setControl = setControl.bind(this);
+        // this.setConfig = setConfig.bind(this);
+        // this.observeThumbs = observeThumbs.bind(this);
+        // this.observeControl = observeControl.bind(this);
+        // this.observeConfig = observeConfig.bind(this);
     }
 
     render(): void {
@@ -59,16 +59,16 @@ class View extends Observer {
         this.setSlider();
         this.setBar();
         this.setRange();
-        this.setRulers();
-        this.setColor();
-        this.setControl();
-        this.setConfig();
-        this.setTooltip();
-        this.setVertical();
+        // this.setRulers();
+        // this.setColor();
+        // this.setControl();
+        // this.setConfig();
+        // this.setTooltip();
+        // this.setVertical();
 
-        this.thumbsObserver();
-        this.controlObserver();
-        this.configObserver();
+        // this.thumbsObserver();
+        // this.controlObserver();
+        // this.configObserver();
     }
 
     thumbsObserver() {

@@ -1,10 +1,10 @@
 @import "variables";
-//@import "src/components/mainClass/main-class";
+@import "src/components/mainClass/main-class";
 //@import "src/components/configPanel/configPanel";
 //@import "src/components/tooltip/tooltip";
 //@import "src/components/rulers/rulers";
 @import "src/components/bar/bar";
-//@import "src/components/progress/progress";
+@import "src/components/progress/progress";
 @import "src/components/thumb/thumb";
 
 html, * {
@@ -13,33 +13,14 @@ html, * {
 }
 
 body {
-  //padding: 1rem;
-  //height: 100vh;
+  padding: 1rem;
   background-color: #35363a;
-  //display: flex;
-  //justify-content: center;
   margin: 2rem;
   display: flex;
   justify-content: center;
 }
 
-//.first {
-//  width: 500px;
-//}
-
-.cont {
+.first {
   width: 500px;
   height: 500px;
-}
-
-.slider-app {
-  width: 100%;
-  height: 100%;
-}
-
-.slider-app__fill {
-  width: 0%;
-  height: 100%;
-  overflow: hidden;
-  background-image: linear-gradient(90deg, rgb(255, 229, 59) 0%, rgb(255, 37, 37) 100%);
 }

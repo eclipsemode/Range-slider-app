@@ -1,9 +1,9 @@
 enum ClassName {
-    THUMBS = '.js-slider-app__input',
-    MIN = '.js-slider-app__input-min',
-    MAX = '.js-slider-app__input-max',
+    THUMBS = '.js-slider-app__thumb',
+    MIN = '.js-slider-app__thumb-min',
+    MAX = '.js-slider-app__thumb-max',
     PROGRESS = '.js-slider-app__progress',
-    BAR_LINE = '.js-slider-app__bar-line',
+    BAR_LINE = '.js-slider-app__line',
     CONFIG = '.js-slider-app__config',
     RULERS = '.js-slider-app__rulers',
     RULERS_VALUES = '.js-slider-app__rulers-values',

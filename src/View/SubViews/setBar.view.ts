@@ -13,7 +13,6 @@ function setBar(): void {
 
     $bar.length === 0 ? bar.getBar() : null;
 
-
     if (isProgressTrue) {
         $(this.selectorState + ' ' + ClassName.PROGRESS).length === 0
             ? progress.getProgress()
@@ -28,6 +27,13 @@ function setBar(): void {
         //     right: findMaxPercent(minVal, +this.opts.to, +this.opts.max)
         // });
     } else {
+        $(this.selectorState + ' ' + ClassName.BAR_LINE).on('click', (e) => {
+            if (e.currentTarget || e.target.classList.contains(ClassName.PROGRESS)) {
+                $(this.selectorState + ' ' + ClassName.MIN).css('left', e.offsetX);
+                $(this.selectorState + ' ' + ClassName.PROGRESS).width(e.offsetX);
+
+            }
+});
         // $progress.css({
         //     width: findMinPercent(minVal, +this.opts.from, parseInt($minThumb.attr('max'))),
         //     height: 100 + '%',

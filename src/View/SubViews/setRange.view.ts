@@ -38,10 +38,10 @@ function setRange(): void {
 
             $thumbMin.on('dragstart', () => false);
 
-            function moveAt(e: JQuery.MouseMoveEvent | JQuery.MouseDownEvent) {
-                $thumbMin.css('left', Math.ceil(progressCalc(e, sliderWidth, $barLine)) + '%');
-                $thumbMin.attr('data-value', Math.ceil(progressCalc(e, sliderWidth, $barLine)) + '%');
-            }
+            const moveAt = (e: JQuery.MouseMoveEvent | JQuery.MouseDownEvent) => {
+                this.opts.from = Math.ceil(progressCalc(e, sliderWidth, $barLine)) + '%';
+                $thumbMin.css('left', this.opts.from);
+            };
 
             moveAt(e);
 
@@ -61,10 +61,9 @@ function setRange(): void {
         });
 
         if (isProgressTrue) {
-            $thumbMin.on('mousedown', (e) => {
-                const sliderWidth: number = e.target.parentElement.offsetWidth;
-                $(document).on('mousemove', (e) => {
-                    $progress.css('width', Math.ceil(progressCalc(e, sliderWidth, $barLine)) + '%');
+            $thumbMin.on('mousedown', () => {
+                $(document).on('mousemove', () => {
+                    $progress.css('width', this.opts.from);
                 });
             });
         }

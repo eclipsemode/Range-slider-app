@@ -28,15 +28,16 @@ function setBar(): void {
         // });
     } else {
         $(this.selectorState + ' ' + ClassName.BAR_LINE).on('click', (e) => {
+            const sliderWidth: number = e.target.parentElement.offsetWidth;
 
             if (e.currentTarget || e.target.classList.contains(ClassName.PROGRESS.slice(1))) {
                 if (e.target.classList.contains(ClassName.THUMBS.slice(1))) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    $(ClassName.PROGRESS).width($(ClassName.MIN).css('left'));
+                    $(ClassName.PROGRESS).width(this.opts.from);
                 } else {
-                    $(this.selectorState + ' ' + ClassName.MIN).css('left', e.offsetX);
-                    $(this.selectorState + ' ' + ClassName.PROGRESS).width(e.offsetX);
+                    $(this.selectorState + ' ' + ClassName.MIN)
+                        .css('left', e.offsetX / sliderWidth * 100 + '%');
+                    $(this.selectorState + ' ' + ClassName.PROGRESS)
+                        .width(e.offsetX / sliderWidth * 100 + '%');
                 }
             }
         });

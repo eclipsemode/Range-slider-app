@@ -1,8 +1,8 @@
 import $ from 'jquery';
 
-import { Bar, Progress } from '../../components';
+import {Bar, Progress} from '../../components';
 
-import { findMaxPercent, findMinPercent, ClassName, progressCalc } from '../../utils';
+import {findMaxPercent, findMinPercent, ClassName, progressCalc} from '../../utils';
 
 function setBar(): void {
     const bar: Bar = new Bar(this.selectorState);
@@ -28,12 +28,19 @@ function setBar(): void {
         // });
     } else {
         $(this.selectorState + ' ' + ClassName.BAR_LINE).on('click', (e) => {
-            if (e.currentTarget || e.target.classList.contains(ClassName.PROGRESS)) {
-                $(this.selectorState + ' ' + ClassName.MIN).css('left', e.offsetX);
-                $(this.selectorState + ' ' + ClassName.PROGRESS).width(e.offsetX);
 
+            if (e.currentTarget || e.target.classList.contains(ClassName.PROGRESS.slice(1))) {
+                if (e.target.classList.contains(ClassName.THUMBS.slice(1))) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    $(ClassName.PROGRESS).width($(ClassName.MIN).css('left'));
+                } else {
+                    $(this.selectorState + ' ' + ClassName.MIN).css('left', e.offsetX);
+                    $(this.selectorState + ' ' + ClassName.PROGRESS).width(e.offsetX);
+                }
             }
-});
+        });
+
         // $progress.css({
         //     width: findMinPercent(minVal, +this.opts.from, parseInt($minThumb.attr('max'))),
         //     height: 100 + '%',

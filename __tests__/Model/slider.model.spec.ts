@@ -1,4 +1,4 @@
-import Model from '../../src/Model/slider.model';
+import Model from '../../src/Model';
 import { ModelOption } from '../../src/utils';
 
 describe('Model test', () => {

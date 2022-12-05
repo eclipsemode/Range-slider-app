@@ -1,7 +1,7 @@
 import { ModelOption } from '../utils';
 
-import View from '../View/slider.view';
-import Model from '../Model/slider.model';
+import View from '../View';
+import Model from '../Model';
 import Observer from '../Observer/Observer';
 
 class Controller extends Observer {

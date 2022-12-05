@@ -1,4 +1,4 @@
-function progressCalc(e: JQuery.MouseEventBase, sliderWidth: number, bar: JQuery) {
+function progressCalc(e: JQuery.MouseEventBase, sliderWidth: number, bar: JQuery): number {
     const min: number = bar.offset().left;
     const max: number = bar.offset().left + sliderWidth;
 

@@ -1,4 +1,4 @@
-import { Slider } from '../../src/Controller/slider.controller';
+import { Slider } from '../../src/Controller';
 import $ from 'jquery';
 
 describe('Testing Controller', () => {

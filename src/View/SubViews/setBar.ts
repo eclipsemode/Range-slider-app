@@ -28,11 +28,11 @@ function setBar(): void {
         // });
     } else {
         $(this.selectorState + ' ' + ClassName.BAR_LINE).on('click', (e) => {
-            const sliderWidth: number = e.target.parentElement.offsetWidth;
+            const sliderWidth: number = $(`${ this.selectorState } .js-slider-app__line`).innerWidth();
 
             if (e.currentTarget || e.target.classList.contains(ClassName.PROGRESS.slice(1))) {
                 if (e.target.classList.contains(ClassName.THUMBS.slice(1))) {
-                    $(ClassName.PROGRESS).width(this.opts.from);
+                    $(ClassName.PROGRESS).width((this.opts.from + this.opts.max) / (this.opts.max - this.opts.min) * 100 + '%');
                 } else {
                     $(this.selectorState + ' ' + ClassName.MIN)
                         .css('left', e.offsetX / sliderWidth * 100 + '%');

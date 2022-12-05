@@ -46,10 +46,11 @@ module.exports = {
             },
             {
                 test: /\.pug$/,
-                loader: 'pug-loader',
+                loader: '@webdiscus/pug-loader',
                 options: {
-                    pretty: true,
-                }
+                    basedir: path.resolve(__dirname, 'src'),
+                    pretty: true
+                },
             },
             {
                 test: /\.s[ac]ss|css$/i,

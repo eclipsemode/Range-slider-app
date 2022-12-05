@@ -1,11 +1,11 @@
-import $ from 'jquery';
+import $ from "jquery";
 
-import { MainClass } from '../../components';
+import { CreateMainClass } from "../../components";
 
 function setSlider(): void {
-    const mainClass: MainClass = new MainClass(this.selectorState);
-    mainClass.getMainClass();
-    $(this.selectorState).addClass('root');
+  const mainClass: CreateMainClass = new CreateMainClass(this.selectorState);
+  mainClass.getMainClass();
+  $(this.selectorState).addClass("root");
 }
 
 export default setSlider;

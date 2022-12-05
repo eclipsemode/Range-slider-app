@@ -1,14 +1,14 @@
-import $ from 'jquery';
+import $ from "jquery";
 
-class Rulers {
-    private readonly selector: string;
+class CreateRulers {
+  private readonly selector: string;
 
-    constructor(selector: string) {
-        this.selector = selector;
-    }
+  constructor(selector: string) {
+    this.selector = selector;
+  }
 
-    getRulers(): JQuery {
-        return $(`
+  getRulers(): JQuery {
+    return $(`
             <div class="slider-app__rulers js-slider-app__rulers"></div>
                 <div class="slider-app__rulers-values js-slider-app__rulers-values">
                     <div class="slider-app__rulers-values--0"><span>0</span></div>
@@ -18,8 +18,8 @@ class Rulers {
                     <div class="slider-app__rulers-values--80"><span>80</span></div>
                     <div class="slider-app__rulers-values--100"><span>100</span></div>
                 </div>
-        `).prependTo(`${ this.selector } .slider-app`);
-    }
+        `).prependTo(`${this.selector} .slider-app`);
+  }
 }
 
-export default Rulers;
+export default CreateRulers;

@@ -1,4 +1,3 @@
-import { Slider } from "./Controller";
 import Controller from "./Controller";
 
 // eslint-disable-next-line no-new

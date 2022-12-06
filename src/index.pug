@@ -5,20 +5,8 @@ html(lang="ru")
         meta(http-equiv="X-UA-Compatible", content="IE=edge")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         title Range Slider App
-        
-        //- load source images in Pug via require()
         link(rel="shortcut icon" href=require("./assets/favicon.ico") type="image/x-icon")
-        
-        //- load source styles in Pug via require()
         link(href=require('./assets/style/style.scss') rel='stylesheet')
-        
-        //- load source images in Pug via require()
-        link(rel="shortcut icon" href=require("./assets/favicon.ico") type="image/x-icon")
-
-        //- load source styles in Pug via require()
-        link(href=require('./assets/style/style.scss') rel='stylesheet')
-
-        //- load source scripts in Pug via require()
         script(src=require('./index.ts') defer="defer")
     body
         .first

@@ -12,7 +12,7 @@ module.exports = (env, argv) => {
     entry: {
       // using pug-plugin the entry-point is Pug file
       // all assets (images, scss, ts, ...) must be loaded directly in Pug via require()
-      index: "index.pug", // => dist/index.html
+      index: "index.pug",
     },
     output: {
       filename: "assets/js/[name].bundle.[contenthash:8].js",
@@ -22,9 +22,8 @@ module.exports = (env, argv) => {
     devtool: "inline-source-map",
     plugins: [
       new PugPlugin({
-        pretty: isDev, // formatting of HTML for dev mode
+        pretty: isDev,
         extractCss: {
-          // output filename of CSS
           filename: "assets/css/[name].[contenthash:8].css",
         },
       }),
@@ -43,10 +42,9 @@ module.exports = (env, argv) => {
         },
         {
           test: /\.pug$/,
-          loader: PugPlugin.loader, // the @webdiscus/pug-loader is already included in pug-plugin
+          loader: PugPlugin.loader,
           options: {
             basedir: path.resolve(__dirname, "src"),
-            // pretty: true, // DEPRECATED, not works here
           },
         },
         {
@@ -72,7 +70,6 @@ module.exports = (env, argv) => {
       },
       compress: true,
       open: true, // open in default browser
-      // enable HMR for Pug, scss, ts, etc..
       watchFiles: {
         paths: ["src/**/*.*"],
         options: {

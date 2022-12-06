@@ -1,4 +1,4 @@
-import "./assets/style/style.scss";
+// load "./assets/style/style.scss" file directly in Pug via require()
 import { Slider } from "./Controller";
 
 // eslint-disable-next-line no-new

@@ -1,8 +1,7 @@
-import "./assets/style/style.scss";
-import { Slider } from "./Controller";
+import Controller from "./Controller";
 
 // eslint-disable-next-line no-new
-new Slider(".slider", {
+new Controller(".slider", {
   configPanel: true,
   tooltip: true,
   range: false,

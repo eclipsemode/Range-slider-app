@@ -1,14 +1,14 @@
-import { Slider } from '../../src/Controller';
-import $ from 'jquery';
+import $ from "jquery";
+import Controller from "../../src/Controller";
 
-describe('Testing Controller', () => {
-    test('Should exists', () => {
-        $('<div>', {
-            class: 'test'
-        }).appendTo('body');
+describe("Testing Controller", () => {
+  test("Should exists", () => {
+    $("<div>", {
+      class: "test",
+    }).appendTo("body");
 
-        new Slider('.test');
+    new Controller(".test");
 
-        expect($('.test')).toHaveLength(1);
-    });
+    expect($(".test")).toHaveLength(1);
+  });
 });

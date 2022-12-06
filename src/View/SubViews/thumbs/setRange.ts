@@ -1,8 +1,8 @@
 import $ from "jquery";
 
-import { CreateThumb } from "../../components";
-import { ClassName, progressCalc } from "../../utils";
-import offsetCalc from "../../utils/offsetCalc";
+import CreateThumb from "./CreateThumb";
+import { ClassName, progressCalc } from "../../../utils";
+import offsetCalc from "../../../utils/offsetCalc";
 
 function calcMouseOffset(mouseOffset: number, sliderWidth: number): number {
   if (mouseOffset < 0) {

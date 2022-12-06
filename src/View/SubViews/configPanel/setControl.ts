@@ -1,8 +1,8 @@
 import $ from "jquery";
 
-import { CreateConfigPanel } from "../../components";
+import CreateConfigPanel from "./CreateConfigPanel";
 
-import { ClassName, evaluateVar } from "../../utils";
+import { ClassName, evaluateVar } from "../../../utils";
 
 function setControl(): void {
   const configPanel: CreateConfigPanel = new CreateConfigPanel(

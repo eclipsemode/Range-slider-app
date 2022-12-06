@@ -1,13 +1,14 @@
 import $ from "jquery";
 
-import { CreateBar, CreateProgress } from "../../components";
+import CreateBar from "./CreateBar";
+import CreateProgress from "./CreateProgress";
 
 import {
   findMaxPercent,
   findMinPercent,
   ClassName,
   progressCalc,
-} from "../../utils";
+} from "../../../utils";
 
 function setBar(): void {
   const bar: CreateBar = new CreateBar(this.selectorState);

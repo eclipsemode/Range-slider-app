@@ -1,11 +1,11 @@
 @import "variables";
-@import "src/components/mainClass/CreateMainClass";
-@import "src/components/configPanel/CreateConfigPanel";
+@import "src/view/SubViews/mainClass/CreateMainClass";
+@import "src/view/SubViews/configPanel/CreateConfigPanel";
 //@import "src/components/tooltip/tooltip";
 //@import "src/components/rulers/rulers";
-@import "src/components/bar/CreateBar";
-@import "src/components/progress/CreateProgress";
-@import "src/components/thumb/CreateThumb";
+@import "src/view/SubViews/bar/CreateBar";
+@import "src/view/SubViews/bar/CreateProgress";
+@import "src/view/SubViews/thumbs/CreateThumb";
 
 html, * {
   font-size: 10px;

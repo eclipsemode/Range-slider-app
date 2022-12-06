@@ -1,7 +1,7 @@
 import $ from "jquery";
 
-import { CreateTooltip } from "../../components";
-import { ClassName } from "../../utils";
+import CreateTooltip from "./CreateTooltip";
+import { ClassName } from "../../../utils";
 
 function setTooltip(): void {
   const tooltip: CreateTooltip = new CreateTooltip(this.selectorState);

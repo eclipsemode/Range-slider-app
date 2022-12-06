@@ -1,5 +1,5 @@
 import $ from "jquery";
-import { CreateThumb } from "../../src/components";
+import CreateThumb from "../../src/View/SubViews/thumbs/CreateThumb";
 
 const className = ".slider";
 const min = 0;

@@ -1,5 +1,5 @@
 import $ from "jquery";
-import { CreateMainClass } from "../../src/components";
+import CreateMainClass from "../../src/View/SubViews/mainClass/CreateMainClass";
 
 describe("Main class element", () => {
   const className = ".slider";

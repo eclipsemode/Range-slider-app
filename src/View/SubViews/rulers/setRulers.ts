@@ -1,8 +1,8 @@
 import $ from "jquery";
 
-import { CreateRulers } from "../../components";
+import CreateRulers from "./CreateRulers";
 
-import { abbreviateNumber, ClassName } from "../../utils";
+import { abbreviateNumber, ClassName } from "../../../utils";
 
 function setRulers(): void {
   const rulers: CreateRulers = new CreateRulers(this.selectorState);

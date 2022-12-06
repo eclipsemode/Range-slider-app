@@ -1,9 +1,9 @@
-export {default as setBar} from './setBar';
-export {default as setColor} from './setColor';
-export {default as setControl} from './setControl';
-export {default as setConfig} from './setConfig';
-export {default as setRange} from './setRange';
-export {default as setRulers} from './setRulers';
-export {default as setSlider} from './setSlider';
-export {default as setTooltip} from './setTooltip';
-export {default as setVertical} from './setVertical';
+export { default as setBar } from "./bar/setBar";
+export { default as setColor } from "./color/setColor";
+export { default as setControl } from "./configPanel/setControl";
+export { default as setConfig } from "./configPanel/setConfig";
+export { default as setRange } from "./thumbs/setRange";
+export { default as setRulers } from "./rulers/setRulers";
+export { default as setSlider } from "./mainClass/setSlider";
+export { default as setTooltip } from "./tooltip/setTooltip";
+export { default as setVertical } from "./vertical/setVertical";

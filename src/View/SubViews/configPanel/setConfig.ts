@@ -1,6 +1,6 @@
 import $ from "jquery";
 
-import { ClassName, evaluateVar } from "../../utils";
+import { ClassName, evaluateVar } from "../../../utils";
 
 function setConfig() {
   const isConfigPanelTrue: boolean = this.optionsState.configPanel;

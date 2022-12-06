@@ -1,9 +1,9 @@
 import $ from "jquery";
-import CreateMainClass from "../../src/View/SubViews/mainClass/CreateMainClass";
+import CreateRoot from "../../src/View/SubViews/root/CreateRoot";
 
 describe("Main class element", () => {
   const className = ".slider";
-  const mainClass = new CreateMainClass(className);
+  const mainClass = new CreateRoot(className);
 
   test("Should NOT be undefined", () => {
     expect(mainClass.getMainClass()).not.toBeUndefined();

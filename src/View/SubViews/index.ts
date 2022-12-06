@@ -4,6 +4,7 @@ export { default as setControl } from "./configPanel/setControl";
 export { default as setConfig } from "./configPanel/setConfig";
 export { default as setRange } from "./thumbs/setRange";
 export { default as setRulers } from "./rulers/setRulers";
-export { default as setSlider } from "./mainClass/setSlider";
+export { default as setRoot } from "./root/setRoot";
 export { default as setTooltip } from "./tooltip/setTooltip";
 export { default as setVertical } from "./vertical/setVertical";
+export { default as setProgress } from "./progress/setProgress";

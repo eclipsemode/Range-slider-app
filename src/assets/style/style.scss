@@ -1,10 +1,10 @@
 @import "variables";
-@import "src/view/SubViews/mainClass/CreateMainClass";
+@import "../../View/SubViews/root/CreateRoot";
 @import "src/view/SubViews/configPanel/CreateConfigPanel";
 //@import "src/components/tooltip/tooltip";
 //@import "src/components/rulers/rulers";
 @import "src/view/SubViews/bar/CreateBar";
-@import "src/view/SubViews/bar/CreateProgress";
+@import "src/view/SubViews/progress/CreateProgress";
 @import "src/view/SubViews/thumbs/CreateThumb";
 
 html, * {

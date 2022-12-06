@@ -1,6 +1,6 @@
 import $ from "jquery";
 
-class CreateMainClass {
+class CreateRoot {
   private readonly selector: string;
 
   constructor(selector: string) {
@@ -14,4 +14,4 @@ class CreateMainClass {
   }
 }
 
-export default CreateMainClass;
+export default CreateRoot;

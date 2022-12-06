@@ -1,7 +1,7 @@
 import $ from "jquery";
 
 import CreateBar from "./CreateBar";
-import CreateProgress from "./CreateProgress";
+// import CreateProgress from "./CreateProgress";
 
 import {
   findMaxPercent,
@@ -12,18 +12,18 @@ import {
 
 function setBar(): void {
   const bar: CreateBar = new CreateBar(this.selectorState);
-  const progress: CreateProgress = new CreateProgress(this.selectorState);
+  // const progress: CreateProgress = new CreateProgress(this.selectorState);
   const $bar: JQuery = $(`${this.selectorState} ${ClassName.BAR_LINE}`);
-  const isProgressTrue: boolean = this.opts.progress;
+  // const isProgressTrue: boolean = this.opts.progress;
   const isRangeTrue: boolean = this.opts.range;
 
   $bar.length === 0 ? bar.getBar() : null;
 
-  if (isProgressTrue) {
-    $(`${this.selectorState} ${ClassName.PROGRESS}`).length === 0
-      ? progress.getProgress()
-      : null;
-  } else $(`${this.selectorState} ${ClassName.PROGRESS}`).remove();
+  // if (isProgressTrue) {
+  //   $(`${this.selectorState} ${ClassName.PROGRESS}`).length === 0
+  //     ? progress.getProgress()
+  //     : null;
+  // } else $(`${this.selectorState} ${ClassName.PROGRESS}`).remove();
 
   if (isRangeTrue) {
     // $progress.css({

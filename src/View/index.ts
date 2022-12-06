@@ -11,7 +11,8 @@ import Observer from "../Observer/Observer";
 
 import {
   setBar,
-  setSlider,
+  setProgress,
+  setRoot,
   setRulers,
   setRange,
   setTooltip,
@@ -27,38 +28,41 @@ class View extends Observer {
 
   private readonly optionsState: ModelOption;
 
-  private readonly setSlider: CallableFunction;
+  private readonly setRoot: typeof setRoot;
 
-  private readonly setRange: CallableFunction;
+  private readonly setRange: typeof setRange;
 
-  private readonly setRulers: CallableFunction;
+  private readonly setRulers: typeof setRulers;
 
-  private readonly setBar: CallableFunction;
+  private readonly setBar: typeof setBar;
 
-  private readonly setTooltip: CallableFunction;
+  private readonly setProgress: typeof setProgress;
 
-  private readonly setColor: CallableFunction;
+  private readonly setTooltip: typeof setTooltip;
 
-  private readonly setVertical: CallableFunction;
+  private readonly setColor: typeof setColor;
 
-  private readonly setControl: CallableFunction;
+  private readonly setVertical: typeof setVertical;
 
-  private readonly setConfig: CallableFunction;
+  private readonly setControl: typeof setControl;
 
-  private readonly observeThumbs: CallableFunction;
+  private readonly setConfig: typeof setConfig;
 
-  private readonly observeControl: CallableFunction;
+  private readonly observeThumbs: typeof observeThumbs;
 
-  private readonly observeConfig: CallableFunction;
+  private readonly observeControl: typeof observeControl;
+
+  private readonly observeConfig: typeof observeConfig;
 
   constructor(private selector: string, private options: ModelOption) {
     super();
     this.selectorState = selector;
     this.optionsState = options;
-    this.setSlider = setSlider.bind(this);
+    this.setRoot = setRoot.bind(this);
     // this.setRulers = setRulers.bind(this);
     this.setRange = setRange.bind(this);
     this.setBar = setBar.bind(this);
+    this.setProgress = setProgress.bind(this);
     // this.setTooltip = setTooltip.bind(this);
     // this.setColor = setColor.bind(this);
     // this.setVertical = setVertical.bind(this);
@@ -71,8 +75,9 @@ class View extends Observer {
 
   render(): void {
     this.opts = this.optionsState;
-    this.setSlider();
+    this.setRoot();
     this.setBar();
+    this.setProgress();
     this.setRange();
     // this.setRulers();
     // this.setColor();

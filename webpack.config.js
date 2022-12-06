@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 const PugPlugin = require("pug-plugin");
 const ESLintPlugin = require("eslint-webpack-plugin");
 const webpack = require("webpack");

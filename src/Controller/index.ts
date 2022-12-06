@@ -19,9 +19,9 @@ class Controller extends Observer {
     this.init();
   }
 
-  init() {
+  private init() {
     this.view.render();
   }
 }
 
-export { Controller as Slider };
+export default Controller;

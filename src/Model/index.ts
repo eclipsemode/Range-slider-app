@@ -1,12 +1,12 @@
 import { ModelOption, TogglesEnum, ControlsEnum } from "../utils";
-import Observer from "../Observer/Observer";
 
-class Model extends Observer {
-  public optionsState: ModelOption;
+class Model {
+  public options: ModelOption;
 
-  constructor(private options?: Partial<ModelOption>) {
-    super();
-    this.optionsState = this.checkOptions(options);
+  private onOptionsChanged: (options: Partial<ModelOption>) => void;
+
+  constructor(private optionsReceived?: Partial<ModelOption>) {
+    this.options = this.checkOptions(optionsReceived);
   }
 
   private checkOptions(options: Partial<ModelOption>): ModelOption {
@@ -55,6 +55,19 @@ class Model extends Observer {
         : verifiedOptions.min;
 
     return verifiedOptions as ModelOption;
+  }
+
+  public changeOptions(options: Partial<ModelOption>) {
+    this.options = this.checkOptions(options);
+    this.commitOptions(this.options);
+  }
+
+  private commitOptions(options: Partial<ModelOption>) {
+    this.onOptionsChanged(options);
+  }
+
+  public bindOptionsChanged(callback: (options: Partial<ModelOption>) => void) {
+    this.onOptionsChanged = callback;
   }
 }
 

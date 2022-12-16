@@ -3,7 +3,7 @@ import { ModelOption, TogglesEnum, ControlsEnum } from "../utils";
 class Model {
   public options: ModelOption;
 
-  private onOptionsChanged: (options: Partial<ModelOption>) => void;
+  private onOptionsChanged: (options: ModelOption) => void;
 
   constructor(private optionsReceived?: Partial<ModelOption>) {
     this.options = this.checkOptions(optionsReceived);
@@ -57,16 +57,16 @@ class Model {
     return verifiedOptions as ModelOption;
   }
 
-  public changeOptions(options: Partial<ModelOption>) {
+  public changeOptions(options: ModelOption) {
     this.options = this.checkOptions(options);
     this.commitOptions(this.options);
   }
 
-  private commitOptions(options: Partial<ModelOption>) {
+  private commitOptions(options: ModelOption) {
     this.onOptionsChanged(options);
   }
 
-  public bindOptionsChanged(callback: (options: Partial<ModelOption>) => void) {
+  public bindOptionsChanged(callback: (options: ModelOption) => void) {
     this.onOptionsChanged = callback;
   }
 }

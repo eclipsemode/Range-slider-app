@@ -24,7 +24,7 @@ class Controller {
     this.view.render(options);
   };
 
-  private handleChangeOptions = (options: Partial<ModelOption>) => {
+  private handleChangeOptions = (options: ModelOption) => {
     this.model.changeOptions(options);
   };
 

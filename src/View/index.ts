@@ -1,6 +1,9 @@
 import $ from "jquery";
 import { ModelOption } from "../utils";
 
+import CreateBar from "./sub-views/createBar";
+import CreateThumbFrom from "./sub-views/createThumbFrom";
+
 // import {
 //   setBar,
 //   setProgress,
@@ -18,30 +21,46 @@ import { ModelOption } from "../utils";
 class View {
   private readonly app: JQuery;
 
+  private readonly bar: CreateBar;
+
+  private fromThumb: CreateThumbFrom;
+
   private options: Partial<ModelOption>;
 
-  private readonly span: JQuery;
+  // private readonly span: JQuery;
 
   constructor(private readonly selector: string) {
     this.app = $(selector);
-    this.span = $("<pre>");
+    this.bar = new CreateBar(this.app);
+    this.fromThumb = new CreateThumbFrom(this.bar.getBar);
+    // this.span = $("<pre>");
 
-    this.app.append(this.span);
+    // this.app.append(this.span);
   }
 
   public bindChangeOptions(handler: CallableFunction) {
-    this.span.on("click", () => {
+    this.bar.getBar.on("click", () => {
       this.options = {
         ...this.options,
-        rulers: !this.options.rulers,
+        range: !this.options.range,
       };
       handler(this.options);
     });
+
+    // this.span.on("click", () => {
+    //   this.options = {
+    //     ...this.options,
+    //     rulers: !this.options.rulers,
+    //   };
+    //   handler(this.options);
+    // });
   }
 
   public render(options: ModelOption) {
     this.options = options;
-    this.span.text(JSON.stringify(options, null, 2));
+    // console.log(this.fromThumb.getFromThumb.length);
+
+    // this.span.text(JSON.stringify(options, null, 2));
   }
 
   // private readonly selectorState: string;

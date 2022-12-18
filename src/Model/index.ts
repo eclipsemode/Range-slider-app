@@ -48,11 +48,11 @@ class Model {
         ? verifiedOptions.min
         : verifiedOptions.max;
 
-    verifiedOptions.from =
-      verifiedOptions.from > verifiedOptions.min &&
-      verifiedOptions.from < verifiedOptions.max
-        ? verifiedOptions.from
-        : verifiedOptions.min;
+    if (verifiedOptions.from < verifiedOptions.min) {
+      verifiedOptions.from = verifiedOptions.min;
+    } else if (verifiedOptions.from > verifiedOptions.max) {
+      verifiedOptions.from = verifiedOptions.max;
+    }
 
     return verifiedOptions as ModelOption;
   }

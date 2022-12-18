@@ -1,5 +1,5 @@
 import $ from "jquery";
-import { ModelOption, progressCalc } from "../utils";
+import { ModelOption } from "../utils";
 
 import CreateBar from "./sub-views/CreateBar";
 import CreateThumbFrom from "./sub-views/CreateThumbFrom";
@@ -62,7 +62,6 @@ class View {
           mouseOffset,
           sliderWidth
         );
-
         this.options.from = Math.round(
           (((thumbOffsetValue / 500) * 100) / 100) * this.options.max
         );
@@ -96,6 +95,13 @@ class View {
       this.toThumb.toThumbElement.remove();
     }
 
+    if (this.options.progress && !this.progress?.progressElement) {
+      this.progress = new CreateProgress(this.bar.barElement);
+    } else if (!this.options.progress) {
+      this.progress.progressElement.remove();
+      this.progress = null;
+    }
+
     if (this.options.range) {
       console.log(2);
     } else {
@@ -105,33 +111,13 @@ class View {
         `${(this.options.from / this.options.max) * sliderWidth}px`
       );
 
-      if (this.options.progress) {
-        $(document).on("mousemove", () => {
-          this.progress.progressElement.css(
-            "width",
-            `${(this.options.from / this.options.max) * sliderWidth}px`
-          );
-        });
+      if (this.progress?.progressElement) {
+        this.progress.progressElement.css(
+          "width",
+          `${(this.options.from / this.options.max) * sliderWidth}px`
+        );
       }
     }
-
-    if (this.options.progress && !this.progress?.progressElement) {
-      this.progress = new CreateProgress(this.bar.barElement);
-    } else if (!this.options.progress) {
-      this.progress.progressElement.remove();
-      this.progress = null;
-    }
-    // if (this.progress && !this.options.progress) {
-    //
-    // }
-
-    // if (this.options.progress && !this.progress) {
-    //   console.log(this.progress);
-    //   this.progress = new CreateProgress(this.bar.barElement);
-    // }
-    // if (this.progress && !this.options.progress) {
-    //   this.progress.progressElement.remove();
-    // }
   }
 
   // private readonly selectorState: string;

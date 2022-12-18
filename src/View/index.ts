@@ -1,8 +1,10 @@
 import $ from "jquery";
-import { ModelOption } from "../utils";
+import { ModelOption, progressCalc } from "../utils";
 
-import CreateBar from "./sub-views/createBar";
-import CreateThumbFrom from "./sub-views/createThumbFrom";
+import CreateBar from "./sub-views/CreateBar";
+import CreateThumbFrom from "./sub-views/CreateThumbFrom";
+import CreateThumbTo from "./sub-views/CreateThumbTo";
+import CreateProgress from "./sub-views/CreateProgress";
 
 // import {
 //   setBar,
@@ -18,6 +20,16 @@ import CreateThumbFrom from "./sub-views/createThumbFrom";
 // } from "./SubViews";
 // import { observeThumbs, observeControl, observeConfig } from "../Observer";
 
+function calcMouseOffset(mouseOffset: number, sliderWidth: number): number {
+  if (mouseOffset < 0) {
+    return 0;
+  }
+  if (mouseOffset > sliderWidth) {
+    return sliderWidth;
+  }
+  return mouseOffset;
+}
+
 class View {
   private readonly app: JQuery;
 
@@ -25,42 +37,101 @@ class View {
 
   private fromThumb: CreateThumbFrom;
 
-  private options: Partial<ModelOption>;
+  private toThumb: CreateThumbTo;
 
-  // private readonly span: JQuery;
+  private progress: CreateProgress;
+
+  private options: Partial<ModelOption>;
 
   constructor(private readonly selector: string) {
     this.app = $(selector);
     this.bar = new CreateBar(this.app);
-    this.fromThumb = new CreateThumbFrom(this.bar.getBar);
-    // this.span = $("<pre>");
-
-    // this.app.append(this.span);
+    this.fromThumb = new CreateThumbFrom(this.bar.barElement);
   }
 
   public bindChangeOptions(handler: CallableFunction) {
-    this.bar.getBar.on("click", () => {
-      this.options = {
-        ...this.options,
-        range: !this.options.range,
-      };
-      handler(this.options);
-    });
+    this.fromThumb.fromThumbElement.on("mousedown", (e) => {
+      const sliderWidth: number = this.bar.barElement.innerWidth();
+      const sliderLeftOffset: number = this.bar.barElement.offset().left;
 
-    // this.span.on("click", () => {
-    //   this.options = {
-    //     ...this.options,
-    //     rulers: !this.options.rulers,
-    //   };
-    //   handler(this.options);
-    // });
+      this.fromThumb.fromThumbElement.on("dragstart", () => false);
+
+      const moveAt = (e: JQuery.MouseMoveEvent | JQuery.MouseDownEvent) => {
+        const mouseOffset: number = e.pageX - sliderLeftOffset;
+        const thumbOffsetValue: number = calcMouseOffset(
+          mouseOffset,
+          sliderWidth
+        );
+
+        this.options.from = Math.round(
+          (((thumbOffsetValue / 500) * 100) / 100) * this.options.max
+        );
+        handler(this.options);
+      };
+
+      moveAt(e);
+
+      $(document).on("mousemove", (e) => moveAt(e));
+
+      this.fromThumb.fromThumbElement.on("mouseleave", () => {
+        $(document).on("mouseup", () => {
+          $(document).off("mousemove");
+          $(document).off("mouseup");
+          this.fromThumb.fromThumbElement.off("mouseleave");
+        });
+      });
+      this.fromThumb.fromThumbElement.on("mouseup", () => {
+        $(document).off("mousemove");
+        this.fromThumb.fromThumbElement.off("mouseup");
+      });
+    });
   }
 
   public render(options: ModelOption) {
     this.options = options;
-    // console.log(this.fromThumb.getFromThumb.length);
 
-    // this.span.text(JSON.stringify(options, null, 2));
+    if (this.options.range) {
+      this.toThumb = new CreateThumbTo(this.bar.barElement);
+    } else if (this.toThumb && !this.options.range) {
+      this.toThumb.toThumbElement.remove();
+    }
+
+    if (this.options.range) {
+      console.log(2);
+    } else {
+      const sliderWidth: number = this.bar.barElement.innerWidth();
+      this.fromThumb.fromThumbElement.css(
+        "left",
+        `${(this.options.from / this.options.max) * sliderWidth}px`
+      );
+
+      if (this.options.progress) {
+        $(document).on("mousemove", () => {
+          this.progress.progressElement.css(
+            "width",
+            `${(this.options.from / this.options.max) * sliderWidth}px`
+          );
+        });
+      }
+    }
+
+    if (this.options.progress && !this.progress?.progressElement) {
+      this.progress = new CreateProgress(this.bar.barElement);
+    } else if (!this.options.progress) {
+      this.progress.progressElement.remove();
+      this.progress = null;
+    }
+    // if (this.progress && !this.options.progress) {
+    //
+    // }
+
+    // if (this.options.progress && !this.progress) {
+    //   console.log(this.progress);
+    //   this.progress = new CreateProgress(this.bar.barElement);
+    // }
+    // if (this.progress && !this.options.progress) {
+    //   this.progress.progressElement.remove();
+    // }
   }
 
   // private readonly selectorState: string;

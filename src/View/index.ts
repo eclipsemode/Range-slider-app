@@ -1,10 +1,10 @@
 import $ from "jquery";
 import { ModelOption } from "../utils";
 
-import CreateBar from "./sub-views/CreateBar";
-import CreateThumbFrom from "./sub-views/CreateThumbFrom";
-import CreateThumbTo from "./sub-views/CreateThumbTo";
-import CreateProgress from "./sub-views/CreateProgress";
+import CreateBar from "./subViews/CreateBar";
+import CreateThumbFrom from "./subViews/CreateThumbFrom";
+import CreateThumbTo from "./subViews/CreateThumbTo";
+import CreateProgress from "./subViews/CreateProgress";
 
 // import {
 //   setBar,
@@ -17,7 +17,7 @@ import CreateProgress from "./sub-views/CreateProgress";
 //   setVertical,
 //   setControl,
 //   setConfig,
-// } from "./SubViews";
+// } from "./SubViewsOld";
 // import { observeThumbs, observeControl, observeConfig } from "../Observer";
 
 function calcMouseOffset(mouseOffset: number, sliderWidth: number): number {
@@ -28,6 +28,40 @@ function calcMouseOffset(mouseOffset: number, sliderWidth: number): number {
     return sliderWidth;
   }
   return mouseOffset;
+}
+
+function convertToNumber(
+  mouseOffset: number,
+  sliderWidth: number,
+  min: number,
+  max: number
+): number {
+  if (min < 0) {
+    return Math.round(min + (mouseOffset / sliderWidth) * (max - min));
+  }
+  if (min > 0) {
+    return Math.round((mouseOffset / sliderWidth) * (max - min) + min);
+  }
+  return Math.round((mouseOffset / sliderWidth) * max);
+}
+
+function convertToPixel(
+  value: number,
+  sliderWidth: number,
+  min: number,
+  max: number
+): number {
+  if (min < 0) {
+    const newMax: number = max + Math.abs(min);
+    const newValue: number = value + Math.abs(min);
+    return Math.round((newValue / newMax) * sliderWidth);
+  }
+  if (min > 0) {
+    const newMax: number = max - min;
+    const newValue: number = value - min;
+    return Math.round((newValue / newMax) * sliderWidth);
+  }
+  return Math.round((value / max) * sliderWidth);
 }
 
 class View {
@@ -62,8 +96,12 @@ class View {
           mouseOffset,
           sliderWidth
         );
-        this.options.from = Math.round(
-          (((thumbOffsetValue / 500) * 100) / 100) * this.options.max
+
+        this.options.from = convertToNumber(
+          thumbOffsetValue,
+          sliderWidth,
+          this.options.min,
+          this.options.max
         );
         handler(this.options);
       };
@@ -108,13 +146,23 @@ class View {
       const sliderWidth: number = this.bar.barElement.innerWidth();
       this.fromThumb.fromThumbElement.css(
         "left",
-        `${(this.options.from / this.options.max) * sliderWidth}px`
+        `${convertToPixel(
+          this.options.from,
+          sliderWidth,
+          this.options.min,
+          this.options.max
+        )}px`
       );
 
       if (this.progress?.progressElement) {
         this.progress.progressElement.css(
           "width",
-          `${(this.options.from / this.options.max) * sliderWidth}px`
+          `${convertToPixel(
+            this.options.from,
+            sliderWidth,
+            this.options.min,
+            this.options.max
+          )}px`
         );
       }
     }

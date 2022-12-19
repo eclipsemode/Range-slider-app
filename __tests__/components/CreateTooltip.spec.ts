@@ -1,5 +1,5 @@
 import $ from "jquery";
-import CreateTooltip from "../../src/View/SubViews/tooltip/CreateTooltip";
+import CreateTooltip from "../../src/View/SubViewsOld/tooltip/CreateTooltip";
 
 const className = ".slider";
 const tooltip = new CreateTooltip(className);

@@ -1,5 +1,5 @@
 import $ from "jquery";
-import CreateBar from "../../src/View/SubViews/bar/CreateBar";
+import CreateBar from "../../src/View/SubViewsOld/bar/CreateBar";
 
 describe("CreateBar element", () => {
   const className = ".slider";

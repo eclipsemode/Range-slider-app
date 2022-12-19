@@ -1,5 +1,5 @@
 import $ from "jquery";
-import CreateRulers from "../../src/View/SubViews/rulers/CreateRulers";
+import CreateRulers from "../../src/View/SubViewsOld/rulers/CreateRulers";
 
 describe("CreateProgress element", () => {
   const className = ".slider";

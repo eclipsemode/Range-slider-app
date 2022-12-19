@@ -1,5 +1,5 @@
 import $ from "jquery";
-import CreateRoot from "../../src/View/SubViews/root/CreateRoot";
+import CreateRoot from "../../src/View/SubViewsOld/root/CreateRoot";
 
 describe("Main class element", () => {
   const className = ".slider";

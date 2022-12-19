@@ -1,5 +1,5 @@
 import $ from "jquery";
-import CreateProgress from "../../src/View/SubViews/progress/CreateProgress";
+import CreateProgress from "../../src/View/SubViewsOld/progress/CreateProgress";
 
 describe("CreateProgress element", () => {
   const className = ".slider";

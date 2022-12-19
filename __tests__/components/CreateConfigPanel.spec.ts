@@ -1,6 +1,6 @@
 import $ from "jquery";
 import { clearCaches } from "@typescript-eslint/parser";
-import CreateConfigPanel from "../../src/View/SubViews/configPanel/CreateConfigPanel";
+import CreateConfigPanel from "../../src/View/SubViewsOld/configPanel/CreateConfigPanel";
 
 const newControlConfig = ["min", "max", "step", "from", "to"];
 const newToggleConfig = ["vertical", "range", "rulers", "progress", "tooltip"];

@@ -84,6 +84,10 @@ class View {
   }
 
   public bindChangeOptions(handler: CallableFunction) {
+    /**
+     * Binds thumbs move.
+     */
+
     this.fromThumb.fromThumbElement.on("mousedown", (e) => {
       const sliderWidth: number = this.bar.barElement.innerWidth();
       const sliderLeftOffset: number = this.bar.barElement.offset().left;
@@ -122,17 +126,46 @@ class View {
         this.fromThumb.fromThumbElement.off("mouseup");
       });
     });
+
+    /**
+     * Binds thumbs move.
+     */
+
+    this.bar.barElement.on("click", (e) => {
+      const sliderWidth: number = this.bar.barElement.innerWidth();
+      const sliderLeftOffset: number = this.bar.barElement.offset().left;
+      const clickedOffset: number = e.pageX - sliderLeftOffset;
+      const valueCalculated: number = calcMouseOffset(
+        clickedOffset,
+        sliderWidth
+      );
+
+      this.options.from = convertToNumber(
+        valueCalculated,
+        sliderWidth,
+        this.options.min,
+        this.options.max
+      );
+
+      handler(this.options);
+    });
   }
 
   public render(options: ModelOption) {
     this.options = options;
 
+    /**
+     * Creates thumb TO.
+     */
     if (this.options.range) {
       this.toThumb = new CreateThumbTo(this.bar.barElement);
     } else if (this.toThumb && !this.options.range) {
       this.toThumb.toThumbElement.remove();
     }
 
+    /**
+     * Creates Progress.
+     */
     if (this.options.progress && !this.progress?.progressElement) {
       this.progress = new CreateProgress(this.bar.barElement);
     } else if (!this.options.progress) {
@@ -140,6 +173,9 @@ class View {
       this.progress = null;
     }
 
+    /**
+     * Changes css of thumb position.
+     */
     if (this.options.range) {
       console.log(2);
     } else {

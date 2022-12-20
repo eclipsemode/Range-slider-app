@@ -162,7 +162,6 @@ class View {
      */
     if (this.options.tooltip) {
       const sliderWidth: number = this.bar.barElement.innerWidth();
-      this.app.css("padding", "2.6em 1.5em 1em");
       if (!this.tooltip) {
         this.tooltip = new CreateTooltip(this.app);
       }

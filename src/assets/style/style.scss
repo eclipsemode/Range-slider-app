@@ -93,6 +93,7 @@ body {
 }
 
 .slider-app__tooltip {
+  box-sizing: border-box;
   width: fit-content;
   background: rgba(0, 0, 0, 0.4);
   color: #fff;

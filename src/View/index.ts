@@ -5,6 +5,7 @@ import CreateBar from "./subViews/CreateBar";
 import CreateThumbFrom from "./subViews/CreateThumbFrom";
 import CreateThumbTo from "./subViews/CreateThumbTo";
 import CreateProgress from "./subViews/CreateProgress";
+import CreateTooltip from "./subViews/CreateTooltip";
 
 // import {
 //   setBar,
@@ -74,6 +75,8 @@ class View {
   private toThumb: CreateThumbTo;
 
   private progress: CreateProgress;
+
+  private tooltip: CreateTooltip;
 
   private options: Partial<ModelOption>;
 
@@ -155,12 +158,41 @@ class View {
     this.options = options;
 
     /**
+     * Creates Tooltip.
+     */
+    if (this.options.tooltip) {
+      const sliderWidth: number = this.bar.barElement.innerWidth();
+      this.app.css("padding", "2.6em 1.5em 1em");
+      if (!this.tooltip) {
+        this.tooltip = new CreateTooltip(this.app);
+      }
+      this.tooltip.tooltipElement.css(
+        "left",
+        `${convertToPixel(
+          this.options.from,
+          sliderWidth,
+          this.options.min,
+          this.options.max
+        )}px`
+      );
+      this.tooltip.tooltipElement.text(this.options.from);
+    } else {
+      if (this.tooltip) {
+        this.tooltip.tooltipElement.remove();
+        this.tooltip = null;
+      }
+
+      this.app.css("padding", "1em 1.5em 1em");
+    }
+
+    /**
      * Creates thumb TO.
      */
     if (this.options.range) {
       this.toThumb = new CreateThumbTo(this.bar.barElement);
     } else if (this.toThumb && !this.options.range) {
       this.toThumb.toThumbElement.remove();
+      this.toThumb = null;
     }
 
     /**

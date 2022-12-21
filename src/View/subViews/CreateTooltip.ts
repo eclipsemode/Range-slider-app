@@ -8,7 +8,6 @@ class CreateTooltip {
   private createTooltip(parent: JQuery): void {
     this.tooltipElement = $("<div>", {
       class: "slider-app__tooltip",
-      text: "100",
     });
 
     this.tooltipElement.prependTo(parent);

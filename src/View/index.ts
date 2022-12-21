@@ -1,11 +1,12 @@
 import $ from "jquery";
-import { ModelOption } from "../utils";
+import { ModelOption, convertToNumber } from "../utils";
 
 import CreateBar from "./subViews/CreateBar";
 import CreateThumbFrom from "./subViews/CreateThumbFrom";
 import CreateThumbTo from "./subViews/CreateThumbTo";
 import CreateProgress from "./subViews/CreateProgress";
 import CreateTooltip from "./subViews/CreateTooltip";
+import CreateRulers from "./subViews/CreateRulers";
 
 // import {
 //   setBar,
@@ -29,21 +30,6 @@ function calcMouseOffset(mouseOffset: number, sliderWidth: number): number {
     return sliderWidth;
   }
   return mouseOffset;
-}
-
-function convertToNumber(
-  mouseOffset: number,
-  sliderWidth: number,
-  min: number,
-  max: number
-): number {
-  if (min < 0) {
-    return Math.round(min + (mouseOffset / sliderWidth) * (max - min));
-  }
-  if (min > 0) {
-    return Math.round((mouseOffset / sliderWidth) * (max - min) + min);
-  }
-  return Math.round((mouseOffset / sliderWidth) * max);
 }
 
 function convertToPixel(
@@ -78,7 +64,9 @@ class View {
 
   private tooltip: CreateTooltip;
 
-  private options: Partial<ModelOption>;
+  private rulers: CreateRulers;
+
+  private options: ModelOption;
 
   constructor(private readonly selector: string) {
     this.app = $(selector);
@@ -91,7 +79,7 @@ class View {
      * Binds thumbs move.
      */
 
-    this.fromThumb.fromThumbElement.on("mousedown", (e) => {
+    this.fromThumb?.fromThumbElement?.on("mousedown", (e) => {
       const sliderWidth: number = this.bar.barElement.innerWidth();
       const sliderLeftOffset: number = this.bar.barElement.offset().left;
 
@@ -134,7 +122,7 @@ class View {
      * Binds thumbs move.
      */
 
-    this.bar.barElement.on("click", (e) => {
+    this.bar?.barElement.on("click", (e) => {
       const sliderWidth: number = this.bar.barElement.innerWidth();
       const sliderLeftOffset: number = this.bar.barElement.offset().left;
       const clickedOffset: number = e.pageX - sliderLeftOffset;
@@ -232,6 +220,41 @@ class View {
           )}px`
         );
       }
+    }
+
+    /**
+     * Creates Rulers.
+     */
+
+    if (this.options.rulers) {
+      if (!this.rulers) {
+        const sliderWidth: number = this.bar.barElement.innerWidth();
+        const gap = 125;
+        const amountValues: number = Math.round(sliderWidth / gap);
+        const gapValues: number = sliderWidth / amountValues;
+        const valuesArr: number[] = [];
+        const pixelsArr: number[] = [];
+
+        for (let i = 0; i < sliderWidth + gapValues; i += gapValues) {
+          valuesArr.push(
+            convertToNumber(i, sliderWidth, this.options.min, this.options.max)
+          );
+          pixelsArr.push(i);
+        }
+
+        this.rulers = new CreateRulers(this.app, valuesArr, pixelsArr);
+      }
+
+      this.rulers.rulersElement.children().each((index, element) => {
+        $(element).off();
+        $(element).on("mousedown", () => {
+          this.options.from = +$(element).text();
+          this.render(this.options);
+        });
+      });
+    } else {
+      this.rulers.rulersElement.remove();
+      this.rulers = null;
     }
   }
 

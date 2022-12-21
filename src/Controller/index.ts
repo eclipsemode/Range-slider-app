@@ -28,6 +28,10 @@ class Controller {
     this.model.changeOptions(options);
   };
 
+  // private handleUpdate(options: ModelOption) {
+  //   this.model.changeOptions(options);
+  // }
+
   // private model: Model;
   //
   // private view: View;

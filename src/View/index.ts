@@ -227,15 +227,43 @@ class View {
         )}px`
       );
 
+      this.toThumb.toThumbElement.css(
+        "left",
+        `${convertToPixel(
+          this.options.to,
+          sliderWidth,
+          this.options.min,
+          this.options.max
+        )}px`
+      );
+
       if (this.progress?.progressElement) {
         this.progress.progressElement.css(
-          "width",
+          "left",
           `${convertToPixel(
             this.options.from,
             sliderWidth,
             this.options.min,
             this.options.max
           )}px`
+        );
+
+        this.progress.progressElement.css(
+          "width",
+          `${
+            convertToPixel(
+              this.options.to,
+              sliderWidth,
+              this.options.min,
+              this.options.max
+            ) -
+            convertToPixel(
+              this.options.from,
+              sliderWidth,
+              this.options.min,
+              this.options.max
+            )
+          }px`
         );
       }
     } else {

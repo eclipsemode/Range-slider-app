@@ -7,6 +7,7 @@ import CreateThumbTo from "./subViews/CreateThumbTo";
 import CreateProgress from "./subViews/CreateProgress";
 import CreateTooltip from "./subViews/CreateTooltip";
 import CreateRulers from "./subViews/CreateRulers";
+import modelOption from "../utils/ModelOption";
 
 // import {
 //   setBar,
@@ -140,6 +141,17 @@ class View {
 
       handler(this.options);
     });
+
+    /**
+     * Binds rulers values.
+     */
+
+    $(this.app).on("click", (e) => {
+      if (e.target.classList.contains("slider-app__rulers-value")) {
+        this.options.from = +e.target.textContent;
+      }
+      handler(this.options);
+    });
   }
 
   public render(options: ModelOption) {
@@ -244,14 +256,6 @@ class View {
 
         this.rulers = new CreateRulers(this.app, valuesArr, pixelsArr);
       }
-
-      this.rulers.rulersElement.children().each((index, element) => {
-        $(element).off();
-        $(element).on("mousedown", () => {
-          this.options.from = +$(element).text();
-          this.render(this.options);
-        });
-      });
     } else {
       this.rulers.rulersElement.remove();
       this.rulers = null;

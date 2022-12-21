@@ -5,5 +5,6 @@ const app = new Controller("#slider", {
   // max: -1000,
   tooltip: true,
   from: 100,
+  // range: true,
   // to: 2000,
 });

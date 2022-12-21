@@ -7,7 +7,6 @@ import CreateThumbTo from "./subViews/CreateThumbTo";
 import CreateProgress from "./subViews/CreateProgress";
 import CreateTooltip from "./subViews/CreateTooltip";
 import CreateRulers from "./subViews/CreateRulers";
-import modelOption from "../utils/ModelOption";
 
 // import {
 //   setBar,
@@ -152,6 +151,11 @@ class View {
       }
       handler(this.options);
     });
+
+    // $(".test").on("click", () => {
+    //   this.options.range = !this.options.range;
+    //   handler(this.options);
+    // });
   }
 
   public render(options: ModelOption) {
@@ -187,12 +191,12 @@ class View {
     /**
      * Creates thumb TO.
      */
-    if (this.options.range) {
-      this.toThumb = new CreateThumbTo(this.bar.barElement);
-    } else if (this.toThumb && !this.options.range) {
-      this.toThumb.toThumbElement.remove();
-      this.toThumb = null;
-    }
+    // if (this.options.range) {
+    //   this.toThumb = new CreateThumbTo(this.bar.barElement);
+    // } else if (this.toThumb && !this.options.range) {
+    //   this.toThumb.toThumbElement.remove();
+    //   this.toThumb = null;
+    // }
 
     /**
      * Creates Progress.
@@ -208,9 +212,40 @@ class View {
      * Changes css of thumb position.
      */
     if (this.options.range) {
-      console.log(2);
+      const sliderWidth: number = this.bar.barElement.innerWidth();
+      if (!this.toThumb) {
+        this.toThumb = new CreateThumbTo(this.bar.barElement);
+      }
+
+      this.fromThumb.fromThumbElement.css(
+        "left",
+        `${convertToPixel(
+          this.options.from,
+          sliderWidth,
+          this.options.min,
+          this.options.max
+        )}px`
+      );
+
+      if (this.progress?.progressElement) {
+        this.progress.progressElement.css(
+          "width",
+          `${convertToPixel(
+            this.options.from,
+            sliderWidth,
+            this.options.min,
+            this.options.max
+          )}px`
+        );
+      }
     } else {
       const sliderWidth: number = this.bar.barElement.innerWidth();
+
+      if (this.toThumb) {
+        this.toThumb.toThumbElement.remove();
+        this.toThumb = null;
+      }
+
       this.fromThumb.fromThumbElement.css(
         "left",
         `${convertToPixel(

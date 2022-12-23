@@ -101,6 +101,10 @@ class View {
             this.options.min,
             this.options.max
           );
+
+          if (this.options.to < this.options.from + this.options.gap) {
+            this.options.to = this.options.from + this.options.gap;
+          }
           handler(this.options);
         };
 
@@ -140,6 +144,10 @@ class View {
             this.options.min,
             this.options.max
           );
+
+          if (this.options.from > this.options.to - this.options.gap) {
+            this.options.from = this.options.to - this.options.gap;
+          }
           handler(this.options);
         };
 
@@ -201,7 +209,18 @@ class View {
 
     $(this.app).on("click", (e) => {
       if (e.target.classList.contains("slider-app__rulers-value")) {
-        this.options.from = +e.target.textContent;
+        if (this.options.range) {
+          if (
+            Math.abs(+e.target.textContent - this.options.from) <
+            Math.abs(+e.target.textContent - this.options.to)
+          ) {
+            this.options.from = +e.target.textContent;
+          } else {
+            this.options.to = +e.target.textContent;
+          }
+        } else {
+          this.options.from = +e.target.textContent;
+        }
       }
       handler(this.options);
     });

@@ -98,13 +98,21 @@ body {
   text-align: center;
   padding: 0.5em 1em;
   border-radius: 0.3em;
-  position: relative;
+  position: absolute;
+  top: auto;
   z-index: 1;
   box-shadow: 0.2em 1em 2em 0.1em rgba(0, 0, 0, 0.2);
   transform: translate(-50%);
   bottom: 2.2em;
   font-size: 1.2em;
   margin-top: 2.2em;
+
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 
   &::after {
     content: " ";
@@ -116,6 +124,11 @@ body {
     border-style: solid;
     border-color: rgba(0, 0, 0, 0.4) transparent transparent transparent;
   }
+}
+
+.test {
+  position: absolute;
+  top: 100em;
 }
 
 .slider-app__rulers {

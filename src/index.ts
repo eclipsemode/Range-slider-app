@@ -7,5 +7,6 @@ const app = new Controller("#slider", {
   from: 250,
   to: 500,
   range: true,
+  configPanel: true,
   // to: 2000,
 });

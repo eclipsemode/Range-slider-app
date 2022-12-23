@@ -8,20 +8,6 @@ import CreateProgress from "./subViews/CreateProgress";
 import CreateTooltip from "./subViews/CreateTooltip";
 import CreateRulers from "./subViews/CreateRulers";
 
-// import {
-//   setBar,
-//   setProgress,
-//   setRoot,
-//   setRulers,
-//   setRange,
-//   setTooltip,
-//   setColor,
-//   setVertical,
-//   setControl,
-//   setConfig,
-// } from "./SubViewsOld";
-// import { observeThumbs, observeControl, observeConfig } from "../Observer";
-
 function calcMouseOffset(mouseOffset: number, sliderWidth: number): number {
   if (mouseOffset < 0) {
     return 0;
@@ -62,7 +48,9 @@ class View {
 
   private progress: CreateProgress;
 
-  private tooltip: CreateTooltip;
+  private tooltipFrom: CreateTooltip;
+
+  private tooltipTo: CreateTooltip;
 
   private rulers: CreateRulers;
 
@@ -84,10 +72,62 @@ class View {
       const sliderLeftOffset: number = this.bar.barElement.offset().left;
 
       if (
-        e.target.classList.contains(this.toThumb.toThumbElement[0].classList[1])
+        e.target.classList.contains(
+          this.fromThumb.fromThumbElement[0].classList[1]
+        )
       ) {
         $(e.target).on("dragstart", () => false);
 
+        // eslint-disable-next-line @typescript-eslint/no-shadow
+        const moveAt = (e: JQuery.MouseMoveEvent | JQuery.MouseDownEvent) => {
+          const mouseOffset: number = e.pageX - sliderLeftOffset;
+          const thumbOffsetValue: number = calcMouseOffset(
+            mouseOffset,
+            sliderWidth
+          );
+
+          this.options.from = convertToNumber(
+            thumbOffsetValue,
+            sliderWidth,
+            this.options.min,
+            this.options.max
+          );
+
+          if (this.options.range) {
+            if (this.options.from > this.options.to - this.options.gap) {
+              this.options.from = this.options.to - this.options.gap;
+            }
+          }
+
+          handler(this.options);
+        };
+
+        moveAt(e);
+
+        // eslint-disable-next-line @typescript-eslint/no-shadow
+        $(document).on("mousemove", (e) => moveAt(e));
+
+        $(e.target).on("mouseleave", () => {
+          $(document).on("mouseup", () => {
+            $(document).off("mousemove");
+            $(document).off("mouseup");
+            $(e.target).off("mouseleave");
+          });
+        });
+        $(e.target).on("mouseup", () => {
+          $(document).off("mousemove");
+          $(e.target).off("mouseup");
+        });
+      }
+
+      if (
+        e.target.classList.contains(
+          this.options.range && this.toThumb.toThumbElement[0].classList[1]
+        )
+      ) {
+        $(e.target).on("dragstart", () => false);
+
+        // eslint-disable-next-line @typescript-eslint/no-shadow
         const moveAt = (e: JQuery.MouseMoveEvent | JQuery.MouseDownEvent) => {
           const mouseOffset: number = e.pageX - sliderLeftOffset;
           const thumbOffsetValue: number = calcMouseOffset(
@@ -112,48 +152,9 @@ class View {
 
         $(document).on(
           "mousemove",
+          // eslint-disable-next-line @typescript-eslint/no-shadow
           (e: JQuery.MouseMoveEvent | JQuery.MouseDownEvent) => moveAt(e)
         );
-
-        $(e.target).on("mouseleave", () => {
-          $(document).on("mouseup", () => {
-            $(document).off("mousemove");
-            $(document).off("mouseup");
-            $(e.target).off("mouseleave");
-          });
-        });
-        $(e.target).on("mouseup", () => {
-          $(document).off("mousemove");
-          $(e.target).off("mouseup");
-        });
-      } else if (
-        e.target.classList.contains(this.toThumb.toThumbElement[0].classList[0])
-      ) {
-        $(e.target).on("dragstart", () => false);
-
-        const moveAt = (e: JQuery.MouseMoveEvent | JQuery.MouseDownEvent) => {
-          const mouseOffset: number = e.pageX - sliderLeftOffset;
-          const thumbOffsetValue: number = calcMouseOffset(
-            mouseOffset,
-            sliderWidth
-          );
-
-          this.options.from = convertToNumber(
-            thumbOffsetValue,
-            sliderWidth,
-            this.options.min,
-            this.options.max
-          );
-
-          if (this.options.from > this.options.to - this.options.gap) {
-            this.options.from = this.options.to - this.options.gap;
-          }
-          handler(this.options);
-        };
-
-        moveAt(e);
-
-        $(document).on("mousemove", (e) => moveAt(e));
 
         $(e.target).on("mouseleave", () => {
           $(document).on("mouseup", () => {
@@ -225,10 +226,16 @@ class View {
       handler(this.options);
     });
 
-    // $(".test").on("click", () => {
-    //   this.options.range = !this.options.range;
-    //   handler(this.options);
-    // });
+    $(".test").on("click", () => {
+      this.options.range = !this.options.range;
+      handler(this.options);
+    });
+
+    /**
+     * Binds resize window.
+     */
+
+    $(window).on("resize", () => handler(this.options));
   }
 
   public render(options: ModelOption) {
@@ -239,10 +246,11 @@ class View {
      */
     if (this.options.tooltip) {
       const sliderWidth: number = this.bar.barElement.innerWidth();
-      if (!this.tooltip) {
-        this.tooltip = new CreateTooltip(this.app);
+      if (!this.tooltipFrom) {
+        this.tooltipFrom = new CreateTooltip(this.bar.barElement);
       }
-      this.tooltip.tooltipElement.css(
+      this.bar.barElement.css("margin-top", "2em");
+      this.tooltipFrom.tooltipElement.css(
         "left",
         `${convertToPixel(
           this.options.from,
@@ -251,21 +259,53 @@ class View {
           this.options.max
         )}px`
       );
-      this.tooltip.tooltipElement.text(this.options.from);
+      this.tooltipFrom.tooltipElement.text(this.options.from);
+
+      if (this.options.range) {
+        if (!this.tooltipTo) {
+          this.tooltipTo = new CreateTooltip(this.bar.barElement);
+        }
+
+        this.tooltipTo.tooltipElement.css(
+          "left",
+          `${convertToPixel(
+            this.options.to,
+            sliderWidth,
+            this.options.min,
+            this.options.max
+          )}px`
+        );
+        this.tooltipTo.tooltipElement.text(this.options.to);
+      } else if (this.tooltipTo) {
+        this.tooltipTo.tooltipElement.remove();
+        this.tooltipTo = null;
+      }
     } else {
-      if (this.tooltip) {
-        this.tooltip.tooltipElement.remove();
-        this.tooltip = null;
+      if (this.tooltipFrom) {
+        this.tooltipFrom.tooltipElement.remove();
+        this.tooltipFrom = null;
       }
 
-      this.app.css("padding", "1em 1.5em 1em");
+      if (this.tooltipTo) {
+        this.tooltipTo.tooltipElement.remove();
+        this.tooltipTo = null;
+      }
+
+      this.bar.barElement.css("margin-top", "auto");
+      // this.app.css("padding", "1em 1.5em 1em");
     }
 
     /**
      * Creates Progress.
      */
-    if (this.options.progress && !this.progress?.progressElement) {
-      this.progress = new CreateProgress(this.bar.barElement);
+    if (this.options.progress) {
+      if (!this.progress) {
+        this.progress = new CreateProgress(this.bar.barElement);
+      }
+
+      if (!this.options.range) {
+        this.progress.progressElement.css("left", "auto");
+      }
     } else if (!this.options.progress) {
       this.progress.progressElement.remove();
       this.progress = null;
@@ -365,6 +405,11 @@ class View {
      */
 
     if (this.options.rulers) {
+      if (this.rulers) {
+        this.rulers.rulersElement.remove();
+        this.rulers = null;
+      }
+
       if (!this.rulers) {
         const sliderWidth: number = this.bar.barElement.innerWidth();
         const gap = 125;
@@ -379,7 +424,6 @@ class View {
           );
           pixelsArr.push(i);
         }
-
         this.rulers = new CreateRulers(this.app, valuesArr, pixelsArr);
       }
     } else {

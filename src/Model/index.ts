@@ -48,20 +48,19 @@ class Model {
         ? verifiedOptions.min
         : verifiedOptions.max;
 
+    // if (verifiedOptions.to - verifiedOptions.gap < verifiedOptions.from) {
+    //   if (verifiedOptions.from + verifiedOptions.gap > verifiedOptions.max) {
+    //     verifiedOptions.to = verifiedOptions.from + verifiedOptions.gap;
+    //   } else {
+    //     verifiedOptions.from = verifiedOptions.to - verifiedOptions.gap;
+    //   }
+    // }
+
     if (verifiedOptions.from < verifiedOptions.min) {
       verifiedOptions.from = verifiedOptions.min;
     } else if (verifiedOptions.from > verifiedOptions.max) {
       verifiedOptions.from = verifiedOptions.max;
     }
-
-    // if (verifiedOptions.to - verifiedOptions.gap <= verifiedOptions.from) {
-    //   if (verifiedOptions.from + verifiedOptions.gap <= verifiedOptions.max) {
-    //     verifiedOptions.to = verifiedOptions.from + verifiedOptions.gap;
-    //   } else {
-    //     console.log(111);
-    //     verifiedOptions.from = verifiedOptions.to - verifiedOptions.gap;
-    //   }
-    // }
 
     return verifiedOptions as ModelOption;
   }

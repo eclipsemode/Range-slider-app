@@ -76,46 +76,89 @@ class View {
 
   public bindChangeOptions(handler: CallableFunction) {
     /**
-     * Binds thumbs move.
+     * Binds thumbs.
      */
 
-    this.fromThumb?.fromThumbElement?.on("mousedown", (e) => {
+    this.app.on("mousedown", (e: JQuery.MouseDownEvent) => {
       const sliderWidth: number = this.bar.barElement.innerWidth();
       const sliderLeftOffset: number = this.bar.barElement.offset().left;
 
-      this.fromThumb.fromThumbElement.on("dragstart", () => false);
+      if (
+        e.target.classList.contains(this.toThumb.toThumbElement[0].classList[1])
+      ) {
+        $(e.target).on("dragstart", () => false);
 
-      const moveAt = (e: JQuery.MouseMoveEvent | JQuery.MouseDownEvent) => {
-        const mouseOffset: number = e.pageX - sliderLeftOffset;
-        const thumbOffsetValue: number = calcMouseOffset(
-          mouseOffset,
-          sliderWidth
+        const moveAt = (e: JQuery.MouseMoveEvent | JQuery.MouseDownEvent) => {
+          const mouseOffset: number = e.pageX - sliderLeftOffset;
+          const thumbOffsetValue: number = calcMouseOffset(
+            mouseOffset,
+            sliderWidth
+          );
+
+          this.options.to = convertToNumber(
+            thumbOffsetValue,
+            sliderWidth,
+            this.options.min,
+            this.options.max
+          );
+          handler(this.options);
+        };
+
+        moveAt(e);
+
+        $(document).on(
+          "mousemove",
+          (e: JQuery.MouseMoveEvent | JQuery.MouseDownEvent) => moveAt(e)
         );
 
-        this.options.from = convertToNumber(
-          thumbOffsetValue,
-          sliderWidth,
-          this.options.min,
-          this.options.max
-        );
-        handler(this.options);
-      };
-
-      moveAt(e);
-
-      $(document).on("mousemove", (e) => moveAt(e));
-
-      this.fromThumb.fromThumbElement.on("mouseleave", () => {
-        $(document).on("mouseup", () => {
-          $(document).off("mousemove");
-          $(document).off("mouseup");
-          this.fromThumb.fromThumbElement.off("mouseleave");
+        $(e.target).on("mouseleave", () => {
+          $(document).on("mouseup", () => {
+            $(document).off("mousemove");
+            $(document).off("mouseup");
+            $(e.target).off("mouseleave");
+          });
         });
-      });
-      this.fromThumb.fromThumbElement.on("mouseup", () => {
-        $(document).off("mousemove");
-        this.fromThumb.fromThumbElement.off("mouseup");
-      });
+        $(e.target).on("mouseup", () => {
+          $(document).off("mousemove");
+          $(e.target).off("mouseup");
+        });
+      } else if (
+        e.target.classList.contains(this.toThumb.toThumbElement[0].classList[0])
+      ) {
+        $(e.target).on("dragstart", () => false);
+
+        const moveAt = (e: JQuery.MouseMoveEvent | JQuery.MouseDownEvent) => {
+          const mouseOffset: number = e.pageX - sliderLeftOffset;
+          const thumbOffsetValue: number = calcMouseOffset(
+            mouseOffset,
+            sliderWidth
+          );
+
+          this.options.from = convertToNumber(
+            thumbOffsetValue,
+            sliderWidth,
+            this.options.min,
+            this.options.max
+          );
+          handler(this.options);
+        };
+
+        moveAt(e);
+
+        $(document).on("mousemove", (e) => moveAt(e));
+
+        $(e.target).on("mouseleave", () => {
+          $(document).on("mouseup", () => {
+            $(document).off("mousemove");
+            $(document).off("mouseup");
+            $(e.target).off("mouseleave");
+          });
+        });
+        $(e.target).on("mouseup", () => {
+          $(document).off("mousemove");
+          $(e.target).off("mouseup");
+        });
+      }
     });
 
     /**
@@ -130,14 +173,25 @@ class View {
         clickedOffset,
         sliderWidth
       );
-
-      this.options.from = convertToNumber(
+      const convertedValue: number = convertToNumber(
         valueCalculated,
         sliderWidth,
         this.options.min,
         this.options.max
       );
 
+      if (this.options.range) {
+        if (
+          Math.abs(convertedValue - this.options.from) <
+          Math.abs(convertedValue - this.options.to)
+        ) {
+          this.options.from = convertedValue;
+        } else {
+          this.options.to = convertedValue;
+        }
+      } else {
+        this.options.from = convertedValue;
+      }
       handler(this.options);
     });
 
@@ -187,16 +241,6 @@ class View {
 
       this.app.css("padding", "1em 1.5em 1em");
     }
-
-    /**
-     * Creates thumb TO.
-     */
-    // if (this.options.range) {
-    //   this.toThumb = new CreateThumbTo(this.bar.barElement);
-    // } else if (this.toThumb && !this.options.range) {
-    //   this.toThumb.toThumbElement.remove();
-    //   this.toThumb = null;
-    // }
 
     /**
      * Creates Progress.

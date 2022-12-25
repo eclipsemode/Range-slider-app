@@ -1,11 +1,11 @@
 import Controller from "./Controller";
 
 const app = new Controller("#slider", {
-  // min: -2000,
-  // max: -1000,
+  // min: 1000,
+  // max: 3000,
   tooltip: true,
-  from: 250,
-  to: 500,
+  // from: 250,
+  // to: 500,
   range: true,
   configPanel: true,
   // to: 2000,

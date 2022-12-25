@@ -13,8 +13,16 @@ class Model {
     const verifiedOptions = { ...options };
     verifiedOptions.min = verifiedOptions.min ?? 0;
     verifiedOptions.max = verifiedOptions.max ?? 1000;
-    verifiedOptions.from = verifiedOptions.from ?? verifiedOptions.min;
-    verifiedOptions.to = verifiedOptions.to ?? verifiedOptions.max;
+    verifiedOptions.from =
+      verifiedOptions.from >= verifiedOptions.min &&
+      verifiedOptions.from <= verifiedOptions.max
+        ? verifiedOptions.from
+        : verifiedOptions.min ?? verifiedOptions.min;
+    verifiedOptions.to =
+      verifiedOptions.to <= verifiedOptions.max &&
+      verifiedOptions.to >= verifiedOptions.min
+        ? verifiedOptions.to
+        : verifiedOptions.max ?? verifiedOptions.max;
     verifiedOptions.gap =
       verifiedOptions.gap ??
       ((verifiedOptions.max - verifiedOptions.min) * 10) / 100;

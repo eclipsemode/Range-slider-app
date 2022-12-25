@@ -1,11 +1,4 @@
 @import "variables";
-//@import "../../View/SubViewsOld/root/CreateRoot";
-//@import "src/view/SubViewsOld/configPanel/CreateConfigPanel";
-//@import "src/components/tooltip/tooltip";
-//@import "src/components/rulers/rulers";
-//@import "src/view/SubViewsOld/bar/CreateBar";
-//@import "src/view/SubViewsOld/progress/CreateProgress";
-//@import "src/view/SubViewsOld/thumbs/CreateThumb";
 
 html, * {
   font-size: 10px;
@@ -21,7 +14,8 @@ body {
 }
 
 #slider {
-  width: 500px;
+  max-width: 500px;
+  width: 100%;
 }
 
 .slider-app__bar {
@@ -31,27 +25,6 @@ body {
   position: relative;
   cursor: pointer;
   border-radius: 0.4em;
-  //&::before {
-  //  content: '';
-  //  position: absolute;
-  //  top: 0;
-  //  right: 100%;
-  //  width: 10px;
-  //  height: 0.8em;
-  //  background: $gr-main;
-  //  border-radius: 0.6em 0 0 0.6em;
-  //}
-  //
-  //&::after {
-  //  content: '';
-  //  position: absolute;
-  //  top: 0;
-  //  left: 100%;
-  //  width: 10px;
-  //  height: 0.8em;
-  //  background: rgba(0,0,0,.2);
-  //  border-radius: 0 0.6em 0.6em 0;
-  //}
 }
 
 .slider-app__thumb {
@@ -138,7 +111,7 @@ body {
   text-align: center;
 
   &-value {
-    color: #fff;
+    color: $gr-main;
     font-size: 1.5em;
     padding-top: 2em;
     position: absolute;
@@ -166,5 +139,81 @@ body {
       color: rgba(255, 255, 255, 0.8);
     }
   }
+}
 
+.slider-app__config {
+
+
+  &-toggle {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    column-gap: 4em;
+    padding-top: 3em;
+    row-gap: 1em;
+  }
+
+  &-element {
+    display: flex;
+    align-items: center;
+    column-gap: 1rem;
+    font-family: sans-serif;
+  }
+
+  &-name {
+    color: $gr-main;
+    cursor: pointer;
+    font-size: 1.6em;
+  }
+
+  &-container {
+    position: relative;
+    display: inline-block;
+    width: 6em;
+    height: 3.4em;
+    box-shadow: 2px 10px 20px 1px rgba(0, 0, 0, 0.2);
+  }
+
+  &-toggle-box {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  &-toggle-btn {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.2);
+    -webkit-transition: .4s;
+    transition: .4s;
+
+    &::before {
+      position: absolute;
+      content: "";
+      height: 2.6em;
+      width: 2.6em;
+      left: 0.4em;
+      bottom: 0.4em;
+      background-color: $gr-main;
+      -webkit-transition: .4s;
+      transition: .4s;
+      opacity: 0.4;
+    }
+  }
+
+  &-toggle-box:focus + &-toggle-btn {
+    box-shadow: 0 0 0.1em #2196F3;
+    outline: 0.1em solid gray;
+  }
+
+  &-toggle-box:checked + &-toggle-btn::before {
+    -webkit-transform: translateX(2.6em);
+    -ms-transform: translateX(2.6em);
+    transform: translateX(2.6em);
+    opacity: 1;
+  }
 }

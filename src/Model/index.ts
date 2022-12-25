@@ -46,7 +46,7 @@ class Model {
     verifiedOptions.color.thumbColor =
       verifiedOptions.color.thumbColor ?? "#ffe53b";
     verifiedOptions.range = verifiedOptions.range ?? false;
-    verifiedOptions.configPanel = verifiedOptions.configPanel ?? false;
+    verifiedOptions.configPanel = verifiedOptions.configPanel ?? true;
     verifiedOptions.progress = verifiedOptions.progress ?? true;
     verifiedOptions.controlConfig = Object.values(ControlsEnum);
     verifiedOptions.toggleConfig = Object.values(TogglesEnum);

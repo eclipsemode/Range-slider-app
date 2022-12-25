@@ -84,14 +84,11 @@ class View {
 
         // eslint-disable-next-line @typescript-eslint/no-shadow
         const moveAt = (e: JQuery.MouseMoveEvent | JQuery.MouseDownEvent) => {
-          // const fromElementLeftCss: number = parseInt($(e.target).css("left"));
           const mouseOffset: number = e.pageX - sliderLeftOffset;
           const thumbOffsetValue: number = calcMouseOffset(
             mouseOffset,
             sliderWidth
           );
-
-          // console.log(fromElementLeftCss);
 
           this.options.from = convertToNumber(
             thumbOffsetValue,
@@ -234,6 +231,25 @@ class View {
     });
 
     /**
+     * Binds toggles.
+     */
+
+    this.app.on("click", (e) => {
+      this.options.toggleConfig.forEach((name) => {
+        if (e.target.classList.contains(`slider-app__toggle--${name}`)) {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          this.options[name] = $(`.slider-app__toggle--${name}`).prop(
+            "checked"
+          );
+          // console.log($(`.slider-app__toggle--${name}`).prop("checked"));
+          // console.log(this.options[name]);
+        }
+      });
+      handler(this.options);
+    });
+
+    /**
      * Binds resize window.
      */
 
@@ -308,7 +324,7 @@ class View {
       if (!this.options.range) {
         this.progress.progressElement.css("left", "auto");
       }
-    } else if (!this.options.progress) {
+    } else if (this.progress) {
       this.progress.progressElement.remove();
       this.progress = null;
     }
@@ -408,7 +424,7 @@ class View {
 
     if (this.options.rulers) {
       if (this.rulers) {
-        this.rulers.rulersElement.remove();
+        this.rulers.rulersElement?.remove();
         this.rulers = null;
       }
 
@@ -432,7 +448,7 @@ class View {
           pixelsArr
         );
       }
-    } else {
+    } else if (this.rulers) {
       this.rulers.rulersElement.remove();
       this.rulers = null;
     }
@@ -444,6 +460,24 @@ class View {
           this.options.toggleConfig,
           this.options.controlConfig
         );
+      }
+
+      this.options.controlConfig.forEach((name) => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        const value: number = this.options[name];
+        $(`.slider-app__control--${name}`).val(value);
+      });
+
+      this.options.toggleConfig.forEach((name) => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        const value: string = this.options[name];
+        $(`.slider-app__toggle--${name}`).attr("checked", value);
+      });
+
+      if (!this.options.range) {
+        $(".slider-app__control--to").prop("disabled", true);
       }
     } else if (this.config) {
       this.config.configElement.remove();

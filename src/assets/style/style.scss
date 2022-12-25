@@ -251,13 +251,13 @@ body {
   }
 
   &-input {
-    width: 8em;
+    width: 100%;
     appearance: none;
     border: none;
     background: rgba(255, 255, 255, 0.1);
     -moz-appearance: textfield;
     color: #eeeeee;
-    padding: 5px;
+    font-size: 1.2em;
 
     &:focus {
       outline: 1px solid gray;

@@ -80,11 +80,14 @@ class View {
 
         // eslint-disable-next-line @typescript-eslint/no-shadow
         const moveAt = (e: JQuery.MouseMoveEvent | JQuery.MouseDownEvent) => {
+          // const fromElementLeftCss: number = parseInt($(e.target).css("left"));
           const mouseOffset: number = e.pageX - sliderLeftOffset;
           const thumbOffsetValue: number = calcMouseOffset(
             mouseOffset,
             sliderWidth
           );
+
+          // console.log(fromElementLeftCss);
 
           this.options.from = convertToNumber(
             thumbOffsetValue,

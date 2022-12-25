@@ -142,16 +142,18 @@ body {
 }
 
 .slider-app__config {
+  display: flex;
+  flex-direction: column;
+  row-gap: 3em;
+  padding-top: 3em;
+}
 
-
-  &-toggle {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    column-gap: 4em;
-    padding-top: 3em;
-    row-gap: 1em;
-  }
+.slider-app__toggle {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  column-gap: 4em;
+  row-gap: 1em;
 
   &-element {
     display: flex;
@@ -174,13 +176,13 @@ body {
     box-shadow: 2px 10px 20px 1px rgba(0, 0, 0, 0.2);
   }
 
-  &-toggle-box {
+  &-box {
     opacity: 0;
     width: 0;
     height: 0;
   }
 
-  &-toggle-btn {
+  &-btn {
     position: absolute;
     cursor: pointer;
     top: 0;
@@ -205,15 +207,75 @@ body {
     }
   }
 
-  &-toggle-box:focus + &-toggle-btn {
+  &-box:focus + &-btn {
     box-shadow: 0 0 0.1em #2196F3;
     outline: 0.1em solid gray;
   }
 
-  &-toggle-box:checked + &-toggle-btn::before {
+  &-box:checked + &-btn::before {
     -webkit-transform: translateX(2.6em);
     -ms-transform: translateX(2.6em);
     transform: translateX(2.6em);
     opacity: 1;
+  }
+}
+
+.slider-app__control {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 3em;
+  row-gap: 1em;
+  justify-content: center;
+  &-element {
+    width: 14em;
+    height: 3.4em;
+    display: flex;
+    position: relative;
+    font-family: sans-serif;
+    justify-content: flex-end;
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow: 2px 10px 20px 1px rgba(0, 0, 0, 0.2);
+  }
+
+  &-name {
+    width: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &-name--inner {
+    padding-left: 1rem;
+    color: $gr-main;
+    font-size: 1.6em;
+  }
+
+  &-input {
+    width: 8em;
+    appearance: none;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    -moz-appearance: textfield;
+    color: #eeeeee;
+    padding: 5px;
+
+    &:focus {
+      outline: 1px solid gray;
+      -moz-appearance: initial;
+    }
+    &:hover {
+      -moz-appearance: initial;
+    }
+    &:disabled {
+      background: repeating-linear-gradient(
+                      45deg,
+                      rgba(0, 0, 0, 0.1),
+                      rgba(0, 0, 0, 0.1) 10px,
+                      rgba(0, 0, 0, 0.2) 10px,
+                      rgba(0, 0, 0, 0.2) 20px
+      );
+      color: rgba(238, 238, 238, 0.2);
+      -moz-appearance: textfield;
+    }
   }
 }

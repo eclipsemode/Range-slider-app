@@ -439,7 +439,11 @@ class View {
 
     if (this.options.configPanel) {
       if (!this.config) {
-        this.config = new CreateConfig(this.app, this.options.toggleConfig);
+        this.config = new CreateConfig(
+          this.app,
+          this.options.toggleConfig,
+          this.options.controlConfig
+        );
       }
     } else if (this.config) {
       this.config.configElement.remove();

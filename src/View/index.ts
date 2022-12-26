@@ -1,5 +1,5 @@
 import $ from "jquery";
-import { ModelOption, convertToNumber } from "../utils";
+import { ModelOption, convertToNumber, ControlsEnum } from "../utils";
 
 import CreateBar from "./subViews/CreateBar";
 import CreateThumbFrom from "./subViews/CreateThumbFrom";
@@ -234,7 +234,7 @@ class View {
      * Binds toggles.
      */
 
-    this.app.on("click", (e) => {
+    this.app.on("input", (e) => {
       this.options.toggleConfig.forEach((name) => {
         if (e.target.classList.contains(`slider-app__toggle--${name}`)) {
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -242,12 +242,43 @@ class View {
           this.options[name] = $(`.slider-app__toggle--${name}`).prop(
             "checked"
           );
-          // console.log($(`.slider-app__toggle--${name}`).prop("checked"));
-          // console.log(this.options[name]);
+        }
+      });
+
+      this.options.controlConfig.forEach((name) => {
+        const element: JQuery = $(`.slider-app__control--${name}`);
+        if (e.target.classList.contains(`slider-app__control--${name}`)) {
+          if (name === ControlsEnum.FROM) {
+            if (element.val() > this.options.to - this.options.gap) {
+              element.val(this.options.to - this.options.gap);
+            }
+          }
+          if (name === ControlsEnum.TO) {
+            if (element.val() < this.options.from + this.options.gap) {
+              element.val(this.options.from + this.options.gap);
+            }
+          }
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          this.options[name] = element.val();
         }
       });
       handler(this.options);
     });
+
+    // this.app.on("input", (e) => {
+    //   if (e.target.classList.contains("slider-app__control--from")) {
+    //     if (
+    //       +$(`.slider-app__control--from`).val() >
+    //       this.options.to - this.options.gap
+    //     ) {
+    //       $(`.slider-app__control--from`).val(
+    //         this.options.to - this.options.gap
+    //       );
+    //     }
+    //     this.options.from = +$(`.slider-app__control--from`).val();
+    //   }
+    // });
 
     /**
      * Binds resize window.
@@ -478,6 +509,8 @@ class View {
 
       if (!this.options.range) {
         $(".slider-app__control--to").prop("disabled", true);
+      } else {
+        $(".slider-app__control--to").prop("disabled", false);
       }
     } else if (this.config) {
       this.config.configElement.remove();

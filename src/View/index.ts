@@ -1,5 +1,10 @@
 import $ from "jquery";
-import { ModelOption, convertToNumber, ControlsEnum } from "../utils";
+import {
+  ModelOption,
+  convertToNumber,
+  ControlsEnum,
+  ActionEnum,
+} from "../utils";
 
 import CreateBar from "./subViews/CreateBar";
 import CreateThumbFrom from "./subViews/CreateThumbFrom";
@@ -97,13 +102,7 @@ class View {
             this.options.max
           );
 
-          if (this.options.range) {
-            if (this.options.from > this.options.to - this.options.gap) {
-              this.options.from = this.options.to - this.options.gap;
-            }
-          }
-
-          handler(this.options);
+          handler(this.options, ActionEnum.DRAG_FROM);
         };
 
         moveAt(e);
@@ -146,10 +145,7 @@ class View {
             this.options.max
           );
 
-          if (this.options.to < this.options.from + this.options.gap) {
-            this.options.to = this.options.from + this.options.gap;
-          }
-          handler(this.options);
+          handler(this.options, ActionEnum.DRAG_TO);
         };
 
         moveAt(e);
@@ -199,13 +195,15 @@ class View {
           Math.abs(convertedValue - this.options.to)
         ) {
           this.options.from = convertedValue;
+          handler(this.options, ActionEnum.CLICK_FROM);
         } else {
           this.options.to = convertedValue;
+          handler(this.options, ActionEnum.CLICK_TO);
         }
       } else {
         this.options.from = convertedValue;
+        handler(this.options);
       }
-      handler(this.options);
     });
 
     /**

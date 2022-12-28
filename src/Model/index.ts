@@ -1,4 +1,4 @@
-import { ModelOption, TogglesEnum, ControlsEnum } from "../utils";
+import { ActionEnum, ControlsEnum, ModelOption, TogglesEnum } from "../utils";
 
 class Model {
   public options: ModelOption;
@@ -9,7 +9,10 @@ class Model {
     this.options = this.checkOptions(optionsReceived);
   }
 
-  private checkOptions(options: Partial<ModelOption>): ModelOption {
+  private checkOptions(
+    options: Partial<ModelOption>,
+    action?: ActionEnum
+  ): ModelOption {
     const verifiedOptions = { ...options };
     verifiedOptions.min = verifiedOptions.min ?? 0;
     verifiedOptions.max = verifiedOptions.max ?? 1000;
@@ -56,26 +59,58 @@ class Model {
         ? verifiedOptions.min
         : verifiedOptions.max;
 
-    if (verifiedOptions.range) {
-      if (verifiedOptions.from > verifiedOptions.to - verifiedOptions.gap) {
-        verifiedOptions.step > verifiedOptions.gap
-          ? (verifiedOptions.to = verifiedOptions.from + verifiedOptions.step)
-          : (verifiedOptions.to = verifiedOptions.from + verifiedOptions.gap);
-
-        if (verifiedOptions.to > verifiedOptions.max) {
-          verifiedOptions.to = verifiedOptions.from;
-          verifiedOptions.step > verifiedOptions.gap
-            ? (verifiedOptions.from -= verifiedOptions.step)
-            : (verifiedOptions.from -= verifiedOptions.gap);
+    if (action === ActionEnum.DRAG_FROM) {
+      if (verifiedOptions.range) {
+        if (verifiedOptions.from > verifiedOptions.to - verifiedOptions.gap) {
+          verifiedOptions.from = verifiedOptions.to - verifiedOptions.gap;
         }
       }
     }
 
+    if (action === ActionEnum.DRAG_TO) {
+      if (verifiedOptions.to < verifiedOptions.from + verifiedOptions.gap) {
+        verifiedOptions.to = verifiedOptions.from + verifiedOptions.gap;
+      }
+    }
+
+    if (action === ActionEnum.CLICK_FROM) {
+      if (verifiedOptions.from > verifiedOptions.to - verifiedOptions.gap) {
+        verifiedOptions.from =
+          verifiedOptions.gap >= verifiedOptions.step
+            ? verifiedOptions.to - verifiedOptions.gap
+            : verifiedOptions.to - verifiedOptions.step;
+      }
+    }
+
+    if (action === ActionEnum.CLICK_TO) {
+      if (verifiedOptions.to < verifiedOptions.from + verifiedOptions.gap) {
+        verifiedOptions.to =
+          verifiedOptions.gap >= verifiedOptions.step
+            ? verifiedOptions.from + verifiedOptions.gap
+            : verifiedOptions.from + verifiedOptions.step;
+      }
+    }
+
+    // if (verifiedOptions.range) {
+    //   if (verifiedOptions.from > verifiedOptions.to - verifiedOptions.gap) {
+    //     verifiedOptions.step > verifiedOptions.gap
+    //       ? (verifiedOptions.to = verifiedOptions.from + verifiedOptions.step)
+    //       : (verifiedOptions.to = verifiedOptions.from + verifiedOptions.gap);
+    //
+    //     if (verifiedOptions.to > verifiedOptions.max) {
+    //       verifiedOptions.to = verifiedOptions.from;
+    //       verifiedOptions.step > verifiedOptions.gap
+    //         ? (verifiedOptions.from -= verifiedOptions.step)
+    //         : (verifiedOptions.from -= verifiedOptions.gap);
+    //     }
+    //   }
+    // }
+
     return verifiedOptions as ModelOption;
   }
 
-  public changeOptions(options: ModelOption) {
-    this.options = this.checkOptions(options);
+  public changeOptions(options: ModelOption, action?: ActionEnum) {
+    this.options = this.checkOptions(options, action);
     this.commitOptions(this.options);
   }
 

@@ -1,4 +1,4 @@
-import { ModelOption } from "../utils";
+import { ActionEnum, ModelOption } from "../utils";
 import View from "../View";
 import Model from "../Model";
 
@@ -24,8 +24,8 @@ class Controller {
     this.view.render(options);
   };
 
-  private handleChangeOptions = (options: ModelOption) => {
-    this.model.changeOptions(options);
+  private handleChangeOptions = (options: ModelOption, action?: ActionEnum) => {
+    this.model.changeOptions(options, action);
   };
 
   // private handleUpdate(options: ModelOption) {

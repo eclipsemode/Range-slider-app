@@ -59,6 +59,17 @@ class Model {
         ? verifiedOptions.min
         : verifiedOptions.max;
 
+    // if (verifiedOptions.from % verifiedOptions.step) {
+    //   const rest = verifiedOptions.from % verifiedOptions.step;
+    //   const middle = verifiedOptions.step / 2;
+    //   if (rest > middle) {
+    //     verifiedOptions.from += verifiedOptions.step - rest;
+    //   }
+    //   else {
+    //     verifiedOptions.from -= verifiedOptions.step - rest;
+    //   }
+    // }
+
     if (action === ActionEnum.DRAG_FROM) {
       if (verifiedOptions.range) {
         if (verifiedOptions.from > verifiedOptions.to - verifiedOptions.gap) {
@@ -91,20 +102,22 @@ class Model {
       }
     }
 
-    // if (verifiedOptions.range) {
-    //   if (verifiedOptions.from > verifiedOptions.to - verifiedOptions.gap) {
-    //     verifiedOptions.step > verifiedOptions.gap
-    //       ? (verifiedOptions.to = verifiedOptions.from + verifiedOptions.step)
-    //       : (verifiedOptions.to = verifiedOptions.from + verifiedOptions.gap);
-    //
-    //     if (verifiedOptions.to > verifiedOptions.max) {
-    //       verifiedOptions.to = verifiedOptions.from;
-    //       verifiedOptions.step > verifiedOptions.gap
-    //         ? (verifiedOptions.from -= verifiedOptions.step)
-    //         : (verifiedOptions.from -= verifiedOptions.gap);
-    //     }
-    //   }
-    // }
+    if (verifiedOptions.range) {
+      if (verifiedOptions.from > verifiedOptions.to - verifiedOptions.gap) {
+        verifiedOptions.to =
+          verifiedOptions.step > verifiedOptions.gap
+            ? verifiedOptions.from + verifiedOptions.step
+            : verifiedOptions.from + verifiedOptions.gap;
+
+        if (verifiedOptions.to > verifiedOptions.max) {
+          verifiedOptions.to = verifiedOptions.from;
+          verifiedOptions.from =
+            verifiedOptions.step > verifiedOptions.gap
+              ? verifiedOptions.from - verifiedOptions.step
+              : verifiedOptions.from - verifiedOptions.gap;
+        }
+      }
+    }
 
     return verifiedOptions as ModelOption;
   }

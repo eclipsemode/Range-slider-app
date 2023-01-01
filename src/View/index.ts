@@ -80,6 +80,8 @@ class View {
       const sliderWidth: number = this.bar.barElement.innerWidth();
       const sliderLeftOffset: number = this.bar.barElement.offset().left;
 
+      $(e.target).addClass("slider-app__thumb--active");
+
       if (
         e.target.classList.contains(
           this.fromThumb.fromThumbElement[0].classList[1]
@@ -88,19 +90,23 @@ class View {
         $(e.target).on("dragstart", () => false);
 
         // eslint-disable-next-line @typescript-eslint/no-shadow
-        const moveAt = (e: JQuery.MouseMoveEvent | JQuery.MouseDownEvent) => {
-          const mouseOffset: number = e.pageX - sliderLeftOffset;
+        const moveAt = (
+          event: JQuery.MouseMoveEvent | JQuery.MouseDownEvent
+        ) => {
+          const mouseOffset: number = event.pageX - sliderLeftOffset;
           const thumbOffsetValue: number = calcMouseOffset(
             mouseOffset,
             sliderWidth
           );
 
-          this.options.from = convertToNumber(
+          const convertedValue: number = convertToNumber(
             thumbOffsetValue,
             sliderWidth,
             this.options.min,
             this.options.max
           );
+
+          this.options.from = convertedValue;
 
           handler(this.options, ActionEnum.DRAG_FROM);
         };
@@ -112,12 +118,14 @@ class View {
 
         $(e.target).on("mouseleave", () => {
           $(document).on("mouseup", () => {
+            $(e.target).removeClass("slider-app__thumb--active");
             $(document).off("mousemove");
             $(document).off("mouseup");
             $(e.target).off("mouseleave");
           });
         });
         $(e.target).on("mouseup", () => {
+          $(e.target).removeClass("slider-app__thumb--active");
           $(document).off("mousemove");
           $(e.target).off("mouseup");
         });
@@ -218,14 +226,16 @@ class View {
             Math.abs(+e.target.textContent - this.options.to)
           ) {
             this.options.from = +e.target.textContent;
+            handler(this.options, ActionEnum.CLICK_FROM);
           } else {
             this.options.to = +e.target.textContent;
+            handler(this.options, ActionEnum.CLICK_TO);
           }
         } else {
           this.options.from = +e.target.textContent;
+          handler(this.options);
         }
       }
-      handler(this.options);
     });
 
     /**
@@ -263,20 +273,6 @@ class View {
       });
       handler(this.options);
     });
-
-    // this.app.on("input", (e) => {
-    //   if (e.target.classList.contains("slider-app__control--from")) {
-    //     if (
-    //       +$(`.slider-app__control--from`).val() >
-    //       this.options.to - this.options.gap
-    //     ) {
-    //       $(`.slider-app__control--from`).val(
-    //         this.options.to - this.options.gap
-    //       );
-    //     }
-    //     this.options.from = +$(`.slider-app__control--from`).val();
-    //   }
-    // });
 
     /**
      * Binds resize window.

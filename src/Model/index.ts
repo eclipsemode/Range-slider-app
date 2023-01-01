@@ -59,16 +59,27 @@ class Model {
         ? verifiedOptions.min
         : verifiedOptions.max;
 
-    // if (verifiedOptions.from % verifiedOptions.step) {
-    //   const rest = verifiedOptions.from % verifiedOptions.step;
-    //   const middle = verifiedOptions.step / 2;
-    //   if (rest > middle) {
-    //     verifiedOptions.from += verifiedOptions.step - rest;
-    //   }
-    //   else {
-    //     verifiedOptions.from -= verifiedOptions.step - rest;
-    //   }
-    // }
+    if (verifiedOptions.from % verifiedOptions.step !== 0) {
+      const rest: number = verifiedOptions.from % verifiedOptions.step;
+      const middle: number = verifiedOptions.step / 2;
+
+      if (verifiedOptions.step - rest > middle) {
+        verifiedOptions.from -= rest;
+      } else {
+        verifiedOptions.from += verifiedOptions.step - rest;
+      }
+    }
+
+    if (verifiedOptions.to % verifiedOptions.step !== 0) {
+      const rest: number = verifiedOptions.to % verifiedOptions.step;
+      const middle: number = verifiedOptions.step / 2;
+
+      if (verifiedOptions.step - rest > middle) {
+        verifiedOptions.to -= rest;
+      } else {
+        verifiedOptions.to += verifiedOptions.step - rest;
+      }
+    }
 
     if (action === ActionEnum.DRAG_FROM) {
       if (verifiedOptions.range) {

@@ -14,7 +14,7 @@ body {
 }
 
 #slider {
-  max-width: 500px;
+  max-width: 800px;
   width: 100%;
 }
 
@@ -53,8 +53,7 @@ body {
     border: 6px solid $thumb;
   }
 
-  &--active {
-    border: 6px solid $thumb;
+  &:active {
     -moz-user-select: none;
     -khtml-user-select: none;
     user-select: none;

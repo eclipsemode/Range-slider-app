@@ -80,8 +80,6 @@ class View {
       const sliderWidth: number = this.bar.barElement.innerWidth();
       const sliderLeftOffset: number = this.bar.barElement.offset().left;
 
-      $(e.target).addClass("slider-app__thumb--active");
-
       if (
         e.target.classList.contains(
           this.fromThumb.fromThumbElement[0].classList[1]
@@ -105,7 +103,6 @@ class View {
             this.options.min,
             this.options.max
           );
-
           this.options.from = convertedValue;
 
           handler(this.options, ActionEnum.DRAG_FROM);
@@ -118,14 +115,12 @@ class View {
 
         $(e.target).on("mouseleave", () => {
           $(document).on("mouseup", () => {
-            $(e.target).removeClass("slider-app__thumb--active");
             $(document).off("mousemove");
             $(document).off("mouseup");
             $(e.target).off("mouseleave");
           });
         });
         $(e.target).on("mouseup", () => {
-          $(e.target).removeClass("slider-app__thumb--active");
           $(document).off("mousemove");
           $(e.target).off("mouseup");
         });

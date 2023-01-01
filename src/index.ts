@@ -6,7 +6,7 @@ const app = new Controller("#slider", {
   tooltip: true,
   // from: 250,
   // to: 500,
-  // range: true,
+  range: true,
   configPanel: true,
   step: 20,
   // to: 2000,

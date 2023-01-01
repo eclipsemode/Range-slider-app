@@ -450,18 +450,35 @@ class View {
 
       if (!this.rulers) {
         const sliderWidth: number = this.bar.barElement.innerWidth();
-        const gap = 125;
-        const amountValues: number = Math.round(sliderWidth / gap);
+        const convertedStepToPixel: number = convertToPixel(
+          this.options.step,
+          sliderWidth,
+          this.options.min,
+          this.options.max
+        );
+
+        let gap: number;
+
+        if (convertedStepToPixel > 125) {
+          gap = convertedStepToPixel;
+        } else {
+          gap = 125;
+        }
+        const amountValues: number = sliderWidth / gap;
         const gapValues: number = sliderWidth / amountValues;
         const valuesArr: number[] = [];
         const pixelsArr: number[] = [];
 
-        for (let i = 0; i < sliderWidth + gapValues; i += gapValues) {
+        for (let i = 0; i < sliderWidth - gapValues; i += gapValues) {
           valuesArr.push(
             convertToNumber(i, sliderWidth, this.options.min, this.options.max)
           );
           pixelsArr.push(i);
         }
+
+        pixelsArr.push(sliderWidth);
+        valuesArr.push(this.options.max);
+
         this.rulers = new CreateRulers(
           this.bar.barElement,
           valuesArr,

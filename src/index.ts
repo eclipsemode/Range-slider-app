@@ -10,4 +10,5 @@ const app = new Controller("#slider", {
   configPanel: true,
   step: 20,
   // to: 2000,
+  gap: 20,
 });

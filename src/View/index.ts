@@ -260,33 +260,72 @@ class View {
       if (!this.tooltipFrom) {
         this.tooltipFrom = new CreateTooltip(this.bar.barElement);
       }
-      this.bar.barElement.css("margin-top", "2em");
-      this.tooltipFrom.tooltipElement.css(
-        "left",
-        `${convertToPixel(
-          this.options.from,
-          sliderWidth,
-          this.options.min,
-          this.options.max
-        )}px`
+      const offsetFromThumb: number = convertToPixel(
+        this.options.from,
+        sliderWidth,
+        this.options.min,
+        this.options.max
       );
+
+      // console.log(this.tooltipFrom.tooltipElement.);
+
+      this.bar.barElement.css("margin-top", "2em");
+      this.tooltipFrom.tooltipElement.css("left", `${offsetFromThumb}px`);
       this.tooltipFrom.tooltipElement.text(this.options.from);
 
       if (this.options.range) {
         if (!this.tooltipTo) {
           this.tooltipTo = new CreateTooltip(this.bar.barElement);
         }
-
-        this.tooltipTo.tooltipElement.css(
-          "left",
-          `${convertToPixel(
-            this.options.to,
-            sliderWidth,
-            this.options.min,
-            this.options.max
-          )}px`
+        const offsetToThumb: number = convertToPixel(
+          this.options.to,
+          sliderWidth,
+          this.options.min,
+          this.options.max
         );
+
+        this.tooltipTo.tooltipElement.css("left", `${offsetToThumb}px`);
         this.tooltipTo.tooltipElement.text(this.options.to);
+
+        const tooltipFromWidth: number = parseFloat(
+          this.tooltipFrom.tooltipElement.css("width")
+        );
+        const tooltipToWidth: number = parseFloat(
+          this.tooltipTo.tooltipElement.css("width")
+        );
+
+        const tooltipFromLeft: number = parseFloat(
+          this.tooltipFrom.tooltipElement.css("left")
+        );
+
+        const tooltipToLeft: number = parseFloat(
+          this.tooltipTo.tooltipElement.css("left")
+        );
+
+        if (
+          tooltipToLeft - tooltipFromLeft <=
+          Math.max(tooltipFromWidth, tooltipToWidth)
+        ) {
+          this.tooltipTo.tooltipElement.remove();
+          this.tooltipTo = null;
+          this.tooltipFrom.tooltipElement.addClass(
+            "slider-app__tooltip--merged"
+          );
+
+          const newLeftCss: number = (tooltipToLeft - tooltipFromLeft) / 2;
+
+          this.tooltipFrom.tooltipElement.text(
+            `${this.options.from} - ${this.options.to}`
+          );
+
+          this.tooltipFrom.tooltipElement.css({
+            left: `${tooltipFromLeft + newLeftCss}px`,
+          });
+        } else {
+          this.tooltipFrom.tooltipElement.removeClass(
+            "slider-app__tooltip--merged"
+          );
+        }
       } else if (this.tooltipTo) {
         this.tooltipTo.tooltipElement.remove();
         this.tooltipTo = null;
@@ -303,7 +342,6 @@ class View {
       }
 
       this.bar.barElement.css("margin-top", "auto");
-      // this.app.css("padding", "1em 1.5em 1em");
     }
 
     /**

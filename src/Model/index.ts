@@ -1,3 +1,4 @@
+import { valHooks } from "jquery";
 import { ActionEnum, ControlsEnum, ModelOption, TogglesEnum } from "../utils";
 
 class Model {
@@ -84,51 +85,64 @@ class Model {
     if (action === ActionEnum.DRAG_FROM) {
       if (verifiedOptions.range) {
         if (verifiedOptions.from > verifiedOptions.to - verifiedOptions.gap) {
-          verifiedOptions.from = verifiedOptions.to - verifiedOptions.gap;
+          verifiedOptions.from =
+            verifiedOptions.step > verifiedOptions.gap
+              ? verifiedOptions.to - verifiedOptions.step
+              : verifiedOptions.to -
+                verifiedOptions.gap -
+                ((verifiedOptions.to - verifiedOptions.gap) %
+                  verifiedOptions.step);
         }
       }
     }
 
     if (action === ActionEnum.DRAG_TO) {
       if (verifiedOptions.to < verifiedOptions.from + verifiedOptions.gap) {
-        verifiedOptions.to = verifiedOptions.from + verifiedOptions.gap;
-      }
-    }
-
-    if (action === ActionEnum.CLICK_FROM) {
-      if (verifiedOptions.from > verifiedOptions.to - verifiedOptions.gap) {
-        verifiedOptions.from =
-          verifiedOptions.gap >= verifiedOptions.step
-            ? verifiedOptions.to - verifiedOptions.gap
-            : verifiedOptions.to - verifiedOptions.step;
-      }
-    }
-
-    if (action === ActionEnum.CLICK_TO) {
-      if (verifiedOptions.to < verifiedOptions.from + verifiedOptions.gap) {
-        verifiedOptions.to =
-          verifiedOptions.gap >= verifiedOptions.step
-            ? verifiedOptions.from + verifiedOptions.gap
-            : verifiedOptions.from + verifiedOptions.step;
-      }
-    }
-
-    if (verifiedOptions.range) {
-      if (verifiedOptions.from > verifiedOptions.to - verifiedOptions.gap) {
         verifiedOptions.to =
           verifiedOptions.step > verifiedOptions.gap
             ? verifiedOptions.from + verifiedOptions.step
-            : verifiedOptions.from + verifiedOptions.gap;
-
-        if (verifiedOptions.to > verifiedOptions.max) {
-          verifiedOptions.to = verifiedOptions.from;
-          verifiedOptions.from =
-            verifiedOptions.step > verifiedOptions.gap
-              ? verifiedOptions.from - verifiedOptions.step
-              : verifiedOptions.from - verifiedOptions.gap;
-        }
+            : verifiedOptions.from +
+              verifiedOptions.gap -
+              (((verifiedOptions.from + verifiedOptions.gap) %
+                verifiedOptions.step) -
+                verifiedOptions.step);
       }
     }
+
+    // if (action === ActionEnum.CLICK_FROM) {
+    //   if (verifiedOptions.from > verifiedOptions.to - verifiedOptions.gap) {
+    //     verifiedOptions.from =
+    //       verifiedOptions.gap >= verifiedOptions.step
+    //         ? verifiedOptions.to - verifiedOptions.gap
+    //         : verifiedOptions.to - verifiedOptions.step;
+    //   }
+    // }
+    //
+    // if (action === ActionEnum.CLICK_TO) {
+    //   if (verifiedOptions.to < verifiedOptions.from + verifiedOptions.gap) {
+    //     verifiedOptions.to =
+    //       verifiedOptions.gap >= verifiedOptions.step
+    //         ? verifiedOptions.from + verifiedOptions.gap
+    //         : verifiedOptions.from + verifiedOptions.step;
+    //   }
+    // }
+    //
+    // if (verifiedOptions.range) {
+    //   if (verifiedOptions.from > verifiedOptions.to - verifiedOptions.gap) {
+    //     verifiedOptions.to =
+    //       verifiedOptions.step > verifiedOptions.gap
+    //         ? verifiedOptions.from + verifiedOptions.step
+    //         : verifiedOptions.from + verifiedOptions.gap;
+    //
+    //     if (verifiedOptions.to > verifiedOptions.max) {
+    //       verifiedOptions.to = verifiedOptions.from;
+    //       verifiedOptions.from =
+    //         verifiedOptions.step > verifiedOptions.gap
+    //           ? verifiedOptions.from - verifiedOptions.step
+    //           : verifiedOptions.from - verifiedOptions.gap;
+    //     }
+    //   }
+    // }
 
     return verifiedOptions as ModelOption;
   }

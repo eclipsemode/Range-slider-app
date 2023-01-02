@@ -2,6 +2,7 @@ import $ from "jquery";
 import {
   ModelOption,
   convertToNumber,
+  convertToPixel,
   ControlsEnum,
   ActionEnum,
 } from "../utils";
@@ -22,25 +23,6 @@ function calcMouseOffset(mouseOffset: number, sliderWidth: number): number {
     return sliderWidth;
   }
   return mouseOffset;
-}
-
-function convertToPixel(
-  value: number,
-  sliderWidth: number,
-  min: number,
-  max: number
-): number {
-  if (min < 0) {
-    const newMax: number = max + Math.abs(min);
-    const newValue: number = value + Math.abs(min);
-    return Math.round((newValue / newMax) * sliderWidth);
-  }
-  if (min > 0) {
-    const newMax: number = max - min;
-    const newValue: number = value - min;
-    return Math.round((newValue / newMax) * sliderWidth);
-  }
-  return Math.round((value / max) * sliderWidth);
 }
 
 class View {
@@ -457,12 +439,12 @@ class View {
           this.options.max
         );
 
-        let gap: number;
+        let gap = 87;
 
-        if (convertedStepToPixel > 125) {
+        if (convertedStepToPixel > gap) {
           gap = convertedStepToPixel;
         } else {
-          gap = 125;
+          gap = gap - (gap % convertedStepToPixel) + convertedStepToPixel;
         }
         const amountValues: number = sliderWidth / gap;
         const gapValues: number = sliderWidth / amountValues;

@@ -27,29 +27,6 @@ class Controller {
   private handleChangeOptions = (options: ModelOption, action?: ActionEnum) => {
     this.model.changeOptions(options, action);
   };
-
-  // private handleUpdate(options: ModelOption) {
-  //   this.model.changeOptions(options);
-  // }
-
-  // private model: Model;
-  //
-  // private view: View;
-  //
-  // constructor(
-  //   private selector: string,
-  //   private options?: Partial<ModelOption>
-  // ) {
-  //   super();
-  //   this.model = new Model(options);
-  //   this.view = new View(selector, this.model.optionsState);
-  //   this.init();
-  // }
-  //
-  // private init() {
-  //   this.view.render();
-  //   $(document).on("click", () => console.log(this.view.opts.from));
-  // }
 }
 
 export default Controller;

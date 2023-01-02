@@ -2,7 +2,7 @@ import Controller from "./Controller";
 
 const app = new Controller("#slider", {
   // min: 1000,
-  max: 104,
+  max: 2018,
   tooltip: true,
   // from: 250,
   // to: 500,
@@ -11,7 +11,3 @@ const app = new Controller("#slider", {
   step: 20,
   // to: 2000,
 });
-
-// console.log((1.23131).toString().slice(2, 4));
-//
-// console.log(56 % 11);

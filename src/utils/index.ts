@@ -7,4 +7,5 @@ export { default as ClassName } from "./ClassName.enum";
 export { default as progressCalc } from "./progressCalc";
 
 export { default as convertToNumber } from "./convertToNumber";
+export { default as convertToPixel } from "./convertToPixel";
 export { default as ActionEnum } from "./Action.enum";

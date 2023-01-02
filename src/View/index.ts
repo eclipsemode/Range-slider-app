@@ -3,6 +3,7 @@ import {
   ModelOption,
   convertToNumber,
   convertToPixel,
+  calcMouseOffset,
   ControlsEnum,
   ActionEnum,
 } from "../utils";
@@ -14,16 +15,6 @@ import CreateProgress from "./subViews/CreateProgress";
 import CreateTooltip from "./subViews/CreateTooltip";
 import CreateRulers from "./subViews/CreateRulers";
 import CreateConfig from "./subViews/CreateConfig";
-
-function calcMouseOffset(mouseOffset: number, sliderWidth: number): number {
-  if (mouseOffset < 0) {
-    return 0;
-  }
-  if (mouseOffset > sliderWidth) {
-    return sliderWidth;
-  }
-  return mouseOffset;
-}
 
 class View {
   private readonly app: JQuery;

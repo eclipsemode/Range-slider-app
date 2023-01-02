@@ -1,4 +1,3 @@
-import { valHooks } from "jquery";
 import { ActionEnum, ControlsEnum, ModelOption, TogglesEnum } from "../utils";
 
 class Model {

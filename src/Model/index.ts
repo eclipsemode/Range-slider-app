@@ -65,10 +65,21 @@ class Model {
       const middle: number = verifiedOptions.step / 2;
 
       if (verifiedOptions.step - rest > middle) {
-        verifiedOptions.from -= rest;
+        if (verifiedOptions.from >= verifiedOptions.max) {
+          verifiedOptions.from = verifiedOptions.max;
+        } else {
+          verifiedOptions.from -= rest;
+        }
       } else {
-        verifiedOptions.from += verifiedOptions.step - rest;
+        verifiedOptions.from =
+          verifiedOptions.from >= verifiedOptions.max
+            ? verifiedOptions.max
+            : verifiedOptions.from + verifiedOptions.step - rest;
       }
+    }
+
+    if (verifiedOptions.from > verifiedOptions.max) {
+      verifiedOptions.from = verifiedOptions.max;
     }
 
     if (verifiedOptions.to % verifiedOptions.step !== 0) {
@@ -80,6 +91,10 @@ class Model {
       } else {
         verifiedOptions.to += verifiedOptions.step - rest;
       }
+    }
+
+    if (verifiedOptions.to > verifiedOptions.max) {
+      verifiedOptions.to = verifiedOptions.max;
     }
 
     if (action === ActionEnum.DRAG_FROM) {
@@ -109,40 +124,54 @@ class Model {
       }
     }
 
-    // if (action === ActionEnum.CLICK_FROM) {
-    //   if (verifiedOptions.from > verifiedOptions.to - verifiedOptions.gap) {
-    //     verifiedOptions.from =
-    //       verifiedOptions.gap >= verifiedOptions.step
-    //         ? verifiedOptions.to - verifiedOptions.gap
-    //         : verifiedOptions.to - verifiedOptions.step;
-    //   }
-    // }
-    //
-    // if (action === ActionEnum.CLICK_TO) {
-    //   if (verifiedOptions.to < verifiedOptions.from + verifiedOptions.gap) {
-    //     verifiedOptions.to =
-    //       verifiedOptions.gap >= verifiedOptions.step
-    //         ? verifiedOptions.from + verifiedOptions.gap
-    //         : verifiedOptions.from + verifiedOptions.step;
-    //   }
-    // }
-    //
-    // if (verifiedOptions.range) {
-    //   if (verifiedOptions.from > verifiedOptions.to - verifiedOptions.gap) {
-    //     verifiedOptions.to =
-    //       verifiedOptions.step > verifiedOptions.gap
-    //         ? verifiedOptions.from + verifiedOptions.step
-    //         : verifiedOptions.from + verifiedOptions.gap;
-    //
-    //     if (verifiedOptions.to > verifiedOptions.max) {
-    //       verifiedOptions.to = verifiedOptions.from;
-    //       verifiedOptions.from =
-    //         verifiedOptions.step > verifiedOptions.gap
-    //           ? verifiedOptions.from - verifiedOptions.step
-    //           : verifiedOptions.from - verifiedOptions.gap;
-    //     }
-    //   }
-    // }
+    if (action === ActionEnum.CLICK_FROM) {
+      if (verifiedOptions.from > verifiedOptions.to - verifiedOptions.gap) {
+        verifiedOptions.from =
+          verifiedOptions.gap >= verifiedOptions.step
+            ? verifiedOptions.to -
+              verifiedOptions.gap -
+              ((verifiedOptions.to - verifiedOptions.gap) %
+                verifiedOptions.step)
+            : verifiedOptions.to - verifiedOptions.step;
+      }
+    }
+
+    if (action === ActionEnum.CLICK_TO) {
+      if (verifiedOptions.to < verifiedOptions.from + verifiedOptions.gap) {
+        verifiedOptions.to =
+          verifiedOptions.gap >= verifiedOptions.step
+            ? verifiedOptions.from +
+              verifiedOptions.gap -
+              (((verifiedOptions.from + verifiedOptions.gap) %
+                verifiedOptions.step) -
+                verifiedOptions.step)
+            : verifiedOptions.from + verifiedOptions.step;
+      }
+    }
+
+    if (verifiedOptions.range) {
+      if (verifiedOptions.from > verifiedOptions.to - verifiedOptions.gap) {
+        verifiedOptions.to =
+          verifiedOptions.step > verifiedOptions.gap
+            ? verifiedOptions.from + verifiedOptions.step
+            : verifiedOptions.from +
+              verifiedOptions.gap -
+              (((verifiedOptions.from + verifiedOptions.gap) %
+                verifiedOptions.step) -
+                verifiedOptions.step);
+
+        if (verifiedOptions.to > verifiedOptions.max) {
+          verifiedOptions.to = verifiedOptions.from;
+          verifiedOptions.from =
+            verifiedOptions.step > verifiedOptions.gap
+              ? verifiedOptions.from - verifiedOptions.step
+              : verifiedOptions.to -
+                verifiedOptions.gap -
+                ((verifiedOptions.to - verifiedOptions.gap) %
+                  verifiedOptions.step);
+        }
+      }
+    }
 
     return verifiedOptions as ModelOption;
   }

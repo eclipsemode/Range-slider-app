@@ -59,6 +59,15 @@ class Model {
         ? verifiedOptions.min
         : verifiedOptions.max;
 
+    if (verifiedOptions.step < 1) {
+      verifiedOptions.step = 1;
+    } else if (
+      verifiedOptions.step >
+      verifiedOptions.max - verifiedOptions.min
+    ) {
+      verifiedOptions.step = verifiedOptions.max - verifiedOptions.min;
+    }
+
     if (verifiedOptions.from % verifiedOptions.step !== 0) {
       const rest: number = verifiedOptions.from % verifiedOptions.step;
       const middle: number = verifiedOptions.step / 2;
@@ -77,7 +86,7 @@ class Model {
       }
     }
 
-    if (verifiedOptions.from > verifiedOptions.max) {
+    if (verifiedOptions.from >= verifiedOptions.max) {
       verifiedOptions.from = verifiedOptions.max;
     }
 
@@ -86,13 +95,25 @@ class Model {
       const middle: number = verifiedOptions.step / 2;
 
       if (verifiedOptions.step - rest > middle) {
-        verifiedOptions.to -= rest;
+        // console.log(verifiedOptions.to);
+        // console.log(rest);
+        verifiedOptions.to =
+          verifiedOptions.to >= verifiedOptions.max
+            ? verifiedOptions.max
+            : verifiedOptions.to - rest;
+        // verifiedOptions.to -= rest;
       } else {
-        verifiedOptions.to += verifiedOptions.step - rest;
+        // verifiedOptions.to =
+        //   verifiedOptions.to >= verifiedOptions.max
+        //     ? verifiedOptions.max
+        //     : verifiedOptions.to + verifiedOptions.step - rest;
+        // console.log(+verifiedOptions.to + +verifiedOptions.step - +rest);
+        verifiedOptions.to =
+          +verifiedOptions.to + +verifiedOptions.step - +rest;
       }
     }
 
-    if (verifiedOptions.to > verifiedOptions.max) {
+    if (verifiedOptions.to >= verifiedOptions.max) {
       verifiedOptions.to = verifiedOptions.max;
     }
 
@@ -113,7 +134,7 @@ class Model {
     if (action === ActionEnum.DRAG_TO) {
       if (verifiedOptions.to < verifiedOptions.from + verifiedOptions.gap) {
         verifiedOptions.to =
-          verifiedOptions.step > verifiedOptions.gap
+          verifiedOptions.step >= verifiedOptions.gap
             ? verifiedOptions.from + verifiedOptions.step
             : verifiedOptions.from +
               verifiedOptions.gap -
@@ -148,11 +169,13 @@ class Model {
       }
     }
 
+    console.log(verifiedOptions.from);
+
     if (verifiedOptions.range) {
       if (verifiedOptions.from > verifiedOptions.to - verifiedOptions.gap) {
         verifiedOptions.to =
           verifiedOptions.step > verifiedOptions.gap
-            ? verifiedOptions.from + verifiedOptions.step
+            ? +verifiedOptions.from + +verifiedOptions.step
             : verifiedOptions.from +
               verifiedOptions.gap -
               (((verifiedOptions.from + verifiedOptions.gap) %

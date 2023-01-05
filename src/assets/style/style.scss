@@ -110,6 +110,28 @@ body {
     &::after {
       display: none;
     }
+
+    &--before {
+      content: " ";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -0.5em;
+      border-width: 0.5em;
+      border-style: solid;
+      border-color: rgba(0, 0, 0, 0.4) transparent transparent transparent;
+    }
+
+    &--after {
+      content: " ";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -0.5em;
+      border-width: 0.5em;
+      border-style: solid;
+      border-color: rgba(0, 0, 0, 0.4) transparent transparent transparent;
+    }
   }
 }
 

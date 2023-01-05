@@ -225,14 +225,17 @@ class View {
         const element: JQuery = $(`.slider-app__control--${name}`);
         if (e.target.classList.contains(`slider-app__control--${name}`)) {
           if (name === ControlsEnum.FROM) {
-            if (element.val() > this.options.to - this.options.gap) {
-              element.val(this.options.to - this.options.gap);
-            }
+            // if (element.val() > this.options.to - this.options.gap) {
+            //   element.val(this.options.to - this.options.gap);
+            // }
           }
           if (name === ControlsEnum.TO) {
-            if (element.val() < this.options.from + this.options.gap) {
-              element.val(this.options.from + this.options.gap);
-            }
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            // this.options[name] = element.val();
+            // if (element.val() < this.options.from + this.options.gap) {
+            //   element.val(this.options.from + this.options.gap);
+            // }
           }
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
@@ -523,6 +526,18 @@ class View {
         const value: string = this.options[name];
         $(`.slider-app__toggle--${name}`).attr("checked", value);
       });
+
+      $(".slider-app__control--from").prop({
+        step: this.options.step,
+        max: this.options.max,
+        min: this.options.min,
+      });
+      $(".slider-app__control--to").prop({
+        step: this.options.step,
+        max: this.options.max,
+        min: this.options.min,
+      });
+      // $(".slider-app__control--to").prop("step", this.options.step);
 
       if (!this.options.range) {
         $(".slider-app__control--to").prop("disabled", true);

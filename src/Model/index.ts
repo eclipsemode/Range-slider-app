@@ -16,16 +16,8 @@ class Model {
     const verifiedOptions = { ...options };
     verifiedOptions.min = verifiedOptions.min ?? 0;
     verifiedOptions.max = verifiedOptions.max ?? 1000;
-    verifiedOptions.from =
-      verifiedOptions.from >= verifiedOptions.min &&
-      verifiedOptions.from <= verifiedOptions.max
-        ? verifiedOptions.from
-        : verifiedOptions.min ?? verifiedOptions.min;
-    verifiedOptions.to =
-      verifiedOptions.to <= verifiedOptions.max &&
-      verifiedOptions.to >= verifiedOptions.min
-        ? verifiedOptions.to
-        : verifiedOptions.max ?? verifiedOptions.max;
+    verifiedOptions.from = verifiedOptions.from ?? verifiedOptions.min;
+    verifiedOptions.to = verifiedOptions.to ?? verifiedOptions.max;
     verifiedOptions.gap =
       verifiedOptions.gap ??
       ((verifiedOptions.max - verifiedOptions.min) * 10) / 100;
@@ -89,7 +81,6 @@ class Model {
     if (verifiedOptions.from >= verifiedOptions.max) {
       verifiedOptions.from = verifiedOptions.max;
     }
-
     if (verifiedOptions.to % verifiedOptions.step !== 0) {
       const rest: number = verifiedOptions.to % verifiedOptions.step;
       const middle: number = verifiedOptions.step / 2;
@@ -112,21 +103,40 @@ class Model {
           +verifiedOptions.to + +verifiedOptions.step - +rest;
       }
     }
-
     if (verifiedOptions.to >= verifiedOptions.max) {
       verifiedOptions.to = verifiedOptions.max;
     }
-
     if (action === ActionEnum.DRAG_FROM) {
       if (verifiedOptions.range) {
-        if (verifiedOptions.from > verifiedOptions.to - verifiedOptions.gap) {
-          verifiedOptions.from =
-            verifiedOptions.step > verifiedOptions.gap
-              ? verifiedOptions.to - verifiedOptions.step
-              : verifiedOptions.to -
-                verifiedOptions.gap -
-                ((verifiedOptions.to - verifiedOptions.gap) %
-                  verifiedOptions.step);
+        if (verifiedOptions.step > verifiedOptions.gap) {
+          if (
+            verifiedOptions.from >
+            verifiedOptions.to - verifiedOptions.step
+          ) {
+            if (verifiedOptions.to === verifiedOptions.max) {
+              verifiedOptions.from =
+                verifiedOptions.to -
+                (verifiedOptions.to % verifiedOptions.step);
+            } else {
+              verifiedOptions.from = verifiedOptions.to - verifiedOptions.step;
+            }
+          }
+        } else if (
+          verifiedOptions.from >
+          verifiedOptions.to - verifiedOptions.gap
+        ) {
+          if (verifiedOptions.to === verifiedOptions.max) {
+            verifiedOptions.from =
+              verifiedOptions.to - (verifiedOptions.to % verifiedOptions.step);
+          } else {
+            verifiedOptions.from =
+              verifiedOptions.step > verifiedOptions.gap
+                ? verifiedOptions.to - verifiedOptions.step
+                : verifiedOptions.to -
+                  verifiedOptions.gap -
+                  ((verifiedOptions.to - verifiedOptions.gap) %
+                    verifiedOptions.step);
+          }
         }
       }
     }
@@ -142,58 +152,65 @@ class Model {
                 verifiedOptions.step) -
                 verifiedOptions.step);
       }
+      verifiedOptions.to =
+        verifiedOptions.to > verifiedOptions.max
+          ? verifiedOptions.max
+          : verifiedOptions.to;
     }
 
-    if (action === ActionEnum.CLICK_FROM) {
-      if (verifiedOptions.from > verifiedOptions.to - verifiedOptions.gap) {
-        verifiedOptions.from =
-          verifiedOptions.gap >= verifiedOptions.step
-            ? verifiedOptions.to -
-              verifiedOptions.gap -
-              ((verifiedOptions.to - verifiedOptions.gap) %
-                verifiedOptions.step)
-            : verifiedOptions.to - verifiedOptions.step;
-      }
-    }
+    // if (action === ActionEnum.CLICK_FROM) {
+    //   if (verifiedOptions.from > verifiedOptions.to - verifiedOptions.gap) {
+    //     verifiedOptions.from =
+    //       verifiedOptions.gap >= verifiedOptions.step
+    //         ? verifiedOptions.to -
+    //           verifiedOptions.gap -
+    //           ((verifiedOptions.to - verifiedOptions.gap) %
+    //             verifiedOptions.step)
+    //         : verifiedOptions.to - verifiedOptions.step;
+    //   }
+    //   if (verifiedOptions.from < verifiedOptions.min) {
+    //     verifiedOptions.from = verifiedOptions.min;
+    //   }
+    // }
+    //
+    // if (action === ActionEnum.CLICK_TO) {
+    //   if (verifiedOptions.to < verifiedOptions.from + verifiedOptions.gap) {
+    //     verifiedOptions.to =
+    //       verifiedOptions.gap >= verifiedOptions.step
+    //         ? verifiedOptions.from +
+    //           verifiedOptions.gap -
+    //           (((verifiedOptions.from + verifiedOptions.gap) %
+    //             verifiedOptions.step) -
+    //             verifiedOptions.step)
+    //         : verifiedOptions.from + verifiedOptions.step;
+    //   }
+    // }
 
-    if (action === ActionEnum.CLICK_TO) {
-      if (verifiedOptions.to < verifiedOptions.from + verifiedOptions.gap) {
-        verifiedOptions.to =
-          verifiedOptions.gap >= verifiedOptions.step
-            ? verifiedOptions.from +
-              verifiedOptions.gap -
-              (((verifiedOptions.from + verifiedOptions.gap) %
-                verifiedOptions.step) -
-                verifiedOptions.step)
-            : verifiedOptions.from + verifiedOptions.step;
-      }
-    }
-
-    console.log(verifiedOptions.from);
-
-    if (verifiedOptions.range) {
-      if (verifiedOptions.from > verifiedOptions.to - verifiedOptions.gap) {
-        verifiedOptions.to =
-          verifiedOptions.step > verifiedOptions.gap
-            ? +verifiedOptions.from + +verifiedOptions.step
-            : verifiedOptions.from +
-              verifiedOptions.gap -
-              (((verifiedOptions.from + verifiedOptions.gap) %
-                verifiedOptions.step) -
-                verifiedOptions.step);
-
-        if (verifiedOptions.to > verifiedOptions.max) {
-          verifiedOptions.to = verifiedOptions.from;
-          verifiedOptions.from =
-            verifiedOptions.step > verifiedOptions.gap
-              ? verifiedOptions.from - verifiedOptions.step
-              : verifiedOptions.to -
-                verifiedOptions.gap -
-                ((verifiedOptions.to - verifiedOptions.gap) %
-                  verifiedOptions.step);
-        }
-      }
-    }
+    // if (verifiedOptions.range) {
+    //   if (verifiedOptions.from > verifiedOptions.to - verifiedOptions.gap) {
+    //     verifiedOptions.to =
+    //       verifiedOptions.step > verifiedOptions.gap
+    //         ? +verifiedOptions.from + +verifiedOptions.step
+    //         : verifiedOptions.from +
+    //           verifiedOptions.gap -
+    //           (((verifiedOptions.from + verifiedOptions.gap) %
+    //             verifiedOptions.step) -
+    //             verifiedOptions.step);
+    //
+    //     console.log(verifiedOptions.to);
+    //
+    //     if (verifiedOptions.to > verifiedOptions.max) {
+    //       verifiedOptions.to = verifiedOptions.from;
+    //       verifiedOptions.from =
+    //         verifiedOptions.step > verifiedOptions.gap
+    //           ? verifiedOptions.from - verifiedOptions.step
+    //           : verifiedOptions.to -
+    //             verifiedOptions.gap -
+    //             ((verifiedOptions.to - verifiedOptions.gap) %
+    //               verifiedOptions.step);
+    //     }
+    //   }
+    // }
 
     return verifiedOptions as ModelOption;
   }

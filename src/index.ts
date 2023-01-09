@@ -7,9 +7,9 @@ const app = new Controller("#slider", {
   tooltip: true,
   // from: 250,
   // to: 500,
-  range: true,
+  // range: true,
   configPanel: true,
-  step: 1,
+  step: 35,
   // to: 2000,
-  gap: 1,
+  // gap: 1,
 });

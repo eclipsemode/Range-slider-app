@@ -6,6 +6,7 @@ import {
   calcMouseOffset,
   ControlsEnum,
   ActionEnum,
+  TogglesEnum,
 } from "../utils";
 
 import CreateBar from "./subViews/CreateBar";
@@ -171,14 +172,14 @@ class View {
           Math.abs(convertedValue - this.options.to)
         ) {
           this.options.from = convertedValue;
-          handler(this.options, ActionEnum.CLICK_FROM);
+          handler(this.options, ActionEnum.DRAG_FROM);
         } else {
           this.options.to = convertedValue;
-          handler(this.options, ActionEnum.CLICK_TO);
+          handler(this.options, ActionEnum.DRAG_TO);
         }
       } else {
         this.options.from = convertedValue;
-        handler(this.options, ActionEnum.CLICK_FROM);
+        handler(this.options, ActionEnum.DRAG_FROM);
       }
     });
 
@@ -194,14 +195,14 @@ class View {
             Math.abs(+e.target.textContent - this.options.to)
           ) {
             this.options.from = +e.target.textContent;
-            handler(this.options, ActionEnum.CLICK_FROM);
+            handler(this.options, ActionEnum.DRAG_FROM);
           } else {
             this.options.to = +e.target.textContent;
-            handler(this.options, ActionEnum.CLICK_TO);
+            handler(this.options, ActionEnum.DRAG_TO);
           }
         } else {
           this.options.from = +e.target.textContent;
-          handler(this.options);
+          handler(this.options, ActionEnum.DRAG_FROM);
         }
       }
     });
@@ -213,6 +214,13 @@ class View {
     this.app.on("input", (e) => {
       this.options.toggleConfig.forEach((name) => {
         if (e.target.classList.contains(`slider-app__toggle--${name}`)) {
+          if (name === TogglesEnum.RANGE) {
+            this.options.range = $(`.slider-app__toggle--${name}`).prop(
+              "checked"
+            );
+            handler(this.options, ActionEnum.CONFIG_RANGE);
+            return;
+          }
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
           this.options[name] = $(`.slider-app__toggle--${name}`).prop(
@@ -226,12 +234,12 @@ class View {
         if (e.target.classList.contains(`slider-app__control--${name}`)) {
           if (name === ControlsEnum.FROM) {
             this.options.from = +element.val();
-            handler(this.options, ActionEnum.CLICK_FROM);
+            handler(this.options, ActionEnum.DRAG_FROM);
             return;
           }
           if (name === ControlsEnum.TO) {
             this.options.to = +element.val();
-            handler(this.options, ActionEnum.CLICK_TO);
+            handler(this.options, ActionEnum.DRAG_TO);
             return;
           }
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment

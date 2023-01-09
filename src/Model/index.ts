@@ -65,84 +65,132 @@ class Model {
       const middle: number = verifiedOptions.step / 2;
 
       if (verifiedOptions.step - rest > middle) {
-        if (verifiedOptions.from >= verifiedOptions.max) {
-          verifiedOptions.from = verifiedOptions.max;
-        } else {
-          verifiedOptions.from -= rest;
-        }
+        verifiedOptions.from -= rest;
+        // if (!verifiedOptions.range) {
+        //   verifiedOptions.from -= rest;
+        //   if (verifiedOptions.from >= verifiedOptions.max) {
+        //     verifiedOptions.from = verifiedOptions.max;
+        //   } else {
+        //     const fromValue: number = verifiedOptions.from;
+        //     verifiedOptions.from -= rest;
+        //     verifiedOptions.from =
+        //       fromValue - verifiedOptions.from > verifiedOptions.max - fromValue
+        //         ? verifiedOptions.max
+        //         : verifiedOptions.from;
+        //   }
+        // } else if (verifiedOptions.from >= verifiedOptions.to) {
+        //   if (verifiedOptions.to === verifiedOptions.max) {
+        //     verifiedOptions.from =
+        //       verifiedOptions.step > verifiedOptions.gap
+        //         ? verifiedOptions.to -
+        //           (verifiedOptions.to % verifiedOptions.step)
+        //         : verifiedOptions.to - verifiedOptions.gap;
+        //   } else {
+        //     verifiedOptions.from =
+        //       verifiedOptions.step > verifiedOptions.gap
+        //         ? verifiedOptions.to - verifiedOptions.step
+        //         : verifiedOptions.to - verifiedOptions.gap;
+        //   }
+        // } else {
+        //   const fromValue: number = verifiedOptions.from;
+        //   verifiedOptions.from -= rest;
+        //   if (verifiedOptions.step > verifiedOptions.gap) {
+        //     verifiedOptions.from =
+        //       fromValue - verifiedOptions.from > verifiedOptions.to - fromValue
+        //         ? verifiedOptions.to - verifiedOptions.step
+        //         : verifiedOptions.from;
+        //   } else {
+        //     verifiedOptions.from =
+        //       fromValue - verifiedOptions.from > verifiedOptions.to - fromValue
+        //         ? verifiedOptions.to - verifiedOptions.gap
+        //         : verifiedOptions.from;
+        //   }
+        // }
       } else {
         verifiedOptions.from =
-          verifiedOptions.from >= verifiedOptions.max
-            ? verifiedOptions.max
-            : verifiedOptions.from + verifiedOptions.step - rest;
+          verifiedOptions.from + verifiedOptions.step - rest;
+        // verifiedOptions.from =
+        //   verifiedOptions.from >= verifiedOptions.max
+        //     ? verifiedOptions.max
+        //     : verifiedOptions.from + verifiedOptions.step - rest;
       }
     }
 
-    if (verifiedOptions.from >= verifiedOptions.max) {
-      verifiedOptions.from = verifiedOptions.max;
-    }
+    // if (verifiedOptions.from >= verifiedOptions.max) {
+    //   verifiedOptions.from = verifiedOptions.max;
+    // }
+
     if (verifiedOptions.to % verifiedOptions.step !== 0) {
       const rest: number = verifiedOptions.to % verifiedOptions.step;
       const middle: number = verifiedOptions.step / 2;
 
       if (verifiedOptions.step - rest > middle) {
-        // console.log(verifiedOptions.to);
-        // console.log(rest);
-        verifiedOptions.to =
-          verifiedOptions.to >= verifiedOptions.max
-            ? verifiedOptions.max
-            : verifiedOptions.to - rest;
-        // verifiedOptions.to -= rest;
-      } else {
+        verifiedOptions.to -= rest;
         // verifiedOptions.to =
         //   verifiedOptions.to >= verifiedOptions.max
         //     ? verifiedOptions.max
-        //     : verifiedOptions.to + verifiedOptions.step - rest;
-        // console.log(+verifiedOptions.to + +verifiedOptions.step - +rest);
-        verifiedOptions.to =
-          +verifiedOptions.to + +verifiedOptions.step - +rest;
-      }
-    }
-    if (verifiedOptions.to >= verifiedOptions.max) {
-      verifiedOptions.to = verifiedOptions.max;
-    }
-    if (action === ActionEnum.DRAG_FROM) {
-      if (verifiedOptions.range) {
-        if (verifiedOptions.step > verifiedOptions.gap) {
-          if (
-            verifiedOptions.from >
-            verifiedOptions.to - verifiedOptions.step
-          ) {
-            if (verifiedOptions.to === verifiedOptions.max) {
-              verifiedOptions.from =
-                verifiedOptions.to -
-                (verifiedOptions.to % verifiedOptions.step);
-            } else {
-              verifiedOptions.from = verifiedOptions.to - verifiedOptions.step;
-            }
-          }
-        } else if (
-          verifiedOptions.from >
-          verifiedOptions.to - verifiedOptions.gap
-        ) {
-          if (verifiedOptions.to === verifiedOptions.max) {
-            verifiedOptions.from =
-              verifiedOptions.to - (verifiedOptions.to % verifiedOptions.step);
-          } else {
-            verifiedOptions.from =
-              verifiedOptions.step > verifiedOptions.gap
-                ? verifiedOptions.to - verifiedOptions.step
-                : verifiedOptions.to -
-                  verifiedOptions.gap -
-                  ((verifiedOptions.to - verifiedOptions.gap) %
-                    verifiedOptions.step);
-          }
-        }
+        //     : verifiedOptions.to - rest;
+      } else {
+        verifiedOptions.to = verifiedOptions.to + verifiedOptions.step - rest;
+        // verifiedOptions.to =
+        //   +verifiedOptions.to + +verifiedOptions.step - +rest;
       }
     }
 
+    // if (verifiedOptions.to >= verifiedOptions.max) {
+    //   verifiedOptions.to = verifiedOptions.max;
+    // }
+    if (action === ActionEnum.DRAG_FROM) {
+      if (verifiedOptions.range) {
+        if (verifiedOptions.from >= verifiedOptions.to - verifiedOptions.gap) {
+          verifiedOptions.from =
+            verifiedOptions.step >= verifiedOptions.gap
+              ? verifiedOptions.to - verifiedOptions.step
+              : verifiedOptions.to -
+                verifiedOptions.gap -
+                ((verifiedOptions.to - verifiedOptions.gap) %
+                  verifiedOptions.step);
+        }
+      }
+      // if (verifiedOptions.range) {
+      //   if (verifiedOptions.step > verifiedOptions.gap) {
+      //     if (
+      //       verifiedOptions.from >
+      //       verifiedOptions.to - verifiedOptions.step
+      //     ) {
+      // console.log(
+      //   (verifiedOptions.to - verifiedOptions.step) % verifiedOptions.step
+      // );
+      // if (verifiedOptions.to === verifiedOptions.max) {
+      //   verifiedOptions.from =
+      //     verifiedOptions.to -
+      //     (verifiedOptions.to % verifiedOptions.step);
+      // } else {
+      //   verifiedOptions.from = verifiedOptions.to - verifiedOptions.step;
+      // }
+      //     }
+      //   } else if (
+      //     verifiedOptions.from >
+      //     verifiedOptions.to - verifiedOptions.gap
+      //   ) {
+      //     if (verifiedOptions.to === verifiedOptions.max) {
+      //       verifiedOptions.from =
+      //         verifiedOptions.to - (verifiedOptions.to % verifiedOptions.step);
+      //     } else {
+      //       verifiedOptions.from =
+      //         verifiedOptions.step > verifiedOptions.gap
+      //           ? verifiedOptions.to - verifiedOptions.step
+      //           : verifiedOptions.to -
+      //             verifiedOptions.gap -
+      //             ((verifiedOptions.to - verifiedOptions.gap) %
+      //               verifiedOptions.step);
+      //     }
+      //   }
+      // }
+    }
+
     if (action === ActionEnum.DRAG_TO) {
-      if (verifiedOptions.to < verifiedOptions.from + verifiedOptions.gap) {
+      if (verifiedOptions.to <= verifiedOptions.from + verifiedOptions.gap) {
         verifiedOptions.to =
           verifiedOptions.step >= verifiedOptions.gap
             ? verifiedOptions.from + verifiedOptions.step
@@ -152,39 +200,53 @@ class Model {
                 verifiedOptions.step) -
                 verifiedOptions.step);
       }
-      verifiedOptions.to =
-        verifiedOptions.to > verifiedOptions.max
-          ? verifiedOptions.max
-          : verifiedOptions.to;
+
+      // if (verifiedOptions.to < verifiedOptions.from + verifiedOptions.gap) {
+      //   verifiedOptions.to =
+      //     verifiedOptions.step >= verifiedOptions.gap
+      //       ? verifiedOptions.from + verifiedOptions.step
+      //       : verifiedOptions.from +
+      //         verifiedOptions.gap -
+      //         (((verifiedOptions.from + verifiedOptions.gap) %
+      //           verifiedOptions.step) -
+      //           verifiedOptions.step);
+      // }
+      // verifiedOptions.to =
+      //   verifiedOptions.to > verifiedOptions.max
+      //     ? verifiedOptions.max
+      //     : verifiedOptions.to;
     }
 
-    // if (action === ActionEnum.CLICK_FROM) {
-    //   if (verifiedOptions.from > verifiedOptions.to - verifiedOptions.gap) {
-    //     verifiedOptions.from =
-    //       verifiedOptions.gap >= verifiedOptions.step
-    //         ? verifiedOptions.to -
-    //           verifiedOptions.gap -
-    //           ((verifiedOptions.to - verifiedOptions.gap) %
-    //             verifiedOptions.step)
-    //         : verifiedOptions.to - verifiedOptions.step;
-    //   }
-    //   if (verifiedOptions.from < verifiedOptions.min) {
-    //     verifiedOptions.from = verifiedOptions.min;
-    //   }
-    // }
-    //
-    // if (action === ActionEnum.CLICK_TO) {
-    //   if (verifiedOptions.to < verifiedOptions.from + verifiedOptions.gap) {
-    //     verifiedOptions.to =
-    //       verifiedOptions.gap >= verifiedOptions.step
-    //         ? verifiedOptions.from +
-    //           verifiedOptions.gap -
-    //           (((verifiedOptions.from + verifiedOptions.gap) %
-    //             verifiedOptions.step) -
-    //             verifiedOptions.step)
-    //         : verifiedOptions.from + verifiedOptions.step;
-    //   }
-    // }
+    if (action === ActionEnum.CLICK_FROM) {
+      // if (verifiedOptions.range) {
+      //   if (verifiedOptions.from > verifiedOptions.to - verifiedOptions.gap) {
+      //     verifiedOptions.from =
+      //       verifiedOptions.gap >= verifiedOptions.step
+      //         ? verifiedOptions.to -
+      //           verifiedOptions.gap -
+      //           ((verifiedOptions.to - verifiedOptions.gap) %
+      //             verifiedOptions.step)
+      //         : verifiedOptions.to - verifiedOptions.step;
+      //   }
+      // }
+      //
+      // if (verifiedOptions.from < verifiedOptions.min) {
+      //   verifiedOptions.from = verifiedOptions.min;
+      // }
+    }
+
+    if (action === ActionEnum.CLICK_TO) {
+      // if (verifiedOptions.to < verifiedOptions.from + verifiedOptions.gap) {
+      //   verifiedOptions.to =
+      //     verifiedOptions.gap >= verifiedOptions.step
+      //       ? verifiedOptions.from +
+      //         verifiedOptions.gap -
+      //         (((verifiedOptions.from + verifiedOptions.gap) %
+      //           verifiedOptions.step) -
+      //           verifiedOptions.step)
+      //       : verifiedOptions.from + verifiedOptions.step;
+      // }
+    }
 
     // if (verifiedOptions.range) {
     //   if (verifiedOptions.from > verifiedOptions.to - verifiedOptions.gap) {

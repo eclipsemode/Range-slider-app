@@ -150,7 +150,7 @@ class View {
      * Binds thumbs move.
      */
 
-    this.bar?.barElement.on("click", (e) => {
+    this.bar?.barElement.on("mousedown", (e) => {
       const sliderWidth: number = this.bar.barElement.innerWidth();
       const sliderLeftOffset: number = this.bar.barElement.offset().left;
       const clickedOffset: number = e.pageX - sliderLeftOffset;
@@ -178,7 +178,7 @@ class View {
         }
       } else {
         this.options.from = convertedValue;
-        handler(this.options);
+        handler(this.options, ActionEnum.CLICK_FROM);
       }
     });
 
@@ -186,7 +186,7 @@ class View {
      * Binds rulers values.
      */
 
-    $(this.app).on("click", (e) => {
+    $(this.app).on("mousedown", (e) => {
       if (e.target.classList.contains("slider-app__rulers-value")) {
         if (this.options.range) {
           if (

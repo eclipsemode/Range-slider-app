@@ -93,8 +93,6 @@ class View {
             this.options.max
           );
 
-          this.options.from = convertedValueX;
-
           if (!this.options.vertical) {
             this.options.from = convertedValueX;
           } else {
@@ -131,18 +129,39 @@ class View {
 
         // eslint-disable-next-line @typescript-eslint/no-shadow
         const moveAt = (e: JQuery.MouseMoveEvent | JQuery.MouseDownEvent) => {
-          const mouseOffset: number = e.pageX - sliderLeftOffset;
-          const thumbOffsetValue: number = calcMouseOffset(
-            mouseOffset,
+          const mouseOffsetX: number = e.pageX - sliderLeftOffset;
+          const mouseOffsetY: number = -(
+            e.pageY -
+            sliderBottomOffset -
+            sliderHeight
+          );
+          const thumbOffsetValueX: number = calcMouseOffset(
+            mouseOffsetX,
             sliderWidth
           );
+          const thumbOffsetValueY: number = calcMouseOffset(
+            mouseOffsetY,
+            sliderHeight
+          );
 
-          this.options.to = convertToNumber(
-            thumbOffsetValue,
+          const convertedValueX: number = convertToNumber(
+            thumbOffsetValueX,
             sliderWidth,
             this.options.min,
             this.options.max
           );
+          const convertedValueY: number = convertToNumber(
+            thumbOffsetValueY,
+            sliderHeight,
+            this.options.min,
+            this.options.max
+          );
+
+          if (!this.options.vertical) {
+            this.options.to = convertedValueX;
+          } else {
+            this.options.to = convertedValueY;
+          }
 
           handler(this.options, ActionEnum.DRAG_TO);
         };
@@ -390,30 +409,71 @@ class View {
         }
         const offsetToThumb: number = convertToPixel(
           this.options.to,
-          sliderWidth,
+          this.options.vertical ? sliderHeight : sliderWidth,
           this.options.min,
           this.options.max
         );
 
-        this.tooltipTo.tooltipElement.css("left", `${offsetToThumb}px`);
+        this.tooltipTo.tooltipElement.css({
+          left: this.options.vertical ? "auto" : `${offsetToThumb}px`,
+          bottom: this.options.vertical ? `${offsetToThumb}px` : "2.2em",
+        });
         this.tooltipTo.tooltipElement.text(this.options.to);
 
         const tooltipFromWidth: number = parseFloat(
           this.tooltipFrom.tooltipElement.css("width")
         );
+        const tooltipFromHeight: number = parseFloat(
+          this.tooltipFrom.tooltipElement.css("height")
+        );
         const tooltipToWidth: number = parseFloat(
           this.tooltipTo.tooltipElement.css("width")
+        );
+        const tooltipToHeight: number = parseFloat(
+          this.tooltipTo.tooltipElement.css("height")
         );
 
         const tooltipFromLeft: number = parseFloat(
           this.tooltipFrom.tooltipElement.css("left")
         );
+        const tooltipFromBottom: number = parseFloat(
+          this.tooltipFrom.tooltipElement.css("bottom")
+        );
 
         const tooltipToLeft: number = parseFloat(
           this.tooltipTo.tooltipElement.css("left")
         );
+        const tooltipToBottom: number = parseFloat(
+          this.tooltipTo.tooltipElement.css("bottom")
+        );
 
-        if (
+        if (this.options.vertical) {
+          if (
+            tooltipToBottom - tooltipFromBottom <=
+            Math.max(tooltipFromHeight, tooltipToHeight)
+          ) {
+            this.tooltipTo.tooltipElement.remove();
+            this.tooltipTo = null;
+            this.tooltipFrom.tooltipElement.addClass(
+              "slider-app__tooltip--merged"
+            );
+
+            const newBottomCss: number =
+              (tooltipToBottom - tooltipFromBottom) / 2;
+
+            this.tooltipFrom.tooltipElement.text(
+              `${this.options.from} - ${this.options.to}`
+            );
+
+            this.tooltipFrom.tooltipElement.css({
+              bottom: `${tooltipFromBottom + newBottomCss}px`,
+            });
+          } else {
+            this.tooltipFrom.tooltipElement.removeClass(
+              "slider-app__tooltip--merged"
+            );
+          }
+        } else if (
           tooltipToLeft - tooltipFromLeft <=
           Math.max(tooltipFromWidth, tooltipToWidth)
         ) {
@@ -506,54 +566,95 @@ class View {
         );
       }
 
-      this.fromThumb.fromThumbElement.css(
-        "left",
-        `${convertToPixel(
-          this.options.from,
-          sliderWidth,
-          this.options.min,
-          this.options.max
-        )}px`
-      );
-
-      this.toThumb.toThumbElement.css(
-        "left",
-        `${convertToPixel(
-          this.options.to,
-          sliderWidth,
-          this.options.min,
-          this.options.max
-        )}px`
-      );
-
-      if (this.progress?.progressElement) {
-        this.progress.progressElement.css(
-          "left",
-          `${convertToPixel(
-            this.options.from,
-            sliderWidth,
-            this.options.min,
-            this.options.max
-          )}px`
-        );
-
-        this.progress.progressElement.css(
-          "width",
-          `${
-            convertToPixel(
-              this.options.to,
-              sliderWidth,
+      this.fromThumb.fromThumbElement.css({
+        bottom: this.options.vertical
+          ? `${convertToPixel(
+              this.options.from,
+              sliderHeight,
               this.options.min,
               this.options.max
-            ) -
-            convertToPixel(
+            )}px`
+          : "auto",
+        left: this.options.vertical
+          ? "-0.85em"
+          : `${convertToPixel(
               this.options.from,
               sliderWidth,
               this.options.min,
               this.options.max
-            )
-          }px`
-        );
+            )}px`,
+      });
+
+      this.toThumb.toThumbElement.css({
+        bottom: this.options.vertical
+          ? `${convertToPixel(
+              this.options.to,
+              sliderHeight,
+              this.options.min,
+              this.options.max
+            )}px`
+          : "auto",
+        left: this.options.vertical
+          ? "-0.85em"
+          : `${convertToPixel(
+              this.options.to,
+              sliderWidth,
+              this.options.min,
+              this.options.max
+            )}px`,
+      });
+
+      if (this.options.progress) {
+        this.progress.progressElement.css({
+          left: this.options.vertical
+            ? "auto"
+            : `${convertToPixel(
+                this.options.from,
+                sliderWidth,
+                this.options.min,
+                this.options.max
+              )}px`,
+          bottom: this.options.vertical
+            ? `${convertToPixel(
+                this.options.from,
+                sliderHeight,
+                this.options.min,
+                this.options.max
+              )}px`
+            : "auto",
+          width: this.options.vertical
+            ? "100%"
+            : `${
+                convertToPixel(
+                  this.options.to,
+                  sliderWidth,
+                  this.options.min,
+                  this.options.max
+                ) -
+                convertToPixel(
+                  this.options.from,
+                  sliderWidth,
+                  this.options.min,
+                  this.options.max
+                )
+              }px`,
+          height: this.options.vertical
+            ? `${
+                convertToPixel(
+                  this.options.to,
+                  sliderHeight,
+                  this.options.min,
+                  this.options.max
+                ) -
+                convertToPixel(
+                  this.options.from,
+                  sliderHeight,
+                  this.options.min,
+                  this.options.max
+                )
+              }px`
+            : "100%",
+        });
       }
     } else {
       const sliderWidth: number = this.bar.barElement.innerWidth();
@@ -612,6 +713,7 @@ class View {
         if (this.progress?.progressElement) {
           this.progress.progressElement.css({
             width: "100%",
+            bottom: "0",
             height: `${convertToPixel(
               this.options.from,
               sliderHeight,
@@ -635,9 +737,10 @@ class View {
 
       if (!this.rulers) {
         const sliderWidth: number = this.bar.barElement.innerWidth();
+        const sliderHeight: number = this.bar.barElement.innerHeight();
         const convertedStepToPixel: number = convertToPixel(
           this.options.step,
-          sliderWidth,
+          this.options.vertical ? sliderHeight : sliderWidth,
           this.options.min,
           this.options.max
         );
@@ -649,25 +752,49 @@ class View {
         } else {
           gap = gap - (gap % convertedStepToPixel) + convertedStepToPixel;
         }
-        const amountValues: number = sliderWidth / gap;
-        const gapValues: number = sliderWidth / amountValues;
+        const amountValues: number = this.options.vertical
+          ? sliderHeight / gap
+          : sliderWidth / gap;
+        const gapValues: number = this.options.vertical
+          ? sliderHeight / amountValues
+          : sliderWidth / amountValues;
         const valuesArr: number[] = [];
         const pixelsArr: number[] = [];
 
-        for (let i = 0; i < sliderWidth - gapValues; i += gapValues) {
-          valuesArr.push(
-            convertToNumber(i, sliderWidth, this.options.min, this.options.max)
-          );
-          pixelsArr.push(i);
+        if (this.options.vertical) {
+          for (let i = 0; i < sliderHeight - gapValues; i += gapValues) {
+            valuesArr.push(
+              convertToNumber(
+                i,
+                sliderHeight,
+                this.options.min,
+                this.options.max
+              )
+            );
+            pixelsArr.push(i);
+          }
+        } else {
+          for (let i = 0; i < sliderWidth - gapValues; i += gapValues) {
+            valuesArr.push(
+              convertToNumber(
+                i,
+                sliderWidth,
+                this.options.min,
+                this.options.max
+              )
+            );
+            pixelsArr.push(i);
+          }
         }
 
-        pixelsArr.push(sliderWidth);
+        pixelsArr.push(this.options.vertical ? sliderHeight : sliderWidth);
         valuesArr.push(this.options.max);
 
         this.rulers = new CreateRulers(
           this.bar.barElement,
           valuesArr,
-          pixelsArr
+          pixelsArr,
+          this.options.vertical
         );
 
         if (this.options.vertical) {
@@ -686,51 +813,6 @@ class View {
       this.rulers.rulersElement.remove();
       this.rulers = null;
     }
-
-    /**
-     * Config panel.
-     */
-
-    // if (this.options.configPanel) {
-    //   if (!this.config) {
-    //     this.config = new CreateConfig(
-    //       this.app,
-    //       this.options.toggleConfig,
-    //       this.options.controlConfig
-    //     );
-    //   }
-    //
-    //   this.options.controlConfig.forEach((name) => {
-    //     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    //     // @ts-ignore
-    //     const value: number = this.options[name];
-    //     $(`.slider-app__control--${name}`).val(value);
-    //   });
-    //
-    //   this.options.toggleConfig.forEach((name) => {
-    //     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    //     // @ts-ignore
-    //     const value: string = this.options[name];
-    //     $(`.slider-app__toggle--${name}`).attr("checked", value);
-    //   });
-    //
-    //   $(".slider-app__control--from").prop({
-    //     step: this.options.step,
-    //   });
-    //   $(".slider-app__control--to").prop({
-    //     step: this.options.step,
-    //   });
-    //   // $(".slider-app__control--to").prop("step", this.options.step);
-    //
-    //   if (!this.options.range) {
-    //     $(".slider-app__control--to").prop("disabled", true);
-    //   } else {
-    //     $(".slider-app__control--to").prop("disabled", false);
-    //   }
-    // } else if (this.config) {
-    //   this.config.configElement.remove();
-    //   this.config = null;
-    // }
   }
 }
 

@@ -52,7 +52,9 @@ class View {
 
     this.app.on("mousedown", (e: JQuery.MouseDownEvent) => {
       const sliderWidth: number = this.bar.barElement.innerWidth();
+      const sliderHeight: number = this.bar.barElement.innerHeight();
       const sliderLeftOffset: number = this.bar.barElement.offset().left;
+      const sliderBottomOffset: number = this.bar.barElement.offset().top;
 
       if (
         e.target.classList.contains(
@@ -65,19 +67,41 @@ class View {
         const moveAt = (
           event: JQuery.MouseMoveEvent | JQuery.MouseDownEvent
         ) => {
-          const mouseOffset: number = event.pageX - sliderLeftOffset;
-          const thumbOffsetValue: number = calcMouseOffset(
-            mouseOffset,
+          const mouseOffsetX: number = event.pageX - sliderLeftOffset;
+          const mouseOffsetY: number = -(
+            event.pageY -
+            sliderBottomOffset -
+            sliderHeight
+          );
+          const thumbOffsetValueX: number = calcMouseOffset(
+            mouseOffsetX,
             sliderWidth
           );
+          const thumbOffsetValueY: number = calcMouseOffset(
+            mouseOffsetY,
+            sliderHeight
+          );
 
-          const convertedValue: number = convertToNumber(
-            thumbOffsetValue,
+          const convertedValueX: number = convertToNumber(
+            thumbOffsetValueX,
             sliderWidth,
             this.options.min,
             this.options.max
           );
-          this.options.from = convertedValue;
+          const convertedValueY: number = convertToNumber(
+            thumbOffsetValueY,
+            sliderHeight,
+            this.options.min,
+            this.options.max
+          );
+
+          this.options.from = convertedValueX;
+
+          if (!this.options.vertical) {
+            this.options.from = convertedValueX;
+          } else {
+            this.options.from = convertedValueY;
+          }
 
           handler(this.options, ActionEnum.DRAG_FROM);
         };
@@ -261,29 +285,70 @@ class View {
     this.options = options;
 
     /**
+     * Initial CSS.
+     */
+
+    this.app.addClass("slider-app");
+    if (this.options.vertical) {
+      this.app.addClass("slider-app--vertical");
+      this.bar.barElement.addClass("slider-app__bar--vertical");
+    } else {
+      this.app.removeClass("slider-app--vertical");
+      this.bar.barElement.removeClass("slider-app__bar--vertical");
+    }
+
+    /**
      * Creates Tooltip.
      */
     if (this.options.tooltip) {
       const sliderWidth: number = this.bar.barElement.innerWidth();
+      const sliderHeight: number = this.bar.barElement.innerHeight();
+
       if (!this.tooltipFrom) {
         this.tooltipFrom = new CreateTooltip(this.bar.barElement);
       }
+
+      if (this.options.vertical) {
+        this.tooltipFrom.tooltipElement.addClass(
+          "slider-app__tooltip--vertical"
+        );
+      } else if (this.tooltipFrom) {
+        this.tooltipFrom.tooltipElement.removeClass(
+          "slider-app__tooltip--vertical"
+        );
+      }
+
       const offsetFromThumb: number = convertToPixel(
         this.options.from,
-        sliderWidth,
+        this.options.vertical ? sliderHeight : sliderWidth,
         this.options.min,
         this.options.max
       );
 
-      // console.log(this.tooltipFrom.tooltipElement.);
-
-      this.bar.barElement.css("margin-top", "2em");
-      this.tooltipFrom.tooltipElement.css("left", `${offsetFromThumb}px`);
+      this.bar.barElement.css(
+        "margin-top",
+        this.options.vertical ? "auto" : "2em"
+      );
+      this.tooltipFrom.tooltipElement.css({
+        left: this.options.vertical ? "auto" : `${offsetFromThumb}px`,
+        bottom: this.options.vertical ? `${offsetFromThumb - 9}px` : "2.2em",
+      });
+      // this.tooltipFrom.tooltipElement.css("left", `${offsetFromThumb}px`);
       this.tooltipFrom.tooltipElement.text(this.options.from);
 
       if (this.options.range) {
         if (!this.tooltipTo) {
           this.tooltipTo = new CreateTooltip(this.bar.barElement);
+        }
+
+        if (this.options.vertical) {
+          this.tooltipTo.tooltipElement.addClass(
+            "slider-app__tooltip--vertical"
+          );
+        } else {
+          this.tooltipTo.tooltipElement.removeClass(
+            "slider-app__tooltip--vertical"
+          );
         }
         const offsetToThumb: number = convertToPixel(
           this.options.to,
@@ -360,6 +425,16 @@ class View {
         this.progress = new CreateProgress(this.bar.barElement);
       }
 
+      if (this.options.vertical) {
+        this.progress.progressElement.addClass(
+          "slider-app__progress--vertical"
+        );
+      } else if (this.progress) {
+        this.progress.progressElement.removeClass(
+          "slider-app__progress--vertical"
+        );
+      }
+
       if (!this.options.range) {
         this.progress.progressElement.css("left", "auto");
       }
@@ -371,10 +446,26 @@ class View {
     /**
      * Changes css of thumb position.
      */
+
+    if (this.options.vertical) {
+      this.fromThumb.fromThumbElement.addClass("slider-app__thumb--vertical");
+    } else {
+      this.fromThumb.fromThumbElement.removeClass(
+        "slider-app__thumb--vertical"
+      );
+    }
+
     if (this.options.range) {
       const sliderWidth: number = this.bar.barElement.innerWidth();
+      const sliderHeight: number = this.bar.barElement.innerHeight();
       if (!this.toThumb) {
         this.toThumb = new CreateThumbTo(this.bar.barElement);
+      }
+
+      if (this.options.vertical) {
+        this.toThumb.toThumbElement.addClass("slider-app__thumb--vertical");
+      } else {
+        this.toThumb.toThumbElement.removeClass("slider-app__thumb--vertical");
       }
 
       this.fromThumb.fromThumbElement.css(
@@ -428,32 +519,57 @@ class View {
       }
     } else {
       const sliderWidth: number = this.bar.barElement.innerWidth();
+      const sliderHeight: number = this.bar.barElement.innerHeight();
 
       if (this.toThumb) {
         this.toThumb.toThumbElement.remove();
         this.toThumb = null;
       }
 
-      this.fromThumb.fromThumbElement.css(
-        "left",
-        `${convertToPixel(
-          this.options.from,
-          sliderWidth,
-          this.options.min,
-          this.options.max
-        )}px`
-      );
-
-      if (this.progress?.progressElement) {
-        this.progress.progressElement.css(
-          "width",
-          `${convertToPixel(
+      if (!this.options.vertical) {
+        this.fromThumb.fromThumbElement.css({
+          bottom: "auto",
+          left: `${convertToPixel(
             this.options.from,
             sliderWidth,
             this.options.min,
             this.options.max
-          )}px`
-        );
+          )}px`,
+        });
+
+        if (this.progress?.progressElement) {
+          this.progress.progressElement.css({
+            height: "100%",
+            width: `${convertToPixel(
+              this.options.from,
+              sliderWidth,
+              this.options.min,
+              this.options.max
+            )}px`,
+          });
+        }
+      } else {
+        this.fromThumb.fromThumbElement.css({
+          left: "-0.8em",
+          bottom: `${convertToPixel(
+            this.options.from,
+            sliderHeight,
+            this.options.min,
+            this.options.max
+          )}px`,
+        });
+
+        if (this.progress?.progressElement) {
+          this.progress.progressElement.css({
+            width: "100%",
+            height: `${convertToPixel(
+              this.options.from,
+              sliderHeight,
+              this.options.min,
+              this.options.max
+            )}px`,
+          });
+        }
       }
     }
 
@@ -503,11 +619,27 @@ class View {
           valuesArr,
           pixelsArr
         );
+
+        if (this.options.vertical) {
+          this.rulers.rulersElement.addClass("slider-app__rulers--vertical");
+          this.rulers.rulersElement
+            .children()
+            .addClass("slider-app__rulers-value--vertical");
+        } else if (this.rulers) {
+          this.rulers.rulersElement.removeClass("slider-app__rulers--vertical");
+          this.rulers.rulersElement
+            .children()
+            .removeClass("slider-app__rulers-value--vertical");
+        }
       }
     } else if (this.rulers) {
       this.rulers.rulersElement.remove();
       this.rulers = null;
     }
+
+    /**
+     * Config panel.
+     */
 
     if (this.options.configPanel) {
       if (!this.config) {

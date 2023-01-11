@@ -26,7 +26,7 @@ class CreateRulers {
       );
     }
 
-    this.rulersElement.insertAfter(parent);
+    this.rulersElement.appendTo(parent);
   }
 }
 

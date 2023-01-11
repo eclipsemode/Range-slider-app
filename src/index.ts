@@ -9,7 +9,7 @@ const app = new Controller("#slider", {
   // to: 500,
   // range: true,
   configPanel: true,
-  step: 35,
+  step: 1,
   // to: 2000,
-  // gap: 1,
+  gap: 1,
 });

@@ -40,9 +40,7 @@ class View {
 
   constructor(private readonly selector: string) {
     this.app = $(selector);
-
     this.bar = new CreateBar(this.app);
-    this.fromThumb = new CreateThumbFrom(this.bar.barElement);
   }
 
   public bindChangeOptions(handler: CallableFunction) {
@@ -298,6 +296,51 @@ class View {
     }
 
     /**
+     * Config panel.
+     */
+
+    if (this.options.configPanel) {
+      if (!this.config) {
+        this.config = new CreateConfig(
+          this.app,
+          this.options.toggleConfig,
+          this.options.controlConfig
+        );
+      }
+
+      this.options.controlConfig.forEach((name) => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        const value: number = this.options[name];
+        $(`.slider-app__control--${name}`).val(value);
+      });
+
+      this.options.toggleConfig.forEach((name) => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        const value: string = this.options[name];
+        $(`.slider-app__toggle--${name}`).attr("checked", value);
+      });
+
+      $(".slider-app__control--from").prop({
+        step: this.options.step,
+      });
+      $(".slider-app__control--to").prop({
+        step: this.options.step,
+      });
+      // $(".slider-app__control--to").prop("step", this.options.step);
+
+      if (!this.options.range) {
+        $(".slider-app__control--to").prop("disabled", true);
+      } else {
+        $(".slider-app__control--to").prop("disabled", false);
+      }
+    } else if (this.config) {
+      this.config.configElement.remove();
+      this.config = null;
+    }
+
+    /**
      * Creates Tooltip.
      */
     if (this.options.tooltip) {
@@ -325,15 +368,10 @@ class View {
         this.options.max
       );
 
-      this.bar.barElement.css(
-        "margin-top",
-        this.options.vertical ? "auto" : "2em"
-      );
       this.tooltipFrom.tooltipElement.css({
         left: this.options.vertical ? "auto" : `${offsetFromThumb}px`,
-        bottom: this.options.vertical ? `${offsetFromThumb - 9}px` : "2.2em",
+        bottom: this.options.vertical ? `${offsetFromThumb}px` : "2.2em",
       });
-      // this.tooltipFrom.tooltipElement.css("left", `${offsetFromThumb}px`);
       this.tooltipFrom.tooltipElement.text(this.options.from);
 
       if (this.options.range) {
@@ -447,14 +485,6 @@ class View {
      * Changes css of thumb position.
      */
 
-    if (this.options.vertical) {
-      this.fromThumb.fromThumbElement.addClass("slider-app__thumb--vertical");
-    } else {
-      this.fromThumb.fromThumbElement.removeClass(
-        "slider-app__thumb--vertical"
-      );
-    }
-
     if (this.options.range) {
       const sliderWidth: number = this.bar.barElement.innerWidth();
       const sliderHeight: number = this.bar.barElement.innerHeight();
@@ -462,10 +492,18 @@ class View {
         this.toThumb = new CreateThumbTo(this.bar.barElement);
       }
 
+      if (!this.fromThumb) {
+        this.fromThumb = new CreateThumbFrom(this.bar.barElement);
+      }
+
       if (this.options.vertical) {
+        this.fromThumb.fromThumbElement.addClass("slider-app__thumb--vertical");
         this.toThumb.toThumbElement.addClass("slider-app__thumb--vertical");
       } else {
         this.toThumb.toThumbElement.removeClass("slider-app__thumb--vertical");
+        this.fromThumb.fromThumbElement.removeClass(
+          "slider-app__thumb--vertical"
+        );
       }
 
       this.fromThumb.fromThumbElement.css(
@@ -521,6 +559,18 @@ class View {
       const sliderWidth: number = this.bar.barElement.innerWidth();
       const sliderHeight: number = this.bar.barElement.innerHeight();
 
+      if (!this.fromThumb) {
+        this.fromThumb = new CreateThumbFrom(this.bar.barElement);
+      }
+
+      if (this.options.vertical) {
+        this.fromThumb.fromThumbElement.addClass("slider-app__thumb--vertical");
+      } else {
+        this.fromThumb.fromThumbElement.removeClass(
+          "slider-app__thumb--vertical"
+        );
+      }
+
       if (this.toThumb) {
         this.toThumb.toThumbElement.remove();
         this.toThumb = null;
@@ -550,7 +600,7 @@ class View {
         }
       } else {
         this.fromThumb.fromThumbElement.css({
-          left: "-0.8em",
+          left: "-0.85em",
           bottom: `${convertToPixel(
             this.options.from,
             sliderHeight,
@@ -641,46 +691,46 @@ class View {
      * Config panel.
      */
 
-    if (this.options.configPanel) {
-      if (!this.config) {
-        this.config = new CreateConfig(
-          this.app,
-          this.options.toggleConfig,
-          this.options.controlConfig
-        );
-      }
-
-      this.options.controlConfig.forEach((name) => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        const value: number = this.options[name];
-        $(`.slider-app__control--${name}`).val(value);
-      });
-
-      this.options.toggleConfig.forEach((name) => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        const value: string = this.options[name];
-        $(`.slider-app__toggle--${name}`).attr("checked", value);
-      });
-
-      $(".slider-app__control--from").prop({
-        step: this.options.step,
-      });
-      $(".slider-app__control--to").prop({
-        step: this.options.step,
-      });
-      // $(".slider-app__control--to").prop("step", this.options.step);
-
-      if (!this.options.range) {
-        $(".slider-app__control--to").prop("disabled", true);
-      } else {
-        $(".slider-app__control--to").prop("disabled", false);
-      }
-    } else if (this.config) {
-      this.config.configElement.remove();
-      this.config = null;
-    }
+    // if (this.options.configPanel) {
+    //   if (!this.config) {
+    //     this.config = new CreateConfig(
+    //       this.app,
+    //       this.options.toggleConfig,
+    //       this.options.controlConfig
+    //     );
+    //   }
+    //
+    //   this.options.controlConfig.forEach((name) => {
+    //     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //     // @ts-ignore
+    //     const value: number = this.options[name];
+    //     $(`.slider-app__control--${name}`).val(value);
+    //   });
+    //
+    //   this.options.toggleConfig.forEach((name) => {
+    //     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //     // @ts-ignore
+    //     const value: string = this.options[name];
+    //     $(`.slider-app__toggle--${name}`).attr("checked", value);
+    //   });
+    //
+    //   $(".slider-app__control--from").prop({
+    //     step: this.options.step,
+    //   });
+    //   $(".slider-app__control--to").prop({
+    //     step: this.options.step,
+    //   });
+    //   // $(".slider-app__control--to").prop("step", this.options.step);
+    //
+    //   if (!this.options.range) {
+    //     $(".slider-app__control--to").prop("disabled", true);
+    //   } else {
+    //     $(".slider-app__control--to").prop("disabled", false);
+    //   }
+    // } else if (this.config) {
+    //   this.config.configElement.remove();
+    //   this.config = null;
+    // }
   }
 }
 

@@ -61,8 +61,8 @@ body {
 
   &--vertical {
     top: auto;
-    left: -0.8em;
-    transform: translateY(1em);
+    left: -0.85em;
+    transform: translateY(50%);
   }
 
   &-from {
@@ -81,6 +81,7 @@ body {
     -moz-user-select: none;
     -khtml-user-select: none;
     user-select: none;
+    border: 6px solid $thumb;
   }
 
 }
@@ -164,9 +165,9 @@ body {
   }
 
   &--vertical {
-    transform: none;
+    transform: translateY(50%);
     bottom: 0;
-    right: 2.6em;
+    right: 2.2em;
     margin-top: auto;
     left: auto;
 

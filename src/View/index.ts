@@ -52,7 +52,7 @@ class View {
       const sliderWidth: number = this.bar.barElement.innerWidth();
       const sliderHeight: number = this.bar.barElement.innerHeight();
       const sliderLeftOffset: number = this.bar.barElement.offset().left;
-      const sliderBottomOffset: number = this.bar.barElement.offset().top;
+      const sliderTopOffset: number = this.bar.barElement.offset().top;
 
       if (
         e.target.classList.contains(
@@ -68,7 +68,7 @@ class View {
           const mouseOffsetX: number = event.pageX - sliderLeftOffset;
           const mouseOffsetY: number = -(
             event.pageY -
-            sliderBottomOffset -
+            sliderTopOffset -
             sliderHeight
           );
           const thumbOffsetValueX: number = calcMouseOffset(
@@ -132,7 +132,7 @@ class View {
           const mouseOffsetX: number = e.pageX - sliderLeftOffset;
           const mouseOffsetY: number = -(
             e.pageY -
-            sliderBottomOffset -
+            sliderTopOffset -
             sliderHeight
           );
           const thumbOffsetValueX: number = calcMouseOffset(
@@ -194,15 +194,22 @@ class View {
 
     this.bar?.barElement.on("mousedown", (e) => {
       const sliderWidth: number = this.bar.barElement.innerWidth();
+      const sliderHeight: number = this.bar.barElement.innerHeight();
       const sliderLeftOffset: number = this.bar.barElement.offset().left;
-      const clickedOffset: number = e.pageX - sliderLeftOffset;
+      const sliderTopOffset: number = this.bar.barElement.offset().top;
+      const clickedOffsetX: number = e.pageX - sliderLeftOffset;
+      const clickedOffsetY: number = -(
+        e.pageY -
+        sliderTopOffset -
+        sliderHeight
+      );
       const valueCalculated: number = calcMouseOffset(
-        clickedOffset,
-        sliderWidth
+        this.options.vertical ? clickedOffsetY : clickedOffsetX,
+        this.options.vertical ? sliderHeight : sliderWidth
       );
       const convertedValue: number = convertToNumber(
         valueCalculated,
-        sliderWidth,
+        this.options.vertical ? sliderHeight : sliderWidth,
         this.options.min,
         this.options.max
       );

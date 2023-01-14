@@ -9,13 +9,17 @@ import {
   TogglesEnum,
 } from "../utils";
 
-import CreateBar from "./subViews/CreateBar";
+import CreateBar from "./subViews/bar/CreateBar";
 import CreateThumbFrom from "./subViews/CreateThumbFrom";
 import CreateThumbTo from "./subViews/CreateThumbTo";
 import CreateProgress from "./subViews/CreateProgress";
 import CreateTooltip from "./subViews/CreateTooltip";
 import CreateRulers from "./subViews/CreateRulers";
 import CreateConfig from "./subViews/CreateConfig";
+import ObserveThumbsMove from "./observable/ObserveThumbsMove";
+import ObserveBarClick from "./observable/ObserveBarClick";
+import ObserveRulersClick from "./observable/ObserveRulersClick";
+import ObserveConfig from "./observable/ObserveConfig";
 
 class View {
   private readonly app: JQuery;
@@ -38,264 +42,62 @@ class View {
 
   private options: ModelOption;
 
+  private observeThumbsMove: ObserveThumbsMove;
+
+  private observeBarClick: ObserveBarClick;
+
+  private observeRulersClick: ObserveRulersClick;
+
+  private observeConfig: ObserveConfig;
+
   constructor(private readonly selector: string) {
     this.app = $(selector);
     this.bar = new CreateBar(this.app);
   }
 
   public bindChangeOptions(handler: CallableFunction) {
-    /**
-     * Binds thumbs.
-     */
-
     this.app.on("mousedown", (e: JQuery.MouseDownEvent) => {
-      const sliderWidth: number = this.bar.barElement.innerWidth();
-      const sliderHeight: number = this.bar.barElement.innerHeight();
-      const sliderLeftOffset: number = this.bar.barElement.offset().left;
-      const sliderTopOffset: number = this.bar.barElement.offset().top;
-
-      if (
-        e.target.classList.contains(
-          this.fromThumb.fromThumbElement[0].classList[1]
-        )
-      ) {
-        $(e.target).on("dragstart", () => false);
-
-        // eslint-disable-next-line @typescript-eslint/no-shadow
-        const moveAt = (
-          event: JQuery.MouseMoveEvent | JQuery.MouseDownEvent
-        ) => {
-          const mouseOffsetX: number = event.pageX - sliderLeftOffset;
-          const mouseOffsetY: number = -(
-            event.pageY -
-            sliderTopOffset -
-            sliderHeight
-          );
-          const thumbOffsetValueX: number = calcMouseOffset(
-            mouseOffsetX,
-            sliderWidth
-          );
-          const thumbOffsetValueY: number = calcMouseOffset(
-            mouseOffsetY,
-            sliderHeight
-          );
-
-          const convertedValueX: number = convertToNumber(
-            thumbOffsetValueX,
-            sliderWidth,
-            this.options.min,
-            this.options.max
-          );
-          const convertedValueY: number = convertToNumber(
-            thumbOffsetValueY,
-            sliderHeight,
-            this.options.min,
-            this.options.max
-          );
-
-          if (!this.options.vertical) {
-            this.options.from = convertedValueX;
-          } else {
-            this.options.from = convertedValueY;
-          }
-
-          handler(this.options, ActionEnum.DRAG_FROM);
-        };
-
-        moveAt(e);
-
-        // eslint-disable-next-line @typescript-eslint/no-shadow
-        $(document).on("mousemove", (e) => moveAt(e));
-
-        $(e.target).on("mouseleave", () => {
-          $(document).on("mouseup", () => {
-            $(document).off("mousemove");
-            $(document).off("mouseup");
-            $(e.target).off("mouseleave");
-          });
-        });
-        $(e.target).on("mouseup", () => {
-          $(document).off("mousemove");
-          $(e.target).off("mouseup");
-        });
-      }
-
-      if (
-        e.target.classList.contains(
-          this.options.range && this.toThumb.toThumbElement[0].classList[1]
-        )
-      ) {
-        $(e.target).on("dragstart", () => false);
-
-        // eslint-disable-next-line @typescript-eslint/no-shadow
-        const moveAt = (e: JQuery.MouseMoveEvent | JQuery.MouseDownEvent) => {
-          const mouseOffsetX: number = e.pageX - sliderLeftOffset;
-          const mouseOffsetY: number = -(
-            e.pageY -
-            sliderTopOffset -
-            sliderHeight
-          );
-          const thumbOffsetValueX: number = calcMouseOffset(
-            mouseOffsetX,
-            sliderWidth
-          );
-          const thumbOffsetValueY: number = calcMouseOffset(
-            mouseOffsetY,
-            sliderHeight
-          );
-
-          const convertedValueX: number = convertToNumber(
-            thumbOffsetValueX,
-            sliderWidth,
-            this.options.min,
-            this.options.max
-          );
-          const convertedValueY: number = convertToNumber(
-            thumbOffsetValueY,
-            sliderHeight,
-            this.options.min,
-            this.options.max
-          );
-
-          if (!this.options.vertical) {
-            this.options.to = convertedValueX;
-          } else {
-            this.options.to = convertedValueY;
-          }
-
-          handler(this.options, ActionEnum.DRAG_TO);
-        };
-
-        moveAt(e);
-
-        $(document).on(
-          "mousemove",
-          // eslint-disable-next-line @typescript-eslint/no-shadow
-          (e: JQuery.MouseMoveEvent | JQuery.MouseDownEvent) => moveAt(e)
-        );
-
-        $(e.target).on("mouseleave", () => {
-          $(document).on("mouseup", () => {
-            $(document).off("mousemove");
-            $(document).off("mouseup");
-            $(e.target).off("mouseleave");
-          });
-        });
-        $(e.target).on("mouseup", () => {
-          $(document).off("mousemove");
-          $(e.target).off("mouseup");
-        });
-      }
-    });
-
-    /**
-     * Binds thumbs move.
-     */
-
-    this.bar?.barElement.on("mousedown", (e) => {
-      const sliderWidth: number = this.bar.barElement.innerWidth();
-      const sliderHeight: number = this.bar.barElement.innerHeight();
-      const sliderLeftOffset: number = this.bar.barElement.offset().left;
-      const sliderTopOffset: number = this.bar.barElement.offset().top;
-      const clickedOffsetX: number = e.pageX - sliderLeftOffset;
-      const clickedOffsetY: number = -(
-        e.pageY -
-        sliderTopOffset -
-        sliderHeight
-      );
-      const valueCalculated: number = calcMouseOffset(
-        this.options.vertical ? clickedOffsetY : clickedOffsetX,
-        this.options.vertical ? sliderHeight : sliderWidth
-      );
-      const convertedValue: number = convertToNumber(
-        valueCalculated,
-        this.options.vertical ? sliderHeight : sliderWidth,
-        this.options.min,
-        this.options.max
+      /**
+       * Binds thumbs move.
+       */
+      this.observeThumbsMove = new ObserveThumbsMove(
+        this.app,
+        this.options,
+        this.bar,
+        this.fromThumb,
+        this.toThumb,
+        handler,
+        e
       );
 
-      if (this.options.range) {
-        if (
-          Math.abs(convertedValue - this.options.from) <
-          Math.abs(convertedValue - this.options.to)
-        ) {
-          this.options.from = convertedValue;
-          handler(this.options, ActionEnum.DRAG_FROM);
-        } else {
-          this.options.to = convertedValue;
-          handler(this.options, ActionEnum.DRAG_TO);
-        }
-      } else {
-        this.options.from = convertedValue;
-        handler(this.options, ActionEnum.DRAG_FROM);
-      }
+      /**
+       * Binds rulers values.
+       */
+
+      this.observeRulersClick = new ObserveRulersClick(
+        this.options,
+        handler,
+        e
+      );
     });
 
-    /**
-     * Binds rulers values.
-     */
-
-    $(this.app).on("mousedown", (e) => {
-      if (e.target.classList.contains("slider-app__rulers-value")) {
-        if (this.options.range) {
-          if (
-            Math.abs(+e.target.textContent - this.options.from) <
-            Math.abs(+e.target.textContent - this.options.to)
-          ) {
-            this.options.from = +e.target.textContent;
-            handler(this.options, ActionEnum.DRAG_FROM);
-          } else {
-            this.options.to = +e.target.textContent;
-            handler(this.options, ActionEnum.DRAG_TO);
-          }
-        } else {
-          this.options.from = +e.target.textContent;
-          handler(this.options, ActionEnum.DRAG_FROM);
-        }
-      }
+    this.bar?.barElement.on("mousedown", (e: JQuery.MouseDownEvent) => {
+      /**
+       * Binds click on bar.
+       */
+      this.observeBarClick = new ObserveBarClick(
+        this.options,
+        this.bar,
+        handler,
+        e
+      );
     });
 
-    /**
-     * Binds toggles.
-     */
-
-    this.app.on("input", (e) => {
-      this.options.toggleConfig.forEach((name) => {
-        if (e.target.classList.contains(`slider-app__toggle--${name}`)) {
-          if (name === TogglesEnum.RANGE) {
-            this.options.range = $(`.slider-app__toggle--${name}`).prop(
-              "checked"
-            );
-            handler(this.options, ActionEnum.CONFIG_RANGE);
-            return;
-          }
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          this.options[name] = $(`.slider-app__toggle--${name}`).prop(
-            "checked"
-          );
-        }
-      });
-
-      this.options.controlConfig.forEach((name) => {
-        const element: JQuery = $(`.slider-app__control--${name}`);
-        if (e.target.classList.contains(`slider-app__control--${name}`)) {
-          if (name === ControlsEnum.FROM) {
-            this.options.from = +element.val();
-            handler(this.options, ActionEnum.DRAG_FROM);
-            return;
-          }
-          if (name === ControlsEnum.TO) {
-            this.options.to = +element.val();
-            handler(this.options, ActionEnum.DRAG_TO);
-            return;
-          }
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          this.options[name] = +element.val();
-        }
-      });
-      handler(this.options);
+    this.app.on("input", (e: JQuery.TriggeredEvent) => {
+      /**
+       * Binds config.
+       */
+      this.observeConfig = new ObserveConfig(this.options, handler, e);
     });
 
     /**

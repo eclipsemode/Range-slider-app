@@ -131,19 +131,16 @@ class Model {
       }
     }
 
-    if (action === ActionEnum.CONFIG_RANGE) {
-      if (
-        verifiedOptions.range &&
-        verifiedOptions.from >= verifiedOptions.to - verifiedOptions.gap
-      ) {
-        verifiedOptions.from =
-          verifiedOptions.step >= verifiedOptions.gap
-            ? verifiedOptions.to - verifiedOptions.step
-            : verifiedOptions.to -
-              verifiedOptions.gap -
-              ((verifiedOptions.to - verifiedOptions.gap) %
-                verifiedOptions.step);
-      }
+    if (
+      verifiedOptions.range &&
+      verifiedOptions.from >= verifiedOptions.to - verifiedOptions.gap
+    ) {
+      verifiedOptions.from =
+        verifiedOptions.step >= verifiedOptions.gap
+          ? verifiedOptions.to - verifiedOptions.step
+          : verifiedOptions.to -
+            verifiedOptions.gap -
+            ((verifiedOptions.to - verifiedOptions.gap) % verifiedOptions.step);
     }
 
     return verifiedOptions as ModelOption;

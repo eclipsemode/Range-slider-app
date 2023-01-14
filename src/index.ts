@@ -1,4 +1,3 @@
-import $ from "jquery";
 import Controller from "./Controller";
 
 const app = new Controller("#slider", {
@@ -7,9 +6,9 @@ const app = new Controller("#slider", {
   tooltip: true,
   // from: 50,
   // to: 500,
-  // range: true,
+  range: true,
   configPanel: true,
-  step: 1,
+  step: 33,
   // to: 2000,
   // vertical: true,
   gap: 1,

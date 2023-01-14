@@ -7,17 +7,18 @@ class ObserveConfig {
     private handler: CallableFunction,
     private e: JQuery.TriggeredEvent
   ) {
-    this.updateToggleConfig();
+    this.updateToggleConfig(handler);
 
     this.updateControlConfig(e, handler);
   }
 
-  private updateToggleConfig() {
+  private updateToggleConfig(handler: CallableFunction) {
     this.options.vertical = $(`.slider-app__toggle--vertical`).prop("checked");
     this.options.range = $(`.slider-app__toggle--range`).prop("checked");
     this.options.rulers = $(`.slider-app__toggle--rulers`).prop("checked");
     this.options.progress = $(`.slider-app__toggle--progress`).prop("checked");
     this.options.tooltip = $(`.slider-app__toggle--tooltip`).prop("checked");
+    handler(this.options);
   }
 
   private updateControlConfig(

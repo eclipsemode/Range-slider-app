@@ -7,18 +7,31 @@ class ObserveConfig {
     private handler: CallableFunction,
     private e: JQuery.TriggeredEvent
   ) {
-    this.updateToggleConfig(handler);
+    this.updateToggleConfig(e, handler);
 
     this.updateControlConfig(e, handler);
   }
 
-  private updateToggleConfig(handler: CallableFunction) {
-    this.options.vertical = $(`.slider-app__toggle--vertical`).prop("checked");
-    this.options.range = $(`.slider-app__toggle--range`).prop("checked");
-    this.options.rulers = $(`.slider-app__toggle--rulers`).prop("checked");
-    this.options.progress = $(`.slider-app__toggle--progress`).prop("checked");
-    this.options.tooltip = $(`.slider-app__toggle--tooltip`).prop("checked");
-    handler(this.options);
+  private updateToggleConfig(
+    e: JQuery.TriggeredEvent,
+    handler: CallableFunction
+  ) {
+    if ($(e.target).hasClass("slider-app__toggle--vertical")) {
+      this.options.vertical = $(e.target).prop("checked");
+      handler(this.options);
+    } else if ($(e.target).hasClass("slider-app__toggle--range")) {
+      this.options.range = $(e.target).prop("checked");
+      handler(this.options);
+    } else if ($(e.target).hasClass("slider-app__toggle--rulers")) {
+      this.options.rulers = $(e.target).prop("checked");
+      handler(this.options);
+    } else if ($(e.target).hasClass("slider-app__toggle--progress")) {
+      this.options.progress = $(e.target).prop("checked");
+      handler(this.options);
+    } else if ($(e.target).hasClass("slider-app__toggle--tooltip")) {
+      this.options.tooltip = $(e.target).prop("checked");
+      handler(this.options);
+    }
   }
 
   private updateControlConfig(

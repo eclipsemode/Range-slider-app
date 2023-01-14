@@ -4,7 +4,8 @@ import {
   convertToNumber,
   ModelOption,
 } from "../../utils";
-import CreateBar from "../subViews/bar/CreateBar";
+
+import { CreateBar } from "../subViews";
 
 class ObserveBarClick {
   constructor(

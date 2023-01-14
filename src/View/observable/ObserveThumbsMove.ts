@@ -5,9 +5,8 @@ import {
   convertToNumber,
   ModelOption,
 } from "../../utils";
-import CreateBar from "../subViews/bar/CreateBar";
-import CreateThumbFrom from "../subViews/CreateThumbFrom";
-import CreateThumbTo from "../subViews/CreateThumbTo";
+
+import { CreateBar, CreateThumbFrom, CreateThumbTo } from "../subViews";
 
 class ObserveThumbsMove {
   constructor(

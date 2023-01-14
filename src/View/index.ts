@@ -1,13 +1,5 @@
 import $ from "jquery";
-import {
-  ModelOption,
-  convertToNumber,
-  convertToPixel,
-  calcMouseOffset,
-  ControlsEnum,
-  ActionEnum,
-  TogglesEnum,
-} from "../utils";
+import { ModelOption, convertToNumber, convertToPixel } from "../utils";
 
 import CreateBar from "./subViews/bar/CreateBar";
 import CreateThumbFrom from "./subViews/CreateThumbFrom";
@@ -533,7 +525,6 @@ class View {
         }
       }
     }
-
     /**
      * Creates Rulers.
      */

@@ -10,6 +10,7 @@ import {
   CreateTooltip,
   CreateRulers,
   CreateConfig,
+  RenderConfig,
 } from "./subViews";
 
 import ObserveThumbsMove from "./observable/ObserveThumbsMove";
@@ -35,6 +36,8 @@ class View {
   private rulers: CreateRulers;
 
   private config: CreateConfig;
+
+  private configInit: RenderConfig;
 
   private options: ModelOption;
 
@@ -131,36 +134,8 @@ class View {
   }
 
   private renderConfig() {
-    if (this.options.configPanel) {
-      if (!this.config) {
-        this.config = new CreateConfig(
-          this.app,
-          this.options.toggleConfig,
-          this.options.controlConfig
-        );
-      }
-
-      $(".slider-app__control--min").val(this.options.min);
-      $(".slider-app__control--max").val(this.options.max);
-      $(".slider-app__control--step").val(this.options.step);
-      $(".slider-app__control--from").val(this.options.from);
-      $(".slider-app__control--to").val(this.options.to);
-
-      $(".slider-app__control--from").prop("step", this.options.step);
-      $(".slider-app__control--to").prop({
-        step: this.options.step,
-        disabled: !this.options.range,
-      });
-
-      $(".slider-app__toggle--vertical").prop("checked", this.options.vertical);
-      $(".slider-app__toggle--range").prop("checked", this.options.range);
-      $(".slider-app__toggle--rulers").prop("checked", this.options.rulers);
-      $(".slider-app__toggle--progress").prop("checked", this.options.progress);
-      $(".slider-app__toggle--tooltip").prop("checked", this.options.tooltip);
-    } else if (this.config) {
-      this.config.configElement.remove();
-      this.config = null;
-    }
+    this.configInit = new RenderConfig(this.options, this.config, this.app);
+    this.config = this.configInit.config;
   }
 
   private renderTooltip() {

@@ -1,6 +1,7 @@
 export { default as CreateBar } from "./bar/CreateBar";
 
 export { default as CreateConfig } from "./config/CreateConfig";
+export { default as RenderConfig } from "./config/RenderConfig";
 
 export { default as CreateProgress } from "./progress/CreateProgress";
 

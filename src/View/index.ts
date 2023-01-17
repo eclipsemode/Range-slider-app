@@ -1,6 +1,6 @@
 import $ from "jquery";
 
-import { ModelOption, convertToNumber, convertToPixel } from "../utils";
+import { ModelOption } from "../utils";
 
 import {
   CreateBar,
@@ -13,6 +13,8 @@ import {
   RenderConfig,
   RenderTooltip,
   RenderProgress,
+  RenderThumbs,
+  RenderRulers,
 } from "./subViews";
 
 import ObserveThumbsMove from "./observable/ObserveThumbsMove";
@@ -29,6 +31,8 @@ class View {
 
   private toThumb: CreateThumbTo;
 
+  private renderThumbs: RenderThumbs;
+
   private progress: CreateProgress;
 
   private renderProgress: RenderProgress;
@@ -40,6 +44,8 @@ class View {
   private renderTooltip: RenderTooltip;
 
   private rulers: CreateRulers;
+
+  private renderRulers: RenderRulers;
 
   private config: CreateConfig;
 
@@ -165,272 +171,20 @@ class View {
   }
 
   private thumbsInitial() {
-    if (this.options.range) {
-      const sliderWidth: number = this.bar.barElement.innerWidth();
-      const sliderHeight: number = this.bar.barElement.innerHeight();
-      if (!this.toThumb) {
-        this.toThumb = new CreateThumbTo(this.bar.barElement);
-      }
-
-      if (!this.fromThumb) {
-        this.fromThumb = new CreateThumbFrom(this.bar.barElement);
-      }
-
-      if (this.options.vertical) {
-        this.fromThumb.fromThumbElement.addClass("slider-app__thumb--vertical");
-        this.toThumb.toThumbElement.addClass("slider-app__thumb--vertical");
-      } else {
-        this.toThumb.toThumbElement.removeClass("slider-app__thumb--vertical");
-        this.fromThumb.fromThumbElement.removeClass(
-          "slider-app__thumb--vertical"
-        );
-      }
-
-      this.fromThumb.fromThumbElement.css({
-        bottom: this.options.vertical
-          ? `${convertToPixel(
-              this.options.from,
-              sliderHeight,
-              this.options.min,
-              this.options.max
-            )}px`
-          : "auto",
-        left: this.options.vertical
-          ? "-0.85em"
-          : `${convertToPixel(
-              this.options.from,
-              sliderWidth,
-              this.options.min,
-              this.options.max
-            )}px`,
-      });
-
-      this.toThumb.toThumbElement.css({
-        bottom: this.options.vertical
-          ? `${convertToPixel(
-              this.options.to,
-              sliderHeight,
-              this.options.min,
-              this.options.max
-            )}px`
-          : "auto",
-        left: this.options.vertical
-          ? "-0.85em"
-          : `${convertToPixel(
-              this.options.to,
-              sliderWidth,
-              this.options.min,
-              this.options.max
-            )}px`,
-      });
-
-      if (this.options.progress) {
-        this.progress.progressElement.css({
-          left: this.options.vertical
-            ? "auto"
-            : `${convertToPixel(
-                this.options.from,
-                sliderWidth,
-                this.options.min,
-                this.options.max
-              )}px`,
-          bottom: this.options.vertical
-            ? `${convertToPixel(
-                this.options.from,
-                sliderHeight,
-                this.options.min,
-                this.options.max
-              )}px`
-            : "auto",
-          width: this.options.vertical
-            ? "100%"
-            : `${
-                convertToPixel(
-                  this.options.to,
-                  sliderWidth,
-                  this.options.min,
-                  this.options.max
-                ) -
-                convertToPixel(
-                  this.options.from,
-                  sliderWidth,
-                  this.options.min,
-                  this.options.max
-                )
-              }px`,
-          height: this.options.vertical
-            ? `${
-                convertToPixel(
-                  this.options.to,
-                  sliderHeight,
-                  this.options.min,
-                  this.options.max
-                ) -
-                convertToPixel(
-                  this.options.from,
-                  sliderHeight,
-                  this.options.min,
-                  this.options.max
-                )
-              }px`
-            : "100%",
-        });
-      }
-    } else {
-      const sliderWidth: number = this.bar.barElement.innerWidth();
-      const sliderHeight: number = this.bar.barElement.innerHeight();
-
-      if (!this.fromThumb) {
-        this.fromThumb = new CreateThumbFrom(this.bar.barElement);
-      }
-
-      if (this.options.vertical) {
-        this.fromThumb.fromThumbElement.addClass("slider-app__thumb--vertical");
-      } else {
-        this.fromThumb.fromThumbElement.removeClass(
-          "slider-app__thumb--vertical"
-        );
-      }
-
-      if (this.toThumb) {
-        this.toThumb.toThumbElement.remove();
-        this.toThumb = null;
-      }
-
-      if (!this.options.vertical) {
-        this.fromThumb.fromThumbElement.css({
-          bottom: "auto",
-          left: `${convertToPixel(
-            this.options.from,
-            sliderWidth,
-            this.options.min,
-            this.options.max
-          )}px`,
-        });
-
-        if (this.progress?.progressElement) {
-          this.progress.progressElement.css({
-            height: "100%",
-            width: `${convertToPixel(
-              this.options.from,
-              sliderWidth,
-              this.options.min,
-              this.options.max
-            )}px`,
-          });
-        }
-      } else {
-        this.fromThumb.fromThumbElement.css({
-          left: "-0.85em",
-          bottom: `${convertToPixel(
-            this.options.from,
-            sliderHeight,
-            this.options.min,
-            this.options.max
-          )}px`,
-        });
-
-        if (this.progress?.progressElement) {
-          this.progress.progressElement.css({
-            width: "100%",
-            bottom: "0",
-            height: `${convertToPixel(
-              this.options.from,
-              sliderHeight,
-              this.options.min,
-              this.options.max
-            )}px`,
-          });
-        }
-      }
-    }
+    this.renderThumbs = new RenderThumbs(
+      this.options,
+      this.fromThumb,
+      this.toThumb,
+      this.bar,
+      this.progress
+    );
+    this.fromThumb = this.renderThumbs.fromThumb;
+    this.toThumb = this.renderThumbs.toThumb;
   }
 
   private rulersInitial() {
-    if (this.options.rulers) {
-      if (this.rulers) {
-        this.rulers.rulersElement?.remove();
-        this.rulers = null;
-      }
-
-      if (!this.rulers) {
-        const sliderWidth: number = this.bar.barElement.innerWidth();
-        const sliderHeight: number = this.bar.barElement.innerHeight();
-        const convertedStepToPixel: number = convertToPixel(
-          this.options.step,
-          this.options.vertical ? sliderHeight : sliderWidth,
-          this.options.min,
-          this.options.max
-        );
-
-        let gap = 87;
-
-        if (convertedStepToPixel > gap) {
-          gap = convertedStepToPixel;
-        } else {
-          gap = gap - (gap % convertedStepToPixel) + convertedStepToPixel;
-        }
-        const amountValues: number = this.options.vertical
-          ? sliderHeight / gap
-          : sliderWidth / gap;
-        const gapValues: number = this.options.vertical
-          ? sliderHeight / amountValues
-          : sliderWidth / amountValues;
-        const valuesArr: number[] = [];
-        const pixelsArr: number[] = [];
-
-        if (this.options.vertical) {
-          for (let i = 0; i < sliderHeight - gapValues; i += gapValues) {
-            valuesArr.push(
-              convertToNumber(
-                i,
-                sliderHeight,
-                this.options.min,
-                this.options.max
-              )
-            );
-            pixelsArr.push(i);
-          }
-        } else {
-          for (let i = 0; i < sliderWidth - gapValues; i += gapValues) {
-            valuesArr.push(
-              convertToNumber(
-                i,
-                sliderWidth,
-                this.options.min,
-                this.options.max
-              )
-            );
-            pixelsArr.push(i);
-          }
-        }
-
-        pixelsArr.push(this.options.vertical ? sliderHeight : sliderWidth);
-        valuesArr.push(this.options.max);
-
-        this.rulers = new CreateRulers(
-          this.bar.barElement,
-          valuesArr,
-          pixelsArr,
-          this.options.vertical
-        );
-
-        if (this.options.vertical) {
-          this.rulers.rulersElement.addClass("slider-app__rulers--vertical");
-          this.rulers.rulersElement
-            .children()
-            .addClass("slider-app__rulers-value--vertical");
-        } else if (this.rulers) {
-          this.rulers.rulersElement.removeClass("slider-app__rulers--vertical");
-          this.rulers.rulersElement
-            .children()
-            .removeClass("slider-app__rulers-value--vertical");
-        }
-      }
-    } else if (this.rulers) {
-      this.rulers.rulersElement.remove();
-      this.rulers = null;
-    }
+    this.renderRulers = new RenderRulers(this.options, this.rulers, this.bar);
+    this.rulers = this.renderRulers.rulers;
   }
 }
 

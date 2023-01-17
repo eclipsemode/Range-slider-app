@@ -11,6 +11,8 @@ import {
   CreateRulers,
   CreateConfig,
   RenderConfig,
+  RenderTooltip,
+  RenderProgress,
 } from "./subViews";
 
 import ObserveThumbsMove from "./observable/ObserveThumbsMove";
@@ -29,15 +31,19 @@ class View {
 
   private progress: CreateProgress;
 
+  private renderProgress: RenderProgress;
+
   private tooltipFrom: CreateTooltip;
 
   private tooltipTo: CreateTooltip;
+
+  private renderTooltip: RenderTooltip;
 
   private rulers: CreateRulers;
 
   private config: CreateConfig;
 
-  private configInit: RenderConfig;
+  private renderConfig: RenderConfig;
 
   private options: ModelOption;
 
@@ -109,20 +115,20 @@ class View {
   public render(options: ModelOption) {
     this.options = options;
 
-    this.renderInitial();
+    this.sliderInitial();
 
-    this.renderConfig();
+    this.configInitial();
 
-    this.renderTooltip();
+    this.tooltipInitial();
 
-    this.renderProgress();
+    this.progressInitial();
 
-    this.renderThumbs();
+    this.thumbsInitial();
 
-    this.renderRulers();
+    this.rulersInitial();
   }
 
-  private renderInitial() {
+  private sliderInitial() {
     this.app.addClass("slider-app");
     if (this.options.vertical) {
       this.app.addClass("slider-app--vertical");
@@ -133,192 +139,32 @@ class View {
     }
   }
 
-  private renderConfig() {
-    this.configInit = new RenderConfig(this.options, this.config, this.app);
-    this.config = this.configInit.config;
+  private configInitial() {
+    this.renderConfig = new RenderConfig(this.options, this.config, this.app);
+    this.config = this.renderConfig.config;
   }
 
-  private renderTooltip() {
-    if (this.options.tooltip) {
-      const sliderWidth: number = this.bar.barElement.innerWidth();
-      const sliderHeight: number = this.bar.barElement.innerHeight();
-
-      if (!this.tooltipFrom) {
-        this.tooltipFrom = new CreateTooltip(this.bar.barElement);
-      }
-
-      if (this.options.vertical) {
-        this.tooltipFrom.tooltipElement.addClass(
-          "slider-app__tooltip--vertical"
-        );
-      } else if (this.tooltipFrom) {
-        this.tooltipFrom.tooltipElement.removeClass(
-          "slider-app__tooltip--vertical"
-        );
-      }
-
-      const offsetFromThumb: number = convertToPixel(
-        this.options.from,
-        this.options.vertical ? sliderHeight : sliderWidth,
-        this.options.min,
-        this.options.max
-      );
-
-      this.tooltipFrom.tooltipElement.css({
-        left: this.options.vertical ? "auto" : `${offsetFromThumb}px`,
-        bottom: this.options.vertical ? `${offsetFromThumb}px` : "2.2em",
-      });
-      this.tooltipFrom.tooltipElement.text(this.options.from);
-
-      if (this.options.range) {
-        if (!this.tooltipTo) {
-          this.tooltipTo = new CreateTooltip(this.bar.barElement);
-        }
-
-        if (this.options.vertical) {
-          this.tooltipTo.tooltipElement.addClass(
-            "slider-app__tooltip--vertical"
-          );
-        } else {
-          this.tooltipTo.tooltipElement.removeClass(
-            "slider-app__tooltip--vertical"
-          );
-        }
-        const offsetToThumb: number = convertToPixel(
-          this.options.to,
-          this.options.vertical ? sliderHeight : sliderWidth,
-          this.options.min,
-          this.options.max
-        );
-
-        this.tooltipTo.tooltipElement.css({
-          left: this.options.vertical ? "auto" : `${offsetToThumb}px`,
-          bottom: this.options.vertical ? `${offsetToThumb}px` : "2.2em",
-        });
-        this.tooltipTo.tooltipElement.text(this.options.to);
-
-        const tooltipFromWidth: number = parseFloat(
-          this.tooltipFrom.tooltipElement.css("width")
-        );
-        const tooltipFromHeight: number = parseFloat(
-          this.tooltipFrom.tooltipElement.css("height")
-        );
-        const tooltipToWidth: number = parseFloat(
-          this.tooltipTo.tooltipElement.css("width")
-        );
-        const tooltipToHeight: number = parseFloat(
-          this.tooltipTo.tooltipElement.css("height")
-        );
-
-        const tooltipFromLeft: number = parseFloat(
-          this.tooltipFrom.tooltipElement.css("left")
-        );
-        const tooltipFromBottom: number = parseFloat(
-          this.tooltipFrom.tooltipElement.css("bottom")
-        );
-
-        const tooltipToLeft: number = parseFloat(
-          this.tooltipTo.tooltipElement.css("left")
-        );
-        const tooltipToBottom: number = parseFloat(
-          this.tooltipTo.tooltipElement.css("bottom")
-        );
-
-        if (this.options.vertical) {
-          if (
-            tooltipToBottom - tooltipFromBottom <=
-            Math.max(tooltipFromHeight, tooltipToHeight)
-          ) {
-            this.tooltipTo.tooltipElement.remove();
-            this.tooltipTo = null;
-            this.tooltipFrom.tooltipElement.addClass(
-              "slider-app__tooltip--merged"
-            );
-
-            const newBottomCss: number =
-              (tooltipToBottom - tooltipFromBottom) / 2;
-
-            this.tooltipFrom.tooltipElement.text(
-              `${this.options.from} - ${this.options.to}`
-            );
-
-            this.tooltipFrom.tooltipElement.css({
-              bottom: `${tooltipFromBottom + newBottomCss}px`,
-            });
-          } else {
-            this.tooltipFrom.tooltipElement.removeClass(
-              "slider-app__tooltip--merged"
-            );
-          }
-        } else if (
-          tooltipToLeft - tooltipFromLeft <=
-          Math.max(tooltipFromWidth, tooltipToWidth)
-        ) {
-          this.tooltipTo.tooltipElement.remove();
-          this.tooltipTo = null;
-          this.tooltipFrom.tooltipElement.addClass(
-            "slider-app__tooltip--merged"
-          );
-
-          const newLeftCss: number = (tooltipToLeft - tooltipFromLeft) / 2;
-
-          this.tooltipFrom.tooltipElement.text(
-            `${this.options.from} - ${this.options.to}`
-          );
-
-          this.tooltipFrom.tooltipElement.css({
-            left: `${tooltipFromLeft + newLeftCss}px`,
-          });
-        } else {
-          this.tooltipFrom.tooltipElement.removeClass(
-            "slider-app__tooltip--merged"
-          );
-        }
-      } else if (this.tooltipTo) {
-        this.tooltipTo.tooltipElement.remove();
-        this.tooltipTo = null;
-      }
-    } else {
-      if (this.tooltipFrom) {
-        this.tooltipFrom.tooltipElement.remove();
-        this.tooltipFrom = null;
-      }
-
-      if (this.tooltipTo) {
-        this.tooltipTo.tooltipElement.remove();
-        this.tooltipTo = null;
-      }
-
-      this.bar.barElement.css("margin-top", "auto");
-    }
+  private tooltipInitial() {
+    this.renderTooltip = new RenderTooltip(
+      this.options,
+      this.tooltipFrom,
+      this.tooltipTo,
+      this.bar
+    );
+    this.tooltipFrom = this.renderTooltip.tooltipFrom;
+    this.tooltipTo = this.renderTooltip.tooltipTo;
   }
 
-  private renderProgress() {
-    if (this.options.progress) {
-      if (!this.progress) {
-        this.progress = new CreateProgress(this.bar.barElement);
-      }
-
-      if (this.options.vertical) {
-        this.progress.progressElement.addClass(
-          "slider-app__progress--vertical"
-        );
-      } else if (this.progress) {
-        this.progress.progressElement.removeClass(
-          "slider-app__progress--vertical"
-        );
-      }
-
-      if (!this.options.range) {
-        this.progress.progressElement.css("left", "auto");
-      }
-    } else if (this.progress) {
-      this.progress.progressElement.remove();
-      this.progress = null;
-    }
+  private progressInitial() {
+    this.renderProgress = new RenderProgress(
+      this.options,
+      this.progress,
+      this.bar
+    );
+    this.progress = this.renderProgress.progress;
   }
 
-  private renderThumbs() {
+  private thumbsInitial() {
     if (this.options.range) {
       const sliderWidth: number = this.bar.barElement.innerWidth();
       const sliderHeight: number = this.bar.barElement.innerHeight();
@@ -500,7 +346,7 @@ class View {
     }
   }
 
-  private renderRulers() {
+  private rulersInitial() {
     if (this.options.rulers) {
       if (this.rulers) {
         this.rulers.rulersElement?.remove();

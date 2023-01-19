@@ -2,15 +2,15 @@ class CreateTooltip {
   public tooltipElement: JQuery;
 
   constructor(private readonly parent: JQuery) {
-    this.createTooltip(parent);
+    this.createTooltip();
   }
 
-  private createTooltip(parent: JQuery): void {
+  private createTooltip(): void {
     this.tooltipElement = $("<div>", {
       class: "slider-app__tooltip",
     });
 
-    this.tooltipElement.prependTo(parent);
+    this.tooltipElement.prependTo(this.parent);
   }
 }
 

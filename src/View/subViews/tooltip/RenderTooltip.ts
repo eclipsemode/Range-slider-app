@@ -14,10 +14,12 @@ class RenderTooltip {
   ) {
     this.tooltipFrom = tooltipFrom;
     this.tooltipTo = tooltipTo;
-    if (this.options.tooltip) {
-      const sliderWidth: number = this.bar.barElement.innerWidth();
-      const sliderHeight: number = this.bar.barElement.innerHeight();
+    this.createElement();
+    this.setProps();
+  }
 
+  private createElement() {
+    if (this.options.tooltip) {
       if (!this.tooltipFrom) {
         this.tooltipFrom = new CreateTooltip(this.bar.barElement);
       }
@@ -31,7 +33,13 @@ class RenderTooltip {
           "slider-app__tooltip--vertical"
         );
       }
+    }
+  }
 
+  private setProps() {
+    if (this.options.tooltip) {
+      const sliderWidth: number = this.bar.barElement.innerWidth();
+      const sliderHeight: number = this.bar.barElement.innerHeight();
       const offsetFromThumb: number = convertToPixel(
         this.options.from,
         this.options.vertical ? sliderHeight : sliderWidth,

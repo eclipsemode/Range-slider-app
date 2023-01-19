@@ -11,7 +11,6 @@ class RenderConfig {
     private app: JQuery
   ) {
     this.config = config;
-
     this.createConfigPanel();
     this.setProps();
   }

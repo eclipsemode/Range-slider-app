@@ -1,3 +1,5 @@
+import $ from "jquery";
+
 class CreateBar {
   public barElement: JQuery;
 

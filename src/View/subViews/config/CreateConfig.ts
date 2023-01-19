@@ -10,14 +10,10 @@ class CreateConfig {
     private readonly toggleConfig: string[],
     private readonly controlConfig: string[]
   ) {
-    this.createToggles(parent, toggleConfig, controlConfig);
+    this.createToggles();
   }
 
-  private createToggles(
-    parent: JQuery,
-    toggleConfig: string[],
-    controlConfig: string[]
-  ) {
+  private createToggles() {
     this.configElement = $("<div>", {
       class: "slider-app__config",
     });
@@ -30,7 +26,7 @@ class CreateConfig {
     this.configElement.append(this.toggleElement);
     this.configElement.prepend(this.controlElement);
 
-    controlConfig.forEach((name) => {
+    this.controlConfig.forEach((name) => {
       const selectorByName = `slider-app__control--${name}`;
 
       this.controlElement.append(
@@ -50,7 +46,7 @@ class CreateConfig {
       );
     });
 
-    toggleConfig.forEach((name) => {
+    this.toggleConfig.forEach((name) => {
       const selectorByName = `slider-app__toggle--${name}`;
 
       this.toggleElement.append(
@@ -65,7 +61,7 @@ class CreateConfig {
       `)
       );
     });
-    this.configElement.appendTo(parent);
+    this.configElement.appendTo(this.parent);
   }
 }
 

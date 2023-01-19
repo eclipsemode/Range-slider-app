@@ -11,6 +11,12 @@ class RenderConfig {
     private app: JQuery
   ) {
     this.config = config;
+
+    this.createConfigPanel();
+    this.setProps();
+  }
+
+  private createConfigPanel() {
     if (this.options.configPanel) {
       if (!this.config) {
         this.config = new CreateConfig(
@@ -19,6 +25,14 @@ class RenderConfig {
           this.options.controlConfig
         );
       }
+    } else if (this.config) {
+      this.config.configElement.remove();
+      this.config = null;
+    }
+  }
+
+  private setProps() {
+    if (this.options.configPanel) {
       const minInput: JQuery = $(".slider-app__control--min");
       const maxInput: JQuery = $(".slider-app__control--max");
       const stepInput: JQuery = $(".slider-app__control--step");
@@ -42,9 +56,6 @@ class RenderConfig {
       $(".slider-app__toggle--rulers").prop("checked", this.options.rulers);
       $(".slider-app__toggle--progress").prop("checked", this.options.progress);
       $(".slider-app__toggle--tooltip").prop("checked", this.options.tooltip);
-    } else if (this.config) {
-      this.config.configElement.remove();
-      this.config = null;
     }
   }
 }

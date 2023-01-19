@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CreateBar test Should match snapshot: class="slider-app__bar" 1`] = `
+jQuery {
+  "0": <body>
+    <div
+      class="slider-app__bar"
+    />
+  </body>,
+  "length": 1,
+  "prevObject": jQuery {
+    "0": Document {
+      "location": Location {
+        "assign": [Function],
+        "hash": "",
+        "host": "localhost",
+        "hostname": "localhost",
+        "href": "http://localhost/",
+        "origin": "http://localhost",
+        "pathname": "/",
+        "port": "",
+        "protocol": "http:",
+        "reload": [Function],
+        "replace": [Function],
+        "search": "",
+        "toString": [Function],
+      },
+      Symbol(SameObject caches): Object {
+        "childNodes": NodeList [
+          DocumentType {},
+          <html>
+            <head />
+            <body>
+              <div
+                class="slider-app__bar"
+              />
+            </body>
+          </html>,
+        ],
+        "implementation": DOMImplementation {},
+      },
+    },
+    "length": 1,
+  },
+}
+`;

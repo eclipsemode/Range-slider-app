@@ -20,9 +20,12 @@ class RenderThumbs {
   ) {
     this.fromThumb = fromThumb;
     this.toThumb = toThumb;
+    this.createElement();
+    this.setProps();
+  }
+
+  private createElement() {
     if (this.options.range) {
-      const sliderWidth: number = this.bar.barElement.innerWidth();
-      const sliderHeight: number = this.bar.barElement.innerHeight();
       if (!this.toThumb) {
         this.toThumb = new CreateThumbTo(this.bar.barElement);
       }
@@ -39,97 +42,6 @@ class RenderThumbs {
         this.fromThumb.fromThumbElement.removeClass(
           "slider-app__thumb--vertical"
         );
-      }
-
-      this.fromThumb.fromThumbElement.css({
-        bottom: this.options.vertical
-          ? `${convertToPixel(
-              this.options.from,
-              sliderHeight,
-              this.options.min,
-              this.options.max
-            )}px`
-          : "auto",
-        left: this.options.vertical
-          ? "-0.85em"
-          : `${convertToPixel(
-              this.options.from,
-              sliderWidth,
-              this.options.min,
-              this.options.max
-            )}px`,
-      });
-
-      this.toThumb.toThumbElement.css({
-        bottom: this.options.vertical
-          ? `${convertToPixel(
-              this.options.to,
-              sliderHeight,
-              this.options.min,
-              this.options.max
-            )}px`
-          : "auto",
-        left: this.options.vertical
-          ? "-0.85em"
-          : `${convertToPixel(
-              this.options.to,
-              sliderWidth,
-              this.options.min,
-              this.options.max
-            )}px`,
-      });
-
-      if (this.options.progress) {
-        this.progress.progressElement.css({
-          left: this.options.vertical
-            ? "auto"
-            : `${convertToPixel(
-                this.options.from,
-                sliderWidth,
-                this.options.min,
-                this.options.max
-              )}px`,
-          bottom: this.options.vertical
-            ? `${convertToPixel(
-                this.options.from,
-                sliderHeight,
-                this.options.min,
-                this.options.max
-              )}px`
-            : "auto",
-          width: this.options.vertical
-            ? "100%"
-            : `${
-                convertToPixel(
-                  this.options.to,
-                  sliderWidth,
-                  this.options.min,
-                  this.options.max
-                ) -
-                convertToPixel(
-                  this.options.from,
-                  sliderWidth,
-                  this.options.min,
-                  this.options.max
-                )
-              }px`,
-          height: this.options.vertical
-            ? `${
-                convertToPixel(
-                  this.options.to,
-                  sliderHeight,
-                  this.options.min,
-                  this.options.max
-                ) -
-                convertToPixel(
-                  this.options.from,
-                  sliderHeight,
-                  this.options.min,
-                  this.options.max
-                )
-              }px`
-            : "100%",
-        });
       }
     } else {
       const sliderWidth: number = this.bar.barElement.innerWidth();
@@ -198,6 +110,101 @@ class RenderThumbs {
           });
         }
       }
+    }
+  }
+
+  private setProps() {
+    const sliderWidth: number = this.bar.barElement.innerWidth();
+    const sliderHeight: number = this.bar.barElement.innerHeight();
+    this.fromThumb.fromThumbElement.css({
+      bottom: this.options.vertical
+        ? `${convertToPixel(
+            this.options.from,
+            sliderHeight,
+            this.options.min,
+            this.options.max
+          )}px`
+        : "auto",
+      left: this.options.vertical
+        ? "-0.85em"
+        : `${convertToPixel(
+            this.options.from,
+            sliderWidth,
+            this.options.min,
+            this.options.max
+          )}px`,
+    });
+
+    this.toThumb?.toThumbElement.css({
+      bottom: this.options.vertical
+        ? `${convertToPixel(
+            this.options.to,
+            sliderHeight,
+            this.options.min,
+            this.options.max
+          )}px`
+        : "auto",
+      left: this.options.vertical
+        ? "-0.85em"
+        : `${convertToPixel(
+            this.options.to,
+            sliderWidth,
+            this.options.min,
+            this.options.max
+          )}px`,
+    });
+
+    if (this.options.progress) {
+      this.progress.progressElement.css({
+        left: this.options.vertical
+          ? "auto"
+          : `${convertToPixel(
+              this.options.from,
+              sliderWidth,
+              this.options.min,
+              this.options.max
+            )}px`,
+        bottom: this.options.vertical
+          ? `${convertToPixel(
+              this.options.from,
+              sliderHeight,
+              this.options.min,
+              this.options.max
+            )}px`
+          : "auto",
+        width: this.options.vertical
+          ? "100%"
+          : `${
+              convertToPixel(
+                this.options.to,
+                sliderWidth,
+                this.options.min,
+                this.options.max
+              ) -
+              convertToPixel(
+                this.options.from,
+                sliderWidth,
+                this.options.min,
+                this.options.max
+              )
+            }px`,
+        height: this.options.vertical
+          ? `${
+              convertToPixel(
+                this.options.to,
+                sliderHeight,
+                this.options.min,
+                this.options.max
+              ) -
+              convertToPixel(
+                this.options.from,
+                sliderHeight,
+                this.options.min,
+                this.options.max
+              )
+            }px`
+          : "100%",
+      });
     }
   }
 }

@@ -10,6 +10,10 @@ class RenderProgress {
     private bar: CreateBar
   ) {
     this.progress = progress;
+    this.createElement();
+  }
+
+  private createElement() {
     if (this.options.progress) {
       if (!this.progress) {
         this.progress = new CreateProgress(this.bar.barElement);

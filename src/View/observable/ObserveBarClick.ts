@@ -14,12 +14,20 @@ class ObserveBarClick {
     private handler: CallableFunction,
     private e: JQuery.MouseDownEvent
   ) {
+    this.bindElement();
+  }
+
+  private bindElement() {
     const sliderWidth: number = this.bar.barElement.innerWidth();
     const sliderHeight: number = this.bar.barElement.innerHeight();
     const sliderLeftOffset: number = this.bar.barElement.offset().left;
     const sliderTopOffset: number = this.bar.barElement.offset().top;
-    const clickedOffsetX: number = e.pageX - sliderLeftOffset;
-    const clickedOffsetY: number = -(e.pageY - sliderTopOffset - sliderHeight);
+    const clickedOffsetX: number = this.e.pageX - sliderLeftOffset;
+    const clickedOffsetY: number = -(
+      this.e.pageY -
+      sliderTopOffset -
+      sliderHeight
+    );
     const valueCalculated: number = calcMouseOffset(
       this.options.vertical ? clickedOffsetY : clickedOffsetX,
       this.options.vertical ? sliderHeight : sliderWidth
@@ -37,14 +45,14 @@ class ObserveBarClick {
         Math.abs(convertedValue - this.options.to)
       ) {
         this.options.from = convertedValue;
-        handler(this.options, ActionEnum.DRAG_FROM);
+        this.handler(this.options, ActionEnum.DRAG_FROM);
       } else {
         this.options.to = convertedValue;
-        handler(this.options, ActionEnum.DRAG_TO);
+        this.handler(this.options, ActionEnum.DRAG_TO);
       }
     } else {
       this.options.from = convertedValue;
-      handler(this.options, ActionEnum.DRAG_FROM);
+      this.handler(this.options, ActionEnum.DRAG_FROM);
     }
   }
 }

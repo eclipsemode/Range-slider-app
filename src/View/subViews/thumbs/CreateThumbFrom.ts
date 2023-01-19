@@ -4,14 +4,14 @@ class CreateThumbFrom {
   public fromThumbElement: JQuery;
 
   constructor(private readonly parent: JQuery) {
-    this.createFromThumb(parent);
+    this.createFromThumb();
   }
 
-  private createFromThumb(parent: JQuery): void {
+  private createFromThumb(): void {
     this.fromThumbElement = $("<div>", {
       class: "slider-app__thumb slider-app__thumb-from",
     });
-    this.fromThumbElement.appendTo(parent);
+    this.fromThumbElement.appendTo(this.parent);
   }
 }
 

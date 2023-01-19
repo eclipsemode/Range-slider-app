@@ -4,14 +4,14 @@ class CreateProgress {
   public progressElement: JQuery;
 
   constructor(private readonly parent: JQuery) {
-    this.createProgress(parent);
+    this.createProgress();
   }
 
-  private createProgress(parent: JQuery) {
+  private createProgress() {
     this.progressElement = $("<div>", {
       class: "slider-app__progress",
     });
-    this.progressElement.prependTo(parent);
+    this.progressElement.prependTo(this.parent);
   }
 }
 

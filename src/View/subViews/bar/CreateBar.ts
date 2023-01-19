@@ -3,15 +3,15 @@ import $ from "jquery";
 class CreateBar {
   public barElement: JQuery;
 
-  constructor(parent: JQuery) {
-    this.createBar(parent);
+  constructor(private readonly parent: JQuery) {
+    this.createBar();
   }
 
-  private createBar(parent: JQuery): void {
+  private createBar(): void {
     this.barElement = $("<div>", {
       class: "slider-app__bar",
     });
-    this.barElement.appendTo(parent);
+    this.barElement.appendTo(this.parent);
   }
 }
 

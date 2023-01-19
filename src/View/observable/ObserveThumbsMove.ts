@@ -18,17 +18,21 @@ class ObserveThumbsMove {
     private handler: CallableFunction,
     private e: JQuery.MouseDownEvent
   ) {
+    this.bindElement();
+  }
+
+  private bindElement() {
     const sliderWidth: number = this.bar.barElement.innerWidth();
     const sliderHeight: number = this.bar.barElement.innerHeight();
     const sliderLeftOffset: number = this.bar.barElement.offset().left;
     const sliderTopOffset: number = this.bar.barElement.offset().top;
 
     if (
-      e.target.classList.contains(
+      this.e.target.classList.contains(
         this.fromThumb?.fromThumbElement[0].classList[1]
       )
     ) {
-      $(e.target).on("dragstart", () => false);
+      $(this.e.target).on("dragstart", () => false);
 
       const moveAt = (event: JQuery.MouseMoveEvent | JQuery.MouseDownEvent) => {
         const mouseOffsetX: number = event.pageX - sliderLeftOffset;
@@ -65,31 +69,23 @@ class ObserveThumbsMove {
           this.options.from = convertedValueY;
         }
 
-        handler(this.options, ActionEnum.DRAG_FROM);
+        this.handler(this.options, ActionEnum.DRAG_FROM);
       };
 
-      moveAt(e);
+      moveAt(this.e);
 
       $(document).on("mousemove", (event) => moveAt(event));
 
-      $(e.target).on("mouseleave", () => {
-        $(document).on("mouseup", () => {
-          $(document).off("mousemove");
-          $(document).off("mouseup");
-          $(e.target).off("mouseleave");
-        });
-      });
-      $(e.target).on("mouseup", () => {
-        $(document).off("mousemove");
-        $(e.target).off("mouseup");
-      });
+      this.unbindElement();
     }
 
     if (
       this.options.range &&
-      e.target.classList.contains(this.toThumb?.toThumbElement[0].classList[1])
+      this.e.target.classList.contains(
+        this.toThumb?.toThumbElement[0].classList[1]
+      )
     ) {
-      $(e.target).on("dragstart", () => false);
+      $(this.e.target).on("dragstart", () => false);
 
       const moveAt = (event: JQuery.MouseMoveEvent | JQuery.MouseDownEvent) => {
         const mouseOffsetX: number = event.pageX - sliderLeftOffset;
@@ -126,28 +122,32 @@ class ObserveThumbsMove {
           this.options.to = convertedValueY;
         }
 
-        handler(this.options, ActionEnum.DRAG_TO);
+        this.handler(this.options, ActionEnum.DRAG_TO);
       };
 
-      moveAt(e);
+      moveAt(this.e);
 
       $(document).on(
         "mousemove",
         (event: JQuery.MouseMoveEvent | JQuery.MouseDownEvent) => moveAt(event)
       );
 
-      $(e.target).on("mouseleave", () => {
-        $(document).on("mouseup", () => {
-          $(document).off("mousemove");
-          $(document).off("mouseup");
-          $(e.target).off("mouseleave");
-        });
-      });
-      $(e.target).on("mouseup", () => {
-        $(document).off("mousemove");
-        $(e.target).off("mouseup");
-      });
+      this.unbindElement();
     }
+  }
+
+  private unbindElement() {
+    $(this.e.target).on("mouseleave", () => {
+      $(document).on("mouseup", () => {
+        $(document).off("mousemove");
+        $(document).off("mouseup");
+        $(this.e.target).off("mouseleave");
+      });
+    });
+    $(this.e.target).on("mouseup", () => {
+      $(document).off("mousemove");
+      $(this.e.target).off("mouseup");
+    });
   }
 }
 

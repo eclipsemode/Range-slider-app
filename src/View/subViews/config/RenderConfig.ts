@@ -11,11 +11,11 @@ class RenderConfig {
     private app: JQuery
   ) {
     this.config = config;
-    this.createConfigPanel();
+    this.createElement();
     this.setProps();
   }
 
-  private createConfigPanel() {
+  private createElement() {
     if (this.options.configPanel) {
       if (!this.config) {
         this.config = new CreateConfig(

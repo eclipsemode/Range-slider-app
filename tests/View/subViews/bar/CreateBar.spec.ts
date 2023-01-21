@@ -16,4 +16,7 @@ describe("CreateBar test", () => {
   test("Should match snapshot", () => {
     expect(body).toMatchSnapshot('class="slider-app__bar"');
   });
+  test("Should match parent", () => {
+    expect(bar.barElement.parent().parent()[0].innerHTML).toMatch("body");
+  });
 });

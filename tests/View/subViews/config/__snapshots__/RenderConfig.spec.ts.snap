@@ -1,0 +1,1367 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Render Config test Should match snapshot: <div class="slider-app__control"><div class="slider-app__control-element">
+                    <div class="slider-app__control-name">
+                        <span class="slider-app__control-name--inner">
+                            three
+                        </span>
+                    </div>
+                    <input class="slider-app__control-input slider-app__control--three" type="number">
+                </div><div class="slider-app__control-element">
+                    <div class="slider-app__control-name">
+                        <span class="slider-app__control-name--inner">
+                            four
+                        </span>
+                    </div>
+                    <input class="slider-app__control-input slider-app__control--four" type="number">
+                </div><div class="slider-app__control-element">
+                    <div class="slider-app__control-name">
+                        <span class="slider-app__control-name--inner">
+                            five
+                        </span>
+                    </div>
+                    <input class="slider-app__control-input slider-app__control--five" type="number">
+                </div><div class="slider-app__control-element">
+                    <div class="slider-app__control-name">
+                        <span class="slider-app__control-name--inner">
+                            six
+                        </span>
+                    </div>
+                    <input class="slider-app__control-input slider-app__control--six" type="number">
+                </div></div><div class="slider-app__toggle"><div class="slider-app__toggle-element">
+                    <label class="slider-app__toggle-name" for="slider-app__toggle--one">one</label>
+                    <label class="slider-app__toggle-container">
+                        <input class="slider-app__toggle-box slider-app__toggle--one" type="checkbox">
+                        <span class="slider-app__toggle-btn"></span>
+                    </label>
+                </div><div class="slider-app__toggle-element">
+                    <label class="slider-app__toggle-name" for="slider-app__toggle--two">two</label>
+                    <label class="slider-app__toggle-container">
+                        <input class="slider-app__toggle-box slider-app__toggle--two" type="checkbox">
+                        <span class="slider-app__toggle-btn"></span>
+                    </label>
+                </div><div class="slider-app__toggle-element">
+                    <label class="slider-app__toggle-name" for="slider-app__toggle--second">second</label>
+                    <label class="slider-app__toggle-container">
+                        <input class="slider-app__toggle-box slider-app__toggle--second" type="checkbox">
+                        <span class="slider-app__toggle-btn"></span>
+                    </label>
+                </div><div class="slider-app__toggle-element">
+                    <label class="slider-app__toggle-name" for="slider-app__toggle--Lorem">Lorem</label>
+                    <label class="slider-app__toggle-container">
+                        <input class="slider-app__toggle-box slider-app__toggle--Lorem" type="checkbox">
+                        <span class="slider-app__toggle-btn"></span>
+                    </label>
+                </div><div class="slider-app__toggle-element">
+                    <label class="slider-app__toggle-name" for="slider-app__toggle--Ipsum">Ipsum</label>
+                    <label class="slider-app__toggle-container">
+                        <input class="slider-app__toggle-box slider-app__toggle--Ipsum" type="checkbox">
+                        <span class="slider-app__toggle-btn"></span>
+                    </label>
+                </div></div> 1`] = `
+jQuery {
+  "0": <body>
+    <div
+      class="slider-app__config"
+    >
+      <div
+        class="slider-app__control"
+      >
+        <div
+          class="slider-app__control-element"
+        >
+          
+                    
+          <div
+            class="slider-app__control-name"
+          >
+            
+                        
+            <span
+              class="slider-app__control-name--inner"
+            >
+              
+                            three
+                        
+            </span>
+            
+                    
+          </div>
+          
+                    
+          <input
+            class="slider-app__control-input slider-app__control--three"
+            type="number"
+          />
+          
+                
+        </div>
+        <div
+          class="slider-app__control-element"
+        >
+          
+                    
+          <div
+            class="slider-app__control-name"
+          >
+            
+                        
+            <span
+              class="slider-app__control-name--inner"
+            >
+              
+                            four
+                        
+            </span>
+            
+                    
+          </div>
+          
+                    
+          <input
+            class="slider-app__control-input slider-app__control--four"
+            type="number"
+          />
+          
+                
+        </div>
+        <div
+          class="slider-app__control-element"
+        >
+          
+                    
+          <div
+            class="slider-app__control-name"
+          >
+            
+                        
+            <span
+              class="slider-app__control-name--inner"
+            >
+              
+                            five
+                        
+            </span>
+            
+                    
+          </div>
+          
+                    
+          <input
+            class="slider-app__control-input slider-app__control--five"
+            type="number"
+          />
+          
+                
+        </div>
+        <div
+          class="slider-app__control-element"
+        >
+          
+                    
+          <div
+            class="slider-app__control-name"
+          >
+            
+                        
+            <span
+              class="slider-app__control-name--inner"
+            >
+              
+                            six
+                        
+            </span>
+            
+                    
+          </div>
+          
+                    
+          <input
+            class="slider-app__control-input slider-app__control--six"
+            type="number"
+          />
+          
+                
+        </div>
+      </div>
+      <div
+        class="slider-app__toggle"
+      >
+        <div
+          class="slider-app__toggle-element"
+        >
+          
+                    
+          <label
+            class="slider-app__toggle-name"
+            for="slider-app__toggle--one"
+          >
+            one
+          </label>
+          
+                    
+          <label
+            class="slider-app__toggle-container"
+          >
+            
+                        
+            <input
+              class="slider-app__toggle-box slider-app__toggle--one"
+              type="checkbox"
+            />
+            
+                        
+            <span
+              class="slider-app__toggle-btn"
+            />
+            
+                    
+          </label>
+          
+                
+        </div>
+        <div
+          class="slider-app__toggle-element"
+        >
+          
+                    
+          <label
+            class="slider-app__toggle-name"
+            for="slider-app__toggle--two"
+          >
+            two
+          </label>
+          
+                    
+          <label
+            class="slider-app__toggle-container"
+          >
+            
+                        
+            <input
+              class="slider-app__toggle-box slider-app__toggle--two"
+              type="checkbox"
+            />
+            
+                        
+            <span
+              class="slider-app__toggle-btn"
+            />
+            
+                    
+          </label>
+          
+                
+        </div>
+        <div
+          class="slider-app__toggle-element"
+        >
+          
+                    
+          <label
+            class="slider-app__toggle-name"
+            for="slider-app__toggle--second"
+          >
+            second
+          </label>
+          
+                    
+          <label
+            class="slider-app__toggle-container"
+          >
+            
+                        
+            <input
+              class="slider-app__toggle-box slider-app__toggle--second"
+              type="checkbox"
+            />
+            
+                        
+            <span
+              class="slider-app__toggle-btn"
+            />
+            
+                    
+          </label>
+          
+                
+        </div>
+        <div
+          class="slider-app__toggle-element"
+        >
+          
+                    
+          <label
+            class="slider-app__toggle-name"
+            for="slider-app__toggle--Lorem"
+          >
+            Lorem
+          </label>
+          
+                    
+          <label
+            class="slider-app__toggle-container"
+          >
+            
+                        
+            <input
+              class="slider-app__toggle-box slider-app__toggle--Lorem"
+              type="checkbox"
+            />
+            
+                        
+            <span
+              class="slider-app__toggle-btn"
+            />
+            
+                    
+          </label>
+          
+                
+        </div>
+        <div
+          class="slider-app__toggle-element"
+        >
+          
+                    
+          <label
+            class="slider-app__toggle-name"
+            for="slider-app__toggle--Ipsum"
+          >
+            Ipsum
+          </label>
+          
+                    
+          <label
+            class="slider-app__toggle-container"
+          >
+            
+                        
+            <input
+              class="slider-app__toggle-box slider-app__toggle--Ipsum"
+              type="checkbox"
+            />
+            
+                        
+            <span
+              class="slider-app__toggle-btn"
+            />
+            
+                    
+          </label>
+          
+                
+        </div>
+      </div>
+    </div>
+  </body>,
+  "length": 1,
+  "prevObject": jQuery {
+    "0": Document {
+      "location": Location {
+        "assign": [Function],
+        "hash": "",
+        "host": "localhost",
+        "hostname": "localhost",
+        "href": "http://localhost/",
+        "origin": "http://localhost",
+        "pathname": "/",
+        "port": "",
+        "protocol": "http:",
+        "reload": [Function],
+        "replace": [Function],
+        "search": "",
+        "toString": [Function],
+      },
+      Symbol(SameObject caches): Object {
+        "childNodes": NodeList [
+          DocumentType {},
+          <html>
+            <head />
+            <body>
+              <div
+                class="slider-app__config"
+              >
+                <div
+                  class="slider-app__control"
+                >
+                  <div
+                    class="slider-app__control-element"
+                  >
+                    
+                    
+                    <div
+                      class="slider-app__control-name"
+                    >
+                      
+                        
+                      <span
+                        class="slider-app__control-name--inner"
+                      >
+                        
+                            three
+                        
+                      </span>
+                      
+                    
+                    </div>
+                    
+                    
+                    <input
+                      class="slider-app__control-input slider-app__control--three"
+                      type="number"
+                    />
+                    
+                
+                  </div>
+                  <div
+                    class="slider-app__control-element"
+                  >
+                    
+                    
+                    <div
+                      class="slider-app__control-name"
+                    >
+                      
+                        
+                      <span
+                        class="slider-app__control-name--inner"
+                      >
+                        
+                            four
+                        
+                      </span>
+                      
+                    
+                    </div>
+                    
+                    
+                    <input
+                      class="slider-app__control-input slider-app__control--four"
+                      type="number"
+                    />
+                    
+                
+                  </div>
+                  <div
+                    class="slider-app__control-element"
+                  >
+                    
+                    
+                    <div
+                      class="slider-app__control-name"
+                    >
+                      
+                        
+                      <span
+                        class="slider-app__control-name--inner"
+                      >
+                        
+                            five
+                        
+                      </span>
+                      
+                    
+                    </div>
+                    
+                    
+                    <input
+                      class="slider-app__control-input slider-app__control--five"
+                      type="number"
+                    />
+                    
+                
+                  </div>
+                  <div
+                    class="slider-app__control-element"
+                  >
+                    
+                    
+                    <div
+                      class="slider-app__control-name"
+                    >
+                      
+                        
+                      <span
+                        class="slider-app__control-name--inner"
+                      >
+                        
+                            six
+                        
+                      </span>
+                      
+                    
+                    </div>
+                    
+                    
+                    <input
+                      class="slider-app__control-input slider-app__control--six"
+                      type="number"
+                    />
+                    
+                
+                  </div>
+                </div>
+                <div
+                  class="slider-app__toggle"
+                >
+                  <div
+                    class="slider-app__toggle-element"
+                  >
+                    
+                    
+                    <label
+                      class="slider-app__toggle-name"
+                      for="slider-app__toggle--one"
+                    >
+                      one
+                    </label>
+                    
+                    
+                    <label
+                      class="slider-app__toggle-container"
+                    >
+                      
+                        
+                      <input
+                        class="slider-app__toggle-box slider-app__toggle--one"
+                        type="checkbox"
+                      />
+                      
+                        
+                      <span
+                        class="slider-app__toggle-btn"
+                      />
+                      
+                    
+                    </label>
+                    
+                
+                  </div>
+                  <div
+                    class="slider-app__toggle-element"
+                  >
+                    
+                    
+                    <label
+                      class="slider-app__toggle-name"
+                      for="slider-app__toggle--two"
+                    >
+                      two
+                    </label>
+                    
+                    
+                    <label
+                      class="slider-app__toggle-container"
+                    >
+                      
+                        
+                      <input
+                        class="slider-app__toggle-box slider-app__toggle--two"
+                        type="checkbox"
+                      />
+                      
+                        
+                      <span
+                        class="slider-app__toggle-btn"
+                      />
+                      
+                    
+                    </label>
+                    
+                
+                  </div>
+                  <div
+                    class="slider-app__toggle-element"
+                  >
+                    
+                    
+                    <label
+                      class="slider-app__toggle-name"
+                      for="slider-app__toggle--second"
+                    >
+                      second
+                    </label>
+                    
+                    
+                    <label
+                      class="slider-app__toggle-container"
+                    >
+                      
+                        
+                      <input
+                        class="slider-app__toggle-box slider-app__toggle--second"
+                        type="checkbox"
+                      />
+                      
+                        
+                      <span
+                        class="slider-app__toggle-btn"
+                      />
+                      
+                    
+                    </label>
+                    
+                
+                  </div>
+                  <div
+                    class="slider-app__toggle-element"
+                  >
+                    
+                    
+                    <label
+                      class="slider-app__toggle-name"
+                      for="slider-app__toggle--Lorem"
+                    >
+                      Lorem
+                    </label>
+                    
+                    
+                    <label
+                      class="slider-app__toggle-container"
+                    >
+                      
+                        
+                      <input
+                        class="slider-app__toggle-box slider-app__toggle--Lorem"
+                        type="checkbox"
+                      />
+                      
+                        
+                      <span
+                        class="slider-app__toggle-btn"
+                      />
+                      
+                    
+                    </label>
+                    
+                
+                  </div>
+                  <div
+                    class="slider-app__toggle-element"
+                  >
+                    
+                    
+                    <label
+                      class="slider-app__toggle-name"
+                      for="slider-app__toggle--Ipsum"
+                    >
+                      Ipsum
+                    </label>
+                    
+                    
+                    <label
+                      class="slider-app__toggle-container"
+                    >
+                      
+                        
+                      <input
+                        class="slider-app__toggle-box slider-app__toggle--Ipsum"
+                        type="checkbox"
+                      />
+                      
+                        
+                      <span
+                        class="slider-app__toggle-btn"
+                      />
+                      
+                    
+                    </label>
+                    
+                
+                  </div>
+                </div>
+              </div>
+            </body>
+          </html>,
+        ],
+        "implementation": DOMImplementation {},
+      },
+    },
+    "length": 1,
+  },
+}
+`;
+
+exports[`Render Config test Should: <div class="slider-app__control"><div class="slider-app__control-element">
+                    <div class="slider-app__control-name">
+                        <span class="slider-app__control-name--inner">
+                            three
+                        </span>
+                    </div>
+                    <input class="slider-app__control-input slider-app__control--three" type="number">
+                </div><div class="slider-app__control-element">
+                    <div class="slider-app__control-name">
+                        <span class="slider-app__control-name--inner">
+                            four
+                        </span>
+                    </div>
+                    <input class="slider-app__control-input slider-app__control--four" type="number">
+                </div><div class="slider-app__control-element">
+                    <div class="slider-app__control-name">
+                        <span class="slider-app__control-name--inner">
+                            five
+                        </span>
+                    </div>
+                    <input class="slider-app__control-input slider-app__control--five" type="number">
+                </div><div class="slider-app__control-element">
+                    <div class="slider-app__control-name">
+                        <span class="slider-app__control-name--inner">
+                            six
+                        </span>
+                    </div>
+                    <input class="slider-app__control-input slider-app__control--six" type="number">
+                </div></div><div class="slider-app__toggle"><div class="slider-app__toggle-element">
+                    <label class="slider-app__toggle-name" for="slider-app__toggle--one">one</label>
+                    <label class="slider-app__toggle-container">
+                        <input class="slider-app__toggle-box slider-app__toggle--one" type="checkbox">
+                        <span class="slider-app__toggle-btn"></span>
+                    </label>
+                </div><div class="slider-app__toggle-element">
+                    <label class="slider-app__toggle-name" for="slider-app__toggle--two">two</label>
+                    <label class="slider-app__toggle-container">
+                        <input class="slider-app__toggle-box slider-app__toggle--two" type="checkbox">
+                        <span class="slider-app__toggle-btn"></span>
+                    </label>
+                </div><div class="slider-app__toggle-element">
+                    <label class="slider-app__toggle-name" for="slider-app__toggle--second">second</label>
+                    <label class="slider-app__toggle-container">
+                        <input class="slider-app__toggle-box slider-app__toggle--second" type="checkbox">
+                        <span class="slider-app__toggle-btn"></span>
+                    </label>
+                </div><div class="slider-app__toggle-element">
+                    <label class="slider-app__toggle-name" for="slider-app__toggle--Lorem">Lorem</label>
+                    <label class="slider-app__toggle-container">
+                        <input class="slider-app__toggle-box slider-app__toggle--Lorem" type="checkbox">
+                        <span class="slider-app__toggle-btn"></span>
+                    </label>
+                </div><div class="slider-app__toggle-element">
+                    <label class="slider-app__toggle-name" for="slider-app__toggle--Ipsum">Ipsum</label>
+                    <label class="slider-app__toggle-container">
+                        <input class="slider-app__toggle-box slider-app__toggle--Ipsum" type="checkbox">
+                        <span class="slider-app__toggle-btn"></span>
+                    </label>
+                </div></div> 1`] = `
+jQuery {
+  "0": <body>
+    <div
+      class="slider-app__config"
+    >
+      <div
+        class="slider-app__control"
+      >
+        <div
+          class="slider-app__control-element"
+        >
+          
+                    
+          <div
+            class="slider-app__control-name"
+          >
+            
+                        
+            <span
+              class="slider-app__control-name--inner"
+            >
+              
+                            three
+                        
+            </span>
+            
+                    
+          </div>
+          
+                    
+          <input
+            class="slider-app__control-input slider-app__control--three"
+            type="number"
+          />
+          
+                
+        </div>
+        <div
+          class="slider-app__control-element"
+        >
+          
+                    
+          <div
+            class="slider-app__control-name"
+          >
+            
+                        
+            <span
+              class="slider-app__control-name--inner"
+            >
+              
+                            four
+                        
+            </span>
+            
+                    
+          </div>
+          
+                    
+          <input
+            class="slider-app__control-input slider-app__control--four"
+            type="number"
+          />
+          
+                
+        </div>
+        <div
+          class="slider-app__control-element"
+        >
+          
+                    
+          <div
+            class="slider-app__control-name"
+          >
+            
+                        
+            <span
+              class="slider-app__control-name--inner"
+            >
+              
+                            five
+                        
+            </span>
+            
+                    
+          </div>
+          
+                    
+          <input
+            class="slider-app__control-input slider-app__control--five"
+            type="number"
+          />
+          
+                
+        </div>
+        <div
+          class="slider-app__control-element"
+        >
+          
+                    
+          <div
+            class="slider-app__control-name"
+          >
+            
+                        
+            <span
+              class="slider-app__control-name--inner"
+            >
+              
+                            six
+                        
+            </span>
+            
+                    
+          </div>
+          
+                    
+          <input
+            class="slider-app__control-input slider-app__control--six"
+            type="number"
+          />
+          
+                
+        </div>
+      </div>
+      <div
+        class="slider-app__toggle"
+      >
+        <div
+          class="slider-app__toggle-element"
+        >
+          
+                    
+          <label
+            class="slider-app__toggle-name"
+            for="slider-app__toggle--one"
+          >
+            one
+          </label>
+          
+                    
+          <label
+            class="slider-app__toggle-container"
+          >
+            
+                        
+            <input
+              class="slider-app__toggle-box slider-app__toggle--one"
+              type="checkbox"
+            />
+            
+                        
+            <span
+              class="slider-app__toggle-btn"
+            />
+            
+                    
+          </label>
+          
+                
+        </div>
+        <div
+          class="slider-app__toggle-element"
+        >
+          
+                    
+          <label
+            class="slider-app__toggle-name"
+            for="slider-app__toggle--two"
+          >
+            two
+          </label>
+          
+                    
+          <label
+            class="slider-app__toggle-container"
+          >
+            
+                        
+            <input
+              class="slider-app__toggle-box slider-app__toggle--two"
+              type="checkbox"
+            />
+            
+                        
+            <span
+              class="slider-app__toggle-btn"
+            />
+            
+                    
+          </label>
+          
+                
+        </div>
+        <div
+          class="slider-app__toggle-element"
+        >
+          
+                    
+          <label
+            class="slider-app__toggle-name"
+            for="slider-app__toggle--second"
+          >
+            second
+          </label>
+          
+                    
+          <label
+            class="slider-app__toggle-container"
+          >
+            
+                        
+            <input
+              class="slider-app__toggle-box slider-app__toggle--second"
+              type="checkbox"
+            />
+            
+                        
+            <span
+              class="slider-app__toggle-btn"
+            />
+            
+                    
+          </label>
+          
+                
+        </div>
+        <div
+          class="slider-app__toggle-element"
+        >
+          
+                    
+          <label
+            class="slider-app__toggle-name"
+            for="slider-app__toggle--Lorem"
+          >
+            Lorem
+          </label>
+          
+                    
+          <label
+            class="slider-app__toggle-container"
+          >
+            
+                        
+            <input
+              class="slider-app__toggle-box slider-app__toggle--Lorem"
+              type="checkbox"
+            />
+            
+                        
+            <span
+              class="slider-app__toggle-btn"
+            />
+            
+                    
+          </label>
+          
+                
+        </div>
+        <div
+          class="slider-app__toggle-element"
+        >
+          
+                    
+          <label
+            class="slider-app__toggle-name"
+            for="slider-app__toggle--Ipsum"
+          >
+            Ipsum
+          </label>
+          
+                    
+          <label
+            class="slider-app__toggle-container"
+          >
+            
+                        
+            <input
+              class="slider-app__toggle-box slider-app__toggle--Ipsum"
+              type="checkbox"
+            />
+            
+                        
+            <span
+              class="slider-app__toggle-btn"
+            />
+            
+                    
+          </label>
+          
+                
+        </div>
+      </div>
+    </div>
+  </body>,
+  "length": 1,
+  "prevObject": jQuery {
+    "0": Document {
+      "location": Location {
+        "assign": [Function],
+        "hash": "",
+        "host": "localhost",
+        "hostname": "localhost",
+        "href": "http://localhost/",
+        "origin": "http://localhost",
+        "pathname": "/",
+        "port": "",
+        "protocol": "http:",
+        "reload": [Function],
+        "replace": [Function],
+        "search": "",
+        "toString": [Function],
+      },
+      Symbol(SameObject caches): Object {
+        "childNodes": NodeList [
+          DocumentType {},
+          <html>
+            <head />
+            <body>
+              <div
+                class="slider-app__config"
+              >
+                <div
+                  class="slider-app__control"
+                >
+                  <div
+                    class="slider-app__control-element"
+                  >
+                    
+                    
+                    <div
+                      class="slider-app__control-name"
+                    >
+                      
+                        
+                      <span
+                        class="slider-app__control-name--inner"
+                      >
+                        
+                            three
+                        
+                      </span>
+                      
+                    
+                    </div>
+                    
+                    
+                    <input
+                      class="slider-app__control-input slider-app__control--three"
+                      type="number"
+                    />
+                    
+                
+                  </div>
+                  <div
+                    class="slider-app__control-element"
+                  >
+                    
+                    
+                    <div
+                      class="slider-app__control-name"
+                    >
+                      
+                        
+                      <span
+                        class="slider-app__control-name--inner"
+                      >
+                        
+                            four
+                        
+                      </span>
+                      
+                    
+                    </div>
+                    
+                    
+                    <input
+                      class="slider-app__control-input slider-app__control--four"
+                      type="number"
+                    />
+                    
+                
+                  </div>
+                  <div
+                    class="slider-app__control-element"
+                  >
+                    
+                    
+                    <div
+                      class="slider-app__control-name"
+                    >
+                      
+                        
+                      <span
+                        class="slider-app__control-name--inner"
+                      >
+                        
+                            five
+                        
+                      </span>
+                      
+                    
+                    </div>
+                    
+                    
+                    <input
+                      class="slider-app__control-input slider-app__control--five"
+                      type="number"
+                    />
+                    
+                
+                  </div>
+                  <div
+                    class="slider-app__control-element"
+                  >
+                    
+                    
+                    <div
+                      class="slider-app__control-name"
+                    >
+                      
+                        
+                      <span
+                        class="slider-app__control-name--inner"
+                      >
+                        
+                            six
+                        
+                      </span>
+                      
+                    
+                    </div>
+                    
+                    
+                    <input
+                      class="slider-app__control-input slider-app__control--six"
+                      type="number"
+                    />
+                    
+                
+                  </div>
+                </div>
+                <div
+                  class="slider-app__toggle"
+                >
+                  <div
+                    class="slider-app__toggle-element"
+                  >
+                    
+                    
+                    <label
+                      class="slider-app__toggle-name"
+                      for="slider-app__toggle--one"
+                    >
+                      one
+                    </label>
+                    
+                    
+                    <label
+                      class="slider-app__toggle-container"
+                    >
+                      
+                        
+                      <input
+                        class="slider-app__toggle-box slider-app__toggle--one"
+                        type="checkbox"
+                      />
+                      
+                        
+                      <span
+                        class="slider-app__toggle-btn"
+                      />
+                      
+                    
+                    </label>
+                    
+                
+                  </div>
+                  <div
+                    class="slider-app__toggle-element"
+                  >
+                    
+                    
+                    <label
+                      class="slider-app__toggle-name"
+                      for="slider-app__toggle--two"
+                    >
+                      two
+                    </label>
+                    
+                    
+                    <label
+                      class="slider-app__toggle-container"
+                    >
+                      
+                        
+                      <input
+                        class="slider-app__toggle-box slider-app__toggle--two"
+                        type="checkbox"
+                      />
+                      
+                        
+                      <span
+                        class="slider-app__toggle-btn"
+                      />
+                      
+                    
+                    </label>
+                    
+                
+                  </div>
+                  <div
+                    class="slider-app__toggle-element"
+                  >
+                    
+                    
+                    <label
+                      class="slider-app__toggle-name"
+                      for="slider-app__toggle--second"
+                    >
+                      second
+                    </label>
+                    
+                    
+                    <label
+                      class="slider-app__toggle-container"
+                    >
+                      
+                        
+                      <input
+                        class="slider-app__toggle-box slider-app__toggle--second"
+                        type="checkbox"
+                      />
+                      
+                        
+                      <span
+                        class="slider-app__toggle-btn"
+                      />
+                      
+                    
+                    </label>
+                    
+                
+                  </div>
+                  <div
+                    class="slider-app__toggle-element"
+                  >
+                    
+                    
+                    <label
+                      class="slider-app__toggle-name"
+                      for="slider-app__toggle--Lorem"
+                    >
+                      Lorem
+                    </label>
+                    
+                    
+                    <label
+                      class="slider-app__toggle-container"
+                    >
+                      
+                        
+                      <input
+                        class="slider-app__toggle-box slider-app__toggle--Lorem"
+                        type="checkbox"
+                      />
+                      
+                        
+                      <span
+                        class="slider-app__toggle-btn"
+                      />
+                      
+                    
+                    </label>
+                    
+                
+                  </div>
+                  <div
+                    class="slider-app__toggle-element"
+                  >
+                    
+                    
+                    <label
+                      class="slider-app__toggle-name"
+                      for="slider-app__toggle--Ipsum"
+                    >
+                      Ipsum
+                    </label>
+                    
+                    
+                    <label
+                      class="slider-app__toggle-container"
+                    >
+                      
+                        
+                      <input
+                        class="slider-app__toggle-box slider-app__toggle--Ipsum"
+                        type="checkbox"
+                      />
+                      
+                        
+                      <span
+                        class="slider-app__toggle-btn"
+                      />
+                      
+                    
+                    </label>
+                    
+                
+                  </div>
+                </div>
+              </div>
+            </body>
+          </html>,
+        ],
+        "implementation": DOMImplementation {},
+      },
+    },
+    "length": 1,
+  },
+}
+`;

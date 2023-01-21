@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Render Progress test Should match snapshot: <div class="slider-app__progress"> 1`] = `
+jQuery {
+  "0": <body>
+    <div
+      class="slider-app__progress"
+    />
+    <div
+      class="slider-app__bar"
+    />
+  </body>,
+  "length": 1,
+  "prevObject": jQuery {
+    "0": Document {
+      "location": Location {
+        "assign": [Function],
+        "hash": "",
+        "host": "localhost",
+        "hostname": "localhost",
+        "href": "http://localhost/",
+        "origin": "http://localhost",
+        "pathname": "/",
+        "port": "",
+        "protocol": "http:",
+        "reload": [Function],
+        "replace": [Function],
+        "search": "",
+        "toString": [Function],
+      },
+      Symbol(SameObject caches): Object {
+        "childNodes": NodeList [
+          DocumentType {},
+          <html>
+            <head />
+            <body>
+              <div
+                class="slider-app__progress"
+              />
+              <div
+                class="slider-app__bar"
+              />
+            </body>
+          </html>,
+        ],
+        "implementation": DOMImplementation {},
+      },
+    },
+    "length": 1,
+  },
+}
+`;
+
+exports[`Render Progress test Should match snapshot: slider-app__progress 1`] = `
+jQuery {
+  "0": <div
+    class="slider-app__progress"
+  />,
+  "length": 1,
+}
+`;
+
+exports[`Render Progress test Should match vertical: <div class="slider-app__progress slider-app__progress--vertical" /> 1`] = `
+<div
+  class="slider-app__progress slider-app__progress--vertical"
+/>
+`;

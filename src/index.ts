@@ -14,5 +14,3 @@ const app = new Controller("#slider", {
   // vertical: true,
   gap: 1,
 });
-
-console.log(map([1, 2, 3], (x) => x * 2));

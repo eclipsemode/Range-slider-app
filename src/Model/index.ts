@@ -6,14 +6,11 @@ class Model {
   private onOptionsChanged: (options: ModelOption) => void;
 
   constructor(private optionsReceived?: Partial<ModelOption>) {
-    this.options = this.checkOptions(optionsReceived);
+    this.options = this.checkOptions();
   }
 
-  private checkOptions(
-    options: Partial<ModelOption>,
-    action?: ActionEnum
-  ): ModelOption {
-    const verifiedOptions = { ...options };
+  private checkOptions(action?: ActionEnum): ModelOption {
+    const verifiedOptions = this.optionsReceived;
     verifiedOptions.min = verifiedOptions.min ?? 0;
     verifiedOptions.max = verifiedOptions.max ?? 1000;
     verifiedOptions.from = verifiedOptions.from ?? verifiedOptions.min;
@@ -147,7 +144,8 @@ class Model {
   }
 
   public changeOptions(options: ModelOption, action?: ActionEnum) {
-    this.options = this.checkOptions(options, action);
+    this.options = options;
+    this.options = this.checkOptions(action);
     this.commitOptions(this.options);
   }
 

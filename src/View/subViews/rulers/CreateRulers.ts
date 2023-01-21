@@ -1,3 +1,5 @@
+import $ from "jquery";
+
 class CreateRulers {
   public rulersElement: JQuery;
 

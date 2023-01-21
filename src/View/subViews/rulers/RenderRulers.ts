@@ -1,3 +1,4 @@
+import $ from "jquery";
 import { convertToNumber, convertToPixel, ModelOption } from "../../../utils";
 import { CreateBar, CreateRulers } from "../index";
 

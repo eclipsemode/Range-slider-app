@@ -1,5 +1,4 @@
-<h2>Slider Plugin (beta)</h2>
-<h6>Development in progress...</h6>
+<h2>Slider Plugin</h2>
 <hr>
 <a href="https://eclipsemode.github.io/Range-slider-app/" target="_blank">--- Watch Demo ---</a>
 <h3>Libraries:</h3>
@@ -47,9 +46,9 @@
 <h3>Slider initialization:</h3>
 <hr>
 <pre>
-import { Slider };
+import Controller from './Controller';
 
-new Slider('.slider', {...})
+new Controller('.slider', {...options})
 </pre>
 
 <h4>User options: </h4>
@@ -115,6 +114,21 @@ new Slider('.slider', {...})
 <td>true</td>
 <td>Show tooltip above thumbs</td>
 </tr>
+<tr>
+<td>configPanel</td>
+<td>boolean</td>
+<td>true</td>
+<td>Show config panel</td>
+</tr>
+<tr>
+<td>color</td>
+<td>string</td>
+<td>{firstColor?: #ffe53b;
+    secondColor?: #ff2525;
+    textColor?: #ffe53b;
+    thumbColor?: #ffe53b; }</td>
+<td>Set color</td>
+</tr>
 </tbody>
 </table>
 
@@ -122,7 +136,7 @@ new Slider('.slider', {...})
 <hr>
 Architecture of slider based on MVP pattern. 
 Application divided on 3 components - <code>Model</code>, <code>View</code>, <code>Controller</code>, 
-and this components synchronized with <code>Observer</code> subscriptions.
+and this components synchronized with subscriptions. View architecture divided on subscriptions and subViews, which in turn connected in main View.ts.
 
 <h3>UML:</h3>
 <hr>

@@ -1,0 +1,237 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Render Tooltip tests Should match snapshot: cascasxca 1`] = `
+jQuery {
+  "0": <body>
+    <div
+      class="slider-app__bar"
+    />
+  </body>,
+  "length": 1,
+  "prevObject": jQuery {
+    "0": Document {
+      "location": Location {
+        "assign": [Function],
+        "hash": "",
+        "host": "localhost",
+        "hostname": "localhost",
+        "href": "http://localhost/",
+        "origin": "http://localhost",
+        "pathname": "/",
+        "port": "",
+        "protocol": "http:",
+        "reload": [Function],
+        "replace": [Function],
+        "search": "",
+        "toString": [Function],
+      },
+      Symbol(SameObject caches): Object {
+        "childNodes": NodeList [
+          DocumentType {},
+          <html>
+            <head />
+            <body>
+              <div
+                class="slider-app__bar"
+              />
+            </body>
+          </html>,
+        ],
+        "implementation": DOMImplementation {},
+      },
+    },
+    "length": 1,
+  },
+}
+`;
+
+exports[`Render Tooltip tests Should match snapshot: class="slider-app__bar" 1`] = `"0 - 99"`;
+
+exports[`Render Tooltip tests Should match snapshot: dasfasfas 1`] = `
+RenderTooltip {
+  "bar": CreateBar {
+    "barElement": jQuery {
+      "0": <div
+        class="slider-app__bar"
+      />,
+      "length": 1,
+    },
+    "parent": jQuery {
+      "0": <body>
+        <div
+          class="slider-app__bar"
+        />
+      </body>,
+      "length": 1,
+      "prevObject": jQuery {
+        "0": Document {
+          "location": Location {
+            "assign": [Function],
+            "hash": "",
+            "host": "localhost",
+            "hostname": "localhost",
+            "href": "http://localhost/",
+            "origin": "http://localhost",
+            "pathname": "/",
+            "port": "",
+            "protocol": "http:",
+            "reload": [Function],
+            "replace": [Function],
+            "search": "",
+            "toString": [Function],
+          },
+          Symbol(SameObject caches): Object {
+            "childNodes": NodeList [
+              DocumentType {},
+              <html>
+                <head />
+                <body>
+                  <div
+                    class="slider-app__bar"
+                  />
+                </body>
+              </html>,
+            ],
+            "implementation": DOMImplementation {},
+          },
+        },
+        "length": 1,
+      },
+    },
+  },
+  "options": Object {
+    "color": Object {
+      "firstColor": "#ffe53b",
+      "secondColor": "#ff2525",
+      "textColor": "#ffe53b",
+      "thumbColor": "#ffe53b",
+    },
+    "configPanel": true,
+    "controlConfig": Array [
+      "min",
+      "max",
+      "step",
+      "from",
+      "to",
+    ],
+    "from": 0,
+    "gap": 1,
+    "max": 104,
+    "min": 0,
+    "percent": false,
+    "progress": true,
+    "range": true,
+    "rulers": true,
+    "step": 33,
+    "to": 99,
+    "toggleConfig": Array [
+      "vertical",
+      "range",
+      "rulers",
+      "progress",
+      "tooltip",
+    ],
+    "tooltip": true,
+    "vertical": false,
+  },
+  "tooltipFrom": CreateTooltip {
+    "parent": jQuery {
+      "0": <body>
+        <div
+          class="slider-app__bar"
+        />
+      </body>,
+      "length": 1,
+      "prevObject": jQuery {
+        "0": Document {
+          "location": Location {
+            "assign": [Function],
+            "hash": "",
+            "host": "localhost",
+            "hostname": "localhost",
+            "href": "http://localhost/",
+            "origin": "http://localhost",
+            "pathname": "/",
+            "port": "",
+            "protocol": "http:",
+            "reload": [Function],
+            "replace": [Function],
+            "search": "",
+            "toString": [Function],
+          },
+          Symbol(SameObject caches): Object {
+            "childNodes": NodeList [
+              DocumentType {},
+              <html>
+                <head />
+                <body>
+                  <div
+                    class="slider-app__bar"
+                  />
+                </body>
+              </html>,
+            ],
+            "implementation": DOMImplementation {},
+          },
+        },
+        "length": 1,
+      },
+    },
+    "tooltipElement": jQuery {
+      "0": <div
+        class="slider-app__tooltip slider-app__tooltip--merged"
+        style="left: 0px; bottom: 2.2em;"
+      >
+        0 - 99
+      </div>,
+      "length": 1,
+    },
+  },
+  "tooltipTo": null,
+}
+`;
+
+exports[`Render Tooltip tests Should match snapshot: slider-app__tooltip 1`] = `
+jQuery {
+  "0": <body>
+    <div
+      class="slider-app__bar"
+    />
+  </body>,
+  "length": 1,
+  "prevObject": jQuery {
+    "0": Document {
+      "location": Location {
+        "assign": [Function],
+        "hash": "",
+        "host": "localhost",
+        "hostname": "localhost",
+        "href": "http://localhost/",
+        "origin": "http://localhost",
+        "pathname": "/",
+        "port": "",
+        "protocol": "http:",
+        "reload": [Function],
+        "replace": [Function],
+        "search": "",
+        "toString": [Function],
+      },
+      Symbol(SameObject caches): Object {
+        "childNodes": NodeList [
+          DocumentType {},
+          <html>
+            <head />
+            <body>
+              <div
+                class="slider-app__bar"
+              />
+            </body>
+          </html>,
+        ],
+        "implementation": DOMImplementation {},
+      },
+    },
+    "length": 1,
+  },
+}
+`;

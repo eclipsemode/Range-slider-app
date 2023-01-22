@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Create Tooltip tests Should match snapshot: class="slider-app__tooltip 1`] = `
+jQuery {
+  "0": <body>
+    <div
+      class="slider-app__tooltip"
+    />
+  </body>,
+  "length": 1,
+  "prevObject": jQuery {
+    "0": Document {
+      "location": Location {
+        "assign": [Function],
+        "hash": "",
+        "host": "localhost",
+        "hostname": "localhost",
+        "href": "http://localhost/",
+        "origin": "http://localhost",
+        "pathname": "/",
+        "port": "",
+        "protocol": "http:",
+        "reload": [Function],
+        "replace": [Function],
+        "search": "",
+        "toString": [Function],
+      },
+      Symbol(SameObject caches): Object {
+        "childNodes": NodeList [
+          DocumentType {},
+          <html>
+            <head />
+            <body>
+              <div
+                class="slider-app__tooltip"
+              />
+            </body>
+          </html>,
+        ],
+        "implementation": DOMImplementation {},
+      },
+    },
+    "length": 1,
+  },
+}
+`;
+
+exports[`Create Tooltip tests Should match snapshot: dsd 1`] = `
+jQuery {
+  "0": <div
+    class="slider-app__tooltip"
+  />,
+  "length": 1,
+}
+`;

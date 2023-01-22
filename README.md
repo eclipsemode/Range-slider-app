@@ -4,16 +4,37 @@
 <a href="https://eclipsemode.github.io/Range-slider-app/" target="_blank">--- Watch Demo ---</a>
 <h3>Libraries:</h3>
 <hr>
-<ul>
-<li>Jquery: 3.6.0</li>
-<li>Webpack: 5.72.0</li>
-<li>Typescript: 4.6.4</li>
-<li>Pug: 3.0.2</li>
-<li>SASS: 1.51.0</li>
-<li>Jest: 28.1.0</li>
-<li>Jsdom: 19.0.0</li>
-<li>Eslint: 8.14.0</li>
-</ul>
+<pre>
+  "devDependencies": {
+    "@types/jest": "^27.5.1",
+    "@types/jquery": "^3.5.14",
+    "@typescript-eslint/eslint-plugin": "^5.21.0",
+    "@typescript-eslint/parser": "^5.21.0",
+    "css-loader": "^6.7.1",
+    "eslint": "^8.14.0",
+    "eslint-config-airbnb-base-typescript-prettier": "^5.1.0",
+    "eslint-webpack-plugin": "^3.1.1",
+    "jest": "^28.1.0",
+    "jest-environment-jsdom": "^28.1.0",
+    "js-abbreviation-number": "^1.4.0",
+    "jsdom": "^19.0.0",
+    "prettier": "^2.8.0",
+    "pug": "^3.0.2",
+    "pug-plugin": "^4.5.0",
+    "sass": "^1.51.0",
+    "sass-loader": "^12.6.0",
+    "ts-jest": "^28.0.3",
+    "ts-loader": "^9.3.0",
+    "typescript": "^4.6.4",
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.8.1",
+    "gh-pages": "^4.0.0"
+  },
+  "dependencies": {
+    "jquery": "^3.6.0"
+  }
+</pre>
 
 <h3>Commands:</h3>
 <hr>

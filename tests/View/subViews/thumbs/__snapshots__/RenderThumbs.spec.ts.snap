@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Render Thumbs tests Should match snapshot: class="slider-app__thumb 1`] = `""`;
+
+exports[`Render Thumbs tests Should match snapshot: ss 1`] = `
+jQuery {
+  "0": <div
+    class="slider-app__thumb slider-app__thumb-to"
+    style="left: 0px;"
+  />,
+  "length": 1,
+}
+`;
+
+exports[`Render Thumbs tests Should match snapshot: ssaddasdafcas 1`] = `
+jQuery {
+  "0": <div
+    class="slider-app__thumb slider-app__thumb-to"
+    style="left: 0px;"
+  />,
+  "length": 1,
+}
+`;

@@ -17,10 +17,10 @@ import {
   RenderRulers,
 } from "./subViews";
 
-import ObserveThumbsMove from "./observable/ObserveThumbsMove";
-import ObserveBarClick from "./observable/ObserveBarClick";
-import ObserveRulersClick from "./observable/ObserveRulersClick";
-import ObserveConfig from "./observable/ObserveConfig";
+import SubscribeThumbsMove from "./subscribes/SubscribeThumbsMove";
+import SubscribeBarClick from "./subscribes/SubscribeBarClick";
+import SubscribeRulersClick from "./subscribes/SubscribeRulersClick";
+import SubscribeConfig from "./subscribes/SubscribeConfig";
 
 class View {
   private readonly app: JQuery;
@@ -53,13 +53,13 @@ class View {
 
   private options: ModelOption;
 
-  private observeThumbsMove: ObserveThumbsMove;
+  private subscribeThumbsMove: SubscribeThumbsMove;
 
-  private observeBarClick: ObserveBarClick;
+  private subscribeBarClick: SubscribeBarClick;
 
-  private observeRulersClick: ObserveRulersClick;
+  private subscribeRulersClick: SubscribeRulersClick;
 
-  private observeConfig: ObserveConfig;
+  private subscribeConfig: SubscribeConfig;
 
   constructor(private readonly selector: string) {
     this.app = $(selector);
@@ -71,7 +71,7 @@ class View {
       /**
        * Binds thumbs move.
        */
-      this.observeThumbsMove = new ObserveThumbsMove(
+      this.subscribeThumbsMove = new SubscribeThumbsMove(
         this.app,
         this.options,
         this.bar,
@@ -85,7 +85,7 @@ class View {
        * Binds rulers values.
        */
 
-      this.observeRulersClick = new ObserveRulersClick(
+      this.subscribeRulersClick = new SubscribeRulersClick(
         this.options,
         handler,
         e
@@ -96,7 +96,7 @@ class View {
       /**
        * Binds click on bar.
        */
-      this.observeBarClick = new ObserveBarClick(
+      this.subscribeBarClick = new SubscribeBarClick(
         this.options,
         this.bar,
         handler,
@@ -108,7 +108,7 @@ class View {
       /**
        * Binds config.
        */
-      this.observeConfig = new ObserveConfig(this.options, handler, e);
+      this.subscribeConfig = new SubscribeConfig(this.options, handler, e);
     });
 
     /**

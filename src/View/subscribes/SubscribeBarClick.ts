@@ -7,7 +7,7 @@ import {
 
 import { CreateBar } from "../subViews";
 
-class ObserveBarClick {
+class SubscribeBarClick {
   constructor(
     private options: ModelOption,
     private bar: CreateBar,
@@ -57,4 +57,4 @@ class ObserveBarClick {
   }
 }
 
-export default ObserveBarClick;
+export default SubscribeBarClick;

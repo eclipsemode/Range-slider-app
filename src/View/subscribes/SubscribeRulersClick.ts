@@ -1,6 +1,6 @@
 import { ActionEnum, ModelOption } from "../../utils";
 
-class ObserveRulersClick {
+class SubscribeRulersClick {
   constructor(
     private options: ModelOption,
     private handler: CallableFunction,
@@ -30,4 +30,4 @@ class ObserveRulersClick {
   }
 }
 
-export default ObserveRulersClick;
+export default SubscribeRulersClick;

@@ -1,7 +1,7 @@
 import $ from "jquery";
 import { ActionEnum, ModelOption } from "../../utils";
 
-class ObserveConfig {
+class SubscribeConfig {
   constructor(
     private options: ModelOption,
     private handler: CallableFunction,
@@ -51,4 +51,4 @@ class ObserveConfig {
   }
 }
 
-export default ObserveConfig;
+export default SubscribeConfig;

@@ -8,7 +8,7 @@ import {
 
 import { CreateBar, CreateThumbFrom, CreateThumbTo } from "../subViews";
 
-class ObserveThumbsMove {
+class SubscribeThumbsMove {
   constructor(
     private app: JQuery,
     private options: ModelOption,
@@ -151,4 +151,4 @@ class ObserveThumbsMove {
   }
 }
 
-export default ObserveThumbsMove;
+export default SubscribeThumbsMove;
